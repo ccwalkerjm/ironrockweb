@@ -75,7 +75,7 @@
                         <label for="quotationNo">Quotation No:</label>
                         <input type="number" class="form-control" id="quotationNo">
                     </div>
-                    <button type="button" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Submit</button>
                 </form>
                 <div id="result" style="display:none">
                     <h4>Results</h4>
@@ -93,10 +93,10 @@
                 <br/>
                 <br/>
                 <h2><a name="app">Mobile App</a></h2>
-                <a href="https://cdn.courserv.com/ironrock/apps/IronRockAdminApp.apk">DownLoad</a>
+                <a href="https://cdn.courserv.com/ironrock/apps/IronRockApplication-debug.apk">DownLoad</a>
                 <p>OR</p>
                 <h4>Scan QR with Mobile</h4>
-                <img src="https://cdn.courserv.com/ironrock/apps/ironrock_app_qr.jpg" />
+                <img src="https://cdn.courserv.com/ironrock/apps/ironrockQRImage.png" />
             </div>
         </div>
         <!-- /.row -->
@@ -112,17 +112,33 @@
     <!-- Bootstrap Core JavaScript -->
     <script type="text/javascript">
         $(document).ready(function () {
-            $("button").click(function () {
+            $("form").submit(function (e) {
+                e.preventDefault();
                 $.get("https://api.courserv.com/ironrock/details/?id=" + $('#quotationNo').val(), function (r) {
-                    $('#result').show();
-                    var dl = $('#dl').html('');
-                    dl.append('<dt>First Name</dt><dd>' + r.FirstName + '</dd>'); //"applicantSurname":"WALKER","FirstName":"COURTNEY","applicantMiddleName":"CLIVE","applicantTitle":"Mr."
-                    dl.append('<dt>Middle Name</dt><dd>' + r.applicantMiddleName + '</dd>');
-                    dl.append('<dt>SurName</dt><dd>' + r.applicantSurname + '</dd>');
-                    dl.append('<dt>Signature</dt><dd><img src="data:' + r.signatureImageType + ',' + r.signatureBytes + '"/></dd>'); //"data:" + sig[0] + "," + sig[1]
+                    if (r.FirstName) {
+                        $('#result').show();
+                        var dl = $('#dl').html('');
+                        dl.append('<dt>First Name</dt><dd>' + r.FirstName + '</dd>'); //"applicantSurname":"WALKER","FirstName":"COURTNEY","applicantMiddleName":"CLIVE","applicantTitle":"Mr."
+                        dl.append('<dt>Middle Name</dt><dd>' + r.applicantMiddleName + '</dd>');
+                        dl.append('<dt>SurName</dt><dd>' + r.applicantSurname + '</dd>');
+                        dl.append('<dt>Signature</dt><dd><img width="200px" src="data:' + r.signatureImageType + ',' + r.signatureBytes + '"/></dd>'); //"data:" + sig[0] + "," + sig[1]
+                        dl.append('<dt></dt><dd><hr/></dd>');
+                        dl.append('<dt></dt><dd style="font-weight: bold;text-decoration: underline">Note Details Below</dd>');
+                        dl.append('<dt></dt><dd><hr/></dd>');
+                        delete r.signatureImageType;
+                        delete r.signatureBytes;
+                        $.each(r, function (i, n) {
+                            if (n) {
+                                dl.append('<dt>' + i + "</dt><dd>" + n + "</dd>");
+                            }
+                        });
+                    } else {
+                        alert("No Result for this quote no!");
+                    }
                 })
             });
-            jQuery('#quotationNo').on('input', function () {
+
+            $('#quotationNo').on('input', function (e) {
                 $('#result').hide();
             });
         });
