@@ -1,0 +1,401 @@
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IronRock Application Administration</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="https://cdn.courserv.com/ironrock/images/IronRockLogo.png" width="200px">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#details">Details</a>
+                    </li>
+                    <li>
+                        <a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-default" id="s3list_submit">List Buckets</button>
+                <button type="button" class="btn btn-default" id="logout_submit">Logout</button>
+                <div id="status"></div>
+                <ul id="objects"></ul>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Register User</h2>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_given_name">First Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="signup_given_name" placeholder="Enter First Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_family_name">Last Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="signup_family_name" placeholder="Enter Last Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_profile">Broker:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="signup_profile">
+                                <option value="broker1">Broker1</option>
+                                <option value="broker1">Broker2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_gender">Gender:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="signup_gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_email">Email:</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="signup_email" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_phone_number">Phone:</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="signup_phone_number" placeholder="Enter Phone Number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_username">Username:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="signup_username" placeholder="Enter Username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_password">Password:</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="signup_password" placeholder="Enter password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-default" id="signup_submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--confirm-->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Confirm User</h2>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="confirm_username">Username:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="confirm_username" placeholder="Enter Username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="confirm_code">Security Code:</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="confirm_code" placeholder="Enter Security Code">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-default" id="confirm_submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--login-->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Login</h2>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="login_username">Username:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="login_username" placeholder="Enter Username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="login_password">Password:</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="login_password" placeholder="Enter Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-default" id="login_submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <!--AWS -->
+    <script src="js/jsbn.js"></script>
+    <script src="js/jsbn2.js"></script>
+    <script src="js/sjcl.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/aws-cognito-sdk.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/aws-sdk-2.3.19.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var identityPool = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
+            var userPool = 'us-east-1_rqJjMXSw7';
+            var clientId = '2er4hn9hn85dolou9lm7osfj3p';
+            var providerName = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_rqJjMXSw7';
+
+            // Initialize the Amazon Cognito credentials provider
+            AWS.config.region = 'us-east-1'; // Region 
+
+            var creds = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: identityPool,
+            });
+
+            AWS.config.credentials = creds;
+
+            AWSCognito.config.region = 'us-east-1';
+            AWSCognito.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: identityPool
+            });
+
+            var poolData = {
+                UserPoolId: userPool,
+                ClientId: clientId
+            };
+            var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+
+            var cognitoUser = userPool.getCurrentUser();
+            if (cognitoUser != null) {
+                cognitoUser.getSession(function (err, result) {
+                    if (result) {
+                        console.log('You are loggin.');
+                        creds.params.Logins = {};
+                        creds.params.Logins[providerName] = result.getAccessToken().getJwtToken();
+                        AWS.config.credentials = creds;
+                        // Add the User's Id Token to the Cognito credentials login map.
+                        /* AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                             IdentityPoolId: 'YOUR_IDENTITY_POOL_ID',
+                             Logins: {
+                                 'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>': result.getIdToken().getJwtToken()
+                             }
+                         });*/
+                    }
+                });
+            }
+
+
+
+
+
+            $("#signup_submit").click(function (e) {
+                e.preventDefault();
+
+                var attributeList = [];
+
+                var dataEmail = {
+                    Name: 'email',
+                    Value: $('#signup_email').val()
+                };
+                var dataPhoneNumber = {
+                    Name: 'phone_number',
+                    Value: '+' + $('#signup_phone_number').val()
+                };
+                var dataGivenName = {
+                    Name: 'given_name',
+                    Value: $('#signup_given_name').val()
+                };
+                var dataFamilyName = {
+                    Name: 'family_name',
+                    Value: $('#signup_family_name').val()
+                };
+                var dataProfile = {
+                    Name: 'profile',
+                    Value: $('#signup_profile').val()
+                };
+                var dataGender = {
+                    Name: 'gender',
+                    Value: $('#signup_gender').val()
+                };
+
+                var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+                var attributePhoneNumber = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPhoneNumber);
+                var attributeGivenName = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataGivenName);
+                var attributeFamilyName = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataFamilyName);
+                var attributeProfile = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataProfile);
+                var attributeGender = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataGender);
+                //var attributePassword = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPassword);
+
+                attributeList.push(attributeEmail);
+                attributeList.push(attributePhoneNumber);
+                attributeList.push(attributeGivenName);
+                attributeList.push(attributeFamilyName);
+                attributeList.push(attributeProfile);
+                attributeList.push(attributeGender);
+                //attributeList.push(attributePassword);
+
+                userPool.signUp($('#signup_username').val(), $('#signup_password').val(), attributeList, null, function (err, result) {
+                    if (err) {
+                        alert(err);
+                        return;
+                    }
+                    cognitoUser = result.user;
+                    alert('user ' + cognitoUser.getUsername() + ' created. Check email for security code to verify the account.');
+                });
+            });
+            /////
+            $("#confirm_submit").click(function (e) {
+                var userData = {
+                    Username: $('#confirm_username').val(),
+                    Pool: userPool
+                };
+
+                cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+                cognitoUser.confirmRegistration($('#confirm_code').val(), true, function (err, result) {
+                    if (err) {
+                        alert(err);
+                        return;
+                    }
+                    alert('call result: ' + result);
+                });
+
+            });
+            ///
+            $("#login_submit").click(function (e) {
+                var authenticationData = {
+                    Username: $('#login_username').val(),
+                    Password: $('#login_password').val(),
+                };
+                var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+
+                var userData = {
+                    Username: $('#login_username').val(),
+                    Pool: userPool
+                };
+                cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: function (result) {
+                        console.log('access token + ' + result.getAccessToken().getJwtToken());
+                        creds.params.Logins = {};
+                        creds.params.Logins[providerName] = result.getAccessToken().getJwtToken();
+                        AWS.config.credentials = creds;
+                        // finally, expire the credentials so we refresh on the next request
+                        //creds.expired = true;
+
+                    },
+
+                    onFailure: function (err) {
+                        alert(err);
+                    },
+
+                });
+            });
+            //
+            $("#logout_submit").click(function (e) {
+                if (cognitoUser != null) {
+                    cognitoUser.signOut();
+                }
+            });
+            //
+            $("#s3list_submit").click(function (e) {
+                ////////
+                var bucket = new AWS.S3({
+                    params: {
+                        Bucket: 'courserv'
+                    }
+                });
+                bucket.listObjects(function (err, data) {
+                    if (err) {
+                        document.getElementById('status').innerHTML =
+                            'Could not load objects from S3';
+                    } else {
+                        document.getElementById('status').innerHTML =
+                            'Loaded ' + data.Contents.length + ' items from S3';
+                        for (var i = 0; i < data.Contents.length; i++) {
+                            document.getElementById('objects').innerHTML +=
+                                '<li>' + data.Contents[i].Key + '</li>';
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
