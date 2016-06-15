@@ -54,6 +54,12 @@
                         <a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a>
                     </li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="menu_account_state">
+                    </li>
+                    <li id="menu_login_state">
+                    </li>
+                </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -63,18 +69,17 @@
     <!-- Page Content -->
     <div class="container">
 
-        <div class="row">
+        <div id="status"></div>
+        <div class="row" id="account-block">
             <div class="col-lg-12">
                 <button type="button" class="btn btn-default" id="s3list_submit">List Buckets</button>
-                <button type="button" class="btn btn-default" id="logout_submit">Logout</button>
-                <div id="status"></div>
                 <ul id="objects"></ul>
             </div>
         </div>
 
 
 
-        <div class="row">
+        <div class="row" id="register-block" style="display:none">
             <div class="col-lg-12">
                 <h2>Register User</h2>
                 <form class="form-horizontal" role="form">
@@ -140,33 +145,9 @@
                 </form>
             </div>
         </div>
-        <!--confirm-->
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Confirm User</h2>
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="confirm_username">Username:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="confirm_username" placeholder="Enter Username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="confirm_code">Security Code:</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="confirm_code" placeholder="Enter Security Code">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default" id="confirm_submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+
         <!--login-->
-        <div class="row">
+        <div class="row" id="login-block" style="display:none">
             <div class="col-lg-12">
                 <h2>Login</h2>
                 <form class="form-horizontal" role="form">
@@ -202,6 +183,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootbox.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <!--AWS -->
     <script src="js/jsbn.js"></script>
@@ -218,6 +200,7 @@
             var userPool = 'us-east-1_rqJjMXSw7';
             var clientId = '2er4hn9hn85dolou9lm7osfj3p';
             var providerName = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_rqJjMXSw7';
+            //cognito-idp.us-east-1.amazonaws.com/us-east-1_123456789.
 
             // Initialize the Amazon Cognito credentials provider
             AWS.config.region = 'us-east-1'; // Region 
@@ -242,24 +225,63 @@
             var cognitoUser = userPool.getCurrentUser();
             if (cognitoUser != null) {
                 cognitoUser.getSession(function (err, result) {
-                    if (result) {
-                        console.log('You are loggin.');
-                        creds.params.Logins = {};
-                        creds.params.Logins[providerName] = result.getAccessToken().getJwtToken();
-                        AWS.config.credentials = creds;
-                        // Add the User's Id Token to the Cognito credentials login map.
-                        /* AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                             IdentityPoolId: 'YOUR_IDENTITY_POOL_ID',
-                             Logins: {
-                                 'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>': result.getIdToken().getJwtToken()
-                             }
-                         });*/
-                    }
+                    updateSession(err, result);
                 });
+            } else {
+                updateSession();
             }
 
 
+            $('#menu_account_state').on('click', '#get-register-block', function () {
+                $('#register-block').show();
+                $('#login-block').hide();
+            });
 
+            $('#menu_login_state').on('click', '#get-login-block', function () {
+                $('#register-block').hide();
+                $('#login-block').show();
+            });
+
+            //logout
+            $("#menu_login_state").on('click', '#logout', function (e) {
+                if (cognitoUser != null) {
+                    cognitoUser.signOut();
+                }
+                $('#status').html('');
+                $('#objects').html('');
+                updateSession();
+            });
+
+            function updateSession(err, session) {
+                if (err) {
+                    display(err.message, true);
+                    console.log(err);
+                }
+                if (session) {
+                    creds.params.Logins = {};
+                    creds.params.Logins[providerName] = session.getIdToken().getJwtToken();
+                    creds.expired = true;
+                    console.log(creds);
+                }
+                if (cognitoUser == null || cognitoUser.signInUserSession == null) {
+                    $('#menu_account_state').html('<a href="#" id="get-register-block">Register</a>');
+                    $('#menu_login_state').html('<a href="#" id="get-login-block">Login</a>');
+                } else {
+                    $('#menu_account_state').html('<a href="#" id="get-account-block">' + cognitoUser.getUsername() + '</a>');
+                    $('#menu_login_state').html('<a href="#" id="logout">Logout</a>');
+                }
+                console.log(cognitoUser);
+
+            }
+
+
+            function display(message, err) {
+                if (err) {
+                    $('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+                    return;
+                }
+                $('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+            }
 
 
             $("#signup_submit").click(function (e) {
@@ -310,28 +332,36 @@
 
                 userPool.signUp($('#signup_username').val(), $('#signup_password').val(), attributeList, null, function (err, result) {
                     if (err) {
-                        alert(err);
+                        display(err.message, true);
                         return;
                     }
-                    cognitoUser = result.user;
-                    alert('user ' + cognitoUser.getUsername() + ' created. Check email for security code to verify the account.');
+
+
+                    bootbox.prompt("A security code has been emailed to you. Enter security code to confirm", function (securityCode) {
+                        if (result === null) {
+                            return;
+                        } else {
+                            cognitoUser = result.user;
+                            cognitoUser.confirmRegistration(securityCode, true, function (err, result) {
+                                if (err) {
+                                    display(err.message, true);
+                                    return;
+                                }
+                                display("Confirmed:" + result, false);
+                            });
+
+                        }
+                    });
+
+                    // cognitoUser = result.user;
+                    //    display('user ' + cognitoUser.getUsername() + ' created. Check email for security code to verify the account.', false);
                 });
             });
             /////
-            $("#confirm_submit").click(function (e) {
-                var userData = {
-                    Username: $('#confirm_username').val(),
-                    Pool: userPool
-                };
 
-                cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-                cognitoUser.confirmRegistration($('#confirm_code').val(), true, function (err, result) {
-                    if (err) {
-                        alert(err);
-                        return;
-                    }
-                    alert('call result: ' + result);
-                });
+
+
+            $("#confirm_submit").click(function (e) {
 
             });
             ///
@@ -349,28 +379,18 @@
                 cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
                 cognitoUser.authenticateUser(authenticationDetails, {
                     onSuccess: function (result) {
-                        console.log('access token + ' + result.getAccessToken().getJwtToken());
-                        creds.params.Logins = {};
-                        creds.params.Logins[providerName] = result.getAccessToken().getJwtToken();
-                        AWS.config.credentials = creds;
-                        // finally, expire the credentials so we refresh on the next request
-                        //creds.expired = true;
-
+                        updateSession(null, result);
                     },
-
                     onFailure: function (err) {
-                        alert(err);
+                        updateSession(err);
                     },
 
                 });
             });
-            //
-            $("#logout_submit").click(function (e) {
-                if (cognitoUser != null) {
-                    cognitoUser.signOut();
-                }
-            });
-            //
+
+
+
+            //test authentication
             $("#s3list_submit").click(function (e) {
                 ////////
                 var bucket = new AWS.S3({
@@ -380,14 +400,13 @@
                 });
                 bucket.listObjects(function (err, data) {
                     if (err) {
-                        document.getElementById('status').innerHTML =
-                            'Could not load objects from S3';
+                        $('#status').html('Could not load objects from S3');
                     } else {
-                        document.getElementById('status').innerHTML =
-                            'Loaded ' + data.Contents.length + ' items from S3';
+                        $('#status').html('Loaded ' + data.Contents.length + ' items from S3');
+                        $('#objects').html('');
                         for (var i = 0; i < data.Contents.length; i++) {
-                            document.getElementById('objects').innerHTML +=
-                                '<li>' + data.Contents[i].Key + '</li>';
+                            $('#objects').append('<li>' + data.Contents[i].Key + '</li>');
+
                         }
                     }
                 });
