@@ -1,0 +1,1829 @@
+﻿<div data-role="page" id="personal-main-page">
+
+    <div data-role="header" class="header" data-position="fixed">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+            <input type="hidden" id="signatureBytes" name="signatureBytes" />
+            <input type="hidden" id="signatureImageType" name="signatureImageType" />
+            <input type="hidden" id="insuranceType" name="insuranceType" />
+
+            <div class="form-inline">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="fieldcontain">
+                            <label for="applicantTRN">TRN</label>
+                            <!--<input type="text" name="text-basic" id="text-basic" value="" data-inline="true" />-->
+                            <input type="number" id="applicantTRN" name="applicantTRN" placeholder="Enter TRN" value="" data-inline="true" />
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <a href="#" id="getTRNDetails" class="ui-btn ui-icon-search ui-btn-icon-notext ui-corner-all" data-inline="true">Check</a>
+                        <a href="#" id="clearTRNDetails" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all" data-inline="true" style="display:none">Clear</a>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="width:22.5%;border-color:ActiveCaption">
+                    <img id="applicantPhoto" height="200" width="160" style="margin-top:20px;margin-left:20px" src="images/dummy.jpg" />
+                </div>
+                <div class="ui-block-b" style="width:77.5%">
+                    <div class="ui-field-contain" id="applicantTRNDetails">
+                        <label for="applicantSurname">Surname:</label>
+                        <input type="text" id="applicantSurname" name="applicantSurname" placeholder="Enter Surname" readonly>
+
+                        <label for="applicantFirstName">FirstName:</label>
+                        <input type="text" id="applicantFirstName" name="FirstName" placeholder="Enter FirstName" readonly>
+
+                        <label for="applicantMiddleName">MiddleName:</label>
+                        <input type="text" id="applicantMiddleName" name="applicantMiddleName" placeholder="Enter MiddleName" readonly>
+
+                        <label for="applicantTitle">Title:</label>
+                        <input type="text" id="applicantTitle" name="applicantTitle" placeholder="Enter Title" readonly>
+
+                        <label for="applicantDateOfBirth">Date Of Birth:</label>
+                        <input type="date" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="applicantPlaceOfBirth">Place Of Birth:</label>
+                <input type="text" id="applicantPlaceOfBirth" name="applicantPlaceOfBirth" placeholder="Enter Place of Birth">
+
+                <label for="applicantMothersMaidenName">Mother's Maiden Name:</label>
+                <input type="text" id="applicantMothersMaidenName" name="applicantMothersMaidenName" placeholder="Enter your Mother's Maiden Name">
+
+                <label for="applicantAlias">Other Names/Aliases:</label>
+                <input type="text" id="applicantAlias" name="applicantAlias" placeholder="Enter other name/alias">
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="applicantNationality">Country of Nationality:</label>
+                <select name="applicantNationality" id="applicantNationality" class="countries"></select>
+                <label for="applicantIDType" class="select">ID Type:</label>
+                <select id="applicantIDType" name="applicantIDType">
+                    <option value="national">National ID</option>
+                    <option value="passport">Passport</option>
+                    <option value="driverLicense" selected>Driver's Licence</option>
+                </select>
+                <input type="hidden" id="dateFirstIssued" />
+                <label for="applicantIDNumber">ID Number:</label>
+                <input type="number" id="applicantIDNumber" name="applicantIDnumber" placeholder="Enter ID Number">
+                <label for="applicationIDExpirationDate">Expiration Date:</label>
+                <input type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="">
+            </div>
+
+        </form>
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="personal-contact-page">
+
+    <div data-role="header" class="header" data-position="fixed">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+            <div class="ui-field-contain">
+                <label for="SourceOfFunds">Source of Funds:</label>
+                <input type="text" id="SourceOfFunds" placeholder="Enter Source of Funds">
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="applicantEmailAddress">Email Address:</label>
+                <input type="email" id="applicantEmailAddress" name="applicantEmailAddress" placeholder="Enter Email Address">
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="ApplicantMobileNumber">Mobile Number:</label>
+                <input type="number" id="MobileNumber" name="applicantMobileNumber" placeholder="Enter Mobile Number">
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="applicantHomeNumber">Home Number:</label>
+                <input type="number" id="applicantHomeNumber" name="applicantHomeNumber" placeholder="Enter Home Number">
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="applicantWorkNumber">Work Number:</label>
+                <input type="number" id="applicantWorkNumber" name="applicantWorkNumber" placeholder="Enter Work Number">
+            </div>
+
+            <div id="homeAddress">
+                <h4>Home Address</h4>
+                <div class="ui-field-contain">
+                    <label for="applicantHomeStreetName">Street Number and Name:</label>
+                    <input type="text" id="applicantHomeStreetName" name="applicantHomeStreetName" placeholder="Enter Street Number and Name">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="applicantHomeTown">City/Town/Postal Zone:</label>
+                    <input type="text" id="applicantHomeTown" name="applicantHomeTown" placeholder="Enter City, Town or Postal Zone">
+                </div>
+
+                <div class="ui-field-contain jamaica">
+                    <label for="applicantHomeParish">Select Parish:</label>
+                    <select name="applicantHomeParish" id="applicantHomeParish" data-mini="true">
+                        <option value="Kingston">Kingston</option>
+                        <option value="St. Andrew">St. Andrew</option>
+                        <option value="St. Catherine">St. Catherine</option>
+                        <option value="Clarendon">Clarendon</option>
+                        <option value="Manchester">Manchester</option>
+                        <option value="St. Elizabeth">St. Elizabeth</option>
+                        <option value="Westmoreland">Westmoreland</option>
+                        <option value="Hanover">Hanover</option>
+                        <option value="St. James">St. James</option>
+                        <option value="Trelawny">Trelawny</option>
+                        <option value="St. Ann">St. Ann</option>
+                        <option value="St. Mary">St. Mary</option>
+                        <option value="Portland">Portland</option>
+                        <option value="St. Thomas">St. Thomas</option>
+                    </select>
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="applicantHomePostalCode">Postal Code:</label>
+                    <input type="text" id="applicantHomePostalCode" name="applicantHomePostalCode" placeholder="Enter Postal/ZIP Code">
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="applicantHomeState">State/Province:</label>
+                    <input type="text" id="applicantHomeState" name="applicantHomeState" placeholder="Enter State/Province/County">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="applicantHomeCountry">Select Country:</label>
+                    <select name="applicantHomeCountry" id="applicantHomeCountry" class="countries" data-mini="true"></select>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="mailingAddressSame">
+                        Is Mailing Address Same as Home Address?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 40%">
+                    <select name="mailingAddressSame" id="mailingAddressSame" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="mailingAddress" style="display:none">
+                <h4>Mailing Address</h4>
+                <div class="ui-field-contain">
+                    <label for="applicantMailStreetName">Street Number and Name:</label>
+                    <input type="text" id="applicantMailStreetName" name="appplicantMailStreetName" placeholder="Enter Street Number and Name">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="applicantMailTown">City/Town/Postal Zone:</label>
+                    <input type="text" id="applicantMailTown" name="applicantMailTown" placeholder="Enter City, Town or Postal Zone">
+                </div>
+
+                <div class="ui-field-contain jamaica">
+                    <label for="applicantMailParish">Select Parish:</label>
+                    <select name="applicantMailParish" id="applicantMailParish" data-mini="true">
+                        <option value="Kingston">Kingston</option>
+                        <option value="St. Andrew">St. Andrew</option>
+                        <option value="St. Catherine">St. Catherine</option>
+                        <option value="Clarendon">Clarendon</option>
+                        <option value="Manchester">Manchester</option>
+                        <option value="St. Elizabeth">St. Elizabeth</option>
+                        <option value="Westmoreland">Westmoreland</option>
+                        <option value="Hanover">Hanover</option>
+                        <option value="St. James">St. James</option>
+                        <option value="Trelawny">Trelawny</option>
+                        <option value="St. Ann">St. Ann</option>
+                        <option value="St. Mary">St. Mary</option>
+                        <option value="Portland">Portland</option>
+                        <option value="St. Thomas">St. Thomas</option>
+                    </select>
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="applicantMailPostalCode">Postal Code:</label>
+                    <input type="text" id="applicantMailPostalCode" name="applicantMailPostalCode" placeholder="Enter Postal/ZIP Code">
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="applicantMailState">State/Province:</label>
+                    <input type="text" id="applicantMailState" name="applicantMailState" placeholder="Enter State/Province/County">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="applicantMailCountry">Select Country:</label>
+                    <select name="applicantMailCountry" id="applicantMailCountry" class="countries" data-mini="true"></select>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="personal-employer-details-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <div id="employer">
+                <div class="ui-field-contain">
+                    <label for="applicantOccupation">Occupation:</label>
+                    <select name="applicantOccupation" id="applicantOccupation"></select>
+                </div>
+                <div class="ui-field-contain">
+                    <label for="employerName">Company Name:</label>
+                    <input type="text" name="employerName" id="employerName" placeholder="Enter Name In Full">
+                </div>
+                <div class="ui-field-contain">
+                    <label for="employerStreetName">Street Number and Name:</label>
+                    <input type="text" name="employerStreetName" id="employerStreetName" placeholder="Enter Street Number and Name">
+                </div>
+                <div class="ui-field-contain">
+                    <label for="employerTown">City/Town/Postal Zone:</label>
+                    <input type="text" name="employerTown" id="employerTown" placeholder="Enter City, Town or Postal Zone">
+                </div>
+
+                <div class="ui-field-contain jamaica">
+                    <label for="employerParish">Select Parish:</label>
+                    <select name="employerParish" id="employerParish" data-mini="true">
+                        <option value="Kingston">Kingston</option>
+                        <option value="St. Andrew">St. Andrew</option>
+                        <option value="St. Catherine">St. Catherine</option>
+                        <option value="Clarendon">Clarendon</option>
+                        <option value="Manchester">Manchester</option>
+                        <option value="St. Elizabeth">St. Elizabeth</option>
+                        <option value="Westmoreland">Westmoreland</option>
+                        <option value="Hanover">Hanover</option>
+                        <option value="St. James">St. James</option>
+                        <option value="Trelawny">Trelawny</option>
+                        <option value="St. Ann">St. Ann</option>
+                        <option value="St. Mary">St. Mary</option>
+                        <option value="Portland">Portland</option>
+                        <option value="St. Thomas">St. Thomas</option>
+                    </select>
+
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="employerPostalCode">Postal Code:</label>
+                    <input type="text" id="employerPostalCode" name="employerPostalCode" placeholder="Enter Postal/ZIP Code">
+                </div>
+
+                <div class="ui-field-contain international" style="display:none">
+                    <label for="employerState">State/Province:</label>
+                    <input type="text" id="employerState" name="employerState" placeholder="Enter State/Province/County">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="employerNationality">Nationality:</label>
+                    <select name="employerNationality" id="employerNationality" class="countries" data-mini="true"></select>
+                </div>
+            </div>
+            <hr />
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width: 75%">
+                    <label for="applicantRelativeInPublicOffice">
+                        Have you or any relative or close associate been entrusted with prominent pubic functions(e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces)?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 25%">
+                    <select name="applicantRelativeInPublicOffice" id="applicantRelativeInPublicOffice" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="publicofficerelation" style="display:none">
+                <div class="publicofficerelations">
+                    <h4>Relative 1</h4>
+                    <hr />
+                    <div class="ui-field-contain office">
+                        <label for="applicantRelativeTypePublicOffice0">Type of Public Office</label>
+                        <input type="text" name="applicantRelativeTypePublicOffice0" id="applicantRelativeTypePublicOffice0" value="">
+                    </div>
+                    <div class="ui-field-contain name">
+                        <label for="applicantRelativeInPublicOfficeName0">Name</label>
+                        <input type="text" name="applicantRelativeInPublicOfficeName0" id="applicantRelativeInPublicOfficeName0" value="">
+                    </div>
+                    <div class="ui-field-contain address">
+                        <label for="applicantRelativeInPublicOfficeAddress0">Address</label>
+                        <input type="text" name="applicantRelativeInPublicOfficeAddress0" id="applicantRelativeInPublicOfficeAddress0" value="">
+                    </div>
+                    <div class="ui-field-contain relation">
+                        <label for="applicantRelativeInPublicOfficeRelation0">Relation</label>
+                        <select name="applicantRelativeInPublicOfficeRelation0" id="applicantRelativeInPublicOfficeRelation0">
+                            <option value="spouse">Spouse</option>
+                            <option value="child">Child</option>
+                            <option value="father">Father</option>
+                            <option value="mother">Mother</option>
+                        </select>
+                    </div>
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Relative</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" data-dialog="true" id="taxOfficeVehicleDialog">
+    <div data-role="main" class="ui-content">
+        <h2>Add Vehicle</h2>
+        <form id="taxOfficeQuery">
+            <!--<div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="isNewVehicle">Is Vehicle Registered?</label>
+                </div>
+                <div class="ui-block-b">
+                    <select name="isNewVehicle" id="isNewVehicle" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+            </div>-->
+            <div class="ui-grid-a registration">
+                <div class="ui-block-a">
+                    <label for="QueryVehicleRegistrationNo">Registration No.:</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="text" name="QueryVehicleRegistrationNo" id="QueryVehicleRegistrationNo" value="">
+                </div>
+            </div>
+
+            <div class="ui-grid-a chassis">  <!--style="display:none">-->
+                <div class="ui-block-a">
+                    <label for="QueryVehicleChassisNo">Chassis No.:</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="text" name="QueryVehicleChassisNo" id="QueryVehicleChassisNo" value="">
+                </div>
+            </div>
+            
+            <div id="taxOfficeQueryManualEntry" style="display:none">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleEngineNo">Engine No.:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <input type="text" name="QueryVehicleEngineNo" id="QueryVehicleEngineNo" value="">
+                    </div>
+                </div>
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleMake">Make:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <select name="QueryVehicleMake" id="QueryVehicleMake"></select>
+                    </div>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleModel">Model:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <select name="QueryVehicleModel" id="QueryVehicleModel"></select>
+                    </div>
+                </div>
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleBodyType">Body Type:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <select name="QueryVehicleBodyType" id="QueryVehicleBodyType"></select>
+                    </div>
+                </div>
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleColour">Colour:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <select name="QueryVehicleColour" id="QueryVehicleColour"></select>
+                    </div>
+                </div>
+
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="QueryVehicleYear">Year:</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <input type="number" name="QueryVehicleYear" id="QueryVehicleYear" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-a sum-insured">
+                <div class="ui-block-a">
+                    <label for="QueryVehicleSumInsured">Sum Being Insured:</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" name="QueryVehicleSumInsured" id="QueryVehicleSumInsured" value="">
+                </div>
+            </div>
+
+            <a href="#vehicle-particulars-page" class="ui-btn ui-btn-inline ui-icon-back ui-btn-icon-right">Return</a>
+            <a href="#" id="queryVehicleSearch" class="ui-btn ui-btn-inline ui-icon-navigation ui-btn-icon-right" data-textonly="false" data-textvisible="true" data-msgtext="Retrieving Data..." data-inline="true">Add</a>
+            <a href="#" id="queryVehicleAdd" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-right" style="display:none">Add</a>
+        </form>
+
+    </div>
+</div>
+
+<div data-role="page" id="vehicle-particulars-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm" id="vehicleToBeInsuredCtrl">
+            <h4>PARTICULARS OF VEHICLE(S) TO BE INSURED</h4>
+            <p>You are required to ensure that the Sum Insured is revised annually to reflect the current market value. Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.</p>
+            <a href="#taxOfficeVehicleDialog" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-right ui-btn-inline ui-mini">Add Vehicle</a>
+            <a href="#" id="taxOfficeVehicleRefresh" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right ui-btn-inline ui-mini" style="display:none">Refresh</a>
+            <div id="vehiclesToBeInsured">
+                <div class="ui-grid-d" data-id="0">
+                    <div class="ui-block-a">
+                        <h4>Plate No</h4>
+                    </div>
+                    <div class="ui-block-b">
+                        <h4>Make/Model</h4>
+                    </div>
+                    <div class="ui-block-c">
+                        <h4>Year/Body/Colour</h4>
+                    </div>
+                    <div class="ui-block-d">
+                        <h4>Chassis/Engine</h4>
+                    </div>
+                    <div class="ui-block-e">
+                        <h4>Sum Insured</h4>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="ui-grid-a">
+                <input type="hidden" name="currency" id="currency" value="JA" />
+                <div class="ui-block-a" style="width:40%">
+                    <label for="startDate">Insurance Start Date:</label>
+                </div>
+                <div class="ui-block-b" style="width:60%">
+                    <input name="startDate" type="date" id="startDate" placeholder="Start Date" />
+                </div>
+            </div>
+
+            <div class="ui-grid-c">
+
+                <div class="ui-block-a" style="width:40%">
+                    <label for="isOwnerOfVehicle">Are you the owner of the vehicle?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="isOwnerOfVehicle" id="isOwnerOfVehicle" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+
+                <div class="ui-block-c vehicleNameAddressOfOwner" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for=nameAddressOfOwner>Owner Details:</label>
+                        <textarea name="nameAddressOfOwner" id="nameAddressOfOwner" placeholder="Owner's Name/Address"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="trailerUsed">Will a trailer be used?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="trailerUsed" id="trailerUsed" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div id="lien-holder">
+                <h4>Lien Holder</h4>
+                <div class="ui-field-contain">
+                    <label for="lienHolder">Is there a Lien Holder?</label>
+                    <select name="lienHolder" id="lienHolder" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+                <div class="lienHolderClass" style="display:none">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <div class="ui-field-contain">
+                                <label for="lienHolderNameInFull">&nbsp;&nbsp;Name:</label>
+                                <input type="text" name="lienHolderNameInFull" id="lienHolderNameInFull" value="">
+                            </div>
+                            <div class="ui-field-contain">
+                                <label for="lienHolderTown">&nbsp;&nbsp;Town:</label>
+                                <input type="text" name="lienHolderTown" id="lienHolderTown" value="">
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                            <div class="ui-field-contain">
+                                <label for="lienHolderStreetName">&nbsp;&nbsp;Address:</label>
+                                <input type="text" name="lienHolderStreetName" id="lienHolderStreetName" value="">
+                            </div>
+                            <div class="ui-field-contain">
+                                <label for="lienHolderParish">&nbsp;&nbsp;Parish:</label>
+                                <select name="lienHolderParish" id="lienHolderParish" data-mini="true">
+                                    <option value="Kingston">Kingston</option>
+                                    <option value="St. Andrew">St. Andrew</option>
+                                    <option value="St. Catherine">St. Catherine</option>
+                                    <option value="Clarendon">Clarendon</option>
+                                    <option value="Manchester">Manchester</option>
+                                    <option value="St. Elizabeth">St. Elizabeth</option>
+                                    <option value="Westmoreland">Westmoreland</option>
+                                    <option value="Hanover">Hanover</option>
+                                    <option value="St. James">St. James</option>
+                                    <option value="Trelawny">Trelawny</option>
+                                    <option value="St. Ann">St. Ann</option>
+                                    <option value="St. Mary">St. Mary</option>
+                                    <option value="Portland">Portland</option>
+                                    <option value="St. Thomas">St. Thomas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+
+    </div>
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="vehicle-insurance-coverage-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+            <div class="ui-field-contain">
+                <label for="insuranceCoverage">Insurance coverage:</label>
+                <select name="insuranceCoverage" id="insuranceCoverage" data-mini="true">
+                    <option value="Comprehensive" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured’s Motor Vehicle">Comprehensive</option>
+                    <option value="ThirdPartyFireTheft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
+                    <option value="ThirdParty" title="Liability for Third Party Bodily Injury and Property Damage">Third Party Liability</option>
+                </select>
+                <label for="vehicleUsedAs">Vehicle Used As:</label>
+                <select name="vehicleUsedAs" id="vehicleUsedAs" data-mini="true">
+                    <option value="CarriageOwnGoods">Carriage of own goods only (Private Commercial)</option>
+                    <option value="CarriagePassengersNotHire">Carriage of passengers not for hire or reward</option>
+                    <option value="CarriagePassengersHire">Carriage of Passengers for hire or reward</option>
+                    <option value="SocialDomesticPleasure" selected>Social domestic and pleasure purposes only</option>
+                    <option value="GeneralCartage">General Cartage</option>
+                    <option value="SocialDomesticPleasureBusiness">Social domestic & pleasure purposes and Proposer’s business use</option>
+                    <option value="CommercialTravelling">Commercial travelling</option>
+                </select>
+            </div>
+
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label>Is the vehicle fitted with an anti-theft device?:</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="vehicleAntiTheftDevice" id="vehicleAntiTheftDevice" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c VehicleAntiTheftDeviceProviderClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="vehicleAntiTheftDeviceName">Name of device:</label>
+                        <textarea name="vehicleAntiTheftDeviceName" id="vehicleAntiTheftDeviceName"></textarea>
+                        <label for="vehicleAntiTheftDeviceType">Type:</label>
+                        <textarea name="vehicleAntiTheftDeviceType" id="vehicleAntiTheftDeviceType"></textarea>
+                        <label for="vehicleAntiTheftDeviceNameOfProvider">Name of provider:</label>
+                        <textarea name="vehicleAntiTheftDeviceNameOfProvider" id="vehicleAntiTheftDeviceNameOfProvider"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label>Will you have regular custody of the vehicle?:</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="vehicleRegularCustody" id="vehicleRegularCustody" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c vehicleRegularCustodyDetailsClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="vehicleRegularCustodyDetails">Details:</label>
+                        <textarea name="vehicleRegularCustodyDetails" id="vehicleRegularCustodyDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="vehicleGaragedAtProposersHome">Is the vehicle garaged at the Proposer's home address?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="vehicleGaragedAtProposersHome" id="vehicleGaragedAtProposersHome" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c vehicleGaragedAtProposersHomeDetailsClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="vehicleGaragedAtProposersHomeDetails">Details:</label>
+                        <textarea name="vehicleGaragedAtProposersHomeDetails" id="vehicleGaragedAtProposersHomeDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:25%">
+                    <label for="vehicleKeptIn">Is Vehicle Kept In?</label>
+                </div>
+                <div class="ui-block-b" style="width:25%">
+                    <select name="vehicleKeptIn" id="vehicleKeptIn" data-mini="true">
+                        <option value="lockedgarage">Locked Garage</option>
+                        <option value="SecureCompound">Secure Compound</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="ui-block-c vehicleKeptInOtherClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="vehicleKeptInOtherDetails" style="display:none">Details:</label>
+                        <textarea name="vehicleKeptInOtherDetails" id="vehicleKeptInOtherDetails" placeholder="Details" style="display:none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="proposerInsured">Is the Proposer now insured or was previously insured in respect of any vehicles(s)?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="proposerInsured" id="proposerInsured" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c proposerInsuranceDetailsClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="proposerInsuranceDetails">Details:</label>
+                        <textarea name="proposerInsuranceDetails" id="proposerInsuranceDetails" placeholder="Details"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="proposerEntitledToNOClaimDiscount">Is the proposer entitled to No Claim Discount from previous insurer(s) in respect of any vehicle(s) described in the proposal?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="proposerEntitledToNOClaimDiscount" id="proposerEntitledToNOClaimDiscount" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c" style="width:50%;display:none">
+                    <p id="proposerEntitledToNOClaimDiscountProof" style="display:none;color:red">Please submit proof of No Claim Discount Letter or Renewal Notice</p>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="applicantOtherInsurer">Do you have any other insurance(s) with IronRock Insurance Company Ltd.?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="applicantOtherInsurer" id="applicantOtherInsurer" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c applicantOtherInsurerTypeClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="applicantOtherInsurerType">Type:</label>
+                        <textarea name="applicantOtherInsurerType" id="applicantOtherInsurerType"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div data-role="popup" id="applicantPreviouslyInsuredPopup">
+                <p>Has any Insurer(s) in respect of the Proposer or any other person who will regularly drive ever:</p>
+                <ul>
+                    <li>Declined your proposal?</li>
+                    <li>Required and increased premium or imposed special conditions</li>
+                    <li>Cancelled or refused to renew an existing insurance?</li>
+                </ul>
+            </div>
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="applicantPreviouslyInsured">
+                        Declined/Cancelled/Problematic Previous Insurance:<a href="#applicantPreviouslyInsuredPopup" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="applicantPreviouslyInsured" id="applicantPreviouslyInsured" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c ApplicantPreviouslyInsuredClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="ApplicantPreviouslyInsuredDetails">Details:</label>
+                        <textarea name="ApplicantPreviouslyInsuredDetails" id="ApplicantPreviouslyInsuredDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="typeOfAuthorizedDriver">Type of Authorized Driver Clause:</label>
+                </div>
+                <div class="ui-block-b" style="width:60%">
+                    <select name="typeOfAuthorizedDriver" id="typeOfAuthorizedDriver" data-mini="true">
+                        <option value="OpenDriving">Open Driving</option>
+                        <option value="RestrictedDriving">Restricted Driving(Restricted Discount Available)</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="vehicle-driver-details-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <!--<div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="regularDriverOfVehicle">Will you be the regular driver of the vehicle:</label>
+                </div>
+                <div class="ui-block-b">
+                    <select name="regularDriver" id="regularDriver" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+            </div>-->
+            <h4>Regular Drivers</h4>
+            <div class="ui-grid-a" id="regularDriversBtns">
+                <div class="ui-block-a">
+                    <div class="ui-field-contain">
+                        <label for="regularDriverQueryID">Driver Licence:</label>
+                        <input type="text" id="regularDriverQueryID" placeholder="Enter Driver Licence No">
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true" style="margin-top:15px">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-right Add">Add Driver</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Reset">Reset</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="regularDriversId" style="display:none">
+                <div class="regularDriversCls">
+                    <h4>Driver 1</h4>
+                    <hr />
+                    <div class="ui-field-contain name">
+                        <label for="regularDriversName0">Name:</label>
+                        <input type="text" name="regularDriversName0" id="regularDriversName0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain occupation">
+                        <label for="regularDriversOccupation0">Occupation:</label>
+                        <select name="regularDriversOccupation0" id="regularDriversOccupation0"></select>
+                    </div>
+                    <div class="ui-field-contain DateOfBirth">
+                        <label for="regularDriversDateOfBirth0">Date of Birth:</label>
+                        <input type="date" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversDL">
+                        <label for="regularDriversDL0">Driver's Licence:</label>
+                        <input type="text" name="regularDriversDL0" id="regularDriversDL0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversDLExpirationDate">
+                        <label for="regularDriversDLExpirationDate0">Expiration Date:</label>
+                        <input type="date" name="regularDriversDLExpirationDate0" id="regularDriversDLExpirationDate0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversDLOriginalDateOfIssue">
+                        <label for="regularDriversDLOriginalDateOfIssue0">Original Date of Issue:</label>
+                        <input type="date" name="regularDriversDLOriginalDateOfIssue0" id="regularDriversDLOriginalDateOfIssue0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversRelationshipToProposer">
+                        <label for="regularDriversRelationshipToProposer0">Relationship to Proposer:</label>
+                        <input type="text" name="regularDriversRelationshipToProposer0" id="regularDriversRelationshipToProposer0" value="">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <h4>Will anyone driving your motor vehicle:</h4>
+            <div id="InexperiencedDriverBlock" class="ui-grid-a">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup">
+                        <legend>Be under the age of:</legend>
+                        <input class="inexperiencedDriver" type="checkbox" name="21YearsOldPrivateCars" id="21YearsOldPrivateCars">
+                        <label for="21YearsOldPrivateCars">21 Years Old</label>
+                        <input class="inexperiencedDriver" type="checkbox" name="23YearsOldPrivateCommercial" id="23YearsOldPrivateCommercial">
+                        <label for="23YearsOldPrivateCommercial">23 Years Old</label>
+                        <input class="inexperiencedDriver" type="checkbox" name="25YearsOldGeneralCartage" id="25YearsOldGeneralCartage">
+                        <label for="25YearsOldGeneralCartage">25 Years Old</label>
+                    </fieldset>
+                </div>
+                <div class="ui-block-b">
+                    <fieldset data-role="controlgroup">
+                        <legend>Have Driving Experience less than:</legend>
+                        <input class="inexperiencedDriver" type="checkbox" name="24MonthsPrivateLicence" id="24MonthsPrivateLicence">
+                        <label for="24MonthsPrivateLicence">24 Months Private Licence</label>
+                        <input class="inexperiencedDriver" type="checkbox" name="36MonthsGeneralLicencePrivateCommercial" id="36MonthsGeneralLicencePrivateCommercial">
+                        <label for="36MonthsGeneralLicencePrivateCommercial">36 Months General Licence-Private Commercial</label>
+                        <input class="inexperiencedDriver" type="checkbox" name="5YearsGeneralLicencePublicCommercial" id="5YearsGeneralLicencePublicCommercial">
+                        <label for="5YearsGeneralLicencePublicCommercial">5 Years General Licence-Public Commercial</label>
+                    </fieldset>
+                </div>
+            </div>
+            <!--<div class="ui-grid-a" id="inexperiencedDriversBtns" style="display:none">
+                <div class="ui-block-a">
+                    <div class="ui-field-contain">
+                        <label for="inexperiencedDriverQueryID">Driver Licence:</label>
+                        <input type="text" id="inexperiencedDriverQueryID" placeholder="Enter Driver Licence No">
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true" style="margin-top:15px">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-right Add">Add Driver</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Reset">Reset</a>
+                    </div>
+                </div>
+            </div>
+            <div id="inexperiencedDriversId" style="display:none">
+                <div class="inexperiencedDriversCls">
+                    <h4>Driver 1</h4>
+                    <hr />
+                    <div class="ui-field-contain name">
+                        <label for="inexperiencedDriversName0">Name:</label>
+                        <input type="text" name="inexperiencedDriversName0" id="inexperiencedDriversName0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain occupation">
+                        <label for="inexperiencedDriversOccupation0">Occupation:</label>
+                        <input type="text" name="inexperiencedDriversOccupation0" id="inexperiencedDriversOccupation0" value="">
+                    </div>
+                    <div class="ui-field-contain DateOfBirth">
+                        <label for="inexperiencedDriversDateOfBirth0">Date of Birth:</label>
+                        <input type="date" name="inexperiencedDriversDateOfBirth0" id="inexperiencedDriversDateOfBirth0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversDL">
+                        <label for="inexperiencedDriversDL0">Driver's Licence:</label>
+                        <input type="text" name="inexperiencedDriversDL0" id="inexperiencedDriversDL0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversDLOriginalDateOfIssue">
+                        <label for="inexperiencedDriversDLOriginalDateOfIssue0">Original Date of Issue:</label>
+                        <input type="date" name="inexperiencedDriversDLOriginalDateOfIssue0" id="inexperiencedDriversDLOriginalDateOfIssue0" value="" readonly>
+                    </div>
+                    <div class="ui-field-contain DriversRelationshipToProposer">
+                        <label for="inexperiencedDriversRelationshipToProposer0">Relationship to Proposer:</label>
+                        <input type="text" name="inexperiencedDriversRelationshipToProposer0" id="inexperiencedDriversRelationshipToProposer0" value="" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <h4>State the number of motor vehicles[including motorcycle(s)] owned by you</h4>
+            <div id="numberOfVehiclesOwned"></div>-->
+
+        </form>
+
+    </div>
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="vehicle-accidents-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+            <p>Have you or any regular drivers had any accidents or losses during the past three years(whether insured or not) in respect of all vehicles:</p>
+
+            <ol>
+                <li>Owned by you, whether or not you were the driver at the material time?</li>
+                <li>Not owned by you, but driven by you or in your custody at the material time?</li>
+            </ol>
+
+            <label for="involvedInAccident"></label>
+            <select name="involvedInAccident" id="involvedInAccident" data-role="slider" data-mini="true">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes</option>
+            </select>
+
+            <div class="involvedInAccidentClass" style="display:none">
+                <div id="vehicle-all-accidents">
+                    <div class="vehicle-accident-block">
+                        <h4>Accident 1</h4>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div class="ui-field-contain year">
+                                    <label for="accidentYear0">Year of Accident:</label>
+                                    <select name="accidentYear0" id="accidentYear0"></select>
+                                </div>
+                                <div class="ui-field-contain cost" title="Cost(Paid/Estimated)">
+                                    <label for="accidentCost0">Cost:</label>
+                                    <input type="number" name="accidentCost0" id="accidentCost0" placeholder="Cost (Paid/Estimated)" value="">
+                                </div>
+                            </div>
+                            <div class="ui-block-b">
+                                <div class="ui-field-contain month">
+                                    <label for="accidentMonth0">&nbsp;&nbsp;Month:</label>
+                                    <select name="accidentMonth0" id="accidentMonth0" data-mini="true">
+                                        <option value="01">Jan</option>
+                                        <option value="02">Feb</option>
+                                        <option value="03">Mar</option>
+                                        <option value="04">Apr</option>
+                                        <option value="05">May</option>
+                                        <option value="06">Jun</option>
+                                        <option value="07">Jul</option>
+                                        <option value="08">Aug</option>
+                                        <option value="09">Sep</option>
+                                        <option value="10">Oct</option>
+                                        <option value="11">Nov</option>
+                                        <option value="12">Dec</option>
+                                    </select>
+                                </div>
+                                <div class="ui-field-contain driver">
+                                    <label for="accidentDriver0">&nbsp;&nbsp;Driver:</label>
+                                    <input type="text" name="accidentDriver0" id="accidentDriver0" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-field-contain brief">
+                            <label for="accidentBrief0" style="width:9%">Brief Details:</label>
+                            <textarea name="accidentBrief0" id="accidentBrief0" placeholder="Brief Details of Accident/Incident/Losses"></textarea>
+                        </div>
+                        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Accident</a>
+                            <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete Accident</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </form>
+
+    </div>
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="vehicle-medical-history-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <p>To the best of your knowledge and belief have you, or any person who to your knowledge will drive, have suffered or now suffer from?:</p>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup">
+                        <legend>Medical Conditions:</legend>
+                        <input class="medicalCondition" type="checkbox" name="driverSufferFromDefectiveHearingOrVision" id="driverSufferFromDefectiveHearingOrVision">
+                        <label for="driverSufferFromDefectiveHearingOrVision">Defective vision or hearing?</label>
+
+                        <input class="medicalCondition" type="checkbox" name="driverSufferFromDiabetesEpilepsyHeartDisease" id="driverSufferFromDiabetesEpilepsyHeartDisease">
+                        <label for="driverSufferFromDiabetesEpilepsyHeartDisease">Diabetes, Epilepsy, complaints of the heart or any other disease</label>
+
+                        <input class="medicalCondition" type="checkbox" name="driverSufferFromPhysicalMentalInfirmity" id="driverSufferFromPhysicalMentalInfirmity">
+                        <label for="driverSufferFromPhysicalMentalInfirmity">Any other physical or mental infirmity</label>
+                    </fieldset>
+                </div>
+                <div class="ui-block-b">
+                    <br />
+                    <div id="medicalConditionDetails" style="display:none">
+                        <label for="driverSufferFromDetails">Details:</label>
+                        <textarea name="driverSufferFromDetails" id="driverSufferFromDetails" placeholder="Medical Condition Details"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="width:40%">
+
+                    <label for="driverTrafficTicket">Have you or any person who to your knowledge will drive received any traffic ticket(s) and or have been convicted of any offence in connection with the driving of any motor vehicle within the last three (3) years?</label>
+
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="driverTrafficTicket" id="driverTrafficTicket" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+
+
+                <div class="ui-block-c" style="width:50%">
+                    <div id="driverTrafficTicketDetailGroup">
+                        <div class="ui-field-contain">
+                            <label for="driverTrafficTicketDate">Date:</label>
+                            <input type="date" name="driverTrafficTicketDate" id="driverTrafficTicketDate">
+                            <label for="driverTrafficTicketDetails">Nature of Event:</label>
+                            <textarea name="driverTrafficTicketDetails" id="driverTrafficTicketDetails"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="vehicleModified">Has the vehicle been modified or converted from makers' standard specification or do you intend to do so?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="vehicleModified" id="vehicleModified" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c vehicleModifiedDetailsClass" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="vehicleModifiedDetails">Details:</label>
+                        <textarea name="vehicleModifiedDetails" id="vehicleModifiedDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="increasedLimits">Do you require increased limits (in excess of the Standard Limits)?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="increasedLimits" id="increasedLimits" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+
+            <fieldset class="ui-field-contain">
+                <label for="wreckerFee">Protection and Removal (Wrecker Fee):</label>
+                <select name="wreckerFee" id="wreckerFee">
+                    <optgroup label="Standard Limit">
+                        <option value="StandardLimit">$35,000 </option>
+                    </optgroup>
+                    <optgroup label="Increased Limits">
+                        <option value="50000">$50,000</option>
+                        <option value="75000">$75,000</option>
+                        <option value="100000">$100,000</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+            <fieldset class="ui-field-contain">
+                <label for="medicalExpenses">Medical Expenses (Including Passengers):</label>
+                <select name="medicalExpenses" id="medicalExpenses">
+                    <optgroup label="Standard Limit">
+                        <option value="30000">$30,000</option>
+                    </optgroup>
+                    <optgroup label="Increased Limits">
+                        <option value="45000">$45,000</option>
+                        <option value="55000">$55,000</option>
+                        <option value="75000">$75,000</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+            <fieldset class="ui-field-contain">
+                <label for="manslaughterDefenceCosts">Manslaughter Defense Costs:</label>
+                <select name="manslaughterDefenceCosts" id="manslaughterDefenceCosts">
+                    <optgroup label="Standard Limit">
+                        <option value="250000">$250,000</option>
+                    </optgroup>
+                    <optgroup label="Increased Limits">
+                        <option value="300000">$300,000</option>
+                        <option value="400000">$400,000</option>
+                        <option value="500000">$500,000</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+            <fieldset class="ui-field-contain">
+                <label for="thirdPartyLimits">
+                    Third Party Limits (Bodily Injury and Property Damage) Sums Insured
+                    < $2M
+                </label>
+                <select name="thirdPartyLimits" id="thirdPartyLimits">
+                    <optgroup label="Standard Limit">
+                        <option value="$3M/$5M/$5M">$3M/$5M/$5M</option>
+                    </optgroup>
+                    <optgroup label="Increased Limits">
+                        <option value="$5M/$7.5M/$5M">$5M/$7.5M/$5M</option>
+                        <option value="$5M/$10M/$5M">$5M/$10M/$5M</option>
+                        <option value="$10M/$10M/$10M">$10M/$10M/$10M</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+            <fieldset class="ui-field-contain">
+                <label for="sumsInsured">Sums Insured ≥ $2M</label>
+                <select name="sumsInsured" id="sumsInsured">
+                    <optgroup label="Standard Limit">
+                        <option value="$5M/$10M/$5M">$5M/$10M/$5M</option>
+                    </optgroup>
+                    <optgroup label="Increased Limits">
+                        <option value="$10M/$10M/$10M">$10M/$10M/$10M</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+
+
+
+
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="home-particulars-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <h4>Property Address</h4>
+            <div class="ui-field-contain">
+                <label for="homeRiskAddressStreetNo">Apt No/Street No:</label>
+                <input type="text" id="homeRiskAddressStreetNo" name="homeRiskAddressStreetNo" placeholder="Enter Apt No/Street Number">
+
+                <label for="homeRiskAddressStreetName">Street Name:</label>
+                <input type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
+
+                <label for="homeRiskAddressTown">City/Town/Postal Zone:</label>
+                <input type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
+
+                <label for="homeRiskAddressParish">Select Parish:</label>
+                <select name="homeRiskAddressParish" id="homeRiskAddressParish" data-mini="true">
+                    <option value="Kingston">Kingston</option>
+                    <option value="St. Andrew">St. Andrew</option>
+                    <option value="St. Catherine">St. Catherine</option>
+                    <option value="Clarendon">Clarendon</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="St. Elizabeth">St. Elizabeth</option>
+                    <option value="Westmoreland">Westmoreland</option>
+                    <option value="Hanover">Hanover</option>
+                    <option value="St. James">St. James</option>
+                    <option value="Trelawny">Trelawny</option>
+                    <option value="St. Ann">St. Ann</option>
+                    <option value="St. Mary">St. Mary</option>
+                    <option value="Portland">Portland</option>
+                    <option value="St. Thomas">St. Thomas</option>
+                </select>
+            </div>
+
+
+            <div class="ui-field-contain">
+                <label for="homeType">Type of home:</label>
+                <select name="homeType" id="homeType">
+                    <option value="A private Dwelling House?">Private Dwelling House</option>
+                    <option value="Apartment with seperate entrance">Apartment With Seperate Entrance</option>
+                    <option value="Rooms not self-contained?">Rooms Not Self-Contained</option>
+                </select>
+                <label for="homeRiskAddressStoreys">No of Storeys:</label>
+                <input type="number" id="homeRiskAddressStoreys" name="homeRiskAddressStoreys" placeholder="Enter Number of Storeys">
+                <label for="homeRiskAddressYearBuilt">Year Built:</label>
+                <input type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
+            </div>
+
+
+            <h4>Construction of Dwelling</h4>
+
+            <div class="ui-field-contain">
+                <label for="constructionExternalWalls">External Walls:</label>
+                <select name="constructionExternalWalls" id="constructionExternalWalls"></select>
+
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="constructionRoof">Roof:</label>
+                <select name="constructionRoof" id="constructionRoof"></select>
+            </div>
+
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <h4>Garages or Out Buildings?</h4>
+                </div>
+                <div class="ui-block-b">
+                    <select name="garageOutBuildingExists" id="garageOutBuildingExists" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="ui-field-contain garageOutBuildingClass" style="display:none">
+                <label for="garageExternalWalls">External Walls:</label>
+                <textarea name="garageExternalWalls" id="garageExternalWalls"></textarea>
+            </div>
+
+            <div class="ui-field-contain garageOutBuildingClass" style="display:none">
+                <label for="garageRoof">Roof:</label>
+                <textarea name="garageRoof" id="garageRoof"></textarea>
+            </div>
+
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="home-particulars-continued-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="homeInGoodState">Are the buildings in a good state of repair and will they be so maintained?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="homeInGoodState" id="homeInGoodState" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+                <div id="divhomeInGoodStateDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="homeInGoodStateDetails">Details:</label>
+                        <textarea name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="homeOccupiedByApplicantFamily">Is the Dwelling occupied solely by you, your family and domestic employees?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="homeOccupiedByApplicantFamily" id="homeOccupiedByApplicantFamily" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c" style="width:50%">
+                    <div id="divhomeOccupiedByApplicantFamily" class="ui-field-contain" style="display:none">
+                        <label for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
+                        <textarea name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="homeUsedForIncomeActivity">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="homeUsedForIncomeActivity" id="homeUsedForIncomeActivity" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c" style="width:50%">
+                    <div id="divhomeUsedForIncomeActivity" class="ui-field-contain" style="display:none">
+                        <label for="homeUsedForIncomeActivityDetails">Details:</label>
+                        <textarea name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="homeHaveInterestFromIndividual">Does any institution or individual have a financial interest in the property?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="homeHaveInterestFromIndividual" id="homeHaveInterestFromIndividual" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c" style="width:50%">
+                    <div id="divhomeHaveInterestFromIndividual" class="ui-field-contain" style="display:none">
+                        <label for="homeHaveInterestFromIndividualDetails">Details:</label>
+                        <textarea name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width:40%">
+                    <label for="homeHasWatersideStructure">Are there any Waterside Structures?</label>
+                </div>
+                <div class="ui-block-b" style="width:10%">
+                    <select name="homeHasWatersideStructure" id="homeHasWatersideStructure" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="ui-block-c" style="width:50%">
+                    <div id="divhomeHasWatersideStructure" class="ui-field-contain" style="display:none">
+                        <label for="homeHasWatersideStructureDetails">Details:</label>
+                        <textarea name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="home-property-details-page">
+
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <h2>Buildings and other structures</h2>
+            <div data-role="collapsible">
+                <h4>IMPORTANT NOTE</h4>
+                <p>
+                    The SUMS TO BE INSURED must represent the FULL NEW REPLACEMENT COST of the Property and should include adequate provision for demolition and debris removal costs in the event of major damage as well as professional fees that would be incurred in reinstatement. As the Company will pay up to 10% of the Sum insured in respect of Rent lost or reasonable costs of alternative accomodation if damage by an Insured Peril renders the home uninhabitable, provision for this should also be included in your Sums Insured.
+                </p>
+
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="startDate">Insurance Start Date:</label>
+                <input name="startDate" type="date" id="startDate" placeholder="Start Date" />
+                <label for="currency">Currency:</label>
+                <select name="currency" id="currency" data-mini="true">
+                    <option value="JA">Jamaican Dollar</option>
+                    <option value="USD">United States Dollar</option>
+                </select>
+            </div>
+
+
+            <div id="homeInsuranceProperty">
+                <div data-role="popup" id="homeInsurancePropertyDetails">
+                    <p>
+                        The Buildings of the private dwelling together with its garages and outbuildings, including landlord’s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools & Waterside Structures are not included.)
+                    </p>
+                </div>
+                <div class="homeInsurancePropertyItems">
+                    <h4>Building 1</h4>
+                    <div class="ui-field-contain article-name">
+                        <label for="homeInsurancePropertyItem0">
+                            Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                        </label>
+                        <input type="text" name="homeInsurancePropertyItem0" id="homeInsurancePropertyItem0" value="">
+                    </div>
+                    <div class="ui-field-contain article-value">
+                        <label for="homeInsurancePropertyItemValue0">Value</label>
+                        <input type="number" name="homeInsurancePropertyItemValue0" id="homeInsurancePropertyItemValue0" value="">
+                    </div>
+
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Building</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                    </div>
+                </div>
+
+                <div class="ui-field-contain article-value">
+                    <label for="homeInsurancePropertySwimmingPoolValue">
+                        Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <input type="number" name="homeInsurancePropertySwimmingPoolValue" id="homeInsurancePropertySwimmingPoolValue" value="">
+                </div>
+                <div data-role="popup" id="swimmingpoolDetails">
+                    <p>
+                        Swimming Pools: permanent pool structures together with pump-houses and permanently installed pool equipment and accessories including all related pipes and cables.
+                    </p>
+                </div>
+                <div class="ui-field-contain">
+                    <label for="homeInsurancePropertySum">The Total Sum Insured:</label>
+                    <input type="text" name="homeInsurancePropertySum" id="homeInsurancePropertySum" readonly value="">
+                </div>
+
+            </div>
+
+            <h2>Contents</h2>
+
+            <div id="HomeInsuranceContent">
+
+                <div data-role="collapsible">
+                    <h4>IMPORTANT NOTES</h4>
+                    <p>The SUMS TO BE INSURED must represent the FULL COST of replacing all the contents insured with NEW articles of similar size, style and specification. As the Company will pay up to 10% of the Sum Insured in respect of reasonable costs of alternative accommodation if damage by an Insured Peril renders the home uninhabitable, provision for this should be included in your Sum Insured.</p>
+                    <p>
+                        Do not include in your Contents Sum Insured any Article which is to be insured under the All Risks Section Unspecified Valuables: Coverage is limited to one-third of the Total Sum Insured on Contents with coverage on individual articles limited to 5% of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured to be insured should be insured separately specified below.
+                    </p>
+                    <p>
+                        Valuables include jewellery and other articles of gold, silver or other precious metal, clocks, watches, cameras, camcorders and other photographic equipment, electronic equipment (other than domestic appliances), furs, pictures and other works of art, curios, licensed fire-arms, collections of stamps, coins or other valuable objects.
+                    </p>
+                </div>
+
+
+
+                <div data-role="popup" id="HouseholdGoodsDetails">
+                    <p>
+                        Contents: Household Goods, Personal Effects and Fixtures and Fittings which belong to or are the legal responsibility of any member of your household, including personal effects of non-paying guests temporarily staying with you but excluding Valuables which are to be individually specified.
+                    </p>
+                </div>
+
+
+                <div class="ui-field-contain article-value">
+                    <label for="amountHouseholdGoods">
+                        Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <input type="number" name="amountHouseholdGoods" id="amountHouseholdGoods" value="">
+                </div>
+
+                <div data-role="popup" id="ValuablesDetails">
+                    <p>
+                        Valuables to be individually specified (Please attach a list of these articles giving detailed descriptions, including model and serial numbers where appropriate and individual values)
+                    </p>
+                </div>
+
+                <div class="ui-field-contain article-value">
+                    <label for="amountValuables">
+                        Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <input type="number" name="amountValuables" id="amountValuables" value="">
+                </div>
+
+
+                <div data-role="popup" id="totalValueExceedOneThirdTotalSumDetails">
+                    <p>
+                        Does the total value of your Valuables excluding those listed above and those which you will be insuring under the All Risk Section exceed one-third of the Total Sum to be insured?
+                    </p>
+                </div>
+
+                <div class="ui-field-contain article-value">
+                    <label for="HomeInsuranceOtherValuableAmount">
+                        Other Valuables Estimate:<a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <input type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
+                </div>
+
+                <div class="ui-field-contain">
+                    <label for="HomeInsuranceContentTotalAmount">The Total Sum Insured:</label>
+                    <input type="text" name="HomeInsuranceContentTotalAmount" id="HomeInsuranceContentTotalAmount" value="" readonly>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="home-all-risk-insurance-page">
+    <div data-role="header" class="header">
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm">
+
+            <div data-role="collapsible">
+                <h4>IMPORTANT NOTE</h4>
+                <p>Valuation Reports or Receipts in respect of all Articles to be insured should be submitted to this Form.</p>
+            </div>
+
+            <div id="HomeAllRiskInsured">
+                <div class="HomeAllRiskArticles">
+                    <h4>Article 1</h4>
+                    <div class="ui-field-contain article-name">
+                        <label for="HomeAllRiskArticleDescription0">Description</label>
+                        <input type="text" name="HomeAllRiskArticleDescription0" id="HomeAllRiskArticleDescription0" value="">
+                    </div>
+
+                    <div class="ui-field-contain article-value">
+                        <label for="HomeAllRiskArticleValue0">Value</label>
+                        <input type="number" name="HomeAllRiskArticleValue0" id="HomeAllRiskArticleValue0" value="">
+                    </div>
+
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Article</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                    </div>
+                </div>
+                <div class="ui-field-contain">
+                    <label for="HomeAllRiskTotalAmount">Total Sum Insured:</label>
+                    <input type="text" name="HomeAllRiskTotalAmount" id="HomeAllRiskTotalAmount" value="" readonly>
+                </div>
+                <hr />
+            </div>
+
+
+
+
+            <div class="ui-grid-c">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="currentPolicyWithCompanyOrInsurer">
+                        Territorial Limits:
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 40%">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <input type="radio" name="territorialLimit" id="territorialLimitJMD" value="Jamaica" checked="checked">
+                        <label for="territorialLimitJMD">Jamaica</label>
+                        <input type="radio" name="territorialLimit" id="territorialLimitWorld" value="world">
+                        <label for="territorialLimitWorld">Worldwide</label>
+                    </fieldset>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="currentPolicyWithCompanyOrInsurer">
+                        Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="currentPolicyWithCompanyOrInsurer" id="currentPolicyWithCompanyOrInsurer" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divcurrentPolicyWithCompanyOrInsurerDetails" class="ui-block-c" style="width: 50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
+                        <input type="text" name="currentPolicyWithCompanyOrInsurerDetails" id="currentPolicyWithCompanyOrInsurerDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+            <h4>Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:</h4>
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsuranceDeclined">
+                        Declined to insure you?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsuranceDeclined" id="HomeInsuranceDeclined" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsuranceDeclined" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsuranceDeclinedDetails">Details:</label>
+                        <input type="text" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsuranceRequiredSpecialTerm">
+                        Required special terms to insure you?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsuranceRequiredSpecialTerm" id="HomeInsuranceRequiredSpecialTerm" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsuranceRequiredSpecialTermDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
+                        <input type="text" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsuranceCancelled">
+                        Cancelled or refused to renew your policy?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsuranceCancelled" id="HomeInsuranceCancelled" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsuranceCancelledDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsuranceCancelledDetails">Details:</label>
+                        <input type="text" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsuranceIncreasedPremium">
+                        Increased your premium on renewal?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsuranceIncreasedPremium" id="HomeInsuranceIncreasedPremium" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsuranceIncreasedPremiumDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
+                        <input type="text" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsurancePerilsSuffer">
+                        Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsurancePerilsSuffer" id="HomeInsurancePerilsSuffer" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="no">Don't Know</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsurancePerilsSufferDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsurancePerilsSufferDetails">Details:</label>
+                        <textarea name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-b">
+                <div class="ui-block-a" style="width: 40%">
+                    <label for="HomeInsuranceSufferLoss">
+                        Have you ever sustained loss from any Perils to which this Proposal would apply?
+                    </label>
+                </div>
+                <div class="ui-block-b" style="width: 10%">
+                    <select name="HomeInsuranceSufferLoss" id="HomeInsuranceSufferLoss" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="no">Don't Know</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div id="divHomeInsuranceSufferLossDetails" class="ui-block-c" style="width:50%;display:none">
+                    <div class="ui-field-contain">
+                        <label for="HomeInsuranceSufferLossDetails">Details:</label>
+                        <textarea name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+<div data-role="page" id="page-signature">
+    <div data-role="header" class="header" data-position="fixed">
+    </div>
+
+    <div data-role="main" class="ui-content">
+
+        <div id="signatureContainer">
+            <h4>Disclaimer:</h4>
+            <p>
+                The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
+            </p>
+            <p>Sign below and press the submit button.</p>
+
+
+            <div id="signature" style="width:600px; height:150px;"></div>
+
+            <form class="ProposalForm">
+                <div data-role="controlgroup">
+                    <a href="#personal-main-page" data-role="button" data-inline="true" data-mini="true" data-icon="delete">Return</a>
+                    <a id="clear-canvas" href="#" data-role="button" data-inline="true" data-icon="back" data-mini="true">Clear</a>
+                    <a id="submit-btn" href="#" data-role="button" data-inline="true" data-icon="check" data-mini="true">Submit</a>
+                    <a href="#" class="exitApp" data-role="button" data-inline="true" data-icon="delete" data-mini="true">Exit App</a>
+                </div>
+            </form>
+
+            <!--<div id="lowerControls">
+                <div id="feedback"></div>
+                <div id="buttonsContainer">
+                    <div data-role="controlgroup">
+                        <a href="#personal-main-page" data-role="button" data-inline="true" data-mini="true" data-icon="delete">Return</a>
+                        <a id="clear-canvas" href="#" data-role="button" data-inline="true" data-icon="back" data-mini="true">Clear</a>
+                        <a id="submit-btn" href="#" data-role="button" data-inline="true" data-icon="check" data-mini="true">Submit</a>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+        <a href="#" class="exitApp" data-role="button" data-mini="true" style="display:none" id="signatureExit">Exit App</a>
+        <input type="hidden" id="quotation-number" />
+        <div id="quotation"></div>
+
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>
+
+
