@@ -1,11 +1,9 @@
 <div class="tab-pane" id="personal-main-page">
 
-    <form class="form-horizontal ProposalForm">
+    <form class="ProposalForm form-horizontal">
         <input type="hidden" id="signatureBytes" name="signatureBytes" />
         <input type="hidden" id="signatureImageType" name="signatureImageType" />
         <input type="hidden" id="insuranceType" name="insuranceType" />
-
-
 
 
         <div class="form-inline">
@@ -20,20 +18,20 @@
 
         <div class="row">
             <div class="col-md-3">
-                <img id="applicantPhoto" height="200" width="160" style="margin-top:20px;margin-left:20px" src="images/dummy.jpg" />
+                <img id="applicantPhoto" height="200" width="160" style="margin-top:20px;margin-left:20px" src="/images/dummy.jpg" />
             </div>
             <div class="col-md-9">
                 <div class="form-horizontal" id="applicantTRNDetails">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="applicantSurname">Surname:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="applicantSurname" name="applicantSurname" placeholder="Enter Surname" readonly>
+                            <input required class="form-control" type="text" id="applicantSurname" name="applicantSurname" placeholder="Enter Surname" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="applicantFirstName">FirstName:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="applicantFirstName" name="FirstName" placeholder="Enter FirstName" readonly>
+                            <input required class="form-control" type="text" id="applicantFirstName" name="FirstName" placeholder="Enter FirstName" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,7 +49,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="applicantDateOfBirth">Date Of Birth:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="date" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
+                            <input required class="form-control" type="date" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
                         </div>
                     </div>
                 </div>
@@ -62,13 +60,13 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantPlaceOfBirth">Place Of Birth:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantPlaceOfBirth" name="applicantPlaceOfBirth" placeholder="Enter Place of Birth">
+                    <input required class="form-control" type="text" id="applicantPlaceOfBirth" name="applicantPlaceOfBirth" placeholder="Enter Place of Birth">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantMothersMaidenName">Mother's Maiden Name:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantMothersMaidenName" name="applicantMothersMaidenName" placeholder="Enter your Mother's Maiden Name">
+                    <input required class="form-control" type="text" id="applicantMothersMaidenName" name="applicantMothersMaidenName" placeholder="Enter your Mother's Maiden Name">
                 </div>
             </div>
             <div class="form-group">
@@ -80,7 +78,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantNationality">Country of Nationality:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="applicantNationality" id="applicantNationality" class="countries"></select>
+                    <select class="form-control countries" name="applicantNationality" id="applicantNationality"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -97,38 +95,38 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="applicantIDNumber">ID Number:</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" id="applicantIDNumber" name="applicantIDnumber" placeholder="Enter ID Number">
+                <input required class="form-control" type="number" id="applicantIDNumber" name="applicantIDnumber" placeholder="Enter ID Number">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="applicationIDExpirationDate">Expiration Date:</label>
             <div class="col-sm-10">
-                <input class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="">
+                <input required class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="">
             </div>
         </div>
     </form>
 </div>
 
 <div class="tab-pane" id="personal-contact-page">
-    <form class="form-horizontal ProposalForm">
+    <form class="ProposalForm form-horizontal">
         <div class="form-group">
             <label class="control-label col-sm-2" for="SourceOfFunds">Source of Funds:</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="SourceOfFunds" placeholder="Enter Source of Funds">
+                <input required class="form-control" type="text" id="SourceOfFunds" placeholder="Enter Source of Funds">
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="applicantEmailAddress">Email Address:</label>
             <div class="col-sm-10">
-                <input class="form-control" type="email" id="applicantEmailAddress" name="applicantEmailAddress" placeholder="Enter Email Address">
+                <input required class="form-control" type="email" id="applicantEmailAddress" name="applicantEmailAddress" placeholder="Enter Email Address">
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="ApplicantMobileNumber">Mobile Number:</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" id="MobileNumber" name="applicantMobileNumber" placeholder="Enter Mobile Number">
+                <input required class="form-control" type="number" id="MobileNumber" name="applicantMobileNumber" placeholder="Enter Mobile Number">
             </div>
         </div>
 
@@ -151,21 +149,21 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantHomeStreetName">Street Number and Name:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantHomeStreetName" name="applicantHomeStreetName" placeholder="Enter Street Number and Name">
+                    <input required class="form-control" type="text" id="applicantHomeStreetName" name="applicantHomeStreetName" placeholder="Enter Street Number and Name">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantHomeTown">City/Town/Postal Zone:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantHomeTown" name="applicantHomeTown" placeholder="Enter City, Town or Postal Zone">
+                    <input required class="form-control" type="text" id="applicantHomeTown" name="applicantHomeTown" placeholder="Enter City, Town or Postal Zone">
                 </div>
             </div>
 
             <div class="form-group jamaica">
                 <label class="control-label col-sm-2" for="applicantHomeParish">Select Parish:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="applicantHomeParish" id="applicantHomeParish" data-mini="true">
+                    <select class="form-control" name="applicantHomeParish" id="applicantHomeParish">
                         <option value="Kingston">Kingston</option>
                         <option value="St. Andrew">St. Andrew</option>
                         <option value="St. Catherine">St. Catherine</option>
@@ -187,21 +185,21 @@
             <div class="form-group international" style="display:none">
                 <label class="control-label col-sm-2" for="applicantHomePostalCode">Postal Code:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantHomePostalCode" name="applicantHomePostalCode" placeholder="Enter Postal/ZIP Code">
+                    <input required class="form-control" type="text" id="applicantHomePostalCode" name="applicantHomePostalCode" placeholder="Enter Postal/ZIP Code">
                 </div>
             </div>
 
             <div class="form-group international" style="display:none">
                 <label class="control-label col-sm-2" for="applicantHomeState">State/Province:</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="applicantHomeState" name="applicantHomeState" placeholder="Enter State/Province/County">
+                    <input required class="form-control" type="text" id="applicantHomeState" name="applicantHomeState" placeholder="Enter State/Province/County">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantHomeCountry">Select Country:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="applicantHomeCountry" id="applicantHomeCountry" class="countries" data-mini="true"></select>
+                    <select class="form-control countries" name="applicantHomeCountry" id="applicantHomeCountry"></select>
                 </div>
             </div>
 
@@ -234,7 +232,7 @@
             <div class="form-group jamaica">
                 <label class="control-label col-sm-2" for="applicantMailParish">Select Parish:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="applicantMailParish" id="applicantMailParish" data-mini="true">
+                    <select class="form-control" name="applicantMailParish" id="applicantMailParish">
                         <option value="Kingston">Kingston</option>
                         <option value="St. Andrew">St. Andrew</option>
                         <option value="St. Catherine">St. Catherine</option>
@@ -270,7 +268,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantMailCountry">Select Country:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="applicantMailCountry" id="applicantMailCountry" class="countries" data-mini="true"></select>
+                    <select class="form-control countries" name="applicantMailCountry" id="applicantMailCountry"></select>
                 </div>
 
             </div>
@@ -280,7 +278,7 @@
 
 <div class="tab-pane" id="personal-employer-details-page">
 
-    <form class="form-horizontal ProposalForm">
+    <form class="ProposalForm form-horizontal">
         <div id="employer">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="applicantOccupation">Occupation:</label>
@@ -310,7 +308,7 @@
             <div class="form-group jamaica">
                 <label class="control-label col-sm-2" for="employerParish">Select Parish:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="employerParish" id="employerParish" data-mini="true">
+                    <select class="form-control" name="employerParish" id="employerParish">
                         <option value="Kingston">Kingston</option>
                         <option value="St. Andrew">St. Andrew</option>
                         <option value="St. Catherine">St. Catherine</option>
@@ -347,7 +345,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="employerNationality">Nationality:</label>
                 <div class="col-sm-10">
-                    <select class="form-control" name="employerNationality" id="employerNationality" class="countries" data-mini="true"></select>
+                    <select class="form-control countries" name="employerNationality" id="employerNationality"></select>
                 </div>
             </div>
             <hr />
@@ -394,7 +392,7 @@
                             </select>
                         </div>
                     </div>
-                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <div data-role="controlgroup" data-type="horizontal">
                         <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Relative</a>
                         <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
                     </div>

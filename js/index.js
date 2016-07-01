@@ -151,7 +151,7 @@ function doPrimaryFunctions() {
 
     $('#personal-main-page').on('click', '#clearTRNDetails', function () {
         SetTRnDetails(false);
-        var imageSrc = "images/dummy.jpg";
+        var imageSrc = "/images/dummy.jpg";
         $('#applicantPhoto').attr('src', imageSrc); //
         $('#applicantTRNDetails input').val('');
         $('#applicantTRN').val('');

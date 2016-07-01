@@ -5,7 +5,7 @@
 function doMiscellaneous() {
 
         //set menu
-        $('#menu-vehicle').click(function () {
+        /*$('#menu-vehicle').click(function () {
             $('#insuranceType').val('motor');
             setmenu(getVehicleMenu(), "Vehicle Insurance");
             // SetPageHeaderFooter(getVehicleMenu());
@@ -20,30 +20,8 @@ function doMiscellaneous() {
             loadOccupations(false);
             loadRoofWallsTypes();
             $.mobile.changePage($("#personal-main-page"), "none");
-        });
+        });*/
 
-        function loadOccupations(isMotor) {
-            var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
-            $.each(options.occupations.data, function (key, value) {
-                $('#applicantOccupation').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
-                if (isMotor) {
-                    $('#regularDriversOccupation0').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
-                }
-            });
-        }
-
-        function loadRoofWallsTypes() {
-            var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
-            //wall
-            $.each(options.wallTypes.data, function (key, value) {
-                $('#constructionExternalWalls').append('<option value="' + value + '">' + value + '</option>');
-            });
-
-            //roof
-            $.each(options.roofTypes.data, function (key, value) {
-                $('#constructionRoof').append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
 
         //vehicle Used As
         $('#vehicleUsedAs').change(function () {
@@ -588,8 +566,30 @@ function doMiscellaneous() {
 
 
 
+//load occupations
+function loadOccupations(isMotor) {
+    var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+    $.each(options.occupations.data, function (key, value) {
+        $('#applicantOccupation').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
+        if (isMotor) {
+            $('#regularDriversOccupation0').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
+        }
+    });
+}
 
+//load roof and wall types
+function loadRoofWallsTypes() {
+    var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+    //wall
+    $.each(options.wallTypes.data, function (key, value) {
+        $('#constructionExternalWalls').append('<option value="' + value + '">' + value + '</option>');
+    });
 
+    //roof
+    $.each(options.roofTypes.data, function (key, value) {
+        $('#constructionRoof').append('<option value="' + value + '">' + value + '</option>');
+    });
+}
 
 
 
@@ -1983,7 +1983,7 @@ var _countries = [
 ];
 
 function loadCountriesOptions() {
-    var countryElements = $("#rootwizard").find('.countries');
+    var countryElements = $('#rootwizard .countries');
     countryElements.each(function (index, item) {
         var selectObj = $(this);
         selectObj.html('');

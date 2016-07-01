@@ -72,7 +72,7 @@
         <div id="status"></div>
         <div class="row" id="account-block">
             <div class="col-lg-12">
-                <button type="button" class="btn btn-default" id="listUsers">List Users</button>
+                <button type="button" class="btn btn-default" id="s3list_submit">List Buckets</button>
                 <ul id="objects"></ul>
             </div>
         </div>
@@ -93,6 +93,15 @@
                         <label class="control-label col-sm-2" for="signup_family_name">Last Name:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="signup_family_name" placeholder="Enter Last Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="signup_profile">Broker:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="signup_profile">
+                                <option value="broker1">Broker1</option>
+                                <option value="broker1">Broker2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -171,10 +180,12 @@
 
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootbox.js"></script>
-    <!--Required Libraries-->
+    <!-- Bootstrap Core JavaScript -->
+    <!--AWS -->
     <script src="js/jsbn.js"></script>
     <script src="js/jsbn2.js"></script>
     <script src="js/sjcl.js"></script>
@@ -182,27 +193,42 @@
     <script src="js/aws-cognito-sdk.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>
     <script src="js/aws-sdk-2.3.19.min.js"></script>
-    <!--Iron Rock Custom Library-->
-    <script src="js/ironrockcloudservice.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
+            var identityPool = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
+            var userPool = 'us-east-1_sXSIoZ4vD';
+            var clientId = '65qcrqbc1tkru2unrkegerschk';
+            var providerName = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
+            //cognito-idp.us-east-1.amazonaws.com/us-east-1_123456789.
 
-            var ir = new ironrockcloudservice();
+            // Initialize the Amazon Cognito credentials provider
+            AWS.config.region = 'us-east-1'; // Region 
 
-
-            ir.init(function () {
-                updateStatus();
+            var creds = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: identityPool,
             });
 
-            function updateStatus() {
-                if (ir.getUsername()) {
-                    $('#menu_account_state').html('<a href="#" id="get-account-block">' + ir.getUsername() + '</a>');
-                    $('#menu_login_state').html('<a href="#" id="logout">Logout</a>');
-                } else {
-                    $('#menu_account_state').html('<a href="#" id="get-register-block">Register</a>');
-                    $('#menu_login_state').html('<a href="#" id="get-login-block">Login</a>');
-                }
+            AWS.config.credentials = creds;
+
+            AWSCognito.config.region = 'us-east-1';
+            AWSCognito.config.credentials = creds; // new AWS.CognitoIdentityCredentials({
+            //    IdentityPoolId: identityPool
+            //});
+
+            var poolData = {
+                UserPoolId: userPool,
+                ClientId: clientId
+            };
+            var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+
+            var cognitoUser = userPool.getCurrentUser();
+            if (cognitoUser != null) {
+                cognitoUser.getSession(function (err, result) {
+                    updateSession(err, result);
+                });
+            } else {
+                updateSession();
             }
 
 
@@ -218,11 +244,35 @@
 
             //logout
             $("#menu_login_state").on('click', '#logout', function (e) {
-                ir.signoff();
-                location.reload();
-                //updateStatus();
+                if (cognitoUser != null) {
+                    cognitoUser.signOut();
+                }
+                $('#status').html('');
+                $('#objects').html('');
+                updateSession();
             });
 
+            function updateSession(err, session) {
+                if (err) {
+                    display(err.message, true);
+                    console.log(err);
+                }
+                if (session) {
+                    creds.params.Logins = {};
+                    creds.params.Logins[providerName] = session.getIdToken().getJwtToken();
+                    creds.expired = true;
+                    console.log(creds);
+                }
+                if (cognitoUser == null || cognitoUser.signInUserSession == null) {
+                    $('#menu_account_state').html('<a href="#" id="get-register-block">Register</a>');
+                    $('#menu_login_state').html('<a href="#" id="get-login-block">Login</a>');
+                } else {
+                    $('#menu_account_state').html('<a href="#" id="get-account-block">' + cognitoUser.getUsername() + '</a>');
+                    $('#menu_login_state').html('<a href="#" id="logout">Logout</a>');
+                }
+                console.log(cognitoUser);
+
+            }
 
 
             function display(message, err) {
@@ -234,58 +284,130 @@
             }
 
 
-            //username, password, email, phone_number, given_name, family_name, gender
             $("#signup_submit").click(function (e) {
                 e.preventDefault();
 
-                ir.signup($('#signup_username').val(),
-                    $('#signup_password').val(),
-                    $('#signup_email').val(),
-                    $('#signup_phone_number').val(),
-                    $('#signup_given_name').val(),
-                    $('#signup_family_name').val(),
-                    $('#signup_gender').val(),
-                    function (err, result) {
-                        if (err) {
-                            display(err.message, true);
-                            return;
-                        }
+                var attributeList = [];
 
-                        bootbox.prompt("A security code has been emailed to you. Enter security code to confirm", function (securityCode) {
-                            if (result === null) {
-                                return;
-                            } else {
-                                ir.confirmSignup(securityCode, function (err, results) {
-                                    if (err) {
-                                        display(err.message, true);
-                                        return;
-                                    }
-                                    display("Confirmed:" + result, false);
-                                })
-                            }
-                        });
+                var dataEmail = {
+                    Name: 'email',
+                    Value: $('#signup_email').val()
+                };
+                var dataPhoneNumber = {
+                    Name: 'phone_number',
+                    Value: '+' + $('#signup_phone_number').val()
+                };
+                var dataGivenName = {
+                    Name: 'given_name',
+                    Value: $('#signup_given_name').val()
+                };
+                var dataFamilyName = {
+                    Name: 'family_name',
+                    Value: $('#signup_family_name').val()
+                };
+                var dataProfile = {
+                    Name: 'profile',
+                    Value: $('#signup_profile').val()
+                };
+                var dataGender = {
+                    Name: 'gender',
+                    Value: $('#signup_gender').val()
+                };
+
+                var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
+                var attributePhoneNumber = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPhoneNumber);
+                var attributeGivenName = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataGivenName);
+                var attributeFamilyName = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataFamilyName);
+                var attributeProfile = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataProfile);
+                var attributeGender = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataGender);
+                //var attributePassword = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPassword);
+
+                attributeList.push(attributeEmail);
+                attributeList.push(attributePhoneNumber);
+                attributeList.push(attributeGivenName);
+                attributeList.push(attributeFamilyName);
+                attributeList.push(attributeProfile);
+                attributeList.push(attributeGender);
+                //attributeList.push(attributePassword);
+
+                userPool.signUp($('#signup_username').val(), $('#signup_password').val(), attributeList, null, function (err, result) {
+                    if (err) {
+                        display(err.message, true);
+                        return;
+                    }
+
+
+                    bootbox.prompt("A security code has been emailed to you. Enter security code to confirm", function (securityCode) {
+                        if (result === null) {
+                            return;
+                        } else {
+                            cognitoUser = result.user;
+                            cognitoUser.confirmRegistration(securityCode, true, function (err, result) {
+                                if (err) {
+                                    display(err.message, true);
+                                    return;
+                                }
+                                display("Confirmed:" + result, false);
+                            });
+
+                        }
                     });
+
+                    // cognitoUser = result.user;
+                    //    display('user ' + cognitoUser.getUsername() + ' created. Check email for security code to verify the account.', false);
+                });
             });
             /////
 
 
 
-            ///login
+            ///
             $("#login_submit").click(function (e) {
-                ir.signin($('#login_username').val(), $('#login_password').val(), function (err) {
-                    if (err) {
-                        display(err.message, true);
-                    } else {
-                        updateStatus(ir);
-                        //location.reload();
-                    }
+                var authenticationData = {
+                    Username: $('#login_username').val(),
+                    Password: $('#login_password').val(),
+                };
+                var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
+
+                var userData = {
+                    Username: $('#login_username').val(),
+                    Pool: userPool
+                };
+                cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: function (result) {
+                        updateSession(null, result);
+                    },
+                    onFailure: function (err) {
+                        updateSession(err);
+                    },
+
                 });
             });
 
 
+
             //test authentication
-            $("#listUsers").click(function (e) { ////////
-                ir.listUsers(null, null, function (err, data) {;
+            $("#s3list_submit").click(function (e) {
+                ////////
+                /*var bucket = new AWS.S3({ params: { Bucket: 'courserv' } }); bucket.listObjects(function (err, data) { if (err) { $('#status').html('Could not load objects from S3'); } else { $('#status').html('Loaded ' + data.Contents.length + ' items from S3'); $('#objects').html(''); for (var i = 0; i < data.Contents.length; i++) { $( '#objects').append( '<li>' + data.Contents[i].Key + '</li>'); } } });*/
+                var lambda = new AWS.Lambda();
+
+                var jsonRequest = {};
+                jsonRequest.data = 'I love you.';
+                jsonRequest.auth = {};
+                jsonRequest.auth.username = cognitoUser.username;
+                jsonRequest.auth.signInUserSession = cognitoUser.signInUserSession;
+                if (cognitoUser.client && cognitoUser.client.config && cognitoUser.client.config.credentials && cognitoUser.client.config.credentials.params) {
+                    jsonRequest.auth.credentials = cognitoUser.client.config.credentials.params;
+                }
+
+                var requestSerialized = JSON.stringify(jsonRequest);
+                var params = {
+                    FunctionName: 'IronRockTest',
+                    Payload: requestSerialized
+                };
+                lambda.invoke(params, function (err, data) {
                     if (err) {
                         console.log(err, err.stack); // an error occurred
                         display(err.message, true);

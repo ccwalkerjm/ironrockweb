@@ -1,0 +1,723 @@
+<div class="tab-pane" id="home-particulars-page">
+
+    
+
+    <div data-role="main" class="ui-content">
+        <form class="ProposalForm form-horizontal" role="form">
+
+            <h4>Property Address</h4>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressStreetNo">Apt No/Street No:</label>
+                <div class="col-sm-10">
+                <input type="text" id="homeRiskAddressStreetNo" name="homeRiskAddressStreetNo" placeholder="Enter Apt No/Street Number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressStreetName">Street Name:</label>
+                <div class="col-sm-10">
+                <input type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressTown">City/Town/Postal Zone:</label>
+            <div class="col-sm-10">
+                <input type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
+            </div>
+            </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressParish">Select Parish:</label>
+                <div class="col-sm-10">
+                <select name="homeRiskAddressParish" id="homeRiskAddressParish" data-mini="true">
+                    <option value="Kingston">Kingston</option>
+                    <option value="St. Andrew">St. Andrew</option>
+                    <option value="St. Catherine">St. Catherine</option>
+                    <option value="Clarendon">Clarendon</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="St. Elizabeth">St. Elizabeth</option>
+                    <option value="Westmoreland">Westmoreland</option>
+                    <option value="Hanover">Hanover</option>
+                    <option value="St. James">St. James</option>
+                    <option value="Trelawny">Trelawny</option>
+                    <option value="St. Ann">St. Ann</option>
+                    <option value="St. Mary">St. Mary</option>
+                    <option value="Portland">Portland</option>
+                    <option value="St. Thomas">St. Thomas</option>
+                </select>
+                </div>
+            </div>
+            
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2"for="homeType">Type of home:</label>
+                <div class="col-sm-10">
+                <select name="homeType" id="homeType">
+                    <option value="A private Dwelling House?">Private Dwelling House</option>
+                    <option value="Apartment with seperate entrance">Apartment With Seperate Entrance</option>
+                    <option value="Rooms not self-contained?">Rooms Not Self-Contained</option>
+                </select>
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressStoreys">No of Storeys:</label>
+                <div class="col-sm-10">
+                <input type="number" id="homeRiskAddressStoreys" name="homeRiskAddressStoreys" placeholder="Enter Number of Storeys">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="homeRiskAddressYearBuilt">Year Built:</label>
+                <div class="col-sm-10">
+                <input type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
+                </div>
+                </div>
+            
+
+
+            <h4>Construction of Dwelling</h4>
+            <div class="form-group">            
+                <label class="control-label col-sm-2" for="constructionExternalWalls">External Walls:</label>
+                <div class="col-sm-10">
+                <select name="constructionExternalWalls" id="constructionExternalWalls"></select>
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="constructionRoof">Roof:</label>
+                <div class="col-sm-10">
+                <select name="constructionRoof" id="constructionRoof"></select>
+            </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Garages or Out Buildings?</h4>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-sm-10">
+                    <select name="garageOutBuildingExists" id="garageOutBuildingExists" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="garageOutBuildingClass form-group" style="display:none">
+            
+                <label class="control-label col-sm-2" for="garageExternalWalls">External Walls:</label>
+                <div class="col-sm-10">
+                <textarea name="garageExternalWalls" id="garageExternalWalls"></textarea>
+                </div>
+            </div>
+
+            <div class="ui-field-contain garageOutBuildingClass" style="display:none">
+                <label class="control-label col-sm-2" for="garageRoof">Roof:</label>
+                <div class="col-sm-10">
+                <textarea name="garageRoof" id="garageRoof"></textarea>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    
+</div>
+
+<div class="tab-pane" id="home-particulars-continued-page">
+
+    
+    </div>
+
+    <div data-role="page" class="tab-pane">
+        <form class="ProposalForm form-horizontal" role="form">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeInGoodState">
+                        Are the buildings in a good state of repair and will they be so maintained?</label>
+                </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="homeInGoodState" id="homeInGoodState" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                </div>
+                </div>
+                
+                
+                <div id="divhomeInGoodStateDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeInGoodStateDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <textarea name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+            
+            
+            <hr />
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeOccupiedByApplicantFamily">Is the Dwelling occupied solely by you, your family and domestic employees?</label>
+                </div>
+                    
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="homeOccupiedByApplicantFamily" id="homeOccupiedByApplicantFamily" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes" selected>Yes</option>
+                    </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="divhomeOccupiedByApplicantFamily" class="ui-field-contain" style="display:none">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
+                            <div class="col-sm-10">
+                        <textarea name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeUsedForIncomeActivity">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="homeUsedForIncomeActivity" id="homeUsedForIncomeActivity" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    
+                    <div id="divhomeUsedForIncomeActivity" class="ui-field-contain" style="display:none">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeUsedForIncomeActivityDetails">Details:</label>
+                            <div class="col-sm-10">
+                        <textarea name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+
+            
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeHaveInterestFromIndividual">Does any institution or individual have a financial interest in the property?</label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="homeHaveInterestFromIndividual" id="homeHaveInterestFromIndividual" data-role="slider" data-mini="true">
+                        <option value="no" selected>No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="divhomeHaveInterestFromIndividual" style="display:none">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeHaveInterestFromIndividualDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <textarea name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeHasWatersideStructure">Are there any Waterside Structures?</label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="homeHasWatersideStructure" id="homeHasWatersideStructure" data-role="slider" data-mini="true">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="divhomeHasWatersideStructure" class="ui-field-contain" style="display:none">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeHasWatersideStructureDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <textarea name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    
+</div>
+
+<div class="tab-pane" id="home-property-details-page">
+
+    
+
+    <div data-role="page" class="tab-pane">
+        <form class="ProposalForm">
+
+            <h2>Buildings and other structures</h2>
+            <div data-role="collapsible">
+                <h4>IMPORTANT NOTE</h4>
+                <p>
+                    The SUMS TO BE INSURED must represent the FULL NEW REPLACEMENT COST of the Property and should include adequate provision for demolition and debris removal costs in the event of major damage as well as professional fees that would be incurred in reinstatement. As the Company will pay up to 10% of the Sum insured in respect of Rent lost or reasonable costs of alternative accomodation if damage by an Insured Peril renders the home uninhabitable, provision for this should also be included in your Sums Insured.
+                </p>
+
+            </div>
+
+            <div class="form-control">
+                <label class="control-label col-sm-2" for="startDate">Insurance Start Date:</label>
+                <div class="col-sm-10">
+                <input name="startDate" type="date" id="startDate" placeholder="Start Date" />
+                </div>
+            </div>
+            
+            <div class="form-control">
+                <label class="control-label col-sm-2" for="currency">Currency:</label>
+                <div class="col-sm-10">
+                <select name="currency" id="currency" data-mini="true">
+                    <option value="JA">Jamaican Dollar</option>
+                    <option value="USD">United States Dollar</option>
+                    
+                </select>
+                    </div>
+            </div>
+
+
+            <div id="homeInsuranceProperty">
+                <div data-role="popup" id="homeInsurancePropertyDetails">
+                    <p>
+                        The Buildings of the private dwelling together with its garages and outbuildings, including landlord’s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools & Waterside Structures are not included.)
+                    </p>
+                </div>
+                <div class="homeInsurancePropertyItems">
+                    <h4>Building 1</h4>
+                    <div class="article-name">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeInsurancePropertyItem0">
+                            Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                        </label>
+                        <div class="col-sm-10">
+                        <input type="text" name="homeInsurancePropertyItem0" id="homeInsurancePropertyItem0" value="">
+                            </div>
+                    </div>
+                    </div>
+                    
+                    <div class="article-value">
+                        <div class="form-group">
+                        <label class="control-label col-sm-2" for="homeInsurancePropertyItemValue0">Value</label>
+                        <div class="col-sm-10">
+                        <input type="number" name="homeInsurancePropertyItemValue0" id="homeInsurancePropertyItemValue0" value="">
+                            </div>
+                    </div>
+                    </div>
+
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Building</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                    </div>
+                </div>
+
+                <div class="article-value">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeInsurancePropertySwimmingPoolValue">
+                        Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                        <div class="col-sm-10">
+                    <input type="number" name="homeInsurancePropertySwimmingPoolValue" id="homeInsurancePropertySwimmingPoolValue" value="">
+                        </div>
+                </div>
+                </div>
+                <div data-role="popup" id="swimmingpoolDetails">
+                    <p>
+                        Swimming Pools: permanent pool structures together with pump-houses and permanently installed pool equipment and accessories including all related pipes and cables.
+                    </p>
+                </div>
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="homeInsurancePropertySum">The Total Sum Insured:</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="homeInsurancePropertySum" id="homeInsurancePropertySum" readonly value="">
+                        </div>
+                </div>
+
+            </div>
+
+            <h2>Contents</h2>
+
+            <div id="HomeInsuranceContent">
+
+                <div data-role="collapsible">
+                    <h4>IMPORTANT NOTES</h4>
+                    <p>The SUMS TO BE INSURED must represent the FULL COST of replacing all the contents insured with NEW articles of similar size, style and specification. As the Company will pay up to 10% of the Sum Insured in respect of reasonable costs of alternative accommodation if damage by an Insured Peril renders the home uninhabitable, provision for this should be included in your Sum Insured.</p>
+                    <p>
+                        Do not include in your Contents Sum Insured any Article which is to be insured under the All Risks Section Unspecified Valuables: Coverage is limited to one-third of the Total Sum Insured on Contents with coverage on individual articles limited to 5% of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured to be insured should be insured separately specified below.
+                    </p>
+                    <p>
+                        Valuables include jewellery and other articles of gold, silver or other precious metal, clocks, watches, cameras, camcorders and other photographic equipment, electronic equipment (other than domestic appliances), furs, pictures and other works of art, curios, licensed fire-arms, collections of stamps, coins or other valuable objects.
+                    </p>
+                </div>
+
+
+
+                <div data-role="popup" id="HouseholdGoodsDetails">
+                    <p>
+                        Contents: Household Goods, Personal Effects and Fixtures and Fittings which belong to or are the legal responsibility of any member of your household, including personal effects of non-paying guests temporarily staying with you but excluding Valuables which are to be individually specified.
+                    </p>
+                </div>
+
+
+                <div class="article-value form-group">
+                    <label class="control-label col-sm-2" for="amountHouseholdGoods">
+                        Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <div class="col-sm-10">
+                    <input type="number" name="amountHouseholdGoods" id="amountHouseholdGoods" value="">
+                    </div>
+                </div>
+
+                <div data-role="popup" id="ValuablesDetails">
+                    <p>
+                        Valuables to be individually specified (Please attach a list of these articles giving detailed descriptions, including model and serial numbers where appropriate and individual values)
+                    </p>
+                </div>
+
+                <div class="form-group article-value">
+                    <label class="control-label col-sm-2" for="amountValuables">
+                        Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <div class="col-sm-10">
+                    <input type="number" name="amountValuables" id="amountValuables" value="">
+                    </div>
+                </div>
+
+
+                <div data-role="popup" id="totalValueExceedOneThirdTotalSumDetails">
+                    <p>
+                        Does the total value of your Valuables excluding those listed above and those which you will be insuring under the All Risk Section exceed one-third of the Total Sum to be insured?
+                    </p>
+                </div>
+
+                <div class="form-group article-value">
+                    <label class="control-label col-sm-2" for="HomeInsuranceOtherValuableAmount">
+                        Other Valuables Estimate:<a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                    </label>
+                    <div class="col-sm-10">
+                    <input type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceContentTotalAmount">The Total Sum Insured:</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="HomeInsuranceContentTotalAmount" id="HomeInsuranceContentTotalAmount" value="" readonly>
+                </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    
+</div>
+
+<div class="tab-pane" id="home-all-risk-insurance-page">
+    
+
+    <div data-role="page" class="tab-pane">
+        <form class="ProposalForm form-horizontal" role="form">
+
+            <div data-role="collapsible">
+                <h4>IMPORTANT NOTE</h4>
+                <p>Valuation Reports or Receipts in respect of all Articles to be insured should be submitted to this Form.</p>
+            </div>
+
+            <div id="HomeAllRiskInsured">
+                <div class="HomeAllRiskArticles">
+                    <h4>Article 1</h4>
+                    <div class="form-group article-name">
+                        <label class="control-label col-sm-2" for="HomeAllRiskArticleDescription0">Description</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="HomeAllRiskArticleDescription0" id="HomeAllRiskArticleDescription0" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group article-value">
+                        <label class="control-label col-sm-2" for="HomeAllRiskArticleValue0">Value</label>
+                        <div class="col-sm-10">
+                        <input type="number" name="HomeAllRiskArticleValue0" id="HomeAllRiskArticleValue0" value="">
+                        </div>
+                    </div>
+
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Article</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeAllRiskTotalAmount">Total Sum Insured:</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="HomeAllRiskTotalAmount" id="HomeAllRiskTotalAmount" value="" readonly>
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="currentPolicyWithCompanyOrInsurer">
+                        Territorial Limits:
+                    </label>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-sm-10">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <input type="radio" name="territorialLimit" id="territorialLimitJMD" value="Jamaica" checked="checked">
+                        <label class="control-label col-sm-2" for="territorialLimitJMD">Jamaica</label>
+                        <input type="radio" name="territorialLimit" id="territorialLimitWorld" value="world">
+                        <label class="control-label col-sm-2" for="territorialLimitWorld">Worldwide</label>
+                    </fieldset>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="currentPolicyWithCompanyOrInsurer">
+                        Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="currentPolicyWithCompanyOrInsurer" id="currentPolicyWithCompanyOrInsurer" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                </div>
+                </div>
+                <div id="divcurrentPolicyWithCompanyOrInsurerDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="currentPolicyWithCompanyOrInsurerDetails" id="currentPolicyWithCompanyOrInsurerDetails" placeholder="Details" value="" data-mini="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:</h4>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceDeclined">
+                        Declined to insure you?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsuranceDeclined" id="HomeInsuranceDeclined" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                
+                <div id="divHomeInsuranceDeclined" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="HomeInsuranceDeclinedDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails" placeholder="Details" value="" data-mini="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceRequiredSpecialTerm">
+                        Required special terms to insure you?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsuranceRequiredSpecialTerm" id="HomeInsuranceRequiredSpecialTerm" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div id="divHomeInsuranceRequiredSpecialTermDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails" placeholder="Details" value="" data-mini="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceCancelled">
+                        Cancelled or refused to renew your policy?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsuranceCancelled" id="HomeInsuranceCancelled" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div id="divHomeInsuranceCancelledDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="HomeInsuranceCancelledDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails" placeholder="Details" value="" data-mini="true">
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceIncreasedPremium">
+                        Increased your premium on renewal?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsuranceIncreasedPremium" id="HomeInsuranceIncreasedPremium" data-role="slider" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div id="divHomeInsuranceIncreasedPremiumDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <input type="text" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails" placeholder="Details" value="" data-mini="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsurancePerilsSuffer">
+                        Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsurancePerilsSuffer" id="HomeInsurancePerilsSuffer" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="no">Don't Know</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>                        
+                    </div>
+                </div>
+                <div id="divHomeInsurancePerilsSufferDetails" class="col-md-6;display:none">
+                    <div class="form-group">                        
+                        <label class="control-label col-sm-2" for="HomeInsurancePerilsSufferDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <textarea name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="HomeInsuranceSufferLoss">
+                        Have you ever sustained loss from any Perils to which this Proposal would apply?
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <div class="col-sm-10">
+                    <select name="HomeInsuranceSufferLoss" id="HomeInsuranceSufferLoss" data-mini="true">
+                        <option value="no" selected="">No</option>
+                        <option value="no">Don't Know</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                <div id="divHomeInsuranceSufferLossDetails" class="col-md-6;display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="HomeInsuranceSufferLossDetails">Details:</label>
+                        <div class="col-sm-10">
+                        <textarea name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+
+    <footer data-role="footer" data-position="fixed"></footer>
+</div>

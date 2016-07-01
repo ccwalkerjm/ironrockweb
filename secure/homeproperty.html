@@ -4,34 +4,103 @@
 <head>
     <title>Home Property Insurance</title>
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/prettify.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/prettify.css" rel="stylesheet">
+    <style media="screen" type="text/css">
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8) url('/images/pleasewait.gif') 50% 50% no-repeat;
+        }
+        
+        body.loading {
+            overflow: hidden;
+        }
+        
+        body.loading .modal {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
-    <div class='container'>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="https://cdn.courserv.com/ironrock/images/IronRockLogo.png" width="200px">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#details">Details</a>
+                    </li>
+                    <li>
+                        <a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="menu_account_state">
+                    </li>
+                    <li id="menu_login_state">
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <div class='container' style="margin-top:50px">
         <section id="wizard">
             <div class="page-header">
                 <h1>Home Property Insurance</h1>
             </div>
-            <form id="commentForm" method="get" action="" class="form-horizontal">
+            <form id="QuoteForm" class="form-horizontal">
                 <div id="rootwizard">
-                    <ul>
-                        <li><a href="#personal-main-page" data-toggle="tab">Personal</a>
-                        </li>
-                        <li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
-                        </li>
-                        <li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
-                        </li>
-                        <li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>
 
-                        <li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a>
-                        </li>
-                        <li><a href="#home-property-details-page" data-toggle="tab">Details</a>
-                        </li>
-                        <li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a>
-                        </li>
-                    </ul>
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <ul>
+                                    <li><a href="#personal-main-page" data-toggle="tab">Personal</a>
+                                    </li>
+                                    <li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
+                                    </li>
+                                    <li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
+                                    </li>
+                                    <li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>
+
+                                    <li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a>
+                                    </li>
+                                    <li><a href="#home-property-details-page" data-toggle="tab">Details</a>
+                                    </li>
+                                    <li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bar" class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                    </div>
+                    <div class="alert alert-warning" id="warning" style="display:none">
+                        <strong>Warning!</strong> The Page has invalid entries.
+                    </div>
+
                     <div class="tab-content">
                         <div class="tab-pane" id="home-particulars-page">
                             <div class="ProposalForm">
@@ -100,26 +169,27 @@
                                 </div>
 
 
-                                <div class="ui-grid-a">
-                                    <div class="ui-block-a">
-                                        <h4>Garages or Out Buildings?</h4>
-                                    </div>
-                                    <div class="ui-block-b">
-                                        <select class="form-control" name="garageOutBuildingExists" id="garageOutBuildingExists" data-role="slider">
-                                            <option value="no">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Garages or Out Buildings?
+                                                    <input type="checkbox" name="garageOutBuildingExists" id="garageOutBuildingExists"> </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group garageOutBuildingClass" style="display:none">
                                     <label for="garageExternalWalls">External Walls:</label>
-                                    <textarea name="garageExternalWalls" id="garageExternalWalls"></textarea>
+                                    <textarea class="form-control" name="garageExternalWalls" id="garageExternalWalls"></textarea>
                                 </div>
 
                                 <div class="form-group garageOutBuildingClass" style="display:none">
                                     <label for="garageRoof">Roof:</label>
-                                    <textarea name="garageRoof" id="garageRoof"></textarea>
+                                    <textarea class="form-control" name="garageRoof" id="garageRoof"></textarea>
                                 </div>
 
                             </div>
@@ -127,40 +197,47 @@
 
                         <div class="tab-pane" id="home-particulars-continued-page">
                             <div class="ProposalForm">
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width:40%">
-                                        <label for="homeInGoodState">Are the buildings in a good state of repair and will they be so maintained?</label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Are the buildings in a good state of repair and will they be so maintained?
+                                                    <input type="checkbox" name="homeInGoodState" id="homeInGoodState"> </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="ui-block-b" style="width:10%">
-                                        <select class="form-control" name="homeInGoodState" id="homeInGoodState" data-role="slider">
-                                            <option value="no">No</option>
-                                            <option value="yes" selected>Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divhomeInGoodStateDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divhomeInGoodStateDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="homeInGoodStateDetails">Details:</label>
-                                            <textarea name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
+                                            <textarea class="form-control" name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
                                         </div>
                                     </div>
 
                                 </div>
                                 <hr />
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width:40%">
-                                        <label for="homeOccupiedByApplicantFamily">Is the Dwelling occupied solely by you, your family and domestic employees?</label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Is the Dwelling occupied solely by you, your family and domestic employees?
+                                                    <input type="checkbox" name="homeOccupiedByApplicantFamily" id="homeOccupiedByApplicantFamily" checked> </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="ui-block-b" style="width:10%">
-                                        <select class="form-control" name="homeOccupiedByApplicantFamily" id="homeOccupiedByApplicantFamily" data-role="slider">
-                                            <option value="no">No</option>
-                                            <option value="yes" selected>Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="ui-block-c" style="width:50%">
+
+
+                                    <div class="col-md-6" style="">
                                         <div id="divhomeOccupiedByApplicantFamily" class="form-group" style="display:none">
                                             <label for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
-                                            <textarea name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
+                                            <textarea class="form-control" name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -168,20 +245,25 @@
 
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width:40%">
-                                        <label for="homeUsedForIncomeActivity">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Is the Dwelling or Outbuilding used for any income-earning activity?
+                                                    <input type="checkbox" name="homeUsedForIncomeActivity" id="homeUsedForIncomeActivity"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width:10%">
-                                        <select class="form-control" name="homeUsedForIncomeActivity" id="homeUsedForIncomeActivity" data-role="slider">
-                                            <option value="no" selected>No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="ui-block-c" style="width:50%">
+
+
+                                    <div class="col-md-6" style="">
                                         <div id="divhomeUsedForIncomeActivity" class="form-group" style="display:none">
                                             <label for="homeUsedForIncomeActivityDetails">Details:</label>
-                                            <textarea name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
+                                            <textarea class="form-control" name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
                                         </div>
                                     </div>
 
@@ -189,40 +271,50 @@
                                 <hr />
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width:40%">
-                                        <label for="homeHaveInterestFromIndividual">Does any institution or individual have a financial interest in the property?</label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Does any institution or individual have a financial interest in the property?
+                                                    <input type="checkbox" name="homeHaveInterestFromIndividual" id="homeHaveInterestFromIndividual"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width:10%">
-                                        <select class="form-control" name="homeHaveInterestFromIndividual" id="homeHaveInterestFromIndividual" data-role="slider">
-                                            <option value="no" selected>No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="ui-block-c" style="width:50%">
+
+
+                                    <div class="col-md-6" style="">
                                         <div id="divhomeHaveInterestFromIndividual" class="form-group" style="display:none">
                                             <label for="homeHaveInterestFromIndividualDetails">Details:</label>
-                                            <textarea name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                                            <textarea class="form-control" name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <hr />
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width:40%">
-                                        <label for="homeHasWatersideStructure">Are there any Waterside Structures?</label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Are there any Waterside Structures?
+                                                    <input type="checkbox" name="homeHasWatersideStructure" id="homeHasWatersideStructure"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width:10%">
-                                        <select class="form-control" name="homeHasWatersideStructure" id="homeHasWatersideStructure" data-role="slider">
-                                            <option value="no">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="ui-block-c" style="width:50%">
+
+
+                                    <div class="col-md-6" style="">
                                         <div id="divhomeHasWatersideStructure" class="form-group" style="display:none">
                                             <label for="homeHasWatersideStructureDetails">Details:</label>
-                                            <textarea name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                                            <textarea class="form-control" name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -272,9 +364,9 @@
                                             <input class="form-control" type="number" name="homeInsurancePropertyItemValue0" id="homeInsurancePropertyItemValue0" value="">
                                         </div>
 
-                                        <div data-role="controlgroup" data-type="horizontal">
-                                            <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Building</a>
-                                            <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                                        <div>
+                                            <a href="#" class="btn btn-default Add">Add Building</a>
+                                            <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
                                         </div>
                                     </div>
 
@@ -383,9 +475,9 @@
                                             <input class="form-control" type="number" name="HomeAllRiskArticleValue0" id="HomeAllRiskArticleValue0" value="">
                                         </div>
 
-                                        <div data-role="controlgroup" data-type="horizontal">
-                                            <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Article</a>
-                                            <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                                        <div>
+                                            <a href="#" class="btn btn-default Add">Add Article</a>
+                                            <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -398,14 +490,14 @@
 
 
 
-                                <div class="ui-grid-c">
-                                    <div class="ui-block-a" style="width: 40%">
+                                <div class="row">
+                                    <div class="col-md-5">
                                         <label for="currentPolicyWithCompanyOrInsurer">
                                             Territorial Limits:
                                         </label>
                                     </div>
-                                    <div class="ui-block-b" style="width: 40%">
-                                        <fieldset data-role="controlgroup" data-type="horizontal">
+                                    <div class="col-md-6" style="width: 40%">
+                                        <fieldset>
                                             <input class="form-control" type="radio" name="territorialLimit" id="territorialLimitJMD" value="Jamaica" checked="checked">
                                             <label for="territorialLimitJMD">Jamaica</label>
                                             <input class="form-control" type="radio" name="territorialLimit" id="territorialLimitWorld" value="world">
@@ -418,18 +510,21 @@
 
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="currentPolicyWithCompanyOrInsurer">
-                                            Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?
+                                                    <input type="checkbox" name="currentPolicyWithCompanyOrInsurer" id="currentPolicyWithCompanyOrInsurer"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="currentPolicyWithCompanyOrInsurer" id="currentPolicyWithCompanyOrInsurer" data-role="slider">
-                                            <option value="no" selected="">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
+
+
                                     <div id="divcurrentPolicyWithCompanyOrInsurerDetails" class="ui-block-c" style="width: 50%;display:none">
                                         <div class="form-group">
                                             <label for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
@@ -440,19 +535,22 @@
 
                                 <h4>Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:</h4>
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsuranceDeclined">
-                                            Declined to insure you?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Declined to insure you?
+                                                    <input type="checkbox" name="HomeInsuranceDeclined" id="HomeInsuranceDeclined"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsuranceDeclined" id="HomeInsuranceDeclined" data-role="slider">
-                                            <option value="no" selected="">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsuranceDeclined" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsuranceDeclined" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsuranceDeclinedDetails">Details:</label>
                                             <input class="form-control" type="text" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails" placeholder="Details" value="">
@@ -460,19 +558,22 @@
                                     </div>
                                 </div>
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsuranceRequiredSpecialTerm">
-                                            Required special terms to insure you?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Required special terms to insure you?
+                                                    <input type="checkbox" name="HomeInsuranceRequiredSpecialTerm" id="HomeInsuranceRequiredSpecialTerm"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsuranceRequiredSpecialTerm" id="HomeInsuranceRequiredSpecialTerm" data-role="slider">
-                                            <option value="no" selected="">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsuranceRequiredSpecialTermDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsuranceRequiredSpecialTermDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
                                             <input class="form-control" type="text" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails" placeholder="Details" value="">
@@ -481,19 +582,22 @@
                                 </div>
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsuranceCancelled">
-                                            Cancelled or refused to renew your policy?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Cancelled or refused to renew your policy?
+                                                    <input type="checkbox" name="HomeInsuranceCancelled" id="HomeInsuranceCancelled"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsuranceCancelled" id="HomeInsuranceCancelled" data-role="slider">
-                                            <option value="no" selected="">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsuranceCancelledDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsuranceCancelledDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsuranceCancelledDetails">Details:</label>
                                             <input class="form-control" type="text" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails" placeholder="Details" value="">
@@ -501,19 +605,22 @@
                                     </div>
                                 </div>
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsuranceIncreasedPremium">
-                                            Increased your premium on renewal?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Increased your premium on renewal?
+                                                    <input type="checkbox" name="HomeInsuranceIncreasedPremium" id="HomeInsuranceIncreasedPremium"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsuranceIncreasedPremium" id="HomeInsuranceIncreasedPremium" data-role="slider">
-                                            <option value="no" selected="">No</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsuranceIncreasedPremiumDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsuranceIncreasedPremiumDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
                                             <input class="form-control" type="text" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails" placeholder="Details" value="">
@@ -522,44 +629,49 @@
                                 </div>
 
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsurancePerilsSuffer">
-                                            Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?
+                                                    <input type="checkbox" name="HomeInsurancePerilsSuffer" id="HomeInsurancePerilsSuffer"> </label>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsurancePerilsSuffer" id="HomeInsurancePerilsSuffer">
-                                            <option value="no" selected="">No</option>
-                                            <option value="no">Don't Know</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsurancePerilsSufferDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsurancePerilsSufferDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsurancePerilsSufferDetails">Details:</label>
-                                            <textarea name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                                            <textarea class="form-control" name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="ui-grid-b">
-                                    <div class="ui-block-a" style="width: 40%">
-                                        <label for="HomeInsuranceSufferLoss">
-                                            Have you ever sustained loss from any Perils to which this Proposal would apply?
-                                        </label>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Have you ever sustained loss from any Perils to which this Proposal would apply?
+                                                    <input type="checkbox" name="HomeInsuranceSufferLoss" id="HomeInsuranceSufferLoss"> </label>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="ui-block-b" style="width: 10%">
-                                        <select class="form-control" name="HomeInsuranceSufferLoss" id="HomeInsuranceSufferLoss">
-                                            <option value="no" selected="">No</option>
-                                            <option value="no">Don't Know</option>
-                                            <option value="yes">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div id="divHomeInsuranceSufferLossDetails" class="ui-block-c" style="width:50%;display:none">
+
+
+                                    <div id="divHomeInsuranceSufferLossDetails" class="col-md-6" style="display:none">
                                         <div class="form-group">
                                             <label for="HomeInsuranceSufferLossDetails">Details:</label>
-                                            <textarea name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                                            <textarea class="form-control" name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -568,39 +680,55 @@
                             </div>
                         </div>
 
-
-                        <ul class="pager wizard">
-                            <li class="previous first" style="display:none;"><a href="#">First</a>
-                            </li>
-                            <li class="previous"><a href="#">Previous</a>
-                            </li>
-                            <li class="next last" style="display:none;"><a href="#">Last</a>
-                            </li>
-                            <li class="next"><a href="#">Next</a>
-                            </li>
-                        </ul>
+                        <!--navigations -->
+                        <div style="float:right">
+                            <input type='button' class='btn btn-primary button-next btn-lg' name='next' value='Next' />
+                        </div>
+                        <div style="float:left">
+                            <input type='button' class='btn btn-warning button-previous btn-lg' name='previous' value='Previous' />
+                        </div>
                     </div>
+
+
+
+
                 </div>
             </form>
         </section>
     </div>
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.bootstrap.wizard.min.js"></script>
-    <script src="js/prettify.js"></script>
+    <div class="modal">
+        <!-- Place at bottom of page -->
+    </div>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.bootstrap.wizard.min.js"></script>
+    <script src="/js/prettify.js"></script>
     <script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
     <script src="https://cdn.courserv.com/ironrock/scripts/aws-sdk.min.js"></script>
     <script src="https://cdn.courserv.com/ironrock/scripts/jSignature/jSignature.min.js"></script>
     <!--Custom js-->
-    <script src="js/miscellaneous.js"></script>
-    <script src="js/index.js"></script>
+    <script src="/js/miscellaneous.js"></script>
+    <script src="/js/index.js"></script>
     <script>
         $(document).ready(function () {
+            $body = $("body");
+
+            $(document).on({
+                ajaxStart: function () {
+                    $body.addClass("loading");
+                },
+                ajaxStop: function () {
+                    $body.removeClass("loading");
+                }
+            });
+
             $('[data-toggle="tooltip"]').tooltip();
             $.get('personalsection.html', function (r) {
                 $('.tab-content').prepend(r);
-                $('#rootwizard').bootstrapWizard();
+                doWizard();
+                //     $('#rootwizard').bootstrapWizard();
+
                 var serverUrl = _apiBaseUrl + "/misc";
                 $.ajax({
                     type: 'GET',
@@ -613,6 +741,8 @@
                         doMiscellaneous();
                         doPrimaryFunctions();
                         loadCountriesOptions();
+                        loadOccupations(false);
+                        loadRoofWallsTypes();
                     },
                     error: function (err) {
                         alert(err);
@@ -620,6 +750,51 @@
                 });
 
             });
+
+            var $validator = $(".ProposalForm").validate();
+            //wizard
+            function doWizard() {
+                $('#rootwizard').bootstrapWizard({
+                    'nextSelector': '.button-next',
+                    'previousSelector': '.button-previous',
+                    onNext: function (tab, navigation, index) {
+                        var $valid = true;
+                        switch (index) {
+                        case 1:
+                            $valid = $("#personal-main-page .ProposalForm").valid();
+                            break;
+                        case 2:
+                            $valid = $("#personal-contact-page .ProposalForm").valid();
+                            break;
+                        case 3:
+                            $valid = $("#personal-employer-details-page .ProposalForm").valid();
+                            break;
+                        }
+                        if (!$valid) {
+                            $validator.focusInvalid();
+                            $('#warning').fadeIn().delay(5000).fadeOut();
+                            window.scrollTo(0, 0);
+                            return false;
+                        }
+
+                    },
+                    onTabClick: function () {
+                        return false;
+                    },
+                    onTabShow: function (tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard .progress-bar').css({
+                            width: $percent + '%'
+                        });
+                    }
+                });
+            }
+
+
+
+
 
         });
     </script>
