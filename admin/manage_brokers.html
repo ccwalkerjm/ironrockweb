@@ -1,240 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
 <head>
-
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="MobileOptimized" content="320">
+    <title>IronRock Insurance</title>
 
-    <title>IronRock Application Administration</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <style>
-        body {
-            padding-top: 70px;
-            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-        }
-    </style>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!--    @Scripts.Render("~/bundles/modernizr")-->
+    <!--@Styles.Render("~/bundles/GlobalCSS")-->
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <!--    @Styles.Render("~/bundles/ThemeCSS")-->
+    <link href="/assets/css/style-metronic.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style-responsive.css" rel="stylesheet">
+    <link href="/assets/css/plugins.css" rel="stylesheet">
+    <link href="/assets/css/pages/tasks.css" rel="stylesheet">
+    <link href="/assets/css/themes/default.css" rel="stylesheet">
+    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
+    <!--@Scripts.Render("~/bundles/jquery")-->
+    <script src="/Scripts/jquery-2.2.3.js"></script>
+    <script src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/assets/scripts/app.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>
+    <script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/plugins/jquery.blockui.min.js"></script>
+    <script src="/assets/plugins/jquery.cokie.min.js"></script>
+    <script src="/assets/plugins/uniform/jquery.uniform.min.js"></script>
+    <script src="/assets/plugins/select2/select2.min.js"></script>
 
 </head>
 
-<body>
+<body class="page-header-fixed">
+    <div class="header navbar navbar-inverse navbar-fixed-top" style="background-color:rgb(231,231,231)!important;min-height:60px">
+        <div class="header-inner">
+            <a class="navbar-brand" href="/Home">
+                <img src="/assets/img/logo.png" id="logo" alt="" class="img-responsive" />
+            </a>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="https://cdn.courserv.com/ironrock/images/IronRockLogo.png" width="200px">
-                </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#details">Details</a>
-                    </li>
-                    <li>
-                        <a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="menu_account_state">
-                    </li>
-                    <li id="menu_login_state">
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+            <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <img src="/assets/img/menu-toggler.png" alt="" />
+            </a>
 
-    <!-- Page Content -->
-    <div class="container">
-        <div class="row" id="account-block">
-            <div class="col-lg-12">
-                <h1>Brokers</h1>
-                <div id="status"></div>
-                <table class="table table-striped" id="brokerTable">
-                    <thead>
-                        <tr>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <form class="form-inline" role="form">
-                    <div class="form-group">
-                        <label for="code">Code:</label>
-                        <input type="text" class="form-control" id="code">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                    <button type="button" class="btn btn-default" id="save_broker">Save</button>
-                    <button type="button" class="btn btn-warning" id="delete_broker">Delete</button>
-                </form>
-            </div>
+            <ul class="nav navbar-nav pull-right">
+            </ul>
+
         </div>
-        <!-- /.row -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+        </div>
     </div>
-    <!-- /.container -->
+    <div class="clearfix" />
 
-    <!-- jQuery Version 1.11.1 -->
-    <script src="js/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootbox.js"></script>
+    <div class="page-container">
+        <div class="page-sidebar-wrapper" id="sidebar"></div>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="row" id="account-block">
+                    <div class="col-lg-6">
+                        <h1>Brokers</h1>
+                        <div id="status"></div>
+
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label for="code">Code:</label>
+                                <input type="text" class="form-control" id="code">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <button type="button" class="btn btn-link" id="save_broker">Save</button>
+                            <button type="button" class="btn btn-link" id="delete_broker">Delete</button>
+                        </form>
+
+                        <table class="table table-striped" id="brokerTable">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" style="background-color:rgb(231,231,231)!important">
+        <div class="footer-inner">
+            2016 &copy; Ironrock Insurance.
+        </div>
+        <div class="footer-tools">
+            <span class="go-top">
+			    <i class="fa fa-angle-up"></i>
+		    </span>
+        </div>
+    </div>
+
+
+
+    <script src="/Scripts/bootbox.js"></script>
     <!--Required Libraries-->
-    <script src="js/jsbn.js"></script>
-    <script src="js/jsbn2.js"></script>
-    <script src="js/sjcl.js"></script>
-    <script src="js/moment.min.js"></script>
-    <script src="js/aws-cognito-sdk.min.js"></script>
-    <script src="js/amazon-cognito-identity.min.js"></script>
-    <script src="js/aws-sdk-2.3.19.min.js"></script>
+    <script src="/aws/jsbn.js"></script>
+    <script src="/aws/jsbn2.js"></script>
+    <script src="/aws/sjcl.js"></script>
+    <script src="/aws/moment.min.js"></script>
+    <script src="/aws/aws-cognito-sdk.min.js"></script>
+    <script src="/aws/amazon-cognito-identity.min.js"></script>
+    <script src="/aws/aws-sdk-2.3.19.min.js"></script>
     <!--Iron Rock Custom Library-->
-    <script src="js/ironrockcloudservice.js"></script>
+    <script src="/aws/ironrockcloudservice.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-
-            var ir = new ironrockcloudservice();
-
-
-            ir.init(function () {
-                updateStatus();
-            });
-
-            function updateStatus() {
-                if (ir.getUsername()) {
-                    $('#menu_account_state').html('<a href="#" id="get-account-block">' + ir.getUsername() + '</a>');
-                    $('#menu_login_state').html('<a href="#" id="logout">Logout</a>');
-                    listBrokers();
-                    $('#account-block').show();
-                } else {
-                    $('#menu_account_state').html('<a href="#" id="get-register-block">Register</a>');
-                    $('#menu_login_state').html('<a href="#" id="get-login-block">Login</a>');
-                    $('#account-block').hide();
-                }
-            }
+            $('#sidebar').load("/sideBarAuthorised.html", function () {
+                App.init();
+                var ir = new ironrockcloudservice();
 
 
-            $('#save_broker').click(function () {
-                var code = $('#code').val();
-                var name = $('#name').val();
-                ir.createBroker(code, name, function (err, data) {
-                    listBrokers();
+                ir.init(function () {
+                    var username = ir.getUsername();
+                    if (username) {
+                        $('#sidebar #globalUsername').text(username);
+                        listBrokers();
+                    } else {
+                        location.assign('/login.html');
+                    }
                 });
-            })
 
-            $('#delete_broker').click(function () {
-                if (confirm('Are you sure?')) {
+
+                $('#sidebar').on('click', '#logout', function () {
+                        ir.signoff();
+                        location.assign('/index.html');
+                    })
+                    ////////////////////////////////////////////////
+
+                $('#save_broker').click(function () {
                     var code = $('#code').val();
-                    ir.deleteBroker(code, function (err, data) {
+                    var name = $('#name').val();
+                    ir.createBroker(code, name, function (err, data) {
                         listBrokers();
                     });
-                }
-            })
+                })
 
-            $('#brokerTable tbody').on('click', '.select', function (e) {
-                var id = e.target.id;
-                ir.getBroker(id, function (err, data) {
-                    var item = JSON.parse(data.Payload);
-                    $('#code').val(item.code);
-                    $('#name').val(item.name);
-                });
-            })
-
-
-            function listBrokers() {
-                ir.listBrokers(function (err, data) {
-                    if (err) {
-                        display(err.message, err);
-                        return;
+                $('#delete_broker').click(function () {
+                    if (confirm('Are you sure?')) {
+                        var code = $('#code').val();
+                        ir.deleteBroker(code, function (err, data) {
+                            listBrokers();
+                        });
                     }
-                    var tcontent = $('#brokerTable tbody').html('');
-                    var items = JSON.parse(data.Payload);
-                    $.each(items, function (idx, val) {
-                        tcontent.append('<tr><td>' + val.code +
-                            '</td><td>' + val.name +
-                            '</td><td><button type="button" id="' + val.code +
-                            '" class="btn btn-link select">Select</button></td></tr>');
+                })
+
+                $('#brokerTable tbody').on('click', '.select', function (e) {
+                    var id = e.target.id;
+                    ir.getBroker(id, function (err, data) {
+                        var item = JSON.parse(data.Payload);
+                        $('#code').val(item.code);
+                        $('#name').val(item.name);
                     });
                 })
-            }
 
 
-
-
-            $('#menu_account_state').on('click', '#get-register-block', function () {
-                $('#register-block').show();
-                $('#login-block').hide();
-            });
-
-            $('#menu_login_state').on('click', '#get-login-block', function () {
-                $('#register-block').hide();
-                $('#login-block').show();
-            });
-
-            //logout
-            $("#menu_login_state").on('click', '#logout', function (e) {
-                ir.signoff();
-                location.reload();
-                //updateStatus();
-            });
-
-
-
-            function display(message, err) {
-                if (err) {
-                    $('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-                    return;
+                function listBrokers() {
+                    ir.listBrokers(function (err, data) {
+                        if (err) {
+                            display(err.message, err);
+                            return;
+                        }
+                        var tcontent = $('#brokerTable tbody').html('');
+                        var items = JSON.parse(data.Payload);
+                        $.each(items, function (idx, val) {
+                            tcontent.append('<tr><td>' + val.code +
+                                '</td><td>' + val.name +
+                                '</td><td><button type="button" id="' + val.code +
+                                '" class="btn btn-link select">Select</button></td></tr>');
+                        });
+                    })
                 }
-                $('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
-            }
 
 
 
 
-
-
-            //test authentication
-            $("#listUsers").click(function (e) { ////////
-                ir.listUsers(null, null, function (err, data) {;
-                    if (err) {
-                        console.log(err, err.stack); // an error occurred
-                        display(err.message, true);
-                    } else {
-                        console.log(data); // successful response  
-                        display(data.Payload);
-                    }
-                });
 
             });
-
         });
     </script>
+
+
+
 
 </body>
 
