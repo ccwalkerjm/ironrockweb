@@ -22,6 +22,7 @@
     <link href="/assets/css/themes/default.css" rel="stylesheet">
     <link href="/assets/css/custom.css" rel="stylesheet">
     <link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
+
     <!--@Scripts.Render("~/bundles/jquery")-->
     <script src="/Scripts/jquery-2.2.3.js"></script>
     <script src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
@@ -34,6 +35,42 @@
     <script src="/assets/plugins/jquery.cokie.min.js"></script>
     <script src="/assets/plugins/uniform/jquery.uniform.min.js"></script>
     <script src="/assets/plugins/select2/select2.min.js"></script>
+    <style media="screen" type="text/css">
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8) url('/images/pleasewait.gif') 50% 50% no-repeat;
+        }
+        
+        body.loading {
+            overflow: hidden;
+        }
+        
+        body.loading .modal {
+            display: block;
+        }
+        
+        select.error,
+        textarea.error,
+        input.error {
+            color: #FF0000;
+        }
+        
+        .my-error-class {
+            color: #FF0000;
+            /* red */
+        }
+        
+        .my-valid-class {
+            color: #00CC00;
+            /* green */
+        }
+    </style>
 
 </head>
 
@@ -63,8 +100,639 @@
         <div class="page-sidebar-wrapper" id="sidebar"></div>
         <div class="page-content-wrapper">
             <div class="page-content">
-                <h1>IronRock Online Services</h1>
-                <p>We provide a list of online services.</p>
+                <div class='container'>
+                    <section id="wizard">
+                        <div class="page-header">
+                            <h1>Home Property Insurance</h1>
+                        </div>
+                        <form id="QuoteForm" class="form-horizontal">
+                            <div id="rootwizard">
+
+                                <div class="navbar">
+                                    <div class="navbar-inner">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a href="#personal-main-page" data-toggle="tab">Personal</a>
+                                                </li>
+                                                <li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
+                                                </li>
+                                                <li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
+                                                </li>
+                                                <li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>
+
+                                                <li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a>
+                                                </li>
+                                                <li><a href="#home-property-details-page" data-toggle="tab">Details</a>
+                                                </li>
+                                                <li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bar" class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                </div>
+                                <div class="alert alert-warning" id="warning" style="display:none">
+                                    <strong>Warning!</strong> The Page has invalid entries.
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="home-particulars-page">
+                                        <div class="ProposalForm">
+                                            <h4>Property Address</h4>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStreetNo">Apt No/Street No:</label>
+                                                <input class="form-control" type="text" id="homeRiskAddressStreetNo" name="homeRiskAddressStreetNo" placeholder="Enter Apt No/Street Number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStreetName">Street Name:</label>
+                                                <input class="form-control" type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressTown">City/Town/Postal Zone:</label>
+                                                <input class="form-control" type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressParish">Select Parish:</label>
+                                                <select class="form-control" name="homeRiskAddressParish" id="homeRiskAddressParish">
+                                                    <option value="Kingston">Kingston</option>
+                                                    <option value="St. Andrew">St. Andrew</option>
+                                                    <option value="St. Catherine">St. Catherine</option>
+                                                    <option value="Clarendon">Clarendon</option>
+                                                    <option value="Manchester">Manchester</option>
+                                                    <option value="St. Elizabeth">St. Elizabeth</option>
+                                                    <option value="Westmoreland">Westmoreland</option>
+                                                    <option value="Hanover">Hanover</option>
+                                                    <option value="St. James">St. James</option>
+                                                    <option value="Trelawny">Trelawny</option>
+                                                    <option value="St. Ann">St. Ann</option>
+                                                    <option value="St. Mary">St. Mary</option>
+                                                    <option value="Portland">Portland</option>
+                                                    <option value="St. Thomas">St. Thomas</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="homeType">Type of home:</label>
+                                                <select class="form-control" name="homeType" id="homeType">
+                                                    <option value="A private Dwelling House?">Private Dwelling House</option>
+                                                    <option value="Apartment with seperate entrance">Apartment With Seperate Entrance</option>
+                                                    <option value="Rooms not self-contained?">Rooms Not Self-Contained</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStoreys">No of Storeys:</label>
+                                                <input class="form-control" type="number" id="homeRiskAddressStoreys" name="homeRiskAddressStoreys" placeholder="Enter Number of Storeys">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressYearBuilt">Year Built:</label>
+                                                <input class="form-control" type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
+                                            </div>
+
+
+                                            <h4>Construction of Dwelling</h4>
+
+                                            <div class="form-group">
+                                                <label for="constructionExternalWalls">External Walls:</label>
+                                                <select class="form-control" name="constructionExternalWalls" id="constructionExternalWalls"></select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="constructionRoof">Roof:</label>
+                                                <select class="form-control" name="constructionRoof" id="constructionRoof"></select>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Garages or Out Buildings?
+                                                                <input type="checkbox" name="garageOutBuildingExists" id="garageOutBuildingExists"> </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group garageOutBuildingClass" style="display:none">
+                                                <label for="garageExternalWalls">External Walls:</label>
+                                                <textarea class="form-control" name="garageExternalWalls" id="garageExternalWalls"></textarea>
+                                            </div>
+
+                                            <div class="form-group garageOutBuildingClass" style="display:none">
+                                                <label for="garageRoof">Roof:</label>
+                                                <textarea class="form-control" name="garageRoof" id="garageRoof"></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="home-particulars-continued-page">
+                                        <div class="ProposalForm">
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Are the buildings in a good state of repair and will they be so maintained?
+                                                                <input type="checkbox" name="homeInGoodState" id="homeInGoodState"> </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div id="divhomeInGoodStateDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="homeInGoodStateDetails">Details:</label>
+                                                        <textarea class="form-control" name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <hr />
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Is the Dwelling occupied solely by you, your family and domestic employees?
+                                                                <input type="checkbox" name="homeOccupiedByApplicantFamily" id="homeOccupiedByApplicantFamily" checked> </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-6" style="">
+                                                    <div id="divhomeOccupiedByApplicantFamily" class="form-group" style="display:none">
+                                                        <label for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
+                                                        <textarea class="form-control" name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Is the Dwelling or Outbuilding used for any income-earning activity?
+                                                                <input type="checkbox" name="homeUsedForIncomeActivity" id="homeUsedForIncomeActivity"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="col-md-6" style="">
+                                                    <div id="divhomeUsedForIncomeActivity" class="form-group" style="display:none">
+                                                        <label for="homeUsedForIncomeActivityDetails">Details:</label>
+                                                        <textarea class="form-control" name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <hr />
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Does any institution or individual have a financial interest in the property?
+                                                                <input type="checkbox" name="homeHaveInterestFromIndividual" id="homeHaveInterestFromIndividual"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="col-md-6" style="">
+                                                    <div id="divhomeHaveInterestFromIndividual" class="form-group" style="display:none">
+                                                        <label for="homeHaveInterestFromIndividualDetails">Details:</label>
+                                                        <textarea class="form-control" name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Are there any Waterside Structures?
+                                                                <input type="checkbox" name="homeHasWatersideStructure" id="homeHasWatersideStructure"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="col-md-6" style="">
+                                                    <div id="divhomeHasWatersideStructure" class="form-group" style="display:none">
+                                                        <label for="homeHasWatersideStructureDetails">Details:</label>
+                                                        <textarea class="form-control" name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="home-property-details-page">
+                                        <div class="ProposalForm">
+
+                                            <h2>Buildings and other structures</h2>
+                                            <div data-role="collapsible">
+                                                <h4>IMPORTANT NOTE</h4>
+                                                <p>
+                                                    The SUMS TO BE INSURED must represent the FULL NEW REPLACEMENT COST of the Property and should include adequate provision for demolition and debris removal costs in the event of major damage as well as professional fees that would be incurred in reinstatement. As the Company will pay up to 10% of the Sum insured in respect of Rent lost or reasonable costs of alternative accomodation if damage by an Insured Peril renders the home uninhabitable, provision for this should also be included in your Sums Insured.
+                                                </p>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="startDate">Insurance Start Date:</label>
+                                                <input class="form-control" name="startDate" type="date" id="startDate" placeholder="Start Date" />
+                                                <label for="currency">Currency:</label>
+                                                <select class="form-control" name="currency" id="currency">
+                                                    <option value="JA">Jamaican Dollar</option>
+                                                    <option value="USD">United States Dollar</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div id="homeInsuranceProperty">
+                                                <div data-role="popup" id="homeInsurancePropertyDetails">
+                                                    <p>
+                                                        The Buildings of the private dwelling together with its garages and outbuildings, including landlord’s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools & Waterside Structures are not included.)
+                                                    </p>
+                                                </div>
+                                                <div class="homeInsurancePropertyItems">
+                                                    <h4>Building 1</h4>
+                                                    <div class="form-group article-name">
+                                                        <label for="homeInsurancePropertyItem0">
+                                                            Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                        </label>
+                                                        <input class="form-control" type="text" name="homeInsurancePropertyItem0" id="homeInsurancePropertyItem0" value="">
+                                                    </div>
+                                                    <div class="form-group article-value">
+                                                        <label for="homeInsurancePropertyItemValue0">Value</label>
+                                                        <input class="form-control" type="number" name="homeInsurancePropertyItemValue0" id="homeInsurancePropertyItemValue0" value="">
+                                                    </div>
+
+                                                    <div>
+                                                        <a href="#" class="btn btn-default Add">Add Building</a>
+                                                        <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group article-value">
+                                                    <label for="homeInsurancePropertySwimmingPoolValue">
+                                                        Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    </label>
+                                                    <input class="form-control" type="number" name="homeInsurancePropertySwimmingPoolValue" id="homeInsurancePropertySwimmingPoolValue" value="">
+                                                </div>
+                                                <div data-role="popup" id="swimmingpoolDetails">
+                                                    <p>
+                                                        Swimming Pools: permanent pool structures together with pump-houses and permanently installed pool equipment and accessories including all related pipes and cables.
+                                                    </p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="homeInsurancePropertySum">The Total Sum Insured:</label>
+                                                    <input class="form-control" type="text" name="homeInsurancePropertySum" id="homeInsurancePropertySum" readonly value="">
+                                                </div>
+
+                                            </div>
+
+                                            <h2>Contents</h2>
+
+                                            <div id="HomeInsuranceContent">
+
+                                                <div data-role="collapsible">
+                                                    <h4>IMPORTANT NOTES</h4>
+                                                    <p>The SUMS TO BE INSURED must represent the FULL COST of replacing all the contents insured with NEW articles of similar size, style and specification. As the Company will pay up to 10% of the Sum Insured in respect of reasonable costs of alternative accommodation if damage by an Insured Peril renders the home uninhabitable, provision for this should be included in your Sum Insured.</p>
+                                                    <p>
+                                                        Do not include in your Contents Sum Insured any Article which is to be insured under the All Risks Section Unspecified Valuables: Coverage is limited to one-third of the Total Sum Insured on Contents with coverage on individual articles limited to 5% of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured to be insured should be insured separately specified below.
+                                                    </p>
+                                                    <p>
+                                                        Valuables include jewellery and other articles of gold, silver or other precious metal, clocks, watches, cameras, camcorders and other photographic equipment, electronic equipment (other than domestic appliances), furs, pictures and other works of art, curios, licensed fire-arms, collections of stamps, coins or other valuable objects.
+                                                    </p>
+                                                </div>
+
+
+
+                                                <div data-role="popup" id="HouseholdGoodsDetails">
+                                                    <p>
+                                                        Contents: Household Goods, Personal Effects and Fixtures and Fittings which belong to or are the legal responsibility of any member of your household, including personal effects of non-paying guests temporarily staying with you but excluding Valuables which are to be individually specified.
+                                                    </p>
+                                                </div>
+
+
+                                                <div class="form-group article-value">
+                                                    <label for="amountHouseholdGoods">
+                                                        Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    </label>
+                                                    <input class="form-control" type="number" name="amountHouseholdGoods" id="amountHouseholdGoods" value="">
+                                                </div>
+
+                                                <div data-role="popup" id="ValuablesDetails">
+                                                    <p>
+                                                        Valuables to be individually specified (Please attach a list of these articles giving detailed descriptions, including model and serial numbers where appropriate and individual values)
+                                                    </p>
+                                                </div>
+
+                                                <div class="form-group article-value">
+                                                    <label for="amountValuables">
+                                                        Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    </label>
+                                                    <input class="form-control" type="number" name="amountValuables" id="amountValuables" value="">
+                                                </div>
+
+
+                                                <div data-role="popup" id="totalValueExceedOneThirdTotalSumDetails">
+                                                    <p>
+                                                        Does the total value of your Valuables excluding those listed above and those which you will be insuring under the All Risk Section exceed one-third of the Total Sum to be insured?
+                                                    </p>
+                                                </div>
+
+                                                <div class="form-group article-value">
+                                                    <label for="HomeInsuranceOtherValuableAmount">
+                                                        Other Valuables Estimate:<a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    </label>
+                                                    <input class="form-control" type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="HomeInsuranceContentTotalAmount">The Total Sum Insured:</label>
+                                                    <input class="form-control" type="text" name="HomeInsuranceContentTotalAmount" id="HomeInsuranceContentTotalAmount" value="" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="home-all-risk-insurance-page">
+                                        <div class="ProposalForm">
+
+                                            <div data-role="collapsible">
+                                                <h4>IMPORTANT NOTE</h4>
+                                                <p>Valuation Reports or Receipts in respect of all Articles to be insured should be submitted to this Form.</p>
+                                            </div>
+
+                                            <div id="HomeAllRiskInsured">
+                                                <div class="HomeAllRiskArticles">
+                                                    <h4>Article 1</h4>
+                                                    <div class="form-group article-name">
+                                                        <label for="HomeAllRiskArticleDescription0">Description</label>
+                                                        <input class="form-control" type="text" name="HomeAllRiskArticleDescription0" id="HomeAllRiskArticleDescription0" value="">
+                                                    </div>
+
+                                                    <div class="form-group article-value">
+                                                        <label for="HomeAllRiskArticleValue0">Value</label>
+                                                        <input class="form-control" type="number" name="HomeAllRiskArticleValue0" id="HomeAllRiskArticleValue0" value="">
+                                                    </div>
+
+                                                    <div>
+                                                        <a href="#" class="btn btn-default Add">Add Article</a>
+                                                        <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="HomeAllRiskTotalAmount">Total Sum Insured:</label>
+                                                    <input class="form-control" type="text" name="HomeAllRiskTotalAmount" id="HomeAllRiskTotalAmount" value="" readonly>
+                                                </div>
+                                                <hr />
+                                            </div>
+
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="currentPolicyWithCompanyOrInsurer">
+                                                        Territorial Limits:
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6" style="width: 40%">
+                                                    <fieldset>
+                                                        <input class="form-control" type="radio" name="territorialLimit" id="territorialLimitJMD" value="Jamaica" checked="checked">
+                                                        <label for="territorialLimitJMD">Jamaica</label>
+                                                        <input class="form-control" type="radio" name="territorialLimit" id="territorialLimitWorld" value="world">
+                                                        <label for="territorialLimitWorld">Worldwide</label>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?
+                                                                <input type="checkbox" name="currentPolicyWithCompanyOrInsurer" id="currentPolicyWithCompanyOrInsurer"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divcurrentPolicyWithCompanyOrInsurerDetails" class="ui-block-c" style="width: 50%;display:none">
+                                                    <div class="form-group">
+                                                        <label for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
+                                                        <input class="form-control" type="text" name="currentPolicyWithCompanyOrInsurerDetails" id="currentPolicyWithCompanyOrInsurerDetails" placeholder="Details" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <h4>Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:</h4>
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Declined to insure you?
+                                                                <input type="checkbox" name="HomeInsuranceDeclined" id="HomeInsuranceDeclined"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divHomeInsuranceDeclined" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsuranceDeclinedDetails">Details:</label>
+                                                        <input class="form-control" type="text" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails" placeholder="Details" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Required special terms to insure you?
+                                                                <input type="checkbox" name="HomeInsuranceRequiredSpecialTerm" id="HomeInsuranceRequiredSpecialTerm"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divHomeInsuranceRequiredSpecialTermDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
+                                                        <input class="form-control" type="text" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails" placeholder="Details" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Cancelled or refused to renew your policy?
+                                                                <input type="checkbox" name="HomeInsuranceCancelled" id="HomeInsuranceCancelled"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divHomeInsuranceCancelledDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsuranceCancelledDetails">Details:</label>
+                                                        <input class="form-control" type="text" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails" placeholder="Details" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Increased your premium on renewal?
+                                                                <input type="checkbox" name="HomeInsuranceIncreasedPremium" id="HomeInsuranceIncreasedPremium"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divHomeInsuranceIncreasedPremiumDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
+                                                        <input class="form-control" type="text" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails" placeholder="Details" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?
+                                                                <input type="checkbox" name="HomeInsurancePerilsSuffer" id="HomeInsurancePerilsSuffer"> </label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+                                                <div id="divHomeInsurancePerilsSufferDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsurancePerilsSufferDetails">Details:</label>
+                                                        <textarea class="form-control" name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-inline">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                Have you ever sustained loss from any Perils to which this Proposal would apply?
+                                                                <input type="checkbox" name="HomeInsuranceSufferLoss" id="HomeInsuranceSufferLoss"> </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div id="divHomeInsuranceSufferLossDetails" class="col-md-6" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="HomeInsuranceSufferLossDetails">Details:</label>
+                                                        <textarea class="form-control" name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <!--navigations -->
+                                    <div style="float:right">
+                                        <input type='button' class='btn btn-primary button-next btn-lg' name='next' value='Next' />
+                                    </div>
+                                    <div style="float:left">
+                                        <input type='button' class='btn btn-warning button-previous btn-lg' name='previous' value='Previous' />
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </form>
+                    </section>
+                </div>
+
             </div>
         </div>
     </div>
@@ -83,6 +751,9 @@
 
 
     <script src="/Scripts/bootbox.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.bootstrap.wizard.js"></script>
+    <script src="/Scripts/prettify.js"></script>
     <!--Required Libraries-->
     <script src="/aws/jsbn.js"></script>
     <script src="/aws/jsbn2.js"></script>
@@ -91,8 +762,11 @@
     <script src="/aws/aws-cognito-sdk.min.js"></script>
     <script src="/aws/amazon-cognito-identity.min.js"></script>
     <script src="/aws/aws-sdk-2.3.19.min.js"></script>
+    <script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
     <!--Iron Rock Custom Library-->
     <script src="/aws/ironrockcloudservice.js"></script>
+    <script src="/aws/miscellaneous.js"></script>
+    <script src="/aws/index.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -112,10 +786,104 @@
 
 
                 $('#sidebar').on('click', '#logout', function () {
-                    ir.signoff();
-                    location.assign('/index.html');
-                })
+                        ir.signoff();
+                        location.assign('/index.html');
+                    })
+                    ////////////////////////////////////
+                $body = $("body");
 
+                $(document).on({
+                    ajaxStart: function () {
+                        $body.addClass("loading");
+                    },
+                    ajaxStop: function () {
+                        $body.removeClass("loading");
+                    }
+                });
+
+                $('[data-toggle="tooltip"]').tooltip();
+                $.get('personalsection.html', function (r) {
+                    $('.tab-content').prepend(r);
+                    doWizard();
+                    //     $('#rootwizard').bootstrapWizard();
+
+                    var serverUrl = _apiBaseUrl + "/misc";
+                    $.ajax({
+                        type: 'GET',
+                        contentType: 'application/json',
+                        url: serverUrl,
+                        dataType: "json",
+                        success: function (json) {
+                            json = ConvertToJson(json);
+                            sessionStorage.setItem(_PreliminaryData, JSON.stringify(json));
+                            doMiscellaneous();
+                            doPrimaryFunctions();
+                            loadCountriesOptions();
+                            loadOccupations(false);
+                            loadRoofWallsTypes();
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    });
+
+                });
+
+                var $validator = $(".ProposalForm").validate({
+                    messages: {},
+                    highlight: function (element) {
+                        $(element).parent().addClass('error')
+                    },
+                    unhighlight: function (element) {
+                        $(element).parent().removeClass('error')
+                    }
+                });
+                //wizard
+                function doWizard() {
+                    $('#rootwizard').bootstrapWizard({
+                        'nextSelector': '.button-next',
+                        'previousSelector': '.button-previous',
+                        onNext: function (tab, navigation, index) {
+                            var $valid = true;
+                            switch (index) {
+                            case 1:
+                                $valid = $("#personal-main-page .ProposalForm").valid();
+                                break;
+                            case 2:
+                                $valid = $("#personal-contact-page .ProposalForm").valid();
+                                break;
+                            case 3:
+                                $valid = $("#personal-employer-details-page .ProposalForm").valid();
+                                break;
+                            }
+                            if (!$valid) {
+                                $validator.focusInvalid();
+                                $('#warning').fadeIn().delay(5000).fadeOut();
+                                window.scrollTo(0, 0);
+                                return false;
+                            }
+
+                        },
+                        onTabClick: function () {
+                            return false;
+                        },
+                        onTabShow: function (tab, navigation, index) {
+                            var $total = navigation.find('li').length;
+                            var $current = index + 1;
+                            var $percent = ($current / $total) * 100;
+                            $('#rootwizard .progress-bar').css({
+                                width: $percent + '%'
+                            });
+                        }
+                    });
+                }
+
+
+
+
+
+
+                /////////////////////////////////////
 
 
             });
