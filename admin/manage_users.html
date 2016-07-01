@@ -69,6 +69,7 @@
                         <div class="col-lg-12">
                             <h1>Users</h1>
                             <div id="status"></div>
+                            <button type="button" id="btnCreateNewUser" class="btn btn-link select">Create User</button>
                             <table class="table table-striped" id="userTable">
                                 <thead>
                                     <tr>
@@ -135,11 +136,13 @@
                                                         <select id="broker" class="form-control"></select>
                                                     </div>
                                                 </div>
+
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary" id="update-user">Update</button>
+                                            <button type="button" class="btn btn-primary" id="create-user">Create</button>
                                         </div>
                                     </div>
 
@@ -204,7 +207,14 @@
                     location.assign('/index.html');
                 })
 
-                /////////////
+                function display(message, err) {
+                        if (err) {
+                            $('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+                            return;
+                        }
+                        $('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+                    }
+                    /////////////
                 function listRoles() {
                     ir.listRoles(function (err, data) {
                         var element = $('#role').html('<option>None</option>');
@@ -238,16 +248,70 @@
                     var username = e.target.id;
                     ir.getUser(username, function (err, data) {
                         var item = JSON.parse(data.Payload);
-                        $('#username').val(item.username);
-                        $('#firstName').val(item.given_name);
-                        $('#lastName').val(item.family_name);
-                        $('#email').val(item.email);
-                        $('#phone').val(item.phone_number);
-                        $('#role').val(item.role);
-                        $('#broker').val(item.broker);
+                        $('#username').val(item.username).prop("readonly", true);
+                        $('#firstName').val(item.given_name).prop("readonly", true);
+                        $('#lastName').val(item.family_name).prop("readonly", true);
+                        $('#email').val(item.email).prop("readonly", true);
+                        $('#phone').val(item.phone_number).prop("readonly", true);
+                        $('#role').val(item.role).parent().parent().show();
+                        $('#broker').val(item.broker).parent().parent().show();
+                        $('#update-user').show();
+                        $('#create-user').hide();
+                        $('#userModal .modal-title').text('Update Agent');
                         $('#userModal').modal('show');
                     });
                 })
+
+
+                $('#btnCreateNewUser').click(function () {
+                    $('#username').val('').prop("readonly", false);
+                    $('#firstName').val('').prop("readonly", false);
+                    $('#lastName').val('').prop("readonly", false);
+                    $('#email').val('').prop("readonly", false);
+                    $('#phone').val('').prop("readonly", false);
+                    $('#role').parent().parent().hide();
+                    $('#broker').parent().parent().hide();
+                    $('#update-user').hide();
+                    $('#create-user').show();
+                    $('#userModal .modal-title').text('Create Agent');
+                    $('#userModal').modal('show');
+                });
+
+
+                //save new user
+                //username, password, email, phone_number, given_name, family_name, gender
+                $("#create-user").click(function (e) {
+                    var username = $('#email').val().replace('@', '_').replace('.', '_');
+                    var password = '%R#Nr5ck555';
+                    ir.signup(username,
+                        password,
+                        $('#email').val(),
+                        $('#phone').val(),
+                        $('#firstName').val(),
+                        $('#lastName').val(),
+                        'Male',
+                        function (err, result) {
+                            if (err) {
+                                display(err.message, true);
+                                return;
+                            }
+
+                            bootbox.prompt("A security code has been emailed to the user. Enter security code to confirm", function (securityCode) {
+                                if (result === null) {
+                                    return;
+                                } else {
+                                    ir.confirmSignup(securityCode, function (err, results) {
+                                        if (err) {
+                                            display(err.message, true);
+                                            return;
+                                        }
+                                        listUsers();
+                                        $('#userModal').modal('hide');
+                                    })
+                                }
+                            });
+                        });
+                });
 
 
                 function listUsers(role, broker) {
