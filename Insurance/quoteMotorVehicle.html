@@ -1090,8 +1090,7 @@
                 });
 
                 var $validator = $(".ProposalForm").validate();
-                /*{ messages: {}, highlight: function (element) { $(element).parent().addClass('error') }, unhighlight: function (element) { $(element).parent().removeClass('error') } });*/
-                //wizard
+
                 function doWizard() {
                     $('#rootwizard').bootstrapWizard({
                         'nextSelector': '.button-next',
@@ -1167,8 +1166,6 @@
                             alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
                         } else {
                             loadQuotation(r);
-                            $('#page-signature').find('[data-role=footer] a').hide();
-                            $('#signatureExit').show();
                         }
                     });
 
