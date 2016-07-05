@@ -396,4 +396,22 @@ function ironrockcloudservice() {
             callback(err, results)
         });
     }
+
+    //submit quote
+    this.submitQuote = function (data, callback) {
+        var params = {
+            FunctionName: 'ironrockquote',
+            Payload: data
+        };
+        var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function (err, results) {
+            if (err)
+                callback(err);
+            else
+                callback(null, results.Payload);
+        });
+    }
+
+
+
 }

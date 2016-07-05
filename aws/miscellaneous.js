@@ -568,7 +568,7 @@ function doMiscellaneous() {
 
 //load occupations
 function loadOccupations(isMotor) {
-    var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+    var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
     $.each(options.occupations.data, function (key, value) {
         $('#applicantOccupation').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
         if (isMotor) {
@@ -579,7 +579,7 @@ function loadOccupations(isMotor) {
 
 //load roof and wall types
 function loadRoofWallsTypes() {
-    var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+    var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
     //wall
     $.each(options.wallTypes.data, function (key, value) {
         $('#constructionExternalWalls').append('<option value="' + value + '">' + value + '</option>');

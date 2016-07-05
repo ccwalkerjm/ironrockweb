@@ -13,7 +13,7 @@
 
 var _apiBaseUrl = "https://api.courserv.com/ironrock"; //localhost:58633/api/";
 var _contentBaseUrl = "https://cdn.courserv.com/ironrock";
-var _PreliminaryData = "PreliminaryData";
+var _IronRockPreliminaryData = "IronRockPreliminaryData";
 
 function ConvertToJson(r) {
     try {
@@ -25,6 +25,31 @@ function ConvertToJson(r) {
 }
 
 
+function loadQuotation(r) {
+    $('#signatureContainer').hide();
+    $('#quotation-number').val(r.quotation_number);
+    var container = $('#quotation');
+    container.append('<h4>Note the Policy Limits</h4>');
+    var table = $('<table/>'); //data-role="table" class="ui-responsive"
+    table.attr('data-role', "table");
+    table.addClass('ui-responsive');
+    table.append('<tr><th>Quotation No:</th><td>' + r.quotation_number + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Net Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.net_premium) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Stamp Duty:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.stamp_duty) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Tax:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.tax) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.total_premium) + '</td></tr>');
+    table.appendTo(container);
+    if (r.limits.length > 0) {
+        var limitHeader = $('<h4/>').text('Limits');
+        limitHeader.appendTo(container);
+        var limittable = $('<table/>').attr('data-role', "table").addClass('ui-responsive').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
+
+        $.each(r.limits, function (i, item) {
+            limittable.append('<tr><td>' + item.code + '</td><td>' + item.heading + '</td><td style="text-align:right">' + accounting.formatMoney(item.limit) + '</td><td>' + item.description + '</td></tr>');
+        });
+        limittable.appendTo(container);
+    }
+}
 
 
 
@@ -215,43 +240,9 @@ function doPrimaryFunctions() {
     /////Final//////////////////////
 
 
-    $('#page-signature').on('click', '#submit-btn', function () {
-        //get signature data       
-        //var formData = $('form').serialize();
-        var formData = JSON.stringify($('form').serializeObject());
-
-        //var formData = JSON.stringify(formData);
-        console.log(formData);
-        var serverUrl = _apiBaseUrl + "/ironrockquote/"; //; // + $('#quotation-number').val();
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json',
-            url: serverUrl,
-            dataType: "json",
-            data: formData,
-            success: function (r) {
-                //success handling
-                //var r = JSON.parse(data);
-                r = ConvertToJson(r);
-                if (!r.success) {
-                    console.log(r);
-                    alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
-                } else {
-                    loadQuotation(r);
-                    $('#page-signature').find('[data-role=footer] a').hide();
-                    $('#signatureExit').show();
-                }
-            },
-            error: function (err) {
-                alert("error: " + err.statusText);
-            }
-        });
-
-    });
 
 
-
-    ////////Validate and Get Quotation ////////////////
+    /*////////Validate and Get Quotation ////////////////
     $('#page-quotation').on('click', '#get-quotation', function () {
         //var formData = $('form').serialize();
         var formData = JSON.parse(JSON.stringify($('form').serializeObject()));
@@ -293,34 +284,9 @@ function doPrimaryFunctions() {
             }
         });
 
-    });
+    });*/
 
 
-    function loadQuotation(r) {
-        $('#signatureContainer').hide();
-        $('#quotation-number').val(r.quotation_number);
-        var container = $('#quotation');
-        container.append('<h4>Note the Policy Limits</h4>');
-        var table = $('<table/>'); //data-role="table" class="ui-responsive"
-        table.attr('data-role', "table");
-        table.addClass('ui-responsive');
-        table.append('<tr><th>Quotation No:</th><td>' + r.quotation_number + '</td></tr>');
-        table.append('<tr><th style="text-align: right;">Net Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.net_premium) + '</td></tr>');
-        table.append('<tr><th style="text-align: right;">Stamp Duty:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.stamp_duty) + '</td></tr>');
-        table.append('<tr><th style="text-align: right;">Tax:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.tax) + '</td></tr>');
-        table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.total_premium) + '</td></tr>');
-        table.appendTo(container);
-        if (r.limits.length > 0) {
-            var limitHeader = $('<h4/>').text('Limits');
-            limitHeader.appendTo(container);
-            var limittable = $('<table/>').attr('data-role', "table").addClass('ui-responsive').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
-
-            $.each(r.limits, function (i, item) {
-                limittable.append('<tr><td>' + item.code + '</td><td>' + item.heading + '</td><td style="text-align:right">' + accounting.formatMoney(item.limit) + '</td><td>' + item.description + '</td></tr>');
-            });
-            limittable.appendTo(container);
-        }
-    }
 
 
 
@@ -389,7 +355,7 @@ function doPrimaryFunctions() {
 
     //make/model
     function loadVehicleMakes() {
-        var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
         $('#QueryVehicleMake').empty();
         $.each(options.makeModels.data, function (key, value) {
             $('#QueryVehicleMake').append('<option value="' + value.make + '">' + value.make + '</option>');
@@ -397,7 +363,7 @@ function doPrimaryFunctions() {
     }
 
     function loadBodyTypes() {
-        var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
         $('#QueryVehicleBodyType').empty();
         $.each(options.makeModels.data, function (key, value) {
             $.each(value.models, function (key, value) {
@@ -415,7 +381,7 @@ function doPrimaryFunctions() {
     });
 
     function loadVehicleModels() {
-        var options = JSON.parse(sessionStorage.getItem(_PreliminaryData));
+        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
         var models = [];
         var make = $('#QueryVehicleMake').val();
         $('#QueryVehicleModel').empty();
