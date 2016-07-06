@@ -413,5 +413,37 @@ function ironrockcloudservice() {
     }
 
 
+    //search for quote
+    this.searchQuotes = function (data, callback) {
+        var params = {
+            FunctionName: 'ironrockQuoteSearch',
+            Payload: data
+        };
+        var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function (err, results) {
+            if (err)
+                callback(err);
+            else
+                callback(null, results.Payload);
+        });
+    }
+
+
+    //get quote
+    this.getQuote = function (id, callback) {
+        var params = {
+            FunctionName: 'ironrockGetQuote',
+            Payload: id
+        };
+        var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function (err, results) {
+            if (err)
+                callback(err);
+            else
+                callback(null, results.Payload);
+        });
+    }
+
+
 
 }
