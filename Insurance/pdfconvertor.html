@@ -96,7 +96,6 @@
                             <div class="form-group">
                                 <label for="insuranceType">Type:</label>
                                 <select class="form-control" id="insuranceType">
-                                    <option value="">All Types</option>
                                     <option value="motor">Motor Vehicle</option>
                                     <option value="property">Home Property</option>
                                 </select>
@@ -150,10 +149,6 @@
     <!--Iron Rock Custom Library-->
     <script src="/aws/ironrockcloudservice.js"></script>
     <script src="/Scripts/jspdf.min.js"></script>
-    <script src="/Scripts/zlib.js"></script>
-    <script src="/Scripts/png.js"></script>
-    <script src="/Scripts/addimage.js"></script>
-    <script src="/Scripts/png_support.js"></script>
     <script src="/Scripts/basic.js"></script>
 
     <script type="text/javascript">
@@ -234,7 +229,6 @@
                         }
                         resp = JSON.parse(resp);
                         console.log(resp);
-                        var imgData = 'data:' + resp.signatureImageType + ',' + resp.signatureBytes;
                         var doc = new jsPDF();
                         doc.setFontSize(22);
                         doc.text(20, 20, 'Proposal');
@@ -243,10 +237,6 @@
                         doc.setFont("times");
                         doc.setFontType("normal");                        
                         doc.text(20, 30, 'Insurance for ' + resp.insuranceType);
-<<<<<<< HEAD
-                        doc.text(20, 40, 'Name ' + resp.FirstName + " " + resp.applicantSurname);
-                        //  doc.addImage(sigImage, resp.signatureImageType, 15, 40, 180, 160);
-=======
                         
                         doc.text(20, 50, 'Surname:');
                         
@@ -401,8 +391,9 @@
                         
                         
 
->>>>>>> origin/master
                         doc.save('Proposal' + id + '.pdf');
+
+
                     });
                 })
 
