@@ -3,26 +3,6 @@
 //$(document).ready(function (e) {
 
 function doMiscellaneous() {
-
-        //set menu
-        /*$('#menu-vehicle').click(function () {
-            $('#insuranceType').val('motor');
-            setmenu(getVehicleMenu(), "Vehicle Insurance");
-            // SetPageHeaderFooter(getVehicleMenu());
-            loadOccupations(true);
-            $.mobile.changePage($("#personal-main-page"), "none");
-        });
-
-        $('#menu-property').click(function () {
-            $('#insuranceType').val('property');
-            setmenu(getPropertyMenu(), "Property Insurance");
-            //  SetPageHeaderFooter(getPropertyMenu());
-            loadOccupations(false);
-            loadRoofWallsTypes();
-            $.mobile.changePage($("#personal-main-page"), "none");
-        });*/
-
-
         //vehicle Used As
         $('#vehicleUsedAs').change(function () {
             var select_value = $(this).val();
@@ -513,8 +493,7 @@ function doMiscellaneous() {
         });
 
 
-        //validate function       
-
+        //validate function   
         $('#mailingAddressSame').change(function () {
             var select_value = $(this).is(':checked');
             if (select_value) {
@@ -565,6 +544,9 @@ function doMiscellaneous() {
     } //);
 
 
+
+
+////aaaafunctions
 
 //load occupations
 function loadOccupations(isMotor) {
@@ -778,232 +760,6 @@ function resetVehiclesToBeInsured() {
     var elementClass = $('.vehicleToBeInsured');
     resetObjects(objectList, elementClass, "Add", "Delete", "Vehicle");
 }
-
-function SignaturePageItem() {
-    return {
-        "name": "Signature",
-        "value": "page-signature"
-    };
-}
-
-
-function QuotationPageItem() {
-    return {
-        "name": "Validation",
-        "value": "page-quotation"
-    };
-}
-
-
-//function SetupSignaturePage() {
-//    var signaturePage = $('#page-signature');
-//    signaturePage.find("[data-role=header]").find("h1").text("Signature");
-//    signaturePage.find("[data-role=footer]").find("h4").text("IronRock App");
-//    signaturePage.find("[data-role=main]").show();
-//}
-
-function getPersonalMenu() {
-    return [
-        {
-            "name": "Personal Details",
-            "value": "personal-main-page"
-        },
-        {
-            "name": "Contact Details",
-            "value": "personal-contact-page"
-        },
-        {
-            "name": "Employment Details",
-            "value": "personal-employer-details-page"
-        }
-    ];
-}
-
-
-//disable property elements
-function disablePropertyItems() {
-    $("#home-particulars-page :input").prop("disabled", true);
-    $("#home-particulars-continued-page :input").prop("disabled", true);
-    $("#home-property-details-page :input").prop("disabled", true);
-    $("#home-all-risk-insurance-page :input").prop("disabled", true);
-}
-
-
-//disable property elements
-function disableMotorVehicleItems() {
-    $("#vehicle-particulars-page :input").prop("disabled", true);
-    $("#vehicle-insurance-coverage-page :input").prop("disabled", true);
-    $("#vehicle-driver-details-page :input").prop("disabled", true);
-    $("#vehicle-accidents-page :input").prop("disabled", true);
-    $("#vehicle-medical-history-page :input").prop("disabled", true);
-    $("#taxOfficeVehicleDialog :input").prop("disabled", true);
-}
-
-
-function getVehicleMenu() {
-    disablePropertyItems();
-    var vehicleMenuList = [
-        {
-            "name": "Vehicle Particulars",
-            "value": "vehicle-particulars-page"
-        },
-        {
-            "name": "Insurance Coverage",
-            "value": "vehicle-insurance-coverage-page"
-        },
-        {
-            "name": "Drivers Details",
-            "value": "vehicle-driver-details-page"
-        },
-        {
-            "name": "Accidents",
-            "value": "vehicle-accidents-page"
-        },
-        {
-            "name": "Medical History",
-            "value": "vehicle-medical-history-page"
-        }
-    ];
-    var newList = getPersonalMenu().concat(vehicleMenuList);
-    newList.push(SignaturePageItem());
-    return newList;
-}
-
-
-function getPropertyMenu() {
-    disableMotorVehicleItems();
-    var propertyMenuList = [
-        {
-            "name": "Home Particulars",
-            "value": "home-particulars-page"
-        },
-        {
-            "name": "Home Particulars Con't",
-            "value": "home-particulars-continued-page"
-        },
-        {
-            "name": "Home Property Details",
-            "value": "home-property-details-page"
-        },
-        {
-            "name": "All Risk Insurance",
-            "value": "home-all-risk-insurance-page"
-        }
-    ];
-    var newList = getPersonalMenu().concat(propertyMenuList);
-    newList.push(SignaturePageItem());
-    return newList;
-}
-
-
-function SetPageHeaderFooter(menu_list) {
-    // <a href="#main-page" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-arrow-l ui-btn-icon-notext" rel="prev">Home</a>
-    //<a href="#personal-contact-page" class="ui-btn ui-btn-right ui-btn-corner-all ui-icon-arrow-r ui-btn-icon-notext" rel="next">Next</a>       
-    for (var i = 0; i < menu_list.length; i++) {
-        var currentPage = $('#' + menu_list[i].value);
-        var currentHeader = currentPage.find("[data-role=header]");
-        var currentFooter = currentPage.find('[data-role=footer]');
-
-        //set title
-        currentHeader.find("h1").text(menu_list[i].name);
-        var logo = $('<img/>').attr('border', '0');
-        logo.attr('alt', '');
-        logo.attr('style', 'float:left;display:inline');
-        logo.attr('src', 'images/IronRockLogo30x30.png');
-        logo.appendTo(currentHeader);
-
-        //<img border="0" src="http://i490.photobucket.com/albums/rr270/pelicancup/FaceBook30x30.jpg" alt="Logo, Facebook" style="float:left;display:inline"/>
-
-        var prevI = i - 1;
-        var nextI = i + 1;
-        if (i > 0) {
-            //insert previous link               
-            var prevLink = '<a href="#' + menu_list[prevI].value + '" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-arrow-l ui-btn-icon-notext" rel="prev">Home</a>';
-            currentFooter.append(prevLink);
-        }
-        if (i < menu_list.length - 1) {
-            //insert next link
-            var nextLink = '<a href="#' + menu_list[nextI].value + '" class="ui-btn ui-btn-right ui-btn-corner-all ui-icon-arrow-r ui-btn-icon-notext" rel="next">Next</a>';
-            currentFooter.append(nextLink);
-        }
-    }
-}
-
-
-function GetMenuPanelItems(menu_list) {
-    var panelItems = "";
-    $.each(menu_list, function (key, item) {
-        panelItems = panelItems + '<li><a href="#' + item.value + '">' + item.name + '</a></li>';
-    });
-    return panelItems;
-}
-
-
-function setmenu(menu_list, menu_header) {
-    var menuLinks = GetMenuPanelItems(menu_list);
-    var last_page_dom = $("#" + menu_list[menu_list.length - 1].value).get(0);
-
-    var p = 1;
-    $.each(menu_list, function (key, item) {
-        var currentPage = $('#' + item.value);
-        var currentHeader = currentPage.find('[data-role=header]').html('');
-        var currentFooter = currentPage.find('[data-role=footer]').html('');
-
-        //set title
-        var title = $('<h1/>').text(item.name);
-        title.appendTo(currentHeader);
-        //set logo and logo link
-        var logoLink = $('<a/>').attr('data-role', 'button');
-        logoLink.attr('data-corners', 'false');
-        logoLink.attr('data-inline', 'true');
-        logoLink.attr('data-shadow', 'false');
-        logoLink.attr('style', 'border:none;background-color: transparent;');
-        logoLink.attr('href', '#');
-        logoLink.addClass('home');
-        var logo = $('<img/>').attr('border', '0');
-        logo.attr('alt', '');
-        logo.attr('style', 'height:30px');
-        logo.attr('src', 'images/IronRockLogoSmall.png');
-        logoLink.append(logo);
-        logoLink.appendTo(currentHeader);
-
-        //set footer copyright
-        var currDate = new Date();
-        var copyright = $('<h4/>').html('Copyright &nbsp; &copy;' + currDate.getFullYear() + ', IronRock Insurance Company Limited');
-        copyright.appendTo(currentFooter);
-
-        //set footer prev and next links
-        var prevI = p - 2;
-        var nextI = p;
-        if (p > 1) {
-            //insert previous link               
-            var prevLink = '<a href="#' + menu_list[prevI].value + '" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-arrow-l ui-btn-icon-notext" rel="prev">Home</a>';
-            currentFooter.append(prevLink);
-        }
-        if (p < menu_list.length) {
-            //insert next link
-            var nextLink = '<a href="#' + menu_list[nextI].value + '" class="ui-btn ui-btn-right ui-btn-corner-all ui-icon-arrow-r ui-btn-icon-notext" rel="next">Next</a>';
-            currentFooter.append(nextLink);
-        }
-
-
-        //set menu panel
-        var current_page_dom = currentPage.get(0);
-        if (currentPage.find('[data-role=panel]').length == 0 && last_page_dom != current_page_dom) {
-            var panelId = 'panel' + p++;
-            var panel = '<div data-role="panel" data-display="overlay" data-mini="true" class="menu" id="' + panelId + '" data-dismissible="true" data-swipe-close="true" data-position="right">';
-            panel = panel + '<h2>' + menu_header + '</h2><ol data-role="listview" data-inset="true" data-mini="true">' + menuLinks + '</ol>';
-            panel = panel + '<a href="#" class="ui-btn ui-btn-inline exitApp">Exit</a></div>';
-            currentPage.prepend(panel);
-
-            var panelBtn = $('<a/>');
-            panelBtn.attr('href', '#' + panelId)
-            panelBtn.addClass('ui-btn ui-btn-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-right');
-            panelBtn.appendTo(currentHeader);
-        }
-    });
-}
-
 
 //country functions
 var _countries = [

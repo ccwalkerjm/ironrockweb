@@ -309,6 +309,7 @@ function doPrimaryFunctions() {
         }
     });
 
+    //get vehicle modal
     $('#GetTaxOfficeVehicleDialog').click(function () {
         $('#queryVehicleAdd').hide();
         $('#queryVehicleSearch').show();
@@ -430,7 +431,6 @@ function doPrimaryFunctions() {
             return;
         }
 
-
         insertVehicle(r);
     });
 
@@ -495,36 +495,36 @@ function doPrimaryFunctions() {
     });
 
 
-
+    var CaptionBaseVehicleRegistrationNo = 'vehicleRegistrationNo';
+    var CaptionBaseVehicleChassisNo = 'vehicleChassisNo';
+    var CaptionBaseVehicleMake = 'vehicleMake';
+    var CaptionBaseVehicleModel = 'vehicleModel';
+    var CaptionBaseVehicleYear = 'vehicleYear';
+    var CaptionBaseVehicleEngineNo = 'vehicleEngineType';
+    var CaptionBaseVehicleBody = 'vehicleBody';
+    var CaptionBaseVehicleType = 'vehicleType';
+    var CaptionBaseVehicleColour = 'vehicleColour';
+    var CaptionBaseVehicleStatus = 'vehicleStatus';
+    var CaptionBaseVehicleValue = 'vehicleValue';
     //insert vehicle
     function insertVehicle(r) {
 
-        var cnt = $('#vehiclesToBeInsured .vehicle').length;
-        var CaptionBaseVehicleRegistrationNo = 'vehicleRegistrationNo';
-        var CaptionBaseVehicleChassisNo = 'vehicleChassisNo';
-        var CaptionBaseVehicleMake = 'vehicleMake';
-        var CaptionBaseVehicleModel = 'vehicleModel';
-        var CaptionBaseVehicleYear = 'vehicleYear';
-        var CaptionBaseVehicleEngineNo = 'vehicleEngineType';
-        var CaptionBaseVehicleBody = 'vehicleBody';
-        var CaptionBaseVehicleType = 'vehicleType';
-        var CaptionBaseVehicleColour = 'vehicleColour';
-        var CaptionBaseVehicleStatus = 'vehicleStatus';
-        var CaptionBaseVehicleValue = 'vehicleValue';
-
+        var cnt = parseInt($('#vehicleCnt').val()) + 1;
+        $('#vehicleCnt').val(cnt);
+        //  $('#vehiclesToBeInsured .vehicle').length;
 
         var htmlValues = '<span>' + r.plateNo + '</span>' +
-            '<input type="hidden" id="' + CaptionBaseVehicleRegistrationNo + cnt + '" name="' + CaptionBaseVehicleRegistrationNo + cnt + '" value="' + $.trim(r.plateNo) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleChassisNo + cnt + '" name="' + CaptionBaseVehicleChassisNo + cnt + '" value="' + $.trim(r.chassisNo) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleMake + cnt + '" name="' + CaptionBaseVehicleMake + cnt + '" value="' + $.trim(r.make) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleModel + cnt + '" name="' + CaptionBaseVehicleModel + cnt + '" value="' + $.trim(r.model) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleYear + cnt + '" name="' + CaptionBaseVehicleYear + cnt + '" value="' + $.trim(r.year) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleBody + cnt + '" name="' + CaptionBaseVehicleBody + cnt + '" value="' + $.trim(r.vehicleBodyType) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleType + cnt + '" name="' + CaptionBaseVehicleType + cnt + '" value="' + $.trim(r.vehicleType) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleEngineNo + cnt + '" name="' + CaptionBaseVehicleEngineNo + cnt + '" value="' + $.trim(r.engineNo) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleColour + cnt + '" name="' + CaptionBaseVehicleColour + cnt + '" value="' + $.trim(r.colour) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleValue + cnt + '" name="' + CaptionBaseVehicleValue + cnt + '" value="' + $.trim(r.sumInsured) + '" />' +
-            '<input type="hidden" id="' + CaptionBaseVehicleStatus + cnt + '" name="' + CaptionBaseVehicleStatus + cnt + '" value="' + $.trim(r.vehicleStatus) + '" />';
+            '<input type="hidden" class="ValueVehicleRegistrationNo" id="' + CaptionBaseVehicleRegistrationNo + cnt + '" name="' + CaptionBaseVehicleRegistrationNo + cnt + '" value="' + $.trim(r.plateNo) + '" />' +
+            '<input type="hidden" class="ValueVehicleChassisNo" id="' + CaptionBaseVehicleChassisNo + cnt + '" name="' + CaptionBaseVehicleChassisNo + cnt + '" value="' + $.trim(r.chassisNo) + '" />' +
+            '<input type="hidden" class="ValueVehicleMake" id="' + CaptionBaseVehicleMake + cnt + '" name="' + CaptionBaseVehicleMake + cnt + '" value="' + $.trim(r.make) + '" />' +
+            '<input type="hidden" class="ValueVehicleModel" id="' + CaptionBaseVehicleModel + cnt + '" name="' + CaptionBaseVehicleModel + cnt + '" value="' + $.trim(r.model) + '" />' +
+            '<input type="hidden" class="ValueVehicleYear" id="' + CaptionBaseVehicleYear + cnt + '" name="' + CaptionBaseVehicleYear + cnt + '" value="' + $.trim(r.year) + '" />' +
+            '<input type="hidden" class="ValueVehicleBody" id="' + CaptionBaseVehicleBody + cnt + '" name="' + CaptionBaseVehicleBody + cnt + '" value="' + $.trim(r.vehicleBodyType) + '" />' +
+            '<input type="hidden" class="ValueVehicleType" id="' + CaptionBaseVehicleType + cnt + '" name="' + CaptionBaseVehicleType + cnt + '" value="' + $.trim(r.vehicleType) + '" />' +
+            '<input type="hidden" class="ValueVehicleEngineNo" id="' + CaptionBaseVehicleEngineNo + cnt + '" name="' + CaptionBaseVehicleEngineNo + cnt + '" value="' + $.trim(r.engineNo) + '" />' +
+            '<input type="hidden" class="ValueVehicleColour" id="' + CaptionBaseVehicleColour + cnt + '" name="' + CaptionBaseVehicleColour + cnt + '" value="' + $.trim(r.colour) + '" />' +
+            '<input type="hidden" class="ValueVehicleValue" id="' + CaptionBaseVehicleValue + cnt + '" name="' + CaptionBaseVehicleValue + cnt + '" value="' + $.trim(r.sumInsured) + '" />' +
+            '<input type="hidden" class="ValueVehicleStatus" id="' + CaptionBaseVehicleStatus + cnt + '" name="' + CaptionBaseVehicleStatus + cnt + '" value="' + $.trim(r.vehicleStatus) + '" />';
 
 
         var tableRow = $('<tr/>');
@@ -546,8 +546,13 @@ function doPrimaryFunctions() {
         chassisCell.appendTo(tableRow);
         //
         var sumInsuredCell = $('<td/>');
-        sumInsuredCell.html('<input type="text" "style="margin-left:auto; margin-right:0;" value="' + accounting.formatMoney(r.sumInsured) + '" disabled/>');
+        sumInsuredCell.html('<input type="text" style="margin-left:auto; margin-right:0;" value="' + accounting.formatMoney(r.sumInsured) + '" disabled/>');
         sumInsuredCell.appendTo(tableRow);
+        //
+        var deleteCell = $('<td/>');
+        deleteCell.html('<button type="button" class="btn btn-link deleteVehicleRow">Delete Vehicle</button>');
+        deleteCell.appendTo(tableRow);
+
         //
         if (IsDuplicate(r.chassisNo)) {
             bootbox.alert('Duplicate!');
@@ -555,8 +560,15 @@ function doPrimaryFunctions() {
             tableRow.appendTo($('#vehiclesToBeInsured'));
             $('#taxOfficeVehicleRefresh tbody').show();
         }
+        reIndexVehicles();
     }
 
+
+    $('#vehiclesToBeInsured').on('click', '.deleteVehicleRow', function () {
+        var tr = $(this).closest('tr');
+        tr.remove();
+        reIndexVehicles();
+    });
 
 
     //check duplicate
@@ -585,7 +597,36 @@ function doPrimaryFunctions() {
         return returnVal;
     }
 
-    //driver Licence 
+    //need to index vehicles
+    function reIndexVehicles() {
+        var sumInsured = 0;
+        $('#vehiclesToBeInsured tbody tr').each(function (index, element) {
+            $(this).find('ValueVehicleRegistrationNo').attr("id", CaptionBaseVehicleRegistrationNo + index).attr("name", CaptionBaseVehicleRegistrationNo + index);
+            $(this).find('ValueVehicleChassisNo').attr("id", CaptionBaseVehicleChassisNo + index).attr("name", CaptionBaseVehicleChassisNo + index);
+            $(this).find('ValueVehicleMake').attr("id", CaptionBaseVehicleMake + index).attr("name", CaptionBaseVehicleMake + index);
+            $(this).find('ValueVehicleModel').attr("id", CaptionBaseVehicleModel + index).attr("name", CaptionBaseVehicleModel + index);
+            $(this).find('ValueVehicleYear').attr("id", CaptionBaseVehicleYear + index).attr("name", CaptionBaseVehicleYear + index);
+            $(this).find('ValueVehicleBody').attr("id", CaptionBaseVehicleBody + index).attr("name", CaptionBaseVehicleBody + index);
+            $(this).find('ValueVehicleType').attr("id", CaptionBaseVehicleType + index).attr("name", CaptionBaseVehicleType + index);
+            $(this).find('ValueVehicleEngineNo').attr("id", CaptionBaseVehicleEngineNo + index).attr("name", CaptionBaseVehicleEngineNo + index);
+            $(this).find('ValueVehicleColour').attr("id", CaptionBaseVehicleColour + index).attr("name", CaptionBaseVehicleColour + index);
+            $(this).find('ValueVehicleValue').attr("id", CaptionBaseVehicleValue + index).attr("name", CaptionBaseVehicleValue + index);
+            $(this).find('ValueVehicleStatus').attr("id", CaptionBaseVehicleStatus + index).attr("name", CaptionBaseVehicleStatus + index);
+            $(this).find('ValueVehicleEngineNo').attr("id", CaptionBaseVehicleEngineNo + index).attr("name", CaptionBaseVehicleEngineNo + index);
+            sumInsured = sumInsured + parseFloat($(this).find('ValueVehicleValue').val());
+        });
+        if (sumInsured < 2000000) {
+            $("#lessthan2mill").prop("disabled", false);
+            $("#2millandgreater").prop("disabled", true);
+        } else {
+            $("#lessthan2mill").prop("disabled", true);
+            $("#2millandgreater").prop("disabled", false);
+        }
+        $('#vehicleCnt').val($('#vehiclesToBeInsured tbody tr').length);
+    }
+
+
+
 
 
 
