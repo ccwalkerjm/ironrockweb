@@ -125,21 +125,15 @@
                     <section id="wizard" style="display:none">
                         <div class="page-header">
                         </div>
-                        <p>Quote No:<span id="DisplayQuoteNo"></span>
-                            <button type="button" class="btn btn-default" id="doprint">View PDF</button>
-                        </p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" id="returntoQuotes">Return</button>
+                            <button type="button" class="btn btn-info" id="doprint">Create PDF</button>
+                        </div>
                         <div id="rootwizard">
-
                             <div class="navbar">
                                 <div class="navbar-inner">
                                     <div class="container">
                                         <ul id="wizard-tabs">
-                                            <li><a href="#personal-main-page" data-toggle="tab">Personal</a>
-                                            </li>
-                                            <li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
-                                            </li>
-                                            <li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -414,6 +408,30 @@
 
                 });
 
+                $('#returntoQuotes').click(function () {
+                    $('#quotes').show();
+                    $('#wizard').hide();
+                    //remove quote
+                    $('#personal-main-page').remove();
+                    $('#personal-contact-page').remove();
+                    $('#personal-employer-details-page').remove();
+                    if (currentQuote.insuranceType == 'motor') {
+                        $('#vehicle-particulars-page').remove();
+                        $('#vehicle-insurance-coverage-page').remove();
+                        $('#vehicle-driver-details-page').remove();
+                        $('#vehicle-accidents-page').remove();
+                        $('#vehicle-medical-history-page').remove();
+                    } else {
+                        $('#home-particulars-page').remove();
+                        $('#home-particulars-continued-page').remove();
+                        $('#home-property-details-page').remove();
+                        $('#home-all-risk-insurance-page').remove();
+                    }
+                    $('#rootwizard').empty();
+                    $('#quotation').empty();
+                    //last reset currentQuote
+                    currentQuote = {};
+                });
 
 
                 $('#quotesTable tbody').on('click', '.select', function (e) {
@@ -424,6 +442,7 @@
                             return;
                         }
                         currentQuote = JSON.parse(resp);
+                        currentQuote.applicantQuoteNo = id;
                         DisplayQuote();
                     });
                 });
@@ -431,15 +450,18 @@
 
 
                 function DisplayQuote() {
-                    $('#quotes').hide();
-                    $('#wizard').show();
-                    //
-                    var insuranceType = currentQuote.insuranceType;
-                    var wizardTabs = $('#wizard-tabs');
+                    //variables
                     var mainSectionUrl;
-                    $('#insuranceType').val(currentQuote.insuranceType);
-                    if (insuranceType == 'motor') {
-                        $('.page-header').html('<h1>Motor Vehicle Proposal</h1>');
+                    var DisplayQuoteNo = '<h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>';
+
+                    //load wizard
+                    var wizardTabs = $('#wizard-tabs');
+                    wizardTabs.html('<li><a href="#personal-main-page" data-toggle="tab">Personal</a></li>' +
+                        '<li><a href="#personal-contact-page" data-toggle="tab">Contact</a></li>' +
+                        '<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a></li>');
+
+                    if (currentQuote.insuranceType == 'motor') {
+                        $('.page-header').html('<h1>Motor Vehicle Proposal</h1>' + DisplayQuoteNo);
                         mainSectionUrl = "motorVehicleSection.html";
                         wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
                         wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
@@ -447,7 +469,7 @@
                         wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
                         wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
                     } else {
-                        $('.page-header').html('<h1>Home Property Proposal</h1>');
+                        $('.page-header').html('<h1>Home Property Proposal</h1>' + DisplayQuoteNo);
                         mainSectionUrl = "homePropertySection.html";
                         wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
                         wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
@@ -459,11 +481,16 @@
                     $.get(mainSectionUrl, function (r) {
                         $('.tab-content').prepend(r);
                         InsertPersonalSection(function () {
-                            LoadSettings(insuranceType);
+                            LoadSettings(currentQuote.insuranceType);
+                            $('.tab-content').find('#insuranceType').val(currentQuote.insuranceType);
+                            //show quote wizard
+                            $('#wizard').show();
+                            $('#quotes').hide();
                         });
                     });
-                    $('#introduction').hide();
-                    $('#wizard').show();
+
+                    //$('#introduction').hide();
+
                 }
 
                 //load personal sections
@@ -518,6 +545,7 @@
 
 
                 var $validator = $(".ProposalForm").validate();
+                $('#rootwizard').bootstrapWizard();
 
                 function doWizard(insurancetype) {
                     $('#rootwizard').bootstrapWizard({
@@ -593,30 +621,34 @@
                     });
                 }
 
+                var populateOtherItems = function () {
+                    $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
+                    $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
+                    $('#applicantAlias').val(currentQuote.applicantAlias);
+                    $('#applicantNationality').val(currentQuote.applicantNationality);
+                    $('#applicantIDType').val(currentQuote.applicantIDType);
+                }
 
 
                 function populateQuote() {
-                    $('#DisplayQuoteNo').text(currentQuote.id);
-                    $('#applicantTRN').val(currentQuote.applicantTRN);
-                    $('#applicantSurname').val(currentQuote.applicantSurname);
-                    $('#FirstName').val(currentQuote.FirstName);
-                    $('#applicantMiddleName').val(currentQuote.applicantMiddleName);
-                    $('#applicantTitle').val(currentQuote.applicantTitle);
-                    $('#applicantDateOfBirth').val(currentQuote.applicantDateOfBirth);
-
-
-                    $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
-
-                    $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
-
-                    $('#applicantAlias').val(currentQuote.applicantAlias);
-
-                    $('#applicantNationality').val(currentQuote.applicantNationality);
-
-                    $('#applicantIDType').val(currentQuote.applicantIDType);
-
-                    $('#applicantIDnumber').val(currentQuote.applicantIDnumber);
+                    var licenseNo = currentQuote.applicantIDnumber;
+                    if (currentQuote.egovDriversLicenseDetails) {
+                        var driverLicenseJson = JSON.parse(currentQuote.egovDriversLicenseDetails);
+                        populateApplicant(driverLicenseJson);
+                        populateOtherItems();
+                    } else {
+                        GetDriverLicense(licenseNo, function (err, data) {
+                            if (err) {
+                                alert(err);
+                                return;
+                            }
+                            data.id = licenseNo;
+                            populateApplicant(data);
+                            populateOtherItems();
+                        });
+                    }
                 }
+
 
                 $('#doprint').click(function () {
                     DisplayPdf();

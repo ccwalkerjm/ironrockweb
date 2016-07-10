@@ -323,7 +323,6 @@
                     var insuranceType = $this.attr('id');
                     var wizardTabs = $('#wizard-tabs');
                     var mainSectionUrl;
-                    $('#insuranceType').val(insuranceType);
                     if (insuranceType == 'motor') {
                         $('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
                         mainSectionUrl = "motorVehicleSection.html";
@@ -346,6 +345,7 @@
                         $('.tab-content').prepend(r);
                         InsertPersonalSection(function () {
                             LoadSettings(insuranceType);
+                            $('.tab-content').find('#insuranceType').val(insuranceType);
                         });
                     });
                     $('#introduction').hide();
@@ -481,8 +481,9 @@
                 ////submit
                 $('#submit-btn').click(function () {
                     //get signature data       
-                    //var formData = $('form').serialize();                    
-                    var formData = JSON.stringify($('form').serializeObject());
+                    //var formData = $('form').serialize();
+                    var jsonForm = $('form').serializeObject();
+                    var formData = JSON.stringify(jsonForm);
                     ir.submitQuote(formData, function (err, r) {
                         if (err) {
                             alert("error: " + err.statusText);

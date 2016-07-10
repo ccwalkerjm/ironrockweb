@@ -11,6 +11,8 @@
 //    $.mobile.autoInitializePage = false;
 //});
 
+//global variables and functions
+
 var _apiBaseUrl = "https://api.courserv.com/ironrock"; //localhost:58633/api/";
 var _contentBaseUrl = "https://cdn.courserv.com/ironrock";
 var _IronRockPreliminaryData = "IronRockPreliminaryData";
@@ -51,9 +53,67 @@ function loadQuotation(r) {
     }
 }
 
+function GetDriverLicense(licenseNo, callback) {
+    var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + licenseNo;
+    $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
+        url: serverUrl,
+        dataType: "json",
+        success: function (r) {
+            //success handling
+            //var json = JSON.parse(r);
+            r = ConvertToJson(r);
+            if (r.error_message) {
+                err = new Error('Invalid License No!');
+                callback(err);
+            } else if (r.Message) {
+                err = new Error('Invalid License No!');
+                callback(err);
+            } else {
+                callback(null, r);
+            }
+        },
+        error: function (err) {
+            //error handling
+            callback(err);
+        }
+    });
+}
 
+function populateApplicant(r) {
+    //id        
+    var egovDrivers = JSON.stringify(r);
+    $('#egovDriversLicenseDetails').val(egovDrivers);
+    $('#applicantIDnumber').val(r.driversLicenceNo);
+    $('#dateFirstIssued').val(r.dateFirstIssued);
+    $('#applicationIDExpirationDate').val(r.expiryDate);
+    //address
+    $('#applicantSurname').val(r.lastName);
+    $('#applicantFirstName').val(r.firstName);
+    $('#FirstName').val(r.firstName);
+    $('#applicantMiddleName').val(r.middleName);
+    $('#applicantDateOfBirth').val(r.dateOfBirth.substring(0, 10));
+    $('#applicantTitle').val(r.gender == 'M' ? 'Mr.' : 'Ms.');
+    //$('#applicantHomeCountry').val(r.CountryCode.toLowerCase()=='jamaica'?'JM':).trigger("change");
+    //        $('#applicantHomeCountry option[value=' + r.CountryCode + ']').prop('selected', 'selected');
+    //        $('#applicantHomeParish option[value=' + r.ParishCode + ']').prop('selected', 'selected');
+    $('#applicantHomeStreetName').val(r.AddressMark + ', ' + r.AddressStreetNumber + ' ' + r.AddressStreetName);
+    //
+    $("#applicantPhoto").attr('src', 'data:image/png;base64,' + r.photograph);
+    SetTRnDetails(true);
+}
 
-
+function SetTRnDetails(state) {
+    $("#applicantTRN").attr("readonly", state);
+    if (state) {
+        $('#getTRNDetails').hide();
+        $('#clearTRNDetails').show();
+    } else {
+        $('#getTRNDetails').show();
+        $('#clearTRNDetails').hide();
+    }
+}
 
 
 //$(document).ready(function (e) {
@@ -72,7 +132,7 @@ function doPrimaryFunctions() {
             //$('.regularDriversCls:last .occupation select').val(occupation);
             //$('#regularDriversOccupation0').val(occupation);
             $('.regularDriversCls:last .DateOfBirth input').val($('#applicantDateOfBirth').val());
-            $('.regularDriversCls:last .DriversDL input').val($('#applicantIDNumber').val());
+            $('.regularDriversCls:last .DriversDL input').val($('#applicantIDnumber').val());
             $('.regularDriversCls:last .DriversDLExpirationDate input').val($('#applicationIDExpirationDate').val());
             $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val($('#dateFirstIssued').val());
         }
@@ -144,8 +204,7 @@ function doPrimaryFunctions() {
 
     ///
     ///////
-    $('#personal-main-page').on('click', '#getTRNDetails', function () {
-
+    /*$('#personal-main-page').on('click', '#getTRNDetails', function () {
         var id = $('#applicantTRN').val();
         var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + id;
         $.ajax({
@@ -162,7 +221,7 @@ function doPrimaryFunctions() {
                 } else if (r.Message) {
                     alert("Invalid ID!!");
                 } else {
-                    r.id = id;
+                    r.id = id;                    
                     populateApplicant(r);
                     createFirstDriver();
                 }
@@ -172,7 +231,23 @@ function doPrimaryFunctions() {
                 alert("error: " + err.statusText);
             }
         });
+    });*/
+
+    $('#personal-main-page').on('click', '#getTRNDetails', function () {
+        var licenseNo = $('#applicantTRN').val();
+        GetDriverLicense(licenseNo, function (err, data) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            data.id = licenseNo;
+            populateApplicant(data);
+            createFirstDriver();
+
+        });
     });
+
+
 
     $('#personal-main-page').on('click', '#clearTRNDetails', function () {
         SetTRnDetails(false);
@@ -180,43 +255,14 @@ function doPrimaryFunctions() {
         $('#applicantPhoto').attr('src', imageSrc); //
         $('#applicantTRNDetails input').val('');
         $('#applicantTRN').val('');
-        $('#applicantIDNumber').val('');
+        $('#applicantIDnumber').val('');
         $('#dateFirstIssued').val('');
         $('#applicationIDExpirationDate').val('');
         $('#applicantHomeStreetName').val('');
     });
 
-    function populateApplicant(r) {
-        //id
-        $('#applicantIDNumber').val(r.driversLicenceNo);
-        $('#dateFirstIssued').val(r.dateFirstIssued);
-        $('#applicationIDExpirationDate').val(r.expiryDate);
-        //address
-        $('#applicantSurname').val(r.lastName);
-        $('#applicantFirstName').val(r.firstName);
-        $('#applicantMiddleName').val(r.middleName);
-        $('#applicantDateOfBirth').val(r.dateOfBirth.substring(0, 10));
-        $('#applicantTitle').val(r.gender == 'M' ? 'Mr.' : 'Ms.');
-        //$('#applicantHomeCountry').val(r.CountryCode.toLowerCase()=='jamaica'?'JM':).trigger("change");
-        //        $('#applicantHomeCountry option[value=' + r.CountryCode + ']').prop('selected', 'selected');
-        //        $('#applicantHomeParish option[value=' + r.ParishCode + ']').prop('selected', 'selected');
-        $('#applicantHomeStreetName').val(r.AddressMark + ', ' + r.AddressStreetNumber + ' ' + r.AddressStreetName);
-        //
-        $("#applicantPhoto").attr('src', 'data:image/png;base64,' + r.photograph);
-        SetTRnDetails(true);
-    }
 
-    function SetTRnDetails(state) {
-            $("#applicantTRN").attr("readonly", state);
-            if (state) {
-                $('#getTRNDetails').hide();
-                $('#clearTRNDetails').show();
-            } else {
-                $('#getTRNDetails').show();
-                $('#clearTRNDetails').hide();
-            }
-        }
-        ////////////////////////////////////////
+    ////////////////////////////////////////
     $.fn.serializeObject = function () {
         var o = {};
         var a = this.serializeArray();
