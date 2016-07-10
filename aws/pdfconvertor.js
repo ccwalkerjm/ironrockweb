@@ -65,5 +65,5 @@ function CreatePDF(resp) {
     doc.text(20, 110, 'Home Address');
     doc.text(20, 170, 'Mailing Address');
     doc.text(20, 210, 'Employer Details');
-    doc.save('Proposal' + id + '.pdf');
+    doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
 }
