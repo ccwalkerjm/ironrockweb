@@ -3,39 +3,17 @@
 //$(document).ready(function (e) {
 
 function doMiscellaneous() {
+        setVehicleUsedAs("SocialDomesticPleasure");
+        //vehicle-all-accidents
+        setAllAccidentsYears();
+        //set Last Three Years of Ownership()
+        setLastThreeYearsOwnership();
+
         //vehicle Used As
         $('#vehicleUsedAs').change(function () {
             var select_value = $(this).val();
             setVehicleUsedAs(select_value);
         });
-
-        setVehicleUsedAs("SocialDomesticPleasure");
-
-        function setVehicleUsedAs(select_value) {
-            //hide and uncheck all inexperinecd driver elements
-            $('#InexperiencedDriverBlock input').prop('checked', false); // Unchecks it
-            $('#InexperiencedDriverBlock label, #InexperiencedDriverBlock input').hide();
-            //$('label[for=a], input#a').hide();
-            //show relevant inputs
-            switch (select_value) {
-            case "CarriageOwnGoods": //private commercial               
-            case "CarriagePassengersNotHire": //private commercial
-            case "CarriagePassengersHire": //private commercial
-            case "CommercialTravelling": //private commercial
-                $('label[for=23YearsOldPrivateCommercial], input#23YearsOldPrivateCommercial').show();
-                $('label[for=36MonthsGeneralLicencePrivateCommercial], input#36MonthsGeneralLicencePrivateCommercial').show();
-                break;
-            case "GeneralCartage": //General Cartage  
-                $('label[for=25YearsOldGeneralCartage], input#25YearsOldGeneralCartage').show();
-                $('label[for=5YearsGeneralLicencePublicCommercial], input#5YearsGeneralLicencePublicCommercial').show();
-                break;
-            case "SocialDomesticPleasure": //private car
-            case "SocialDomesticPleasureBusiness": //private car
-                $('label[for=21YearsOldPrivateCars], input#21YearsOldPrivateCars').show();
-                $('label[for=24MonthsPrivateLicence], input#24MonthsPrivateLicence').show();
-                break;
-            }
-        }
 
 
         //medical history
@@ -58,21 +36,6 @@ function doMiscellaneous() {
 
 
 
-        //vehicle-all-accidents
-        setAllAccidentsYears();
-
-        function setAllAccidentsYears() {
-            var currentYear = new Date().getFullYear();
-            for (i = 1; i < 4; i++) {
-                currentYear = currentYear - i;
-                var option = $('<option/>');
-                option.attr('Value', currentYear);
-                option.text(currentYear);
-                option.appendTo($('#accidentYear'));
-
-            }
-        }
-
         $('#vehicle-all-accidents').on('click', '.Add', function () {
             var elementGroup = $(this).parent().parent().parent();
             elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
@@ -84,34 +47,6 @@ function doMiscellaneous() {
             elementGroup.remove();
             resetAllAccident();
         });
-
-        function resetAllAccident() {
-            var objectList = [
-                {
-                    "class": "year",
-                    "name": "accidentYear"
-            },
-                {
-                    "class": "cost",
-                    "name": "accidentCost"
-            },
-                {
-                    "class": "month",
-                    "name": "accidentMonth"
-            },
-                {
-                    "class": "driver",
-                    "name": "accidentDriver"
-            },
-                {
-                    "class": "brief",
-                    "name": "accidentBrief"
-            }
-        ];
-            var elementClass = $('.vehicle-accident-block');
-            resetObjects(objectList, elementClass, "Add", "Delete", "Accident");
-        }
-
 
 
         //garageOutBuildingClass
@@ -538,15 +473,82 @@ function doMiscellaneous() {
             }
         });
 
-        //set Last Three Years of Ownership()
-        setLastThreeYearsOwnership();
 
     } //);
 
 
 
 
-////aaaafunctions
+////functions
+//set accident years
+function setAllAccidentsYears() {
+    var currentYear = new Date().getFullYear();
+    for (i = 1; i < 4; i++) {
+        currentYear = currentYear - i;
+        var option = $('<option/>');
+        option.attr('Value', currentYear);
+        option.text(currentYear);
+        option.appendTo($('#accidentYear'));
+
+    }
+}
+
+
+//
+function resetAllAccident() {
+    var objectList = [
+        {
+            "class": "year",
+            "name": "accidentYear"
+            },
+        {
+            "class": "cost",
+            "name": "accidentCost"
+            },
+        {
+            "class": "month",
+            "name": "accidentMonth"
+            },
+        {
+            "class": "driver",
+            "name": "accidentDriver"
+            },
+        {
+            "class": "brief",
+            "name": "accidentBrief"
+            }
+        ];
+    var elementClass = $('.vehicle-accident-block');
+    resetObjects(objectList, elementClass, "Add", "Delete", "Accident");
+}
+
+//Used As
+function setVehicleUsedAs(select_value) {
+    //hide and uncheck all inexperinecd driver elements
+    $('#InexperiencedDriverBlock input').prop('checked', false); // Unchecks it
+    $('#InexperiencedDriverBlock label, #InexperiencedDriverBlock input').hide();
+    //$('label[for=a], input#a').hide();
+    //show relevant inputs
+    switch (select_value) {
+    case "CarriageOwnGoods": //private commercial               
+    case "CarriagePassengersNotHire": //private commercial
+    case "CarriagePassengersHire": //private commercial
+    case "CommercialTravelling": //private commercial
+        $('label[for=23YearsOldPrivateCommercial], input#23YearsOldPrivateCommercial').show();
+        $('label[for=36MonthsGeneralLicencePrivateCommercial], input#36MonthsGeneralLicencePrivateCommercial').show();
+        break;
+    case "GeneralCartage": //General Cartage  
+        $('label[for=25YearsOldGeneralCartage], input#25YearsOldGeneralCartage').show();
+        $('label[for=5YearsGeneralLicencePublicCommercial], input#5YearsGeneralLicencePublicCommercial').show();
+        break;
+    case "SocialDomesticPleasure": //private car
+    case "SocialDomesticPleasureBusiness": //private car
+        $('label[for=21YearsOldPrivateCars], input#21YearsOldPrivateCars').show();
+        $('label[for=24MonthsPrivateLicence], input#24MonthsPrivateLicence').show();
+        break;
+    }
+}
+
 
 //load occupations
 function loadOccupations(isMotor) {

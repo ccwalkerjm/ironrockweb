@@ -114,6 +114,7 @@
                                             <td>First Name</td>
                                             <td>Last Name</td>
                                             <td>Type</td>
+                                            <td>Broker</td>
                                             <td></td>
                                         </tr>
                                     </thead>
@@ -404,14 +405,15 @@
                             dlTable.append('<tr><td>' + r.id + '</td><td>' +
                                 data.FirstName + '</td><td>' +
                                 data.applicantSurname + '</td><td>' +
-                                data.insuranceType + '</td><td><button class="btn btn-link select" id="' + r.id + '">Select</button></td></tr>');
+                                data.insuranceType + '</td><td></td><td><button class="btn btn-link select" id="' + r.id + '">Select</button></td></tr>');
                         })
                     });
 
                 });
 
                 $('#returntoQuotes').click(function () {
-                    $('#quotes').show();
+                    location.reload();
+                    /*$('#quotes').show();
                     $('#wizard').hide();
                     //remove quote
                     $('#personal-main-page').remove();
@@ -432,7 +434,7 @@
                     $('#rootwizard').empty();
                     $('#quotation').empty();
                     //last reset currentQuote
-                    currentQuote = {};
+                    currentQuote = {};*/
                 });
 
 
@@ -547,7 +549,6 @@
 
 
                 var $validator = $(".ProposalForm").validate();
-                $('#rootwizard').bootstrapWizard();
 
                 function doWizard(insurancetype) {
                     $('#rootwizard').bootstrapWizard({
@@ -623,13 +624,10 @@
                     });
                 }
 
-                var populateOtherItems = function () {
-                    $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
-                    $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
-                    $('#applicantAlias').val(currentQuote.applicantAlias);
-                    $('#applicantNationality').val(currentQuote.applicantNationality);
-                    $('#applicantIDType').val(currentQuote.applicantIDType);
-                }
+                $('#doprint').click(function () {
+                    CreatePDF(currentQuote)
+                })
+
 
 
                 function populateQuote() {
@@ -652,9 +650,105 @@
                 }
 
 
-                $('#doprint').click(function () {
-                    CreatePDF(currentQuote)
-                })
+                var populateOtherItems = function () {
+                    //applicant details
+                    $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
+                    $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
+                    $('#applicantAlias').val(currentQuote.applicantAlias);
+                    $('#applicantNationality').val(currentQuote.applicantNationality);
+                    $('#applicantIDType').val(currentQuote.applicantIDType);
+                    $('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
+
+
+                    //contact
+                    $('#SourceOfFunds').val(currentQuote.SourceOfFunds ? currentQuote.SourceOfFunds : "");
+                    $('#applicantMobileNumber').val(currentQuote.applicantMobileNumber);
+                    $('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
+                    $('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
+                    $('#applicantHomeStreetName').val(currentQuote.applicantHomeStreetName);
+                    $('#applicantHomeTown').val(currentQuote.applicantHomeTown);
+                    $('#applicantHomeParish').val(currentQuote.applicantHomeParish);
+                    $('#applicantHomePostalCode').val(currentQuote.applicantHomePostalCode);
+                    $('#applicantHomeState').val(currentQuote.applicantHomeState);
+                    $('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
+
+                    //mailing address
+                    $('#mailingAddressSame').val(currentQuote.mailingAddressSame);
+                    $('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
+                    $('#appplicantMailStreetName').val(currentQuote.appplicantMailStreetName);
+                    $('#applicantMailTown').val(currentQuote.applicantMailTown);
+                    $('#applicantMailParish').val(currentQuote.applicantMailParish);
+                    $('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
+                    $('#applicantMailState').val(currentQuote.applicantMailState);
+                    $('#applicantMailCountry').val(currentQuote.applicantMailCountry);
+
+                    //employment
+                    $('#applicantOccupation').val(currentQuote.applicantOccupation);
+                    $('#employerName').val(currentQuote.employerName);
+                    $('#employerStreetName').val(currentQuote.employerStreetName);
+                    $('#employerTown').val(currentQuote.employerTown);
+                    $('#employerParish').val(currentQuote.employerParish);
+                    $('#employerPostalCode').val(currentQuote.employerPostalCode);
+                    $('#employerState').val(currentQuote.employerState);
+                    $('#employerNationality').val(currentQuote.employerNationality);
+
+
+                    //insert vehicle0
+                    if (currentQuote.vehicleRegistrationNo0) {
+                        var vehicle0 = {};
+                        vehicle0.plateNo = currentQuote.vehicleRegistrationNo0;
+                        vehicle0.chassisNo = currentQuote.vehicleChassisNo0;
+                        vehicle0.make = currentQuote.vehicleMake0;
+                        vehicle0.model = currentQuote.vehicleModel0;
+                        vehicle0.year = currentQuote.vehicleYear0;
+                        vehicle0.vehicleBodyType = currentQuote.vehicleBody0;
+                        //vehicle0.vehicleType = "Sedan";
+                        vehicle0.engineNo = currentQuote.vehicleEngineType0;
+                        vehicle0.colour = currentQuote.vehicleColour0;
+                        vehicle0.vehicleStatus = "";
+                        vehicle0.sumInsured = currentQuote.vehicleValue0;
+                        insertVehicle(vehicle0);
+                    }
+                    if (currentQuote.vehicleRegistrationNo1) {
+                        var vehicle1 = {};
+                        vehicle1.plateNo = currentQuote.vehicleRegistrationNo1;
+                        vehicle1.chassisNo = currentQuote.vehicleChassisNo1;
+                        vehicle1.make = currentQuote.vehicleMake1;
+                        vehicle1.model = currentQuote.vehicleModel1;
+                        vehicle1.year = currentQuote.vehicleYear1;
+                        vehicle1.vehicleBodyType = currentQuote.vehicleBody1;
+                        //vehicle1.vehicleType = "Sedan";
+                        vehicle1.engineNo = currentQuote.vehicleEngineType1;
+                        vehicle1.colour = currentQuote.vehicleColour1;
+                        vehicle1.vehicleStatus = "";
+                        vehicle1.sumInsured = currentQuote.vehicleValue1;
+                        insertVehicle(vehicle1);
+                    }
+
+                    if (currentQuote.vehicleRegistrationNo2) {
+                        var vehicle2 = {};
+                        vehicle2.plateNo = currentQuote.vehicleRegistrationNo2;
+                        vehicle2.chassisNo = currentQuote.vehicleChassisNo2;
+                        vehicle2.make = currentQuote.vehicleMake2;
+                        vehicle2.model = currentQuote.vehicleModel2;
+                        vehicle2.year = currentQuote.vehicleYear2;
+                        vehicle2.vehicleBodyType = currentQuote.vehicleBody2;
+                        //vehicle2.vehicleType = "Sedan";
+                        vehicle2.engineNo = currentQuote.vehicleEngineType2;
+                        vehicle2.colour = currentQuote.vehicleColour2;
+                        vehicle2.vehicleStatus = "";
+                        vehicle2.sumInsured = currentQuote.vehicleValue2;
+                        insertVehicle(vehicle2);
+                    }
+                    
+                    
+                    $('#regularDriversName0').val(currentQuote.employerNationality);
+                    
+                    
+
+
+                }
+
 
 
 
