@@ -63,64 +63,134 @@
         <div class="page-sidebar-wrapper" id="sidebar"></div>
         <div class="page-content-wrapper">
             <div class="page-content">
-                <h1>Quotes</h1>
+                <div class='container'>
+                    <section id="quotes">
+                        <h1>Quotes</h1>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h2>Quote Search</h2>
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="quoteNo">Quote No:</label>
+                                        <input type="number" class="form-control" id="quoteNo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ident">ID No:</label>
+                                        <input type="number" class="form-control" id="ident">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstname">First Name:</label>
+                                        <input type="text" class="form-control" id="firstname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name:</label>
+                                        <input type="text" class="form-control" id="lastname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateFr">Date From:</label>
+                                        <input type="date" class="form-control" id="dateFr">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateTo">Date To:</label>
+                                        <input type="date" class="form-control" id="dateTo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="insuranceType">Type:</label>
+                                        <select class="form-control" id="insuranceType">
+                                            <option value="">All Types</option>
+                                            <option value="motor">Motor Vehicle</option>
+                                            <option value="property">Home Property</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-default" id="doSearch">Submit</button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <h2>Quotes</h2>
+                                <table class="table" id="quotesTable">
+                                    <thead>
+                                        <tr>
+                                            <td>Quote Number</td>
+                                            <td>First Name</td>
+                                            <td>Last Name</td>
+                                            <td>Type</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="wizard" style="display:none">
+                        <div class="page-header">
+                        </div>
+                        <p>Quote No:<span id="DisplayQuoteNo"></span>
+                            <button type="button" class="btn btn-default" id="doprint">View PDF</button>
+                        </p>
+                        <div id="rootwizard">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <h2>Quote Search</h2>
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="quoteNo">Quote No:</label>
-                                <input type="number" class="form-control" id="quoteNo">
+                            <div class="navbar">
+                                <div class="navbar-inner">
+                                    <div class="container">
+                                        <ul id="wizard-tabs">
+                                            <li><a href="#personal-main-page" data-toggle="tab">Personal</a>
+                                            </li>
+                                            <li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
+                                            </li>
+                                            <li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="ident">ID No:</label>
-                                <input type="number" class="form-control" id="ident">
+                            <div id="bar" class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
                             </div>
-                            <div class="form-group">
-                                <label for="firstname">First Name:</label>
-                                <input type="text" class="form-control" id="firstname">
+                            <div class="alert alert-warning" id="warning" style="display:none">
+                                <strong>Warning!</strong> The Page has invalid entries.
                             </div>
-                            <div class="form-group">
-                                <label for="lastname">Last Name:</label>
-                                <input type="text" class="form-control" id="lastname">
+
+                            <div class="tab-content">
+
+                                <div class="tab-pane" id="final-page">
+
+                                    <div id="signatureContainer">
+                                        <h4>Disclaimer:</h4>
+                                        <p>
+                                            The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
+                                        </p>
+                                        <form class="ProposalForm">
+
+                                            <div class="form-inline">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        Do you agree?
+                                                        <input class="form-control" type="checkbox" name="increasedLimits" id="increasedLimits">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+
+                                    <input type="hidden" id="quotation-number" />
+                                    <div id="quotation"></div>
+                                </div>
+
+
+                                <!--navigations -->
+                                <div style="float:right">
+                                    <input type='button' class='btn btn-primary button-next btn-lg' name='next' value='Next' />
+                                </div>
+                                <div style="float:left">
+                                    <input type='button' class='btn btn-warning button-previous btn-lg' name='previous' value='Previous' />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="dateFr">Date From:</label>
-                                <input type="date" class="form-control" id="dateFr">
-                            </div>
-                            <div class="form-group">
-                                <label for="dateTo">Date To:</label>
-                                <input type="date" class="form-control" id="dateTo">
-                            </div>
-                            <div class="form-group">
-                                <label for="insuranceType">Type:</label>
-                                <select class="form-control" id="insuranceType">
-                                    <option value="">All Types</option>
-                                    <option value="motor">Motor Vehicle</option>
-                                    <option value="property">Home Property</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-default" id="doSearch">Submit</button>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Quotes</h2>
-                        <table class="table" id="quotesTable">
-                            <thead>
-                                <tr>
-                                    <td>Quote Number</td>
-                                    <td>First Name</td>
-                                    <td>Last Name</td>
-                                    <td>Type</td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                        </div>
+
+                    </section>
                 </div>
-
             </div>
         </div>
     </div>
@@ -138,7 +208,121 @@
 
 
 
+    <!-- Modal -->
+    <div id="taxOfficeVehicleDialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Vehicle</h4>
+                </div>
+                <div class="modal-body">
+
+                    <h2>Add Vehicle</h2>
+                    <div id="taxOfficeQuery">
+                        <div class="row registration">
+                            <div class="col-md-4">
+                                <label class="control-label" for="QueryVehicleRegistrationNo">Registration No.:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" name="QueryVehicleRegistrationNo" id="QueryVehicleRegistrationNo" value="">
+                            </div>
+                        </div>
+
+                        <div class="row chassis">
+                            <!--style="display:none">-->
+                            <div class="col-md-4">
+                                <label class="control-label" for="QueryVehicleChassisNo">Chassis No.:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" name="QueryVehicleChassisNo" id="QueryVehicleChassisNo" value="">
+                            </div>
+                        </div>
+
+                        <div id="taxOfficeQueryManualEntry" style="display:none">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleEngineNo">Engine No.:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" name="QueryVehicleEngineNo" id="QueryVehicleEngineNo" value="">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleMake">Make:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="QueryVehicleMake" id="QueryVehicleMake"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleModel">Model:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="QueryVehicleModel" id="QueryVehicleModel"></select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleBodyType">Body Type:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="QueryVehicleBodyType" id="QueryVehicleBodyType"></select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleColour">Colour:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="QueryVehicleColour" id="QueryVehicleColour"></select>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label" for="QueryVehicleYear">Year:</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="number" name="QueryVehicleYear" id="QueryVehicleYear" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row sum-insured">
+                            <div class="col-md-4">
+                                <label class="control-label" for="QueryVehicleSumInsured">Sum Being Insured:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" type="number" name="QueryVehicleSumInsured" id="QueryVehicleSumInsured" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="queryVehicleSearch" type="button" class="btn btn-primary">Add</button>
+                    <button id="queryVehicleAdd" type="button" class="btn btn-primary" style="display:none">Add</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
     <script src="/Scripts/bootbox.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.bootstrap.wizard.js"></script>
+    <script src="/Scripts/prettify.js"></script>
     <!--Required Libraries-->
     <script src="/aws/jsbn.js"></script>
     <script src="/aws/jsbn2.js"></script>
@@ -147,8 +331,12 @@
     <script src="/aws/aws-cognito-sdk.min.js"></script>
     <script src="/aws/amazon-cognito-identity.min.js"></script>
     <script src="/aws/aws-sdk-2.3.19.min.js"></script>
+    <script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
     <!--Iron Rock Custom Library-->
     <script src="/aws/ironrockcloudservice.js"></script>
+    <script src="/aws/miscellaneous.js"></script>
+    <script src="/aws/index.js"></script>
+    <!--PDF Libraries-->
     <script src="/Scripts/jspdf.min.js"></script>
     <script src="/Scripts/zlib.js"></script>
     <script src="/Scripts/png.js"></script>
@@ -156,10 +344,12 @@
     <script src="/Scripts/png_support.js"></script>
     <script src="/Scripts/basic.js"></script>
 
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebar').load("/sideBarAuthorised.html", function () {
                 App.init();
+                var currentQuote = {};
                 var ir = new ironrockcloudservice();
 
 
@@ -225,6 +415,7 @@
                 });
 
 
+
                 $('#quotesTable tbody').on('click', '.select', function (e) {
                     var id = e.target.id;
                     ir.getQuote(id, function (err, resp) {
@@ -232,183 +423,372 @@
                             alert("error: " + err.statusText);
                             return;
                         }
-                        resp = JSON.parse(resp);
-                        console.log(resp);
-                        var imgData = 'data:' + resp.signatureImageType + ',' + resp.signatureBytes;
-                        var doc = new jsPDF();
-                        doc.setFontSize(22);
-                        doc.text(20, 20, 'Proposal');
-
-                        doc.setFontSize(10);
-                        doc.setFont("times");
-                        doc.setFontType("normal");                        
-                        doc.text(20, 30, 'Insurance for ' + resp.insuranceType);
-<<<<<<< HEAD
-                        doc.text(20, 40, 'Name ' + resp.FirstName + " " + resp.applicantSurname);
-                        //  doc.addImage(sigImage, resp.signatureImageType, 15, 40, 180, 160);
-=======
-                        
-                        doc.text(20, 50, 'Surname:');
-                        
-                        doc.text(20, 60, 'First Name:');
-                        
-                        doc.text(20, 70, 'Middle Name:');
-                        
-                        doc.text(20, 80, 'Title:');
-                        
-                        doc.text(20, 90, 'Occupation:');
-                        
-                        doc.text(100, 50, 'Mothers Maiden Name: ');
-                        
-                        doc.text(100, 60, 'Other Names/Aliases: ');
-                        
-                        doc.text(100, 70, 'ID Type: ');
-                        
-                        doc.text(100, 80, 'ID Number: ');
-                        
-                        doc.text(100, 90, 'Expiration Date: ');
-                        
-                        doc.text(100, 100, 'Source of Funds: ');
-                        
-                        doc.text(20, 120, 'Street Number and Name: ');
-                        
-                        doc.text(20, 130, 'City/Town/Postal Zone: ');
-                        
-                        doc.text(20, 140, 'Parish: ');
-                        
-                        doc.text(100, 120, 'TRN: ');
-                        
-                        doc.text(100, 130, 'Email Address: ');
-                        
-                        doc.text(100, 140, 'Mobile Number: ');
-                        
-                        doc.text(100, 150, 'Home Number: ');
-                        
-                        doc.text(100, 160, 'Work Number: ');
-                        
-                        
-                        
-                        doc.text(20, 180, 'Street Number and Name: ');
-                        
-                        doc.text(20, 190, 'City/Town/Postal Zone: ');
-
-                        doc.text(20, 200, 'Parish ');
-
-                        doc.text(100, 180, 'Date of Birth: ');
-                        
-                        doc.text(100, 190, 'Place of Birth: ');
-                        
-                        doc.text(100, 200, 'Nationality: ');
-                        
-                        
-                        
-                        doc.text(20, 220, 'Company Name:');  
-                        
-                        doc.text(100, 220, 'Street Number and Name:');  
-                        
-                        doc.text(100, 230, 'Town');  
-                        
-                        doc.text(100, 240, 'Parish');  
-                        
-                          
-                        
-                        doc.setFontType("bold");
-                        doc.text(50, 50, resp.applicantSurname);
-                        
-                        /*doc.text(50, 60, resp.applicantFirstName);                                            
-                        
-                        doc.text(50, 70, resp.applicantMiddleName);*/
-                         
-                        doc.text(50, 80, resp.applicantTitle);
-                        
-                        doc.text(50, 90, resp.applicantOccupation);
-                        
-                        doc.text(150, 50, resp.applicantMothersMaidenName);
-                        
-                        doc.text(150, 60, resp.applicantAlias);
-                        
-                        doc.text(150, 70, resp.applicantIDType);
-                        
-                        doc.text(150, 80, resp.applicantIDnumber);
-                        
-                        doc.text(150, 90, resp.applicationIDExpirationDate);
-                        
-                        /*                         
-                        doc.text(150, 100, resp.SourceOfFunds); */
-                       
-                        doc.text(20, 125, resp.applicantHomeStreetName);
-                        
-                        doc.text(20, 135, resp.applicantHomeTown);
-                        
-                        doc.text(50, 140, resp.applicantHomeParish);
-                        
-                        /*                         
-                        doc.text(150, 120, resp.applicantTRN); */
-                        
-                        doc.text(150, 130, resp.applicantEmailAddress);
-                        
-                        /*                         
-                        doc.text(150, 140, resp.ApplicantMobileNumber); */
-                        
-                        doc.text(150, 150, resp.applicantHomeNumber);
-                        
-                        doc.text(150, 160, resp.applicantWorkNumber);
-                        
-                       /*                         
-                        doc.text(20, 185, resp.applicantMailStreetName); */
-                        
-                        doc.text(20, 195, resp.applicantMailTown);
-                        
-                        doc.text(50, 200, resp.applicantMailParish);
-                        
-                        doc.text(150, 180, resp.applicantDateOfBirth);
-                        
-                        doc.text(150, 190, resp.applicantPlaceOfBirth);
-                        
-                        doc.text(150, 200, resp.applicantNationality);
-                        
-                        doc.text(50, 220, resp.employerName);       
-                                                
-                        doc.text(150, 220, resp.employerStreetName);  
-                        
-                        doc.text(150, 230, resp.employerTown);  
-                        
-                        doc.text(150, 240, resp.employerParish); 
-                        
-                        
-                        doc.setFontType("bold");
-                        doc.setFontSize("14");
-                        doc.text(20, 40, 'Name');       
-                                                
-                        doc.text(20, 110, 'Home Address');  
-                        
-                        doc.text(20, 170, 'Mailing Address');  
-                        
-                        doc.text(20, 210, 'Employer Details');
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                          
-                        
-                       
-                        
-                        
-                    
-                        
-                        
-
->>>>>>> origin/master
-                        doc.save('Proposal' + id + '.pdf');
+                        currentQuote = JSON.parse(resp);
+                        DisplayQuote();
                     });
+                });
+
+
+
+                function DisplayQuote() {
+                    $('#quotes').hide();
+                    $('#wizard').show();
+                    //
+                    var insuranceType = currentQuote.insuranceType;
+                    var wizardTabs = $('#wizard-tabs');
+                    var mainSectionUrl;
+                    $('#insuranceType').val(currentQuote.insuranceType);
+                    if (insuranceType == 'motor') {
+                        $('.page-header').html('<h1>Motor Vehicle Proposal</h1>');
+                        mainSectionUrl = "motorVehicleSection.html";
+                        wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
+                        wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
+                        wizardTabs.append('<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>');
+                        wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
+                        wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
+                    } else {
+                        $('.page-header').html('<h1>Home Property Proposal</h1>');
+                        mainSectionUrl = "homePropertySection.html";
+                        wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
+                        wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
+                        wizardTabs.append('<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>');
+                        wizardTabs.append('<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>');
+                    }
+                    wizardTabs.append('<li><a href="#final-page" data-toggle="tab">Complete</a></li>');
+
+                    $.get(mainSectionUrl, function (r) {
+                        $('.tab-content').prepend(r);
+                        InsertPersonalSection(function () {
+                            LoadSettings(insuranceType);
+                        });
+                    });
+                    $('#introduction').hide();
+                    $('#wizard').show();
+                }
+
+                //load personal sections
+                function InsertPersonalSection(callback) {
+                    $.get('personalsection.html', function (r) {
+                        $('.tab-content').prepend(r);
+                        callback();
+                    });
+                }
+
+                //do wizard and load settings
+                function LoadSettings(insurancetype) {
+                    doWizard(insurancetype);
+                    //     $('#rootwizard').bootstrapWizard();
+                    var prelimData = localStorage.getItem(_IronRockPreliminaryData);
+                    if (prelimData && prelimData != "null") {
+                        doMiscellaneous();
+                        doPrimaryFunctions();
+                        loadCountriesOptions();
+                        loadOccupations(insurancetype == "motor");
+                        if (insurancetype != "motor") loadRoofWallsTypes();
+                        populateQuote();
+                    } else {
+                        var serverUrl = _apiBaseUrl + "/misc";
+                        $.ajax({
+                            type: 'GET',
+                            //contentType: 'application/json',
+                            url: serverUrl,
+                            dataType: 'json',
+                            success: function (r) {
+                                var jsondata = ConvertToJson(r);
+                                if (jsondata.success == undefined) jsondata.success = true;
+                                if (jsondata.success) {
+                                    localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
+                                    doMiscellaneous();
+                                    doPrimaryFunctions();
+                                    loadCountriesOptions();
+                                    loadOccupations(insurancetype == "motor");
+                                    if (insurancetype != "motor") loadRoofWallsTypes();
+                                    //populate quote
+                                    populateQuote();
+                                } else {
+                                    alert(jsondata.error_message);
+                                }
+                            },
+                            error: function (err) {
+                                alert(err);
+                            }
+                        });
+                    }
+                }
+
+
+                var $validator = $(".ProposalForm").validate();
+
+                function doWizard(insurancetype) {
+                    $('#rootwizard').bootstrapWizard({
+                        'nextSelector': '.button-next',
+                        'previousSelector': '.button-previous',
+                        onNext: function (tab, navigation, index) {
+                            var $valid = true;
+                            switch (index) {
+                            case 1:
+                                $valid = $("#personal-main-page .ProposalForm").valid();
+                                break;
+                            case 2:
+                                $valid = $("#personal-contact-page .ProposalForm").valid();
+                                break;
+                            case 3:
+                                $valid = $("#personal-employer-details-page .ProposalForm").valid();
+                                break;
+                            }
+                            if (insurancetype == "motor") {
+                                switch (index) {
+                                case 4:
+                                    $valid = $("#vehicle-particulars-page .ProposalForm").valid();
+                                    if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0) $valid = false;
+                                    break;
+                                case 5:
+                                    //$valid = $("#vehicle-insurance-coverage-page .ProposalForm").valid();
+                                    break;
+                                case 6:
+                                    $valid = $("#vehicle-driver-details-page .ProposalForm").valid();
+                                    break;
+                                case 7:
+                                    //$valid = $("#vehicle-accidents-page .ProposalForm").valid();
+                                    break;
+                                case 8:
+                                    //$valid = $("#vehicle-medical-history-page .ProposalForm").valid();
+                                    break;
+                                }
+                            } else {
+                                switch (index) {
+                                case 4:
+                                    $valid = $("#home-particulars-page .ProposalForm").valid();
+                                    break;
+                                case 5:
+                                    $valid = $("#home-particulars-continued-page .ProposalForm").valid();
+                                    break;
+                                case 6:
+                                    $valid = $("#home-property-details-page .ProposalForm").valid();
+                                    break;
+                                case 7:
+                                    $valid = $("#home-all-risk-insurance-page .ProposalForm").valid();
+                                    break;
+                                }
+                            }
+                            if (!$valid) {
+                                $validator.focusInvalid();
+                                $('#warning').fadeIn().delay(5000).fadeOut();
+                                window.scrollTo(0, 0);
+                                return false;
+                            }
+
+                        },
+                        onTabClick: function () {
+                            return false;
+                        },
+                        onTabShow: function (tab, navigation, index) {
+                            var $total = navigation.find('li').length;
+                            var $current = index + 1;
+                            var $percent = ($current / $total) * 100;
+                            $('#rootwizard .progress-bar').css({
+                                width: $percent + '%'
+                            });
+                        }
+                    });
+                }
+
+
+
+                function populateQuote() {
+                    $('#DisplayQuoteNo').text(currentQuote.id);
+                    $('#applicantTRN').val(currentQuote.applicantTRN);
+                    $('#applicantSurname').val(currentQuote.applicantSurname);
+                    $('#FirstName').val(currentQuote.FirstName);
+                    $('#applicantMiddleName').val(currentQuote.applicantMiddleName);
+                    $('#applicantTitle').val(currentQuote.applicantTitle);
+                    $('#applicantDateOfBirth').val(currentQuote.applicantDateOfBirth);
+
+
+                    $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
+
+                    $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
+
+                    $('#applicantAlias').val(currentQuote.applicantAlias);
+
+                    $('#applicantNationality').val(currentQuote.applicantNationality);
+
+                    $('#applicantIDType').val(currentQuote.applicantIDType);
+
+                    $('#applicantIDnumber').val(currentQuote.applicantIDnumber);
+                }
+
+                $('#doprint').click(function () {
+                    DisplayPdf();
                 })
 
 
-            });
+                function DisplayPdf() {
 
+                    console.log(currentQuote);
+                    var imgData = 'data:' + currentQuote.signatureImageType + ',' + currentQuote.signatureBytes;
+                    var doc = new jsPDF();
+                    doc.setFontSize(22);
+                    doc.text(20, 20, 'Proposal');
+
+                    doc.setFontSize(10);
+                    doc.setFont("times");
+                    doc.setFontType("normal");
+                    doc.text(20, 30, 'Insurance for ' + currentQuote.insuranceType); //<< << << < HEAD
+                    doc.text(20, 40, 'Name ' + currentQuote.FirstName + " " + currentQuote.applicantSurname);
+                    //  doc.addImage(sigImage, currentQuote.signatureImageType, 15, 40, 180, 160);
+                    //=== === =
+
+                    doc.text(20, 50, 'Surname:');
+
+                    doc.text(20, 60, 'First Name:');
+
+                    doc.text(20, 70, 'Middle Name:');
+
+                    doc.text(20, 80, 'Title:');
+
+                    doc.text(20, 90, 'Occupation:');
+
+                    doc.text(100, 50, 'Mothers Maiden Name: ');
+
+                    doc.text(100, 60, 'Other Names/Aliases: ');
+
+                    doc.text(100, 70, 'ID Type: ');
+
+                    doc.text(100, 80, 'ID Number: ');
+
+                    doc.text(100, 90, 'Expiration Date: ');
+
+                    doc.text(100, 100, 'Source of Funds: ');
+
+                    doc.text(20, 120, 'Street Number and Name: ');
+
+                    doc.text(20, 130, 'City/Town/Postal Zone: ');
+
+                    doc.text(20, 140, 'Parish: ');
+
+                    doc.text(100, 120, 'TRN: ');
+
+                    doc.text(100, 130, 'Email Address: ');
+
+                    doc.text(100, 140, 'Mobile Number: ');
+
+                    doc.text(100, 150, 'Home Number: ');
+
+                    doc.text(100, 160, 'Work Number: ');
+
+
+
+                    doc.text(20, 180, 'Street Number and Name: ');
+
+                    doc.text(20, 190, 'City/Town/Postal Zone: ');
+
+                    doc.text(20, 200, 'Parish ');
+
+                    doc.text(100, 180, 'Date of Birth: ');
+
+                    doc.text(100, 190, 'Place of Birth: ');
+
+                    doc.text(100, 200, 'Nationality: ');
+
+
+
+                    doc.text(20, 220, 'Company Name:');
+
+                    doc.text(100, 220, 'Street Number and Name:');
+
+                    doc.text(100, 230, 'Town');
+
+                    doc.text(100, 240, 'Parish');
+
+
+
+                    doc.setFontType("bold");
+                    doc.text(50, 50, currentQuote.applicantSurname);
+
+                    /*doc.text(50, 60, currentQuote.applicantFirstName);                                            
+                        
+                    doc.text(50, 70, currentQuote.applicantMiddleName);*/
+
+                    doc.text(50, 80, currentQuote.applicantTitle);
+
+                    doc.text(50, 90, currentQuote.applicantOccupation);
+
+                    doc.text(150, 50, currentQuote.applicantMothersMaidenName);
+
+                    doc.text(150, 60, currentQuote.applicantAlias);
+
+                    doc.text(150, 70, currentQuote.applicantIDType);
+
+                    doc.text(150, 80, currentQuote.applicantIDnumber);
+
+                    doc.text(150, 90, currentQuote.applicationIDExpirationDate);
+
+                    /*                         
+                    doc.text(150, 100, currentQuote.SourceOfFunds); */
+
+                    doc.text(20, 125, currentQuote.applicantHomeStreetName);
+
+                    doc.text(20, 135, currentQuote.applicantHomeTown);
+
+                    doc.text(50, 140, currentQuote.applicantHomeParish);
+
+                    /*                         
+                    doc.text(150, 120, currentQuote.applicantTRN); */
+
+                    doc.text(150, 130, currentQuote.applicantEmailAddress);
+
+                    /*                         
+                    doc.text(150, 140, currentQuote.ApplicantMobileNumber); */
+
+                    doc.text(150, 150, currentQuote.applicantHomeNumber);
+
+                    doc.text(150, 160, currentQuote.applicantWorkNumber);
+
+                    /*                         
+                     doc.text(20, 185, currentQuote.applicantMailStreetName); */
+
+                    doc.text(20, 195, currentQuote.applicantMailTown);
+
+                    doc.text(50, 200, currentQuote.applicantMailParish);
+
+                    doc.text(150, 180, currentQuote.applicantDateOfBirth);
+
+                    doc.text(150, 190, currentQuote.applicantPlaceOfBirth);
+
+                    doc.text(150, 200, currentQuote.applicantNationality);
+
+                    doc.text(50, 220, currentQuote.employerName);
+
+                    doc.text(150, 220, currentQuote.employerStreetName);
+
+                    doc.text(150, 230, currentQuote.employerTown);
+
+                    doc.text(150, 240, currentQuote.employerParish);
+
+
+                    doc.setFontType("bold");
+                    doc.setFontSize("14");
+                    doc.text(20, 40, 'Name');
+
+                    doc.text(20, 110, 'Home Address');
+
+                    doc.text(20, 170, 'Mailing Address');
+
+                    doc.text(20, 210, 'Employer Details');
+
+
+                    //>>> >>> > origin / master
+                    doc.save('Proposal' + currentQuote.id + '.pdf');
+                }
+
+
+
+
+
+
+
+            });
         });
     </script>
 
