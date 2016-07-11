@@ -111,12 +111,13 @@
                                             <div class="form-inline">
                                                 <div class="checkbox">
                                                     <label>
-                                                        Do you agree?
-                                                        <input class="form-control" type="checkbox" name="increasedLimits" id="increasedLimits">
+                                                        Do you accept the Disclaimer?
+                                                        <input class="form-control" type="checkbox" id="acceptDisclaimer">
                                                     </label>
                                                 </div>
                                             </div>
-                                            <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
+                                            <button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
+                                            <button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
                                         </form>
                                     </div>
 
@@ -474,14 +475,16 @@
                             });
                         }
                     });
-                    $('#rootwizard .finish').click(function () {
-                        //alert('Finished!, Starting over!');
-                        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-                        location.reload();
-                    });
                 }
 
 
+                $('#acceptDisclaimer').change(function () {
+                    $('#submit-btn').prop("disabled", !$(this).is(':checked'));
+                });
+
+                $('#reset-btn').click(function () {
+                    location.reload();
+                });
 
                 ////submit
                 $('#submit-btn').click(function () {
@@ -504,6 +507,7 @@
                             alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
                         } else {
                             loadQuotation(r);
+                            $('.button-previous').prop('disabled', true);
                         }
                     });
 

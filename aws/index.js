@@ -297,6 +297,55 @@ function loadVehicleModels() {
 }
 
 
+///create first driver from applicant details
+function createFirstDriver() {
+    if (!$('#regularDriversId').is(":visible") && $('#applicantIDType').val() == 'driverLicense') {
+        //var occupation = $('#applicantOccupation').val();
+        var occupationIndex = $("#applicantOccupation option:selected").index()
+        var elel = $('.regularDriversCls:last .occupation select');
+        elel.eq(occupationIndex).prop('selected', true);
+
+        $('#regularDriversId').show();
+        $('.regularDriversCls:last .name input').val($('#applicantFirstName').val() + ' ' + $('#applicantSurname').val());
+        //$('.regularDriversCls:last .occupation select').val(occupation);
+        //$('#regularDriversOccupation0').val(occupation);
+        $('.regularDriversCls:last .DateOfBirth input').val($('#applicantDateOfBirth').val());
+        $('.regularDriversCls:last .DriversDL input').val($('#applicantIDnumber').val());
+        $('.regularDriversCls:last .DriversDLExpirationDate input').val($('#applicationIDExpirationDate').val());
+        $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val($('#dateFirstIssued').val());
+    }
+}
+
+
+//add driver
+function addDriver($this, id, callback) {
+    var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + id;
+    $.ajax({
+        type: 'GET',
+        contentType: 'application/json',
+        url: serverUrl,
+        dataType: "json",
+        success: function (json) {
+            //var json = JSON.parse(r);
+            json = ConvertToJson(json);
+            if (json.error_message) {
+                alert("Invalid ID!!");
+            } else if (json.Message) {
+                alert("Invalid ID!!");
+            } else {
+                callback(null, json);
+            }
+        },
+        error: function (err) {
+            //error handling
+            callback(err);
+            //alert("error: " + data.statusText);
+        }
+    });
+}
+
+
+
 //return count
 /*function GetCount() {
     var i = 0;
@@ -311,54 +360,9 @@ function loadVehicleModels() {
 }*/
 
 
+
 //$(document).ready(function (e) {
 function doPrimaryFunctions() {
-
-    ///create first driver from applicant details
-    function createFirstDriver() {
-        if (!$('#regularDriversId').is(":visible") && $('#applicantIDType').val() == 'driverLicense') {
-            //var occupation = $('#applicantOccupation').val();
-            var occupationIndex = $("#applicantOccupation option:selected").index()
-            var elel = $('.regularDriversCls:last .occupation select');
-            elel.eq(occupationIndex).prop('selected', true);
-
-            $('#regularDriversId').show();
-            $('.regularDriversCls:last .name input').val($('#applicantFirstName').val() + ' ' + $('#applicantSurname').val());
-            //$('.regularDriversCls:last .occupation select').val(occupation);
-            //$('#regularDriversOccupation0').val(occupation);
-            $('.regularDriversCls:last .DateOfBirth input').val($('#applicantDateOfBirth').val());
-            $('.regularDriversCls:last .DriversDL input').val($('#applicantIDnumber').val());
-            $('.regularDriversCls:last .DriversDLExpirationDate input').val($('#applicationIDExpirationDate').val());
-            $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val($('#dateFirstIssued').val());
-        }
-    }
-
-    function addDriver($this, id, callback) {
-        var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + id;
-        $.ajax({
-            type: 'GET',
-            contentType: 'application/json',
-            url: serverUrl,
-            dataType: "json",
-            success: function (json) {
-                //var json = JSON.parse(r);
-                json = ConvertToJson(json);
-                if (json.error_message) {
-                    alert("Invalid ID!!");
-                } else if (json.Message) {
-                    alert("Invalid ID!!");
-                } else {
-                    callback(null, json);
-                }
-            },
-            error: function (err) {
-                //error handling
-                callback(err);
-                //alert("error: " + data.statusText);
-            }
-        });
-    }
-
 
     //regular driver
     $('#regularDriversBtns').on('click', '.Add', function () {
