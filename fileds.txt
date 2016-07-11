@@ -115,3 +115,44 @@
   "thirdPartyLimits": "$3M/$5M/$5M",
   "sumsInsured": "$5M/$10M/$5M"
 }
+
+
+
+
+
+
+
+<label class="radio-inline">
+      <input type="radio" name="optradio" value="no">No
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value="yes">Yes
+    </label>
+
+
+
+<div class="form-inline">
+                <div class="checkbox">
+                    <label>
+                        Have you or any relative or close associate been entrusted with prominent pubic functions(e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces)?
+                        <input type="checkbox" name="applicantRelativeInPublicOffice" id="applicantRelativeInPublicOffice"> </label>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

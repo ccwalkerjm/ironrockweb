@@ -130,6 +130,7 @@
                             <button type="button" class="btn btn-default" id="returntoQuotes">Return</button>
                             <button type="button" class="btn btn-info" id="doprint">Create PDF</button>
                         </div>
+                        <hr/>
                         <div id="rootwizard">
                             <div class="navbar">
                                 <div class="navbar-inner">
@@ -149,30 +150,36 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane" id="final-page">
-
-                                    <div id="signatureContainer">
+                                    <div id="disclaimerContainer">
                                         <h4>Disclaimer:</h4>
                                         <p>
                                             The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
                                         </p>
-                                        <form class="ProposalForm">
 
-                                            <div class="form-inline">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        Do you agree?
-                                                        <input class="form-control" type="checkbox" name="increasedLimits" id="increasedLimits">
-                                                    </label>
-                                                </div>
+                                        <div class="form-inline">
+                                            <div class="checkbox">
+                                                <label>
+                                                    Do you accept the Disclaimer?
+                                                    <input class="form-control" type="checkbox" id="acceptDisclaimer">
+                                                </label>
                                             </div>
-                                            <button type="button" id="submit-btn" class="btn btn-primary">Submit</button>
-                                        </form>
+                                        </div>
                                     </div>
-
+                                    <div>
+                                        <button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
+                                        <button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
+                                    </div>
                                     <input type="hidden" id="quotation-number" />
                                     <div id="quotation"></div>
                                 </div>
-
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
 
                                 <!--navigations -->
                                 <div style="float:right">
@@ -182,6 +189,7 @@
                                     <input type='button' class='btn btn-primary button-previous btn-lg' name='previous' value='Previous' />
                                 </div>
                             </div>
+
                         </div>
 
                     </section>
@@ -770,10 +778,50 @@
                         $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue1);
                         $('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
                     }
-
-
-
                 }
+
+
+                $('#acceptDisclaimer').change(function () {
+                    $('#submit-btn').prop("disabled", !$(this).is(':checked'));
+                });
+
+                $('#reset-btn').click(function () {
+                    location.reload();
+                });
+
+                ////submit
+                $('#submit-btn').click(function () {
+                    //get signature data       
+                    //var formData = $('form').serialize();
+                    var jsonForm = $('form').serializeObject();
+                    var formData = JSON.stringify(jsonForm);
+                    ir.submitQuote(formData, function (err, r) {
+                        if (err) {
+                            alert("error: " + err.statusText);
+                            return;
+                        }
+                        var r = ConvertToJson(r);
+                        if (r.errorMessage) {
+                            alert("error: " + r.errorMessage);
+                            return;
+                        }
+                        if (!r.success) {
+                            console.log(r);
+                            alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
+                        } else {
+                            $('#disclaimerContainer').hide();
+                            $('#submit-btn').hide();
+                            $('#quotation-number').val(r.quotation_number);
+                            var $container = $('#quotation');
+                            loadQuotation($container, r);
+                            $('.button-previous').prop('disabled', true);
+                            $('.button-next').prop('disabled', true);
+                        }
+                    });
+
+                });
+
+
 
 
 
