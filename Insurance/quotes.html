@@ -659,7 +659,6 @@
                     $('#applicantIDType').val(currentQuote.applicantIDType);
                     $('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
 
-
                     //contact
                     $('#SourceOfFunds').val(currentQuote.SourceOfFunds ? currentQuote.SourceOfFunds : "");
                     $('#applicantMobileNumber').val(currentQuote.applicantMobileNumber);
@@ -692,7 +691,6 @@
                     $('#employerState').val(currentQuote.employerState);
                     $('#employerNationality').val(currentQuote.employerNationality);
 
-
                     //insert vehicle0
                     if (currentQuote.vehicleRegistrationNo0) {
                         var vehicle0 = {};
@@ -705,7 +703,7 @@
                         //vehicle0.vehicleType = "Sedan";
                         vehicle0.engineNo = currentQuote.vehicleEngineType0;
                         vehicle0.colour = currentQuote.vehicleColour0;
-                        vehicle0.vehicleStatus = "";
+                        vehicle0.vehicleStatus = currentQuote.vehicleStatus0;
                         vehicle0.sumInsured = currentQuote.vehicleValue0;
                         insertVehicle(vehicle0);
                     }
@@ -720,7 +718,7 @@
                         //vehicle1.vehicleType = "Sedan";
                         vehicle1.engineNo = currentQuote.vehicleEngineType1;
                         vehicle1.colour = currentQuote.vehicleColour1;
-                        vehicle1.vehicleStatus = "";
+                        vehicle1.vehicleStatus = currentQuote.vehicleStatus1;
                         vehicle1.sumInsured = currentQuote.vehicleValue1;
                         insertVehicle(vehicle1);
                     }
@@ -736,15 +734,43 @@
                         //vehicle2.vehicleType = "Sedan";
                         vehicle2.engineNo = currentQuote.vehicleEngineType2;
                         vehicle2.colour = currentQuote.vehicleColour2;
-                        vehicle2.vehicleStatus = "";
+                        vehicle2.vehicleStatus = currentQuote.vehicleStatus2;
                         vehicle2.sumInsured = currentQuote.vehicleValue2;
                         insertVehicle(vehicle2);
                     }
-                    
-                    
-                    $('#regularDriversName0').val(currentQuote.employerNationality);
-                    
-                    
+
+
+                    $('#startDate').val(currentQuote.startDate);
+
+                    //add first driver
+                    if (currentQuote.regularDriversDL0) {
+                        $('#regularDriversId').show();
+                        $('.regularDriversCls:last .name input').val(currentQuote.regularDriversName0);
+                        $('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation0);
+                        //$('#regularDriversOccupation0').val(currentQuote.occupation);
+                        $('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth0);
+                        $('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL0);
+                        $('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate0);
+                        $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue0);
+                        $('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer0);
+                    }
+
+                    //add second
+                    if (currentQuote.regularDriversDL0 && currentQuote.regularDriversDL1) {
+                        var elementGroup = $('.regularDriversCls:last');
+                        elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
+                        resetRegularDriver();
+
+                        $('.regularDriversCls:last .name input').val(currentQuote.regularDriversName1);
+                        $('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation1);
+                        //$('#regularDriversOccupation0').val(currentQuote.occupation);
+                        $('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth1);
+                        $('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL1);
+                        $('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate1);
+                        $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue1);
+                        $('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
+                    }
+
 
 
                 }

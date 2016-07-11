@@ -137,29 +137,26 @@ function reIndexVehicles() {
 }
 
 
-function loadQuotation(r) {
-    $('#signatureContainer').hide();
-    $('#quotation-number').val(r.quotation_number);
-    var container = $('#quotation');
-    container.append('<h4>Note the Policy Limits</h4>');
+function loadQuotation($container, limitData) {
+    $container.append('<h4>Note the Policy Limits</h4>');
     var table = $('<table/>'); //data-role="table" class="ui-responsive"
-    table.attr('data-role', "table");
-    table.addClass('ui-responsive');
-    table.append('<tr><th>Quotation No:</th><td>' + r.quotation_number + '</td></tr>');
-    table.append('<tr><th style="text-align: right;">Net Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.net_premium) + '</td></tr>');
-    table.append('<tr><th style="text-align: right;">Stamp Duty:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.stamp_duty) + '</td></tr>');
-    table.append('<tr><th style="text-align: right;">Tax:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.tax) + '</td></tr>');
-    table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(r.premium_calculation.total_premium) + '</td></tr>');
-    table.appendTo(container);
-    if (r.limits.length > 0) {
+    // table.attr('data-role', "table");
+    table.addClass('table');
+    table.append('<tr><th class="col-md-2" style="text-align: right;">Quotation No:</th><td class="col-md-2" style="text-align: right;">' + limitData.quotation_number + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Net Premium:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.net_premium) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Stamp Duty:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.stamp_duty) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Tax:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.tax) + '</td></tr>');
+    table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.total_premium) + '</td></tr>');
+    table.appendTo($container);
+    if (limitData.limits.length > 0) {
         var limitHeader = $('<h4/>').text('Limits');
-        limitHeader.appendTo(container);
-        var limittable = $('<table/>').attr('data-role', "table").addClass('ui-responsive').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
+        limitHeader.appendTo($container);
+        var limittable = $('<table/>').addClass('table table-striped').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
 
-        $.each(r.limits, function (i, item) {
+        $.each(limitData.limits, function (i, item) {
             limittable.append('<tr><td>' + item.code + '</td><td>' + item.heading + '</td><td style="text-align:right">' + accounting.formatMoney(item.limit) + '</td><td>' + item.description + '</td></tr>');
         });
-        limittable.appendTo(container);
+        limittable.appendTo($container);
     }
 }
 
