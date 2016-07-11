@@ -1,6 +1,6 @@
 //function onDeviceReady() {
 
-//$(document).ready(function (e) {
+//$(document).ready(function(e) {
 
 function doMiscellaneous() {
         setVehicleUsedAs("SocialDomesticPleasure");
@@ -34,8 +34,6 @@ function doMiscellaneous() {
         });
 
 
-
-
         $('#vehicle-all-accidents').on('click', '.Add', function () {
             var elementGroup = $(this).parent().parent().parent();
             elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
@@ -60,7 +58,6 @@ function doMiscellaneous() {
         });
 
 
-
         //resetHomeAllRiskArticles
         $('#HomeAllRiskInsured').on('click', '.Add', function () {
             var elementGroup = $(this).parent().parent().parent();
@@ -75,14 +72,6 @@ function doMiscellaneous() {
             resetHomeAllRiskArticles();
             SetHomeAllRiskInsuredValue();
         });
-
-        function SetHomeAllRiskInsuredValue() {
-            var valList = [];
-            $('#HomeAllRiskInsured .article-value').find('input').each(function (index, element) {
-                valList.push($(element).val());
-            });
-            $('#HomeAllRiskTotalAmount').val(GetTotal(valList));
-        }
 
         $('#HomeAllRiskInsured').on('keyup', '.article-value input', function () {
             SetHomeAllRiskInsuredValue();
@@ -104,13 +93,6 @@ function doMiscellaneous() {
             SetHomeInsuranceValue();
         });
 
-        function SetHomeInsuranceValue() {
-            var valList = [];
-            $('#homeInsuranceProperty .article-value').find('input').each(function (index, element) {
-                valList.push($(element).val());
-            });
-            $('#homeInsurancePropertySum').val(GetTotal(valList));
-        }
 
         $('#homeInsuranceProperty').on('keyup', '.article-value input', function () {
             SetHomeInsuranceValue();
@@ -126,7 +108,7 @@ function doMiscellaneous() {
         });
 
         ////totalValueExceedOneThirdTotalSum
-        //$('#totalValueExceedOneThirdTotalSum').change(function () {
+        //$('#totalValueExceedOneThirdTotalSum').change(function() {
         //    var select_value = $(this).val();
         //    if (select_value == 'yes') {
         //        $('#totalValueExceedOneThirdTotalSumIfYesAmount').removeAttr('disabled'); //.show();
@@ -428,7 +410,7 @@ function doMiscellaneous() {
         });
 
 
-        //validate function   
+        //validate  
         $('#mailingAddressSame').change(function () {
             var select_value = $(this).is(':checked');
             if (select_value) {
@@ -480,6 +462,23 @@ function doMiscellaneous() {
 
 
 ////functions
+function SetHomeAllRiskInsuredValue() {
+    var valList = [];
+    $('#HomeAllRiskInsured .article-value').find('input').each(function (index, element) {
+        valList.push($(element).val());
+    });
+    $('#HomeAllRiskTotalAmount').val(GetTotal(valList));
+}
+
+//set home insurance values
+function SetHomeInsuranceValue() {
+    var valList = [];
+    $('#homeInsuranceProperty .article-value').find('input').each(function (index, element) {
+        valList.push($(element).val());
+    });
+    $('#homeInsurancePropertySum').val(GetTotal(valList));
+}
+
 //set accident years
 function setAllAccidentsYears() {
     var currentYear = new Date().getFullYear();
@@ -492,7 +491,6 @@ function setAllAccidentsYears() {
 
     }
 }
-
 
 //
 function resetAllAccident() {

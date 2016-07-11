@@ -96,17 +96,17 @@ function insertVehicle(r) {
 }
 
 //check duplicate
-    function IsDuplicateVehicle(val) {
-        var returnVal = false;
-        $('#vehiclesToBeInsured tr').each(function (index, element) {
-            var rowVal = $(this).attr('data-id');
-            if (rowVal == val) {
-                returnVal = true;
-                return false;
-            }
-        });
-        return returnVal;
-    }
+function IsDuplicateVehicle(val) {
+    var returnVal = false;
+    $('#vehiclesToBeInsured tr').each(function (index, element) {
+        var rowVal = $(this).attr('data-id');
+        if (rowVal == val) {
+            returnVal = true;
+            return false;
+        }
+    });
+    return returnVal;
+}
 
 //need to index vehicles
 function reIndexVehicles() {
@@ -224,6 +224,91 @@ function SetTRnDetails(state) {
         $('#clearTRNDetails').hide();
     }
 }
+
+
+
+function orderSelectList($element) {
+    var options = $element.find('option'),
+        n_options = options.length,
+        temp = [],
+        parts,
+        i;
+
+    for (i = n_options; i--;) {
+        temp[i] = options[i].text + "," + options[i].value;
+    }
+
+    temp.sort();
+
+    for (i = n_options; i--;) {
+        parts = temp[i].split(',');
+
+        options[i].text = parts[0];
+        options[i].value = parts[1];
+    }
+}
+
+
+function loadVehicleColours() {
+    $('#QueryVehicleColour').empty();
+    $.each(_colours, function (key, value) {
+        //<option value="1" style="background:red">Apple</option>
+        $('#QueryVehicleColour').append('<option value="' + value.name + '" style="background:' + value.hex + '">' + value.name + '</option>');
+    });
+}
+
+//make/model
+function loadVehicleMakes() {
+    var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
+    $('#QueryVehicleMake').empty();
+    $.each(options.makeModels.data, function (key, value) {
+        $('#QueryVehicleMake').append('<option value="' + value.make + '">' + value.make + '</option>');
+    });
+}
+
+function loadBodyTypes() {
+    var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
+    $('#QueryVehicleBodyType').empty();
+    $.each(options.makeModels.data, function (key, value) {
+        $.each(value.models, function (key, value) {
+            if ($('#QueryVehicleBodyType option[value="' + value.body_type + '"]').length == 0) {
+                $('#QueryVehicleBodyType').append('<option value="' + value.body_type + '">' + value.body_type + '</option>');
+            }
+        });
+    });
+    orderSelectList($('#QueryVehicleBodyType'));
+}
+
+function loadVehicleModels() {
+    var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
+    var models = [];
+    var make = $('#QueryVehicleMake').val();
+    $('#QueryVehicleModel').empty();
+    $.each(options.makeModels.data, function (key, value) {
+        if (make == value.make) {
+            $.each(value.models, function (key, value) {
+                if ($('#QueryVehicleModel option[value="' + value.model + '"]').length == 0) {
+                    $('#QueryVehicleModel').append('<option value="' + value.model + '">' + value.model + '</option>');
+                }
+            });
+            return;
+        }
+    });
+}
+
+
+//return count
+/*function GetCount() {
+    var i = 0;
+    $('#vehiclesToBeInsured .ui-grid-d').each(function (index, element) {
+        var rowVal = $(this).attr('data-id');
+        if (rowVal == val) {
+            returnVal = true;
+            return false;
+        }
+    });
+    return returnVal;
+}*/
 
 
 //$(document).ready(function (e) {
@@ -480,86 +565,18 @@ function doPrimaryFunctions() {
         $('#taxOfficeVehicleDialog').modal('show');
     });
 
-    function orderSelect($element) {
-        var options = $element.find('option'),
-            n_options = options.length,
-            temp = [],
-            parts,
-            i;
-
-        for (i = n_options; i--;) {
-            temp[i] = options[i].text + "," + options[i].value;
-        }
-
-        temp.sort();
-
-        for (i = n_options; i--;) {
-            parts = temp[i].split(',');
-
-            options[i].text = parts[0];
-            options[i].value = parts[1];
-        }
-    }
-
-
-    function loadColours() {
-        $('#QueryVehicleColour').empty();
-        $.each(_colours, function (key, value) {
-            //<option value="1" style="background:red">Apple</option>
-            $('#QueryVehicleColour').append('<option value="' + value.name + '" style="background:' + value.hex + '">' + value.name + '</option>');
-        });
-    }
-
-    //make/model
-    function loadVehicleMakes() {
-        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
-        $('#QueryVehicleMake').empty();
-        $.each(options.makeModels.data, function (key, value) {
-            $('#QueryVehicleMake').append('<option value="' + value.make + '">' + value.make + '</option>');
-        });
-    }
-
-    function loadBodyTypes() {
-        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
-        $('#QueryVehicleBodyType').empty();
-        $.each(options.makeModels.data, function (key, value) {
-            $.each(value.models, function (key, value) {
-                if ($('#QueryVehicleBodyType option[value="' + value.body_type + '"]').length == 0) {
-                    $('#QueryVehicleBodyType').append('<option value="' + value.body_type + '">' + value.body_type + '</option>');
-                }
-            });
-        });
-        orderSelect($('#QueryVehicleBodyType'));
-    }
 
 
     $('#QueryVehicleMake').change(function () {
         loadVehicleModels();
     });
 
-    function loadVehicleModels() {
-        var options = JSON.parse(localStorage.getItem(_IronRockPreliminaryData));
-        var models = [];
-        var make = $('#QueryVehicleMake').val();
-        $('#QueryVehicleModel').empty();
-        $.each(options.makeModels.data, function (key, value) {
-            if (make == value.make) {
-                $.each(value.models, function (key, value) {
-                    if ($('#QueryVehicleModel option[value="' + value.model + '"]').length == 0) {
-                        $('#QueryVehicleModel').append('<option value="' + value.model + '">' + value.model + '</option>');
-                    }
-                });
-                return;
-            }
-        });
-    }
-
 
     //manual entry
     $('#taxOfficeVehicleDialog').on("click", "#queryVehicleAdd", function () {
         var r = {};
 
-        r.plateNo = $('#QueryVehicleRegistrationNo').val();
+        r.plateNo = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
         r.chassisNo = $('#QueryVehicleChassisNo').val();
         r.make = $('#QueryVehicleMake').val();
         r.model = $('#QueryVehicleModel').val();
@@ -593,7 +610,7 @@ function doPrimaryFunctions() {
 
     $('#taxOfficeVehicleDialog').on("click", "#queryVehicleSearch", function () {
         var serverUrl = _apiBaseUrl + "/Vehicle/";
-        var plateno = $('#QueryVehicleRegistrationNo').val();
+        var plateno = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
         var chassisno = $('#QueryVehicleChassisNo').val();
 
         if (plateno) {
@@ -633,7 +650,7 @@ function doPrimaryFunctions() {
                             loadVehicleMakes();
                             loadVehicleModels();
                             loadBodyTypes();
-                            loadColours();
+                            loadVehicleColours();
                         }
                     });
                 } else {
@@ -651,29 +668,11 @@ function doPrimaryFunctions() {
     });
 
 
-
-
     $('#vehiclesToBeInsured').on('click', '.deleteVehicleRow', function () {
         var tr = $(this).closest('tr');
         tr.remove();
         reIndexVehicles();
     });
-
-
-    //return count
-    function GetCount() {
-        var i = 0;
-        $('#vehiclesToBeInsured .ui-grid-d').each(function (index, element) {
-            var rowVal = $(this).attr('data-id');
-            if (rowVal == val) {
-                returnVal = true;
-                return false;
-            }
-        });
-        return returnVal;
-    }
-
-
 
 }
 
