@@ -179,17 +179,23 @@ function ironrockcloudservice() {
         _cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
         _cognitoUser.forgotPassword({
             onSuccess: function (result) {
-                callback(null, result);
+                callback(null, false, result);
             },
             onFailure: function (err) {
                 callback(err);
             },
+            inputVerificationCode() {
+                callback(null, true, this);
+                /*var verificationCode = prompt('Please input verification code ', '');
+                var newPassword = prompt('Enter new password ', '');
+                cognitoUser.confirmPassword(verificationCode, newPassword, this);*/
+            }
         });
     }
 
-    //forgot password 
-    this.confirmPassword = function (verificationCode, newPassword, callback) {
-        _cognitoUser.confirmPassword(verificationCode, newPassword, this);
+    //confirm-- forgot password 
+    this.confirmPassword = function (verificationCode, newPassword, $this) {
+        _cognitoUser.confirmPassword(verificationCode, newPassword, $this);
     }
 
     function getAuth() {
