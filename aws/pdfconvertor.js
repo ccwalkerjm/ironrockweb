@@ -388,43 +388,81 @@ function setMotorVehiclePages(resp) {
             doc.text(100, 160, resp.regularDriversDL1?resp.regularDriversDL1:""));
             doc.text(130, 160, resp.regularDriversDLOriginalDateOfIssue01resp.regularDriversDLOriginalDateOfIssue1:"");
             doc.text(160, 160, resp.regularDriversDLExpirationDate1?resp.regularDriversDLExpirationDate1:"");
+        
+        }
 
-	}
+	
     
 	if (resp.vehicleRegistrationNo2) {
-        doc.text(20, 165, resp.regularDriversName2?resp.regularDriversName2:"");
+        
+         doc.text(20, 165, resp.regularDriversName2?resp.regularDriversName2:"");
         doc.text(50, 165, resp.regularDriversOccupation2?resp.regularDriversOccupation2:"");
         doc.text(80, 165,resp.regularDriversDateOfBirth2?resp.regularDriversDateOfBirth2:"");
         doc.text(100, 165, resp.regularDriversDL2?resp.regularDriversDL2:""));
         doc.text(130, 165, resp.regularDriversDLOriginalDateOfIssue2?resp.regularDriversDLOriginalDateOfIssue2:"");
         doc.text(160, 165, resp.regularDriversDLExpirationDate2?resp.regularDriversDLExpirationDate2:"");
+    }
+    
+    */
+       
 
-	}*/
+	
     
     
     
     
 
 	doc.addPage();
-
+    
+    doc.setFontSize("10");
 	doc.setFontType("normal");
 	doc.text(20, 20, "Have you or any regular drivers had any accidents or losses during the past three(3) years (whether insured ");
 
-	doc.text(20, 25, "or not in respect of all vehicles)");
+	doc.text(20, 23, "or not in respect of all vehicles)");
 
-	doc.text(20, 30, "I. Owned by you, whether or not you were the driver at the material time?");
+	doc.text(20, 26, "I. Owned by you, whether or not you were the driver at the material time?");
 
-	doc.text(20, 35, "II. Not owned by you, but driven by you or in your custody at the material time?");
+	doc.text(20, 29, "II. Not owned by you, but driven by you or in your custody at the material time?");
 
-	doc.text(20, 45, "If yes, please give details below");
+	doc.text(20, 35, "If yes, please give details below");
+    
+    doc.text(20, 40, "Date of Accident");
+    doc.text(50, 40, "Cost(Paid or Estimated)");
+    doc.text(100, 40,"Driver");
+    doc.text(150, 40 , "Brief details of Accidents, Incident or losses");
+    
+    doc.setFontType("normal");
+        
+   
+    if (resp.involvedInAccident) {
+        doc.text(20, 45, resp.accidentMonth0?resp.accidentMonth0:"");
+        doc.text(50, 45, resp.accidentCost0?resp.accidentCost0:"");
+        doc.text(100, 45,resp.accidentDriver0?resp.accidentDriver0:"");
+        doc.text(150, 45 , resp.accidentBrief0?resp.accidentBrief0:"");
 
-	doc.text(20, 80, "To the best of your knowledge and belief have you, or any person who to your knowledge");
+	}
+	if (resp.involvedInAccident) {
+		doc.text(20, 50, resp.accidentMonth1?resp.accidentMonth1:"");
+        doc.text(50, 50, resp.accidentCost1?resp.accidentCost1:"");
+        doc.text(100, 50,resp.accidentDriver1?resp.accidentDriver1:"");
+        doc.text(150, 50 , resp.accidentBrief1?resp.accidentBrief1:"");
 
-	doc.text(20, 85, "will drive have suffered from, or now suffer from:");
+	}
+	if (resp.involvedInAccident) {
+		doc.text(20, 55, resp.accidentMonth2?resp.accidentMonth2:"");
+        doc.text(50, 55, resp.accidentCost2?resp.accidentCost2:"");
+        doc.text(100, 55,resp.accidentDriver2?resp.accidentDriver2:"");
+        doc.text(150, 55, resp.accidentBrief2?resp.accidentBrief2:"");
 
-	doc.text(20, 100, "If yes, please indicate above and give details:");
+	}
+    
+    
 
-	doc.text(20, 110, "Have you or any person who to your knowledge will drive received any traffic ticket(s) and");
+	doc.text(20, 60, "To the best of your knowledge and belief have you, or any person who to your knowledge will drive have suffered from, or now suffer from:");
+	
+	doc.text(20, 70, "If yes, please indicate above and give details:");
+
+	doc.text(20, 80 , "Have you or any person who to your knowledge will drive received any traffic ticket(s) and");
 
 	doc.text(20, 115, "or have been convicted of any offence in connection with the driving of any motor vehicle within the ");
 
