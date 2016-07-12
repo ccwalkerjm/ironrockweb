@@ -222,79 +222,81 @@ function setMotorVehiclePages(resp) {
 	}
 
 	doc.setFontSize("8");
-	doc.text(20, 80, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
+	doc.text(20, 75, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
 
-	doc.text(20, 83, "Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based in");
+	doc.text(20, 78, "Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based in");
 
-	doc.text(20, 86, "time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.");
+	doc.text(20, 81, "time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.");
 
 	doc.setFontSize("10");
-	doc.text(20, 100, "Lien Holder");
+	doc.text(20, 85, "Lien Holder");
 
-	doc.text(20, 140, "Select cover required(tick the appropriate box)");
+	doc.text(20, 110, "Select cover required(tick the appropriate box)");
 
 	doc.setFontType("normal");
-	doc.text(20, 50, "Are you the owner of the vehicle(s) and is/are/they registered in your name?");
+	doc.text(20, 45, "Are you the owner of the vehicle(s) and is/are/they registered in your name?");
 
-	doc.text(20, 60, "If not, state the name and address of the owner:");
+	doc.text(20, 55, "If not, state the name and address of the owner:");
 
-	doc.text(20, 70, "Will a trailer be used?");
+	doc.text(20, 65, "Will a trailer be used?");
 
-	doc.text(20, 110, "Name in Full:");
+	doc.text(20, 90, "Name in Full:");
 
-	doc.text(100, 110, "Street Number and Name:");
+	doc.text(100, 90, "Street Number and Name:");
 
-	doc.text(100, 120, "Town:");
+	doc.text(100, 100, "Town:");
 
-	doc.text(100, 130, "Parish:");
+	doc.text(100, 105, "Parish:");
+    
+    doc.text(20, 110, "Select cover required(tick the appropriate box)");
 
-	doc.text(20, 150, "Please indicate if the vehicle is to be used as:");
+	doc.text(20, 120, "Please indicate if the vehicle is to be used as:");
 
-	doc.text(20, 160, "Is the vehicle fitted with an anti-theft device?");
+	doc.text(20, 130, "Is the vehicle fitted with an anti-theft device?");
 
-	doc.text(20, 170, "If yes, state the name, type of device and name of provider");
+	doc.text(20, 140, "If yes, state the name, type of device and name of provider");
 
-	doc.text(20, 180, "Will you have regular custody of the vehicle?");
+	doc.text(20, 150, "Will you have regular custody of the vehicle?");
 
-	doc.text(20, 190, "If not, please provide details");
+	doc.text(20, 160, "If not, please provide details");
 
-	doc.text(20, 200, "Is the vehicle garaged at the Proposer's home address?");
+	doc.text(20, 170, "Is the vehicle garaged at the Proposer's home address?");
 
-	doc.text(20, 210, "If not, please state where:");
+	doc.text(20, 180, "If not, please state where:");
 
-	doc.text(20, 220, "Is the vehicle kept in?");
+	doc.text(20, 190, "Is the vehicle kept in?");
 
 	doc.setFontType("bold");
 
-	/* doc.text(110, 50, resp.isOwnerOfVehicle); */
+	/* doc.text(20, 50, resp.isOwnerOfVehicle); */
 
-	doc.text(110, 60, resp.nameAddressOfOwner);
+	doc.text(20, 60, resp.nameAddressOfOwner);
 
-	/*  doc.text(110, 70, resp.trailerUsed); */
+	/*  doc.text(20, 70, resp.trailerUsed); */
 
-	doc.text(110, 110, resp.lienHolderNameInFull);
+	doc.text(50, 90, resp.lienHolderNameInFull);
 
-	doc.text(100, 115, resp.lienHolderStreetName);
+	doc.text(100, 95, resp.lienHolderStreetName);
 
-	doc.text(150, 120, resp.lienHolderTown);
+	doc.text(150, 100, resp.lienHolderTown);
 
-	doc.text(150, 130, resp.lienHolderParish);
+	doc.text(150, 105, resp.lienHolderParish);
 
-	doc.text(110, 150, resp.vehicleUsedAs);
+	doc.text(20, 125 , resp.vehicleUsedAs);
 
-	/* doc.text(110, 160, resp.vehicleAntiTheftDevice); */
+	/* doc.text(20, 135, resp.vehicleAntiTheftDevice); */
 
-	doc.text(20, 175, resp.vehicleAntiTheftDeviceName + " " + resp.vehicleAntiTheftDeviceType + " " + resp.vehicleAntiTheftDeviceNameOfProvider);
+	doc.text(20, 145, resp.vehicleAntiTheftDeviceName + " " + resp.vehicleAntiTheftDeviceType + " " + resp.vehicleAntiTheftDeviceNameOfProvider);
 
-	doc.text(110, 180, resp.vehicleRegularCustody ? resp.vehicleRegularCustody : "");
+	doc.text(20, 155, resp.vehicleRegularCustody ? resp.vehicleRegularCustody : "");
 
-	doc.text(110, 190, resp.vehicleRegularCustodyDetails ? resp.vehicleRegularCustodyDetails : "");
+	doc.text(20, 165, resp.vehicleRegularCustodyDetails ? resp.vehicleRegularCustodyDetails : "");
 
-	doc.text(110, 200, resp.vehicleGaragedAtProposersHome ? resp.vehicleGaragedAtProposersHome : "");
+	doc.text(20, 175, resp.vehicleGaragedAtProposersHome ? resp.vehicleGaragedAtProposersHome : "");
 
-	doc.text(110, 210, resp.vehicleGaragedAtProposersHomeDetails ? resp.vehicleGaragedAtProposersHomeDetails : "");
+	doc.text(20, 185, resp.vehicleGaragedAtProposersHomeDetails ? resp.vehicleGaragedAtProposersHomeDetails : "");
 
-	doc.text(110, 220, resp.vehicleKeptIn ? resp.vehicleKeptIn : "");
+	doc.text(20, 195, resp.vehicleKeptIn ? resp.vehicleKeptIn : "");
 
 	doc.addPage();
 
@@ -303,43 +305,105 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 20, "Is the proposer now insured or was previously insured in respect of any vehicle(s)");
 
-	doc.text(20, 40, "If yes, state the name and address of the Insurance Company:");
+	doc.text(20, 30, "If yes, state the name and address of the Insurance Company:");
 
-	doc.text(20, 50, "Is the proposer entitled to No Claim Discount from previous Insurer(s) In respect of any vehicle(s) described in the ");
+	doc.text(20, 40, "Is the proposer entitled to No Claim Discount from previous Insurer(s) In respect of any vehicle(s) described in the ");
 
-	doc.text(20, 55, "proposal?");
+	doc.text(20, 43, "proposal?");
 
-	doc.text(20, 60, "If yes, please attach proof of No Claim Discount Letter or Renewal Notice.");
+	doc.text(20, 50, "If yes, please attach proof of No Claim Discount Letter or Renewal Notice.");
 
-	doc.text(20, 70, "Do you have any other Insurance(s) with IronRock Insurance Company Ltd.?");
+	doc.text(20, 60, "Do you have any other Insurance(s) with IronRock Insurance Company Ltd.?");
 
-	doc.text(20, 80, "If yes, please state type(s):");
+	doc.text(20, 70, "If yes, please state type(s):");
 
-	doc.text(20, 90, "Has any Insurer(s) in respect of the Proposer or any other Person who will regularly drive ever?");
+	doc.text(20, 80, "Has any Insurer(s) in respect of the Proposer or any other Person who will regularly drive ever?");
 
-	doc.text(20, 130, "If yes, please indicate above and give details:");
+	doc.text(20, 90, "If yes, please indicate above and give details:");
 
-	doc.text(20, 140, "Type of Authorized Driver Clause:");
+	doc.text(20, 100, "Type of Authorized Driver Clause:");
 
 	doc.setFontType("bold");
 
 	doc.text(20, 25, resp.proposerInsured ? resp.proposerInsured : "");
 
-	doc.text(20, 45, resp.proposerInsuranceDetails ? resp.proposerInsuranceDetails : "");
+	doc.text(20, 35, resp.proposerInsuranceDetails ? resp.proposerInsuranceDetails : "");
 
 
-	doc.text(50, 55, resp.proposerEntitledToNOClaimDiscount ? resp.proposerEntitledToNOClaimDiscount : "");
+	doc.text(50, 45, resp.proposerEntitledToNOClaimDiscount ? resp.proposerEntitledToNOClaimDiscount : "");
 
 
-	doc.text(20, 75, resp.applicantOtherInsurer ? resp.applicantOtherInsurer : "");
+	doc.text(20, 65, resp.applicantOtherInsurer ? resp.applicantOtherInsurer : "");
 
-	doc.text(20, 85, resp.applicantOtherInsurerType ? resp.applicantOtherInsurerType : "");
+	doc.text(20, 75, resp.applicantOtherInsurerType ? resp.applicantOtherInsurerType : "");
 
-	doc.text(20, 125, resp.applicantPreviouslyInsured ? resp.applicantPreviouslyInsured : "");
+	doc.text(20, 85, resp.applicantPreviouslyInsured ? resp.applicantPreviouslyInsured : "");
 
-	doc.text(20, 135, resp.ApplicantPreviouslyInsuredDetails ? resp.ApplicantPreviouslyInsuredDetails : "");
+	doc.text(20, 95, resp.ApplicantPreviouslyInsuredDetails ? resp.ApplicantPreviouslyInsuredDetails : "");
 
-	doc.text(20, 145, resp.typeOfAuthorizedDriver ? resp.typeOfAuthorizedDriver : "");
+	doc.text(20, 105, resp.typeOfAuthorizedDriver ? resp.typeOfAuthorizedDriver : "");
+    
+    doc.setFontType("normal");
+    
+    doc.text(20, 110, "Will anyone driving your motor vehicle:");
+    
+    doc.text(20, 115, "In respect of PRIVATE CARS:");
+    
+    doc.text(20, 125, "In respect of PRIVATE COMMERCIAL:");
+    
+    doc.text(20, 135, "In respect of GENERAL CARTAGE:");
+    
+    doc.text(20, 145, "If yes, please give particulars of drivers below:");
+    
+    
+    doc.setFontSize("6");
+    doc.setFontType("bold");
+    
+    doc.text(20, 150, "Name(s)");
+    doc.text(50, 150, "Occupation(s)");
+    doc.text(80, 150,"Date of Birth");
+    doc.text(100, 150, "Drivers License No.");
+    doc.text(130, 150, "Original Date of Issue");
+    doc.text(160, 150, "Relationship to Proposer");
+    
+    
+    doc.setFontType("normal");
+        
+   
+  /* if (resp.vehicleRegistrationNo0) {
+       
+        doc.text(20, 155, resp.regularDriversName0?resp.regularDriversName0:"");
+        doc.text(50, 155, resp.regularDriversOccupation0?resp.regularDriversOccupation0:"");
+        doc.text(80, 155, resp.regularDriversDateOfBirth0?resp.regularDriversDateOfBirth0:"");
+        doc.text(100, 155, resp.regularDriversDL0?resp.regularDriversDL0:"");
+        doc.text(130, 155, resp.regularDriversDLOriginalDateOfIssue0?resp.regularDriversDLOriginalDateOfIssue0:"");
+        doc.text(160, 155, resp.regularDriversDLExpirationDate0?resp.regularDriversDLExpirationDate0:"");
+
+	}
+	if (resp.vehicleRegistrationNo1) {
+        
+            doc.text(20, 160, resp.regularDriversName1?resp.regularDriversName1:"");
+            doc.text(50, 160, resp.regularDriversOccupation1?resp.regularDriversOccupation1:"");
+            doc.text(80, 160,resp.regularDriversDateOfBirth1?resp.regularDriversDateOfBirth1:"");
+            doc.text(100, 160, resp.regularDriversDL1?resp.regularDriversDL1:""));
+            doc.text(130, 160, resp.regularDriversDLOriginalDateOfIssue01resp.regularDriversDLOriginalDateOfIssue1:"");
+            doc.text(160, 160, resp.regularDriversDLExpirationDate1?resp.regularDriversDLExpirationDate1:"");
+
+	}
+    
+	if (resp.vehicleRegistrationNo2) {
+        doc.text(20, 165, resp.regularDriversName2?resp.regularDriversName2:"");
+        doc.text(50, 165, resp.regularDriversOccupation2?resp.regularDriversOccupation2:"");
+        doc.text(80, 165,resp.regularDriversDateOfBirth2?resp.regularDriversDateOfBirth2:"");
+        doc.text(100, 165, resp.regularDriversDL2?resp.regularDriversDL2:""));
+        doc.text(130, 165, resp.regularDriversDLOriginalDateOfIssue2?resp.regularDriversDLOriginalDateOfIssue2:"");
+        doc.text(160, 165, resp.regularDriversDLExpirationDate2?resp.regularDriversDLExpirationDate2:"");
+
+	}*/
+    
+    
+    
+    
 
 	doc.addPage();
 
