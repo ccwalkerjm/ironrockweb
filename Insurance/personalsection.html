@@ -220,10 +220,10 @@
             <div class="controls-row">
                 <label class="control-label">Is Mailing Address Same as Home Address?</label>
                 <label class="radio inline">
-                    <input type="radio" value="no" name="mailingAddressSame" />No
+                    <input type="radio" value="yes" name="mailingAddressSame" checked />Yes
                 </label>
                 <label class="radio inline">
-                    <input type="radio" value="yes" name="mailingAddressSame" />Yes
+                    <input type="radio" value="no" name="mailingAddressSame" />No
                 </label>
             </div>
         </div>
@@ -382,13 +382,17 @@
     </div>
 </div>-->
 
-            <p>Have you or any relative or close associate been entrusted with prominent pubic functions(e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces)?</p>
-            <label class="radio-inline">
-                <input type="radio" name="applicantRelativeInPublicOffice" value="no">No
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="applicantRelativeInPublicOffice" value="yes">Yes
-            </label>
+            <div class="form-inline">
+                <div class="controls-row">
+                    <label class="control-label">Have you or any relative or close associate been entrusted with prominent pubic functions(e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces)?</label>
+                    <label class="radio inline">
+                        <input type="radio" value="yes" name="applicantRelativeInPublicOffice" />Yes
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="no" name="applicantRelativeInPublicOffice" checked />No
+                    </label>
+                </div>
+            </div>
 
 
 
