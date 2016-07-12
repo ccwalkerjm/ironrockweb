@@ -13,75 +13,140 @@ function CreatePDF(resp) {
 	console.log(resp);
 	doc.setFontSize(22);
 	if (resp.insuranceType === 'motor') {
-		doc.text(startingXPoint, startingYPoint, 'Motor Vehicle Insurance Proposal');
+		doc.text(20, 20, 'Motor Vehicle Insurance Proposal');
 	} else {
-		doc.text(startingXPoint, startingYPoint, 'Home Insurance Proposal');
+		doc.text(20, 20, 'Home Insurance Proposal');
 	}
-	doc.text(startingXPoint, startingYPoint + standardYgap, 'Quote No:');
+	
 
 	doc.setFontSize(10);
 	doc.setFont("times");
 	doc.setFontType("normal");
+    
+    doc.text(20, 25, 'Quote No:');
 	//doc.text(startingXPoint, 30, 'Insurance for ' + resp.insuranceType);
-	doc.text(startingXPoint, startingYPoint + 2 * standardYgap, 'Surname:');
-	doc.text(startingXPoint, startingYPoint + 2 * standardYgap, 'First Name:');
-	doc.text(startingXPoint, startingYPoint + 2 * standardYgap, 'Middle Name:');
-	doc.text(startingXPoint, startingYPoint + 2 * standardYgap, 'Title:');
-	doc.text(startingXPoint, startingYPoint + 2 * standardYgap, 'Occupation:');
-	doc.text(100, 50, 'Mothers Maiden Name: ');
-	doc.text(100, 60, 'Other Names/Aliases: ');
+	doc.text(20, 65, 'Surname:');
+	doc.text(20, 70, 'First Name:');
+	doc.text(20, 75, 'Middle Name:');
+	doc.text(20, 80, 'Title:');
+	doc.text(20, 85, 'Occupation:');
+    
+    
+	doc.text(100, 60, 'Mothers Maiden Name: ');
+	doc.text(100, 65, 'Other Names/Aliases: ');
 	doc.text(100, 70, 'ID Type: ');
-	doc.text(100, 80, 'ID Number: ');
-	doc.text(100, 90, 'Expiration Date: ');
-	doc.text(100, 100, 'Source of Funds: ');
+	doc.text(100, 75, 'ID Number: ');
+	doc.text(100, 80, 'Expiration Date: ');
+	doc.text(100, 85, 'Source of Funds: ');
+    
+	doc.text(20, 95, 'Street Number and Name: ');
+	doc.text(20, 105, 'City/Town/Postal Zone: ');
+	//doc.text(20, 115, 'Parish: ');
+	doc.text(100, 90, 'TRN: ');
+	doc.text(100, 95, 'Email Address: ');
+	doc.text(100, 100, 'Mobile Number: ');
+	doc.text(100, 105, 'Home Number: ');
+	doc.text(100, 110, 'Work Number: ');
+    
 	doc.text(20, 120, 'Street Number and Name: ');
-	doc.text(20, 130, 'City/Town/Postal Zone: ');
-	doc.text(20, 140, 'Parish: ');
-	doc.text(100, 120, 'TRN: ');
-	doc.text(100, 130, 'Email Address: ');
-	doc.text(100, 140, 'Mobile Number: ');
-	doc.text(100, 150, 'Home Number: ');
-	doc.text(100, 160, 'Work Number: ');
-	doc.text(20, 180, 'Street Number and Name: ');
-	doc.text(20, 190, 'City/Town/Postal Zone: ');
-	doc.text(20, 200, 'Parish ');
-	doc.text(100, 180, 'Date of Birth: ');
-	doc.text(100, 190, 'Place of Birth: ');
-	doc.text(100, 200, 'Nationality: ');
-	doc.text(20, 220, 'Company Name:');
-	doc.text(100, 220, 'Street Number and Name:');
-	doc.text(100, 230, 'Town');
-	doc.text(100, 240, 'Parish');
-	doc.setFontType("bold");
-	doc.text(50, 50, resp.applicantSurname); /*doc.text(50, 60, resp.applicantFirstName); doc.text(50, 70, resp.applicantMiddleName);*/
+	doc.text(20, 125, 'City/Town/Postal Zone: ');
+	//doc.text(20, 130, 'Parish ');
+	doc.text(100, 115, 'Date of Birth: ');
+	doc.text(100, 120, 'Place of Birth: ');
+	doc.text(100, 125, 'Nationality: ');
+    
+	doc.text(20, 135, 'Company Name:');
+	doc.text(100, 130, 'Street Number and Name:');
+	doc.text(100, 135, 'Town');
+	doc.text(100, 140, 'Parish');
+    
+	doc.setFontType("italics");
+	doc.text(50, 65, resp.applicantSurname); 
+    /*doc.text(50, 70, resp.applicantFirstName);
+    doc.text(50, 75, resp.applicantMiddleName);*/
 	doc.text(50, 80, resp.applicantTitle);
-	doc.text(50, 90, resp.applicantOccupation);
-	doc.text(150, 50, resp.applicantMothersMaidenName);
-	doc.text(150, 60, resp.applicantAlias);
+	doc.text(50, 85, resp.applicantOccupation);
+	doc.text(150, 60, resp.applicantMothersMaidenName);
+	doc.text(150, 65, resp.applicantAlias);
 	doc.text(150, 70, resp.applicantIDType);
-	doc.text(150, 80, resp.applicantIDnumber);
-	doc.text(150, 90, resp.applicationIDExpirationDate); /* doc.text(150, 100, resp.SourceOfFunds); */
-	doc.text(20, 125, resp.applicantHomeStreetName);
-	doc.text(20, 135, resp.applicantHomeTown);
-	doc.text(50, 140, resp.applicantHomeParish); /* doc.text(150, 120, resp.applicantTRN); */
-	doc.text(150, 130, resp.applicantEmailAddress); /* doc.text(150, 140, resp.ApplicantMobileNumber); */
-	doc.text(150, 150, resp.applicantHomeNumber);
-	doc.text(150, 160, resp.applicantWorkNumber); /* doc.text(20, 185, resp.applicantMailStreetName); */
-	doc.text(20, 195, resp.applicantMailTown);
-	doc.text(50, 200, resp.applicantMailParish);
-	doc.text(150, 180, resp.applicantDateOfBirth);
-	doc.text(150, 190, resp.applicantPlaceOfBirth);
-	doc.text(150, 200, resp.applicantNationality);
-	doc.text(50, 220, resp.employerName);
-	doc.text(150, 220, resp.employerStreetName);
-	doc.text(150, 230, resp.employerTown);
-	doc.text(150, 240, resp.employerParish);
+	doc.text(150, 75, resp.applicantIDnumber);
+	doc.text(150, 80, resp.applicationIDExpirationDate);
+    /* doc.text(150, 85, resp.SourceOfFunds); */
+    
+	doc.text(20, 100, resp.applicantHomeStreetName);
+	doc.text(20, 110, resp.applicantHomeTown);
+	//doc.text(20, 120, resp.applicantHomeParish); 
+    /* doc.text(150, 90, resp.applicantTRN); */
+	doc.text(150, 95, resp.applicantEmailAddress);
+    /* doc.text(150, 100, resp.ApplicantMobileNumber);
+    */
+	doc.text(150, 105, resp.applicantHomeNumber);
+	doc.text(150, 110, resp.applicantWorkNumber); 
+    /* doc.text(50, 120, resp.applicantMailStreetName); */
+	doc.text(50, 125, resp.applicantMailTown);
+	//doc.text(50, 130, resp.applicantMailParish);
+	doc.text(150, 115, resp.applicantDateOfBirth);
+	doc.text(150, 120, resp.applicantPlaceOfBirth);
+	doc.text(150, 125, resp.applicantNationality);
+	doc.text(50, 135, resp.employerName);
+	doc.text(150, 130, resp.employerStreetName);
+	doc.text(150, 135, resp.employerTown);
+	doc.text(150, 140, resp.employerParish);
+    
 	doc.setFontType("bold");
-	doc.setFontSize("14");
-	doc.text(20, 40, 'Name');
-	doc.text(20, 110, 'Home Address');
-	doc.text(20, 170, 'Mailing Address');
-	doc.text(20, 210, 'Employer Details');
+	doc.setFontSize("10");
+	doc.text(20, 60, 'Name');
+	doc.text(20, 90, 'Home Address');
+	doc.text(20, 115, 'Mailing Address');
+	doc.text(20, 130, 'Employer Details');
+    
+    doc.setFontSize("8");
+    doc.setFontType("bold");
+    doc.text(20, 170, "NB: Please submit the following:");
+    
+    doc.setFontType("normal");
+    doc.text(20, 175, "** A power of attorney or a letter duly notarized");
+    doc.text(20, 180, "Proof of Address");
+    doc.text(20, 185, "Picture Identification(Insured an agent, where applicable)");
+    doc.text(20, 190, "TRN(if a driver's license is not being used)");
+    
+    doc.text(20, 200, "Have you or any relative or close associate been entrusted with prominent public functions (e.g. Member of Parliament, Senate or Mayor,")
+    
+    doc.text(20, 203, " Senior Government Official, Judiciary, security forces)?")
+    
+    
+    
+    doc.text(20, 210, "If yes, state the type of public office:")
+    
+    doc.text(20 , 220, "If yes to the above, please give the name and address of spouse and children")
+    
+    doc.setFontType("italics")
+    
+    doc.text(20, 206, resp.applicantRelativeInPublicOffice?resp.applicantRelativeInPublicOffice:"" );
+    
+    doc.text(20, 215, resp.applicantRelativeTypePublicOffice0?resp.applicantRelativeTypePublicOffice0:"");
+    
+    
+    
+    
+    
+    doc.setFontSize("8");
+    doc.setFontType("bold");
+    doc.text( 20, 30, "DUTY TO DISCLOSE. This proposal must be completed, dated and signed by the proposer. When answering the questions on this form," );
+    
+    doc.text( 20, 33, " you must be honest and truthful. You have a duty under law to tell us anything known to you which is material to the questions asked as ");
+    
+    doc.text(20, 36, "those answers will guide us in deciding whether to insure you or anyone else to be insured under the policy and on what terms. ");
+    
+    doc.text(20, 39, "If you are in doubt as to whether a fact is relevant, you should state it. Your duty to make full and frank discourse occurs: (1) at the time ");
+    
+    doc.text(20, 42, "of the time of proposing for insurance. (2) during the currency of the policy, if there are any changes or variations in the information given ");
+    
+    doc.text(20, 45, "and (3) at each renewal.");
+    
+    doc.text(20, 50, "FAILURE TO DISCLOSE. If you do not comply with these duties and answer our questions honestly, the company will be at liberty to ");
+    
+    doc.text(20, 53, "treat your Policy as if it never existed and refuse to pay any claims you make under it.");
 
 
 
@@ -100,8 +165,61 @@ function CreatePDF(resp) {
 
 function setMotorVehiclePages(resp) {
 	doc.setFontSize("10");
+    
+    
 	doc.setFontType("bold");
-	doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
+    
+    doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
+    doc.setFontSize("7");
+	
+    
+    doc.text(20, 25, "Registration No.");
+    doc.text(42, 25, "Make and Model");
+    doc.text(62, 25,"SChassis & Engine No.");
+    doc.text(90,25 , "Year of Make");
+    doc.text(105, 25, "C.C. Rating");
+    doc.text(122, 25, "Seating");
+    doc.text(142, 25, "Type Of Body");
+    doc.text(162, 25,"Sum Insured");
+    
+    doc.setFontType("normal")
+        
+   
+    if (resp.vehicleRegistrationNo0) {
+		doc.text(20, 30 , resp.vehicleRegistrationNo0?resp.vehicleRegistrationNo0:"");
+        doc.text(42, 30, resp.vehicleMake0?resp.vehicleMake0:"");
+        doc.text(62, 30,resp.vehicleChassisNo0?resp.vehicleChassisNo0:"");
+        doc.text(90,30 , resp.vehicleYear0?resp.vehicleYear0:"");
+        doc.text(105, 30, "");
+        doc.text(122, 30, resp.vehicleBody0?resp.vehicleBody0:"");
+        doc.text(142, 30, resp.vehicleType0?resp.vehicleType0:"");
+        doc.text(162, 30,resp.QueryVehicleSumInsured?resp.QueryVehicleSumInsured:"");
+
+	}
+	if (resp.vehicleRegistrationNo1) {
+		doc.text(20, 35, resp.vehicleRegistrationNo1?resp.vehicleRegistrationNo1:"");
+        doc.text(42, 35, resp.vehicleMake1?resp.vehicleMake1:"");
+        doc.text(62, 35,resp.vehicleChassisNo1?resp.vehicleChassisNo1:"");
+        doc.text(90,35 , resp.vehicleYear1?resp.vehicleYear1:"");
+        doc.text(105, 35, " ");
+        doc.text(122, 35, resp.vehicleBody1?resp.vehicleBody1:"");
+        doc.text(142, 35, resp.vehicleType1?resp.vehicleType1:"");
+        doc.text(162, 35,resp.QueryVehicleSumInsured?resp.QueryVehicleSumInsured:"");
+
+	}
+	if (resp.vehicleRegistrationNo2) {
+		doc.text(20, 40, resp.vehicleRegistrationNo2?resp.vehicleRegistrationNo2:"");
+        doc.text(42, 40, resp.vehicleMake2?resp.vehicleMake2:"");
+                 
+        doc.text(62, 40, resp.vehicleChassisNo2?resp.vehicleChassisNo2:"");
+        
+        doc.text(90,40 , resp.vehicleYear2?resp.vehicleYear2:"");
+        doc.text(105, 40, " ");
+        doc.text(122, 40, resp.vehicleBody2?resp.vehicleBody2:"");
+        doc.text(142, 40, resp.vehicleType2?resp.vehicleType2:"");
+        doc.text(162, 40,resp.QueryVehicleSumInsured?resp.QueryVehicleSumInsured:"");
+
+	}
 
 	doc.setFontSize("8");
 	doc.text(20, 80, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
