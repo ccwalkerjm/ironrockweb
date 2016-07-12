@@ -1,6 +1,7 @@
 //function onDeviceReady() {
 
 //$(document).ready(function(e) {
+'use strict';
 
 function doMiscellaneous() {
 		setVehicleUsedAs("SocialDomesticPleasure");

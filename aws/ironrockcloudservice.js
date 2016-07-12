@@ -128,7 +128,13 @@ function ironrockcloudservice() {
     }
 
 
-    this.confirmSignup = function (verificationCode, callback) {
+    this.confirmSignup = function (username,verificationCode, callback) {
+		var userData = {
+            Username: username,
+            Pool: _userPool
+        };
+        _cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+		
         _cognitoUser.confirmRegistration(verificationCode, true, function (err, result) {
             callback(err, result);
         });
