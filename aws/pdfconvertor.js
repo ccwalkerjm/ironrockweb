@@ -1,5 +1,7 @@
+var doc;
 function CreatePDF(resp) {
-    var doc = new jsPDF();
+    doc = new jsPDF();
+    console.log(resp);    
     doc.setFontSize(22);
     doc.text(20, 20, 'Proposal');
     doc.setFontSize(10);
@@ -66,8 +68,21 @@ function CreatePDF(resp) {
     doc.text(20, 170, 'Mailing Address');
     doc.text(20, 210, 'Employer Details');
     
-    doc.addPage();
     
+    
+    doc.addPage();
+    if(resp.insuranceType=='motor'){
+        MotorPDF(resp);        
+    }else{
+        ProperPDF(resp);        
+    }
+
+    
+    doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
+}
+
+
+function MotorPDF(resp){
     doc.setFontSize("10");
     doc.setFontType("bold");
     doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
@@ -148,6 +163,7 @@ function CreatePDF(resp) {
     doc.addPage();
     
     doc.setFontSize("10");
+    doc.setFontType("normal");
     
     doc.text(20, 20, "Is the proposer now insured or was previously insured in respect of any vehicle(s)");
     
@@ -169,7 +185,60 @@ function CreatePDF(resp) {
     
     doc.text(20, 140, "Type of Authorized Driver Clause:");
     
+    doc.setFontType("bold");
+    
+    doc.text(20, 25, resp.proposerInsured?resp.proposerInsured:"");
+    
+    doc.text(20, 45, resp.proposerInsuranceDetails?resp.proposerInsuranceDetails:"");
+    
+       
+    doc.text(50, 55, resp.proposerEntitledToNOClaimDiscount?resp.proposerEntitledToNOClaimDiscount:"")
+    
+        
+    doc.text(20, 75, resp.applicantOtherInsurer?resp.applicantOtherInsurer:"");
+    
+    doc.text(20, 85, resp.applicantOtherInsurerType?resp.applicantOtherInsurerType:"");
+    
+    doc.text(20, 125, resp.applicantPreviouslyInsured?resp.applicantPreviouslyInsured:"" );
+    
+    doc.text(20, 135, resp.ApplicantPreviouslyInsuredDetails?resp.ApplicantPreviouslyInsuredDetails:"");
+    
+    doc.text(20, 145, resp.typeOfAuthorizedDriver?resp.typeOfAuthorizedDriver:"");
+    
     doc.addPage();
+    
+    doc.setFontType("normal");
+    doc.text(20, 20, "Have you or any regular drivers had any accidents or losses during the past three(3) years (whether insured ");
+    
+    doc.text(20, 25, "or not in respect of all vehicles)");
+    
+    doc.text(20, 30, "I. Owned by you, whether or not you were the driver at the material time?");
+    
+    doc.text(20, 35, "II. Not owned by you, but driven by you or in your custody at the material time?");
+    
+    doc.text(20, 45, "If yes, please give details below");
+    
+    doc.text(20, 80, "To the best of your knowledge and belief have you, or any person who to your knowledge");
+    
+    doc.text(20, 85, "will drive have suffered from, or now suffer from:");
+    
+    doc.text(20, 100, "If yes, please indicate above and give details:");
+    
+    doc.text(20, 110, "Have you or any person who to your knowledge will drive received any traffic ticket(s) and");
+    
+    doc.text(20, 115, "or have been convicted of any offence in connection with the driving of any motor vehicle within the ");
+    
+    doc.text(20, 120, "last three (3) years?");
+    
+    doc.text(20, 130, "If yes, please give details:");
+    
+    doc.text(20, 140, "has the vehicle been modified or converted from maker's standard specification or do you intend to do so?");
+    
+    doc.text(20, 150, "If yes, please give details:");
+    
+    doc.text(20, 160, "Do you require increased limits (in excess of the Standard Limits)");
+    
+    doc.setFontType("bold");
     
     doc.text(20, 20, "Have you or any regular drivers had any accidents or losses during the past three(3) years (whether insured ");
     
@@ -201,6 +270,92 @@ function CreatePDF(resp) {
     
     doc.text(20, 160, "Do you require increased limits (in excess of the Standard Limits)");
     
+    doc.addPage();
+    function ProperPDF(resp){
+    
+    doc.setFontType("bold");
+    doc.setFontSize(10);
+    doc.setFont("times");
+        
+    
+    if(resp.regularDriversDL0){
+        doc.text(20, 160, "uhkhkjnnjknk");
+        doc.text(50, 160, "klmlkmlkmlkm");
+        doc.text(100, 160, "llmllmlml");
+        doc.text(150, 160, "kjnknknknk");
+        
+    }
+    if(resp.regularDriversDL1){
+        doc.text(20, 170, resp.regularDriversName1);
+        doc.text(50, 170, resp.regularDriversDL1);
+        doc.text(100, 170, resp.regularDriversName1);
+        doc.text(150, 170, resp.regularDriversName1);
+        
+    }
+    if(resp.regularDriversDL2){
+        doc.text(20, 180, resp.regularDriversName1);
+        doc.text(50, 180, resp.regularDriversDL1);
+        doc.text(100, 180, resp.regularDriversName1);
+        doc.text(150, 180, resp.regularDriversName1);
+        
+    }
+}
+    
+    
+        
+}
+
+function ProperPDF(resp){
+
+    
+    doc.setFontType("bold");
+    doc.setFontSize(10);
+    doc.setFont("times");
+    
+    doc.text(20, 20, "Particulars Of Home To Be Insured");
+    
+    doc.text(20, 60, "Construction of Dwelling");
+    
+    doc.text(20, 110, "Garages or Out Buildings?");
+    
+    
+    doc.setFontType("normal");
+    
+    doc.text( 20, 30, "Risk Address:");
+    
+    doc.text(20, 40, "Is the home:");
+    
+    doc.text(20, 80, "External Walls");
+    
+    doc.text(100, 80, "Roof:");
+    
+    doc.text(20, 100, "Internal Walls:");
+    
+    doc.text(20, 120, "External walls:");
+    
+    doc.text(20, 140, "Internal Walls:");
+    
+    doc.text(100, 120, "Roof:");
+    
+    doc.text(20, 160, "Are the buildings in good state of repairs and will be so maintained?");
+    
+    doc.text(20, 180, "Is the Dwelling occupied solely by you, your family and domestic employees?");
+    
+    doc.text(20, 190, "If no, give the details of other occupants:");
+    
+    doc.text(20, 200, "Is any part of the Dwelling or Outbuilding used for any income-earning activity?");
+    
+    doc.text(20, 210, "If yes, give details:");
+    
+    doc.text(20, 220, "Are all externally communicating doors, windows and other openings grilled?");
+    
+    doc.text(20, 230, "If no, describe the security arrangements in place:");
+    
+    doc.text(20, 240, "Does any institution or individual have a financial interest in the Property:");
+    
+    doc.text(20, 250, "If yes, state their name and address:");
+    
+    doc.text(20, 260, "Are there any Waterside Structures i.e. docks, jetties, piers, sea walls and any other structure abutting the sea, a river or any other body of water?");
     
     
     
@@ -209,13 +364,25 @@ function CreatePDF(resp) {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
+    if(resp.regularDriversDL0){
+        doc.text(20, 160, "uhkhkjnnjknk");
+        doc.text(50, 160, "klmlkmlkmlkm");
+        doc.text(100, 160, "llmllmlml");
+        doc.text(150, 160, "kjnknknknk");
+        
+    }
+    if(resp.regularDriversDL1){
+        doc.text(20, 170, resp.regularDriversName1);
+        doc.text(50, 170, resp.regularDriversDL1);
+        doc.text(100, 170, resp.regularDriversName1);
+        doc.text(150, 170, resp.regularDriversName1);
+        
+    }
+    if(resp.regularDriversDL2){
+        doc.text(20, 180, resp.regularDriversName1);
+        doc.text(50, 180, resp.regularDriversDL1);
+        doc.text(100, 180, resp.regularDriversName1);
+        doc.text(150, 180, resp.regularDriversName1);
+        
+    }
 }
