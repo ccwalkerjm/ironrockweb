@@ -17,14 +17,13 @@ function CreatePDF(resp) {
 	}
 
 	var logoCanvas = document.getElementById("canvas-logo");
-	var signatureCanvas = document.getElementById("canvas-signature");
+	
 
 	var imgLogoData = logoCanvas.toDataURL('image/jpeg');
-	var imgSignatureData = signatureCanvas.toDataURL('image/jpeg');
-	console.log(imgSignatureData);
+	
 
 	doc.addImage(imgLogoData, 'JPG', 5, 5, 109, 30);
-	doc.addImage(imgSignatureData, 'JPG', 120, 5, 109, 30);
+	
 
 	doc.setFontSize(10);
 	doc.setFont("times");
@@ -175,8 +174,7 @@ function CreatePDF(resp) {
 function setMotorVehiclePages(resp) {
 	doc.setFontSize("10");
 
-
-	doc.setFontType("bold");
+doc.setFontType("bold");
 
 	doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
 	doc.setFontSize("7");
@@ -231,6 +229,7 @@ function setMotorVehiclePages(resp) {
 	}
 
 	doc.setFontSize("8");
+    doc.setFontType("bold");
 	doc.text(20, 75, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
 
 	doc.text(20, 78, "Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based in");
@@ -238,6 +237,7 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 81, "time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.");
 
 	doc.setFontSize("10");
+    doc.setFontType("bold");
 	doc.text(20, 85, "Lien Holder");
 
 	doc.text(20, 110, "Select cover required(tick the appropriate box)");
@@ -257,7 +257,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(100, 105, "Parish:");
 
-	doc.text(20, 110, "Select cover required(tick the appropriate box)");
+	
 
 	doc.text(20, 120, "Please indicate if the vehicle is to be used as:");
 
@@ -275,7 +275,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 190, "Is the vehicle kept in?");
 
-	doc.setFontType("bold");
+	doc.setFontType("italic");
 
 	/* doc.text(20, 50, resp.isOwnerOfVehicle); */
 
@@ -306,9 +306,9 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 185, resp.vehicleGaragedAtProposersHomeDetails ? resp.vehicleGaragedAtProposersHomeDetails : "");
 
 	doc.text(20, 195, resp.vehicleKeptIn ? resp.vehicleKeptIn : "");
-
 	doc.addPage();
 
+	
 	doc.setFontSize("10");
 	doc.setFontType("normal");
 
@@ -332,14 +332,14 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 100, "Type of Authorized Driver Clause:");
 
-	doc.setFontType("bold");
+	doc.setFontType("italic");
 
 	doc.text(20, 25, resp.proposerInsured ? resp.proposerInsured : "");
 
 	doc.text(20, 35, resp.proposerInsuranceDetails ? resp.proposerInsuranceDetails : "");
 
 
-	doc.text(50, 45, resp.proposerEntitledToNOClaimDiscount ? resp.proposerEntitledToNOClaimDiscount : "");
+	doc.text(20, 46, resp.proposerEntitledToNOClaimDiscount ? resp.proposerEntitledToNOClaimDiscount : "");
 
 
 	doc.text(20, 65, resp.applicantOtherInsurer ? resp.applicantOtherInsurer : "");
@@ -365,7 +365,7 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 145, "If yes, please give particulars of drivers below:");
 
 
-	doc.setFontSize("6");
+	doc.setFontSize("7");
 	doc.setFontType("bold");
 
 	doc.text(20, 150, "Name(s)");
@@ -440,8 +440,8 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 40, "Date of Accident");
 	doc.text(50, 40, "Cost(Paid or Estimated)");
-	doc.text(100, 40, "Driver");
-	doc.text(150, 40, "Brief details of Accidents, Incident or losses");
+	doc.text(90, 40, "Driver");
+	doc.text(120, 40, "Brief details of Accidents, Incident or losses");
 
 	doc.setFontType("normal");
 
@@ -449,81 +449,114 @@ function setMotorVehiclePages(resp) {
 	if (resp.involvedInAccident) {
 		doc.text(20, 45, resp.accidentMonth0 ? resp.accidentMonth0 : "");
 		doc.text(50, 45, resp.accidentCost0 ? resp.accidentCost0 : "");
-		doc.text(100, 45, resp.accidentDriver0 ? resp.accidentDriver0 : "");
-		doc.text(150, 45, resp.accidentBrief0 ? resp.accidentBrief0 : "");
+		doc.text(90, 45, resp.accidentDriver0 ? resp.accidentDriver0 : "");
+		doc.text(120, 45, resp.accidentBrief0 ? resp.accidentBrief0 : "");
 
 	}
 	if (resp.involvedInAccident) {
 		doc.text(20, 50, resp.accidentMonth1 ? resp.accidentMonth1 : "");
 		doc.text(50, 50, resp.accidentCost1 ? resp.accidentCost1 : "");
-		doc.text(100, 50, resp.accidentDriver1 ? resp.accidentDriver1 : "");
-		doc.text(150, 50, resp.accidentBrief1 ? resp.accidentBrief1 : "");
+		doc.text(90, 50, resp.accidentDriver1 ? resp.accidentDriver1 : "");
+		doc.text(120, 50, resp.accidentBrief1 ? resp.accidentBrief1 : "");
 
 	}
 	if (resp.involvedInAccident) {
 		doc.text(20, 55, resp.accidentMonth2 ? resp.accidentMonth2 : "");
 		doc.text(50, 55, resp.accidentCost2 ? resp.accidentCost2 : "");
-		doc.text(100, 55, resp.accidentDriver2 ? resp.accidentDriver2 : "");
-		doc.text(150, 55, resp.accidentBrief2 ? resp.accidentBrief2 : "");
+		doc.text(90, 55, resp.accidentDriver2 ? resp.accidentDriver2 : "");
+		doc.text(120, 55, resp.accidentBrief2 ? resp.accidentBrief2 : "");
 
 	}
 
-
-
-	doc.text(20, 60, "To the best of your knowledge and belief have you, or any person who to your knowledge will drive have suffered from, or now suffer from:");
+    doc.setFontSize("10");
+    
+	doc.text(20, 60, "To the best of your knowledge and belief have you, or any person who to your knowledge will drive have suffered");
+    
+    doc.text(20, 63, " from, or now suffer from:");
 
 	doc.text(20, 70, "If yes, please indicate above and give details:");
 
 	doc.text(20, 80, "Have you or any person who to your knowledge will drive received any traffic ticket(s) and");
 
-	doc.text(20, 115, "or have been convicted of any offence in connection with the driving of any motor vehicle within the ");
+	doc.text(20, 83, "or have been convicted of any offence in connection with the driving of any motor vehicle within the ");
 
-	doc.text(20, 120, "last three (3) years?");
+	doc.text(20, 86, "last three (3) years?");
 
-	doc.text(20, 130, "If yes, please give details:");
+	doc.text(20, 95, "If yes, please give details:");
 
-	doc.text(20, 140, "has the vehicle been modified or converted from maker's standard specification or do you intend to do so?");
+	doc.text(20, 105, "Has the vehicle been modified or converted from maker's standard specification or do you intend to do so?");
 
-	doc.text(20, 150, "If yes, please give details:");
+	doc.text(20, 115, "If yes, please give details:");
 
-	doc.text(20, 160, "Do you require increased limits (in excess of the Standard Limits)");
+	doc.text(20, 125, "Do you require increased limits (in excess of the Standard Limits)");
+    
+    doc.text(20, 135, "Do you require increased limits (in excess of the Standard Limits)?");
+    
+    doc.setFontSize("8");
+    doc.setFontType("bold");
+    doc.text(20, 150, "Disclaimer");
+    
+    doc.setFontType("normal");
+    doc.text(20, 153, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
+    
+    doc.text(20, 156, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
+    
+    doc.text(20, 160, "I declare that the information given above has been verified by original");
+    
+    doc.text(20, 163, "documents to ensure the veracity of the information given.");
+    
+    doc.setFontType("bold");
+    doc.text(20, 180, "Customer service Representative");
+    
+    doc.text(100, 163, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
+    doc.text(100, 166, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
+    
+    doc.setFontType("normal");
+    
+    doc.text(20, 185, "I/We declare that the above answers are true and that all particulars ");
+    doc.text(20, 188, "affecting the assessment of the risk have been disclosed.");
+    
+    doc.text(110, 188, "Surname:");
+    
+    doc.text(110, 191, "First Name:");
+    
+    doc.text(110, 194, "Middle Name:");
+    
+    doc.text(110, 197, "Date of Birth:");
+    
+    doc.text(110, 200, "Nationality:");
+    
+    doc.text(110, 203, "TRN No.:");
+    
+    doc.text(110, 206, "Address:");
+    
+    doc.setFontType("bold");
+    
+    doc.text(110, 185, "Agent Details");
+    
+    doc.text(20, 192, "Proposer's Signature/Date");
+    
+    doc.text(20, 210, "Joint Proposer's Signature Date");
+    
+    doc.text(160, 185, "Agent Signature Date");
+    
+    var signatureCanvas = document.getElementById("canvas-signature");
+    var imgSignatureData = signatureCanvas.toDataURL('image/jpeg');
+	console.log(imgSignatureData);
+    
+    doc.addImage(imgSignatureData, 'JPG', 20, 220, 109, 30);
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-	doc.setFontType("bold");
-
-
-	doc.addPage();
-
-	doc.setFontSize(10);
-	doc.setFont("times");
-
-	doc.text(20, 20, "Name");
-	doc.text(70, 20, "License");
-	doc.text(100, 20, "Occupation");
-	doc.text(150, 20, "Expired Date");
-
-	doc.setFontType("normal");
-
-	if (resp.regularDriversDL0) {
-		doc.text(20, 30, resp.regularDriversName0);
-		doc.text(70, 30, resp.regularDriversDL0);
-		doc.text(100, 30, resp.regularDriversOccupation0);
-		doc.text(150, 30, resp.regularDriversDLExpirationDate0);
-
-	}
-	if (resp.regularDriversDL1) {
-		doc.text(20, 40, resp.regularDriversName1);
-		doc.text(70, 40, resp.regularDriversDL1);
-		doc.text(100, 40, resp.regularDriversOccupation1);
-		doc.text(150, 40, resp.regularDriversDLExpirationDate1);
-
-	}
-	if (resp.regularDriversDL2) {
-		doc.text(20, 50, resp.regularDriversName2);
-		doc.text(70, 50, resp.regularDriversDL2);
-		doc.text(100, 50, resp.regularDriversOccupation2);
-		doc.text(150, 50, resp.regularDriversDLExpirationDate2);
-
-	}
+	doc.setFontType("italic");
+	
 }
 
 function setHomePropertyPages(resp) {
