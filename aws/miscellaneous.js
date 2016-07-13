@@ -422,7 +422,7 @@ function doMiscellaneous() {
 		//validate  
 		//$('#mailingAddressSame').change(function () {
 		$('input[type=radio][name=mailingAddressSame]').change(function () {
-			if (this.value == 'yes') {
+			if (this.value == 'no') {
 				$('#mailingAddress').show();
 			} else
 				$('#mailingAddress').hide();
