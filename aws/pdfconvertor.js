@@ -16,15 +16,15 @@ function CreatePDF(resp) {
 		doc.text(20, 40, 'Home Insurance Proposal');
 	}
 
-	var logoCanvas = document.getElementById("canvas");
-	var ctx = logoCanvas.getContext("2d");
-	var logoImg = document.getElementById("image");
-	ctx.drawImage(logoImg, 5, 5);
+	var logoCanvas = document.getElementById("canvas-logo");
+	var signatureCanvas = document.getElementById("canvas-signature");
 
-	var imgData = logoCanvas.toDataURL('image/jpeg');
-	console.log(imgData);
+	var imgLogoData = logoCanvas.toDataURL('image/jpeg');
+	var imgSignatureData = signatureCanvas.toDataURL('image/jpeg');
+	console.log(imgSignatureData);
 
-	doc.addImage(imgData, 'JPG', 5, 5, 100, 30);
+	doc.addImage(imgLogoData, 'JPG', 5, 5, 109, 30);
+	doc.addImage(imgSignatureData, 'JPG', 120, 5, 109, 30);
 
 	doc.setFontSize(10);
 	doc.setFont("times");

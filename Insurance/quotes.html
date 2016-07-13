@@ -128,7 +128,9 @@
 						</div>
 						<div class="btn-group">
 							<button type="button" class="btn btn-default" id="returntoQuotes">Return</button>
-							<button type="button" class="btn btn-info" id="doprint">View Proposal</button>
+							<button type="button" class="btn btn-info" id="getPDF">Proposal Form</button>
+							<button type="button" class="btn btn-info" id="convert">Convert to Policy</button>
+							<button type="button" class="btn btn-info" id="upload">Upload Documents</button>
 						</div>
 						<hr/>
 						<div id="rootwizard">
@@ -151,8 +153,9 @@
 
 								<div class="tab-pane" id="final-page">
 									<div id="disclaimerContainer">
-										<img id="image" src="/images/IronRockLogo.png"/>
-										<canvas id="canvas"></canvas>
+										<!--										<img id="image" src="/images/IronRockLogoSmall.png" width="109" height="30" />-->
+										<canvas id="canvas-logo" width="109" height="30"></canvas>
+										<canvas id="canvas-signature" width="109" height="30"></canvas>
 										<h4>Disclaimer:</h4>
 										<p>
 											The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
@@ -634,7 +637,7 @@
 					});
 				}
 
-				$('#doprint').click(function () {
+				$('#getPDF').click(function () {
 					CreatePDF(currentQuote)
 				})
 
@@ -655,9 +658,36 @@
 							data.id = licenseNo;
 							populateApplicant(data);
 							populateOtherItems();
+							//populate images and canvases
+							fillLogoCanvas();
+							fillSignatureCanvas();
+
 						});
 					}
 				}
+
+
+				function fillLogoCanvas() {
+					var ctx = document.getElementById("canvas-logo").getContext("2d");
+					var img = new Image();
+
+					img.onload = function () {
+						ctx.drawImage(img, 0, 0, 109, 30);
+					};
+					img.src = "/Images/IronRockLogoSmall.png";
+				}
+
+
+				function fillSignatureCanvas() {
+					var ctx = document.getElementById("canvas-signature").getContext("2d");
+					var img = new Image();
+
+					img.onload = function () {
+						ctx.drawImage(img, 0, 0, 109, 30);
+					};
+					img.src = '' + currentQuote.signatureImageType + ',' + currentQuote.signatureBytes;
+				}
+
 
 
 				var populateOtherItems = function () {
@@ -782,6 +812,10 @@
 					}
 				}
 
+
+
+
+				//events
 
 				$('#acceptDisclaimer').change(function () {
 					$('#submit-btn').prop("disabled", !$(this).is(':checked'));
