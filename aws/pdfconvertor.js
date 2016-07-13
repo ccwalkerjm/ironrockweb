@@ -536,7 +536,7 @@ doc.setFontType("bold");
     
     doc.text(20, 192, "Proposer's Signature/Date");
     
-    doc.text(20, 210, "Joint Proposer's Signature Date");
+    doc.text(20, 215, "Joint Proposer's Signature Date");
     
     doc.text(160, 185, "Agent Signature Date");
     
@@ -544,7 +544,7 @@ doc.setFontType("bold");
     var imgSignatureData = signatureCanvas.toDataURL('image/jpeg');
 	console.log(imgSignatureData);
     
-    doc.addImage(imgSignatureData, 'JPG', 20, 220, 109, 30);
+    doc.addImage(imgSignatureData, 'JPG', 20, 193, 88, 16);
     
     
     
