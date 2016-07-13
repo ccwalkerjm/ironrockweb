@@ -64,7 +64,7 @@ function doMiscellaneous() {
 		$('input[type=radio][name=garageOutBuildingExists]').change(function () {
 			if (this.value == 'yes') {
 				$('#divGarageOutBuilding').show();
-			} else if (this.value == 'transfer') {
+			} else { //if (this.value == 'transfer') {
 				$('#divGarageOutBuilding').hide();
 			}
 		});
@@ -360,7 +360,7 @@ function doMiscellaneous() {
 		//vehicleGaragedAtProposersHome
 		//$('#vehicleGaragedAtProposersHome').change(function () {
 		$('input[type=radio][name=vehicleGaragedAtProposersHome]').change(function () {
-			if (this.value == 'no') {
+			if (this.value == 'yes') {
 				$('.vehicleGaragedAtProposersHomeDetailsClass').hide();
 			} else {
 				$('.vehicleGaragedAtProposersHomeDetailsClass').show();
