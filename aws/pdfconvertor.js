@@ -17,13 +17,19 @@ function CreatePDF(resp) {
 	} else {
 		doc.text(20, 40, 'Home Insurance Proposal');
 	}
+    
+   
+    /*var ironRockLogo = 'data:image/png;base64,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';
+    
+    doc.addImage(ironRockLogo, 'PNG', 5, 5, 100, 30);*/
+    
 	
 
 	doc.setFontSize(10);
 	doc.setFont("times");
 	doc.setFontType("normal");
     
-    doc.text(20, 45, 'Quote No:');
+    doc.text(150, 40, 'Quote No:');
 	//doc.text(startingXPoint, 30, 'Insurance for ' + resp.insuranceType);
 	doc.text(20, 80, 'Surname:');
 	doc.text(20, 85, 'First Name:');
@@ -56,22 +62,22 @@ function CreatePDF(resp) {
 	doc.text(100, 155, 'Nationality: ');
     
 	doc.text(20, 175, 'Company Name:');
-	doc.text(100, 180, 'Street Number and Name:');
+	doc.text(100, 175, 'Street Number and Name:');
 	doc.text(100, 185, 'Town');
 	doc.text(100, 190, 'Parish');
     
-	doc.setFontType("italics");
+	doc.setFontType("italic");
 	doc.text(50, 80, resp.applicantSurname); 
     /*doc.text(50, 85, resp.applicantFirstName);
     doc.text(50, 90, resp.applicantMiddleName);*/
 	doc.text(50, 95, resp.applicantTitle);
 	doc.text(50, 100, resp.applicantOccupation);
-	doc.text(150, 75, resp.applicantMothersMaidenName);
-	doc.text(150, 80, resp.applicantAlias);
-	doc.text(150, 85, resp.applicantIDType);
-	doc.text(150, 90, resp.applicantIDnumber);
-	doc.text(150, 95, resp.applicationIDExpirationDate);
-    /* doc.text(150, 100, resp.SourceOfFunds); */
+	doc.text(150, 80, resp.applicantMothersMaidenName);
+	doc.text(150, 85, resp.applicantAlias);
+	doc.text(150, 90, resp.applicantIDType);
+	doc.text(150, 95, resp.applicantIDnumber);
+	doc.text(150, 100, resp.applicationIDExpirationDate);
+    /* doc.text(150, 105, resp.SourceOfFunds); */
     
 	doc.text(20, 120, resp.applicantHomeStreetName);
 	doc.text(20, 130, resp.applicantHomeTown);
@@ -85,11 +91,11 @@ function CreatePDF(resp) {
     /* doc.text(20, 150, resp.applicantMailStreetName); */
 	doc.text(20, 160, resp.applicantMailTown);
 	//doc.text(50, 165, resp.applicantMailParish);
-	doc.text(150, 140, resp.applicantDateOfBirth);
-	doc.text(150, 145, resp.applicantPlaceOfBirth);
-	doc.text(150, 150, resp.applicantNationality);
+	doc.text(150, 145, resp.applicantDateOfBirth);
+	doc.text(150, 150, resp.applicantPlaceOfBirth);
+	doc.text(150, 155, resp.applicantNationality);
 	doc.text(50, 175, resp.employerName);
-	doc.text(150, 180, resp.employerStreetName);
+	doc.text(100, 180, resp.employerStreetName);
 	doc.text(150, 185, resp.employerTown);
 	doc.text(150, 190, resp.employerParish);
     
@@ -100,19 +106,21 @@ function CreatePDF(resp) {
 	doc.text(20, 140, 'Mailing Address');
 	doc.text(20, 170, 'Employer Details');
     
-    doc.setFontSize("8");
+    doc.setFontSize("10");
     doc.setFontType("bold");
     doc.text(20, 195, "NB: Please submit the following:");
     
-    doc.setFontType("normal");
+    doc.setFontType("bold");
     doc.text(20, 200, "** A power of attorney or a letter duly notarized");
     doc.text(20, 205, "Proof of Address");
     doc.text(20, 210, "Picture Identification(Insured an agent, where applicable)");
     doc.text(20, 215, "TRN(if a driver's license is not being used)");
     
-    doc.text(20, 220, "Have you or any relative or close associate been entrusted with prominent public functions (e.g. Member of Parliament, Senate or Mayor,");
+    doc.setFontType("normal");
     
-    doc.text(20, 223, " Senior Government Official, Judiciary, security forces)?");
+    doc.text(20, 220, "Have you or any relative or close associate been entrusted with prominent public functions (e.g. Member of Parliament, ");
+    
+    doc.text(20, 223, "Senate or Mayor, Senior Government Official, Judiciary, security forces)?");
     
     
     
@@ -120,9 +128,9 @@ function CreatePDF(resp) {
     
     doc.text(20 , 240, "If yes to the above, please give the name and address of spouse and children");
     
-    doc.setFontType("italics");
+    doc.setFontType("italic");
     
-    doc.text(20, 225, resp.applicantRelativeInPublicOffice?resp.applicantRelativeInPublicOffice:"" );
+    doc.text(20, 226, resp.applicantRelativeInPublicOffice?resp.applicantRelativeInPublicOffice:"" );
     
     doc.text(20, 235, resp.applicantRelativeTypePublicOffice0?resp.applicantRelativeTypePublicOffice0:"");
     
@@ -132,21 +140,21 @@ function CreatePDF(resp) {
     
     doc.setFontSize("8");
     doc.setFontType("bold");
-    doc.text( 20, 50, "DUTY TO DISCLOSE. This proposal must be completed, dated and signed by the proposer. When answering the questions on this form," );
+    doc.text( 20, 45, "DUTY TO DISCLOSE. This proposal must be completed, dated and signed by the proposer. When answering the questions on this form," );
     
-    doc.text( 20, 53, " you must be honest and truthful. You have a duty under law to tell us anything known to you which is material to the questions asked as ");
+    doc.text( 20, 48, " you must be honest and truthful. You have a duty under law to tell us anything known to you which is material to the questions asked as ");
     
-    doc.text(20, 56, "those answers will guide us in deciding whether to insure you or anyone else to be insured under the policy and on what terms. ");
+    doc.text(20, 51, "those answers will guide us in deciding whether to insure you or anyone else to be insured under the policy and on what terms. ");
     
-    doc.text(20, 59, "If you are in doubt as to whether a fact is relevant, you should state it. Your duty to make full and frank discourse occurs: (1) at the time ");
+    doc.text(20, 54, "If you are in doubt as to whether a fact is relevant, you should state it. Your duty to make full and frank discourse occurs: (1) at the time ");
     
-    doc.text(20, 62, "of the time of proposing for insurance. (2) during the currency of the policy, if there are any changes or variations in the information given ");
+    doc.text(20, 57, "of the time of proposing for insurance. (2) during the currency of the policy, if there are any changes or variations in the information given ");
     
-    doc.text(20, 65, "and (3) at each renewal.");
+    doc.text(20, 60, "and (3) at each renewal.");
     
-    doc.text(20, 70, "FAILURE TO DISCLOSE. If you do not comply with these duties and answer our questions honestly, the company will be at liberty to ");
+    doc.text(20, 65, "FAILURE TO DISCLOSE. If you do not comply with these duties and answer our questions honestly, the company will be at liberty to ");
     
-    doc.text(20, 73, "treat your Policy as if it never existed and refuse to pay any claims you make under it.");
+    doc.text(20, 68, "treat your Policy as if it never existed and refuse to pay any claims you make under it.");
 
 
 
