@@ -48,17 +48,6 @@ function doMiscellaneous() {
     });
 
 
-    //garageOutBuildingClass
-    /*$('#garageOutBuildingExists').change(function () {
-            var select_value = $(this).is(':checked');
-			$('input[name=radioName]:checked', '#myForm').val()
-			$('input[name=radioName]:checked', '#myForm').val()
-            if (select_value) {
-                $('.garageOutBuildingClass').show();
-            } else {
-                $('.garageOutBuildingClass').hide();
-            }
-        });*/
 
 
     $('input[type=radio][name=garageOutBuildingExists]').change(function () {
@@ -282,15 +271,6 @@ function doMiscellaneous() {
 
 
 
-    //lienHolder
-    /*$('#lienHolder').change(function () {
-    	var select_value = $(this).is(':checked');
-    	if (select_value) {
-    		$('.lienHolderClass').show();
-    	} else {
-    		$('.lienHolderClass').hide();
-    	}
-    });*/
 
     $('input[type=radio][name=lienHolder]').change(function () {
         if (this.value == 'yes') {
@@ -360,9 +340,9 @@ function doMiscellaneous() {
     //$('#vehicleGaragedAtProposersHome').change(function () {
     $('input[type=radio][name=vehicleGaragedAtProposersHome]').change(function () {
         if (this.value == 'no') {
-            $('.vehicleGaragedAtProposersHomeDetailsClass').hide();
+            $('.vehicleGaragedAtProposersHomeDetailsClass').Show();
         } else {
-            $('.vehicleGaragedAtProposersHomeDetailsClass').show();
+            $('.vehicleGaragedAtProposersHomeDetailsClass').hide();
         }
     });
 
