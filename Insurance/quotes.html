@@ -128,7 +128,9 @@
 						</div>
 						<div class="btn-group">
 							<button type="button" class="btn btn-default" id="returntoQuotes">Return</button>
-							<button type="button" class="btn btn-info" id="doprint">View Proposal</button>
+							<button type="button" class="btn btn-info" id="getPDF">Proposal Form</button>
+							<button type="button" class="btn btn-info" id="convert">Convert to Policy</button>
+							<button type="button" class="btn btn-info" id="upload">Upload Documents</button>
 						</div>
 						<hr/>
 						<div id="rootwizard">
@@ -151,6 +153,13 @@
 
 								<div class="tab-pane" id="final-page">
 									<div id="disclaimerContainer">
+										<!--										<img id="image" src="/images/IronRockLogoSmall.png" width="109" height="30" />-->
+										<canvas id="canvas-logo" style="display:none"></canvas>
+										<br/>
+										<canvas id="canvas-signature" style="display:none"></canvas>
+										<div id="svg-signature">
+										</div>
+
 										<h4>Disclaimer:</h4>
 										<p>
 											The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
@@ -340,12 +349,17 @@
 	<script src="/aws/miscellaneous.js"></script>
 	<script src="/aws/index.js"></script>
 	<!--PDF Libraries-->
-	<script src="/Scripts/jspdf.min.js"></script>
-	<script src="/Scripts/zlib.js"></script>
-	<script src="/Scripts/png.js"></script>
-	<script src="/Scripts/addimage.js"></script>
-	<script src="/Scripts/png_support.js"></script>
-	<script src="/Scripts/basic.js"></script>
+	<!--	<script type="text/javascript" src="/jsPDF/dist/jspdf.debug.js"></script>-->
+	<script src="/jsPDF/libs/png_support/zlib.js"></script>
+	<script src="/jsPDF/libs/png_support/png.js"></script>
+	<script src="/jsPDF/jspdf.js"></script>
+	<script src="/jsPDF/plugins/addimage.js"></script>
+	<script src="/jsPDF/plugins/png_support.js"></script>
+
+	<!-- canvg-->
+	<script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
+	<script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+	<script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
 	<!--Custom PDF File -->
 	<script src="/aws/pdfconvertor.js"></script>
 
@@ -632,10 +646,9 @@
 					});
 				}
 
-				$('#doprint').click(function () {
+				$('#getPDF').click(function () {
 					CreatePDF(currentQuote)
 				})
-
 
 
 				function populateQuote() {
@@ -653,9 +666,44 @@
 							data.id = licenseNo;
 							populateApplicant(data);
 							populateOtherItems();
+							//populate images and canvases
+							fillLogoCanvas();
+							fillSignatureCanvas();
+
 						});
 					}
 				}
+
+
+				function fillLogoCanvas() {
+					var ctx = document.getElementById("canvas-logo").getContext("2d");
+					ctx.fillStyle = '#ffffff';
+					var img = new Image();
+
+					img.onload = function () {
+						ctx.drawImage(img, 0, 0, 300, 150);
+					};
+					img.src = "/images/IronRockLogoTest.png";
+				}
+
+
+				function fillSignatureCanvas() {
+					var svgContainer = document.getElementById('svg-signature');
+					//$('#svg-signature').append(atob(currentQuote.signatureBytes));									
+					svgContainer.innerHTML = atob(currentQuote.signatureBytes);
+					var svg = svgContainer.getElementsByTagName('svg')[0];
+					var width = svg.getAttribute("width");
+					var height = svg.getAttribute("height");
+					//Create a rect in SVG's namespace
+					var backgroundRectElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+					backgroundRectElement.setAttribute("x", "0");
+					backgroundRectElement.setAttribute("y", "0");
+					backgroundRectElement.setAttribute("width", 600);
+					backgroundRectElement.setAttribute("height", 150);
+					backgroundRectElement.setAttribute("style", "fill:white");
+					svg.insertBefore(backgroundRectElement, svg.childNodes[0]);
+				}
+
 
 
 				var populateOtherItems = function () {
@@ -780,6 +828,10 @@
 					}
 				}
 
+
+
+
+				//events
 
 				$('#acceptDisclaimer').change(function () {
 					$('#submit-btn').prop("disabled", !$(this).is(':checked'));
