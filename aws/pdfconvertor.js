@@ -17,13 +17,13 @@ function CreatePDF(resp) {
 	}
 
 	var logoCanvas = document.getElementById("canvas-logo");
-	
 
-	var imgLogoData = logoCanvas.toDataURL('image/jpeg');
-	
 
-	doc.addImage(imgLogoData, 'JPG', 5, 5, 109, 30);
-	
+	var imgLogoData = logoCanvas.toDataURL('image/jpeg', 1.0);
+
+
+	doc.addImage(imgLogoData, 'JPG', 2, 2, 100, 30);
+
 
 	doc.setFontSize(10);
 	doc.setFont("times");
@@ -174,7 +174,7 @@ function CreatePDF(resp) {
 function setMotorVehiclePages(resp) {
 	doc.setFontSize("10");
 
-doc.setFontType("bold");
+	doc.setFontType("bold");
 
 	doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
 	doc.setFontSize("7");
@@ -229,7 +229,7 @@ doc.setFontType("bold");
 	}
 
 	doc.setFontSize("8");
-    doc.setFontType("bold");
+	doc.setFontType("bold");
 	doc.text(20, 75, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
 
 	doc.text(20, 78, "Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based in");
@@ -237,7 +237,7 @@ doc.setFontType("bold");
 	doc.text(20, 81, "time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.");
 
 	doc.setFontSize("10");
-    doc.setFontType("bold");
+	doc.setFontType("bold");
 	doc.text(20, 85, "Lien Holder");
 
 	doc.text(20, 110, "Select cover required(tick the appropriate box)");
@@ -257,7 +257,7 @@ doc.setFontType("bold");
 
 	doc.text(100, 105, "Parish:");
 
-	
+
 
 	doc.text(20, 120, "Please indicate if the vehicle is to be used as:");
 
@@ -308,7 +308,7 @@ doc.setFontType("bold");
 	doc.text(20, 195, resp.vehicleKeptIn ? resp.vehicleKeptIn : "");
 	doc.addPage();
 
-	
+
 	doc.setFontSize("10");
 	doc.setFontType("normal");
 
@@ -468,11 +468,11 @@ doc.setFontType("bold");
 
 	}
 
-    doc.setFontSize("10");
-    
+	doc.setFontSize("10");
+
 	doc.text(20, 60, "To the best of your knowledge and belief have you, or any person who to your knowledge will drive have suffered");
-    
-    doc.text(20, 63, " from, or now suffer from:");
+
+	doc.text(20, 63, " from, or now suffer from:");
 
 	doc.text(20, 70, "If yes, please indicate above and give details:");
 
@@ -489,75 +489,81 @@ doc.setFontType("bold");
 	doc.text(20, 115, "If yes, please give details:");
 
 	doc.text(20, 125, "Do you require increased limits (in excess of the Standard Limits)");
-    
-    doc.text(20, 135, "Do you require increased limits (in excess of the Standard Limits)?");
-    
-    doc.setFontSize("8");
-    doc.setFontType("bold");
-    doc.text(20, 150, "Disclaimer");
-    
-    doc.setFontType("normal");
-    doc.text(20, 153, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
-    
-    doc.text(20, 156, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
-    
-    doc.text(20, 160, "I declare that the information given above has been verified by original");
-    
-    doc.text(20, 163, "documents to ensure the veracity of the information given.");
-    
-    doc.setFontType("bold");
-    doc.text(20, 180, "Customer service Representative");
-    
-    doc.text(100, 163, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
-    doc.text(100, 166, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
-    
-    doc.setFontType("normal");
-    
-    doc.text(20, 185, "I/We declare that the above answers are true and that all particulars ");
-    doc.text(20, 188, "affecting the assessment of the risk have been disclosed.");
-    
-    doc.text(110, 188, "Surname:");
-    
-    doc.text(110, 191, "First Name:");
-    
-    doc.text(110, 194, "Middle Name:");
-    
-    doc.text(110, 197, "Date of Birth:");
-    
-    doc.text(110, 200, "Nationality:");
-    
-    doc.text(110, 203, "TRN No.:");
-    
-    doc.text(110, 206, "Address:");
-    
-    doc.setFontType("bold");
-    
-    doc.text(110, 185, "Agent Details");
-    
-    doc.text(20, 192, "Proposer's Signature/Date");
-    
-    doc.text(20, 215, "Joint Proposer's Signature Date");
-    
-    doc.text(160, 185, "Agent Signature Date");
-    
-    var signatureCanvas = document.getElementById("canvas-signature");
-    var imgSignatureData = signatureCanvas.toDataURL('image/jpeg');
-	console.log(imgSignatureData);
-    
-    doc.addImage(imgSignatureData, 'JPG', 20, 193, 88, 16);
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+	doc.text(20, 135, "Do you require increased limits (in excess of the Standard Limits)?");
+
+	doc.setFontSize("8");
+	doc.setFontType("bold");
+	doc.text(20, 150, "Disclaimer");
+
+	doc.setFontType("normal");
+	doc.text(20, 153, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
+
+	doc.text(20, 156, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
+
+	doc.text(20, 160, "I declare that the information given above has been verified by original");
+
+	doc.text(20, 163, "documents to ensure the veracity of the information given.");
+
+	doc.setFontType("bold");
+	doc.text(20, 180, "Customer service Representative");
+
+	doc.text(100, 163, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
+	doc.text(100, 166, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
+
+	doc.setFontType("normal");
+
+	doc.text(20, 185, "I/We declare that the above answers are true and that all particulars ");
+	doc.text(20, 188, "affecting the assessment of the risk have been disclosed.");
+
+	doc.text(110, 188, "Surname:");
+
+	doc.text(110, 191, "First Name:");
+
+	doc.text(110, 194, "Middle Name:");
+
+	doc.text(110, 197, "Date of Birth:");
+
+	doc.text(110, 200, "Nationality:");
+
+	doc.text(110, 203, "TRN No.:");
+
+	doc.text(110, 206, "Address:");
+
+	doc.setFontType("bold");
+
+	doc.text(110, 185, "Agent Details");
+
+	doc.text(20, 192, "Proposer's Signature/Date");
+
+	doc.text(20, 215, "Joint Proposer's Signature Date");
+
+	doc.text(160, 185, "Agent Signature Date");
+
+
+	//print signature
+	var svgSignature = document.getElementById('svg-signature').innerHTML; //atob(resp.signatureBytes);
+	svgSignature = svgSignature.replace(/\r?\n|\r/g, '').trim();
+
+	var canvasSignature = document.getElementById('canvas-signature');
+	var contextSignature = canvasSignature.getContext('2d');
+
+	contextSignature.clearRect(0, 0, canvasSignature.width, canvasSignature.height);
+
+	canvg(canvasSignature, svgSignature);
+
+	var imgSignatureData = canvasSignature.toDataURL('image/JPEG');
+	$('#testimg').attr('src', imgSignatureData);
+
+	doc.addImage(imgSignatureData, 'JPG', 20, 193, 150, 20);
+
 
 	doc.setFontType("italic");
-	
+
 }
+
+
+
 
 function setHomePropertyPages(resp) {
 
