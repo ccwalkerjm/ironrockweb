@@ -915,7 +915,7 @@ function setHomePropertyPages(resp) {
 	var imgSignatureData = canvasSignature.toDataURL('image/JPEG');
 	$('#testimg').attr('src', imgSignatureData);
 
-	doc.addImage(imgSignatureData, 'JPG', 20, 230, 150, 20);
+	doc.addImage(imgSignatureData, 'JPG', 20, 230, 100, 20);
 
     
  
