@@ -19,15 +19,14 @@ function doMiscellaneous() {
 
 		//medical history
 		$('.medicalCondition').change(function () {
-			var isChecked = false;
+			var isYes = false;
 			$('.medicalCondition').each(function (index, element) {
-				var checked_value = $(element).is(':checked');
-				if (checked_value) {
-					isChecked = true;
-					return true;
+				if ($(element).val() == 'yes' && $(element).is(':checked')) {
+					isYes = true;
+					return false;
 				}
 			})
-			if (isChecked) {
+			if (isYes) {
 				$('#medicalConditionDetails').show();
 			} else {
 				$('#medicalConditionDetails').hide();
