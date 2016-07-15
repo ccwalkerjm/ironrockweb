@@ -28,7 +28,7 @@ function CreatePDF(resp) {
 	doc.setFontSize(10);
 	doc.setFont("times");
 	doc.setFontType("normal");
-
+    doc.text(150, 35, "Start date: " + resp.startDate);
 	doc.text(150, 40, 'Quote No:');
 	//doc.text(startingXPoint, 30, 'Insurance for ' + resp.insuranceType);
 	doc.text(20, 80, 'Surname:');
@@ -115,6 +115,10 @@ function CreatePDF(resp) {
 	doc.text(20, 205, "Proof of Address");
 	doc.text(20, 210, "Picture Identification(Insured an agent, where applicable)");
 	doc.text(20, 215, "TRN(if a driver's license is not being used)");
+    
+    doc.text(20, 245, "Relation");
+    doc.text(60, 245, "Name of Relative");
+    doc.text(110, 245, "Address");
 
 	doc.setFontType("normal");
 
@@ -127,12 +131,37 @@ function CreatePDF(resp) {
 	doc.text(20, 230, "If yes, state the type of public office:");
 
 	doc.text(20, 240, "If yes to the above, please give the name and address of spouse and children");
+    
+    
+    
+    
+    if (resp.applicantRelativeInPublicOfficeName0) {
+		doc.text(20, 248, resp.applicantRelativeInPublicOfficeRelation0? resp.applicantRelativeInPublicOfficeRelation0 : "");
+		doc.text(60, 248, resp.applicantRelativeInPublicOfficeName0 ? resp.applicantRelativeInPublicOfficeName0 : "");
+		doc.text(150, 248, resp.applicantRelativeInPublicOfficeAddress0 ? resp.applicantRelativeInPublicOfficeAddress0 : "");
+		
+		
+	}
+	if (resp.vehicleRegistrationNo1) {
+		doc.text(20, 251, resp.applicantRelativeInPublicOfficeRelation ? resp.applicantRelativeInPublicOfficeRelation0 : "");
+		doc.text(60, 251, resp.applicantRelativeInPublicOfficeName0 ? resp.applicantRelativeInPublicOfficeName0 : "");
+		doc.text(110, 251, resp.applicantRelativeInPublicOfficeAddress0 ? resp.applicantRelativeInPublicOfficeAddress0 : "");
+
+	}
+	if (resp.vehicleRegistrationNo2) {
+		doc.text(20, 254, resp.applicantRelativeInPublicOfficeRelation ? resp.applicantRelativeInPublicOfficeRelation0 : "");
+		doc.text(60, 254, resp.applicantRelativeInPublicOfficeName0 ? resp.applicantRelativeInPublicOfficeName0 : "");
+		doc.text(110, 254, resp.applicantRelativeInPublicOfficeAddress0 ? resp.applicantRelativeInPublicOfficeAddress0 : "");
+
+	}
 
 	doc.setFontType("italic");
 
 	doc.text(20, 226, resp.applicantRelativeInPublicOffice ? resp.applicantRelativeInPublicOffice : "");
 
 	doc.text(20, 235, resp.applicantRelativeTypePublicOffice0 ? resp.applicantRelativeTypePublicOffice0 : "");
+    
+    
 
 
 
@@ -165,6 +194,7 @@ function CreatePDF(resp) {
 		setHomePropertyPages(resp);
 	}
 
+    lastPage(resp);
 	//doc.output('datauri');
 	doc.output('dataurlnewwindow');
 	//doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
@@ -430,10 +460,14 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 23, "or not in respect of all vehicles)");
 
 	doc.text(20, 26, "I. Owned by you, whether or not you were the driver at the material time?");
+    
+    
 
 	doc.text(20, 29, "II. Not owned by you, but driven by you or in your custody at the material time?");
+    
+    
 
-	doc.text(20, 35, "If yes, please give details below");
+	doc.text(20, 37, "If yes, please give details below");
 
 	doc.setFontType("bold");
 	doc.setFontSize("8");
@@ -473,83 +507,136 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 60, "To the best of your knowledge and belief have you, or any person who to your knowledge will drive have suffered");
 
 	doc.text(20, 63, " from, or now suffer from:");
+    
 
 	doc.text(20, 70, "If yes, please indicate above and give details:");
+    
+    
 
 	doc.text(20, 80, "Have you or any person who to your knowledge will drive received any traffic ticket(s) and");
+    
 
 	doc.text(20, 83, "or have been convicted of any offence in connection with the driving of any motor vehicle within the ");
 
-	doc.text(20, 86, "last three (3) years?");
+	doc.text(20, 86, "last three (3) years?"); 
+    
+    
 
 	doc.text(20, 95, "If yes, please give details:");
+    
+    
 
 	doc.text(20, 105, "Has the vehicle been modified or converted from maker's standard specification or do you intend to do so?");
+    
+   
 
 	doc.text(20, 115, "If yes, please give details:");
+    
+    
 
-	doc.text(20, 125, "Do you require increased limits (in excess of the Standard Limits)");
+	
 
 	doc.text(20, 135, "Do you require increased limits (in excess of the Standard Limits)?");
+    
+    
     
     doc.text(110, 145, "Limits");
     
     doc.text(20, 150, "Protection and Removal (Wrecker Fee)");
     
+    
+    
     doc.text(20, 155, "Medical Expenses (Including Passengers)");
+    
+    
     
     doc.text(20, 160, "Manslaughter Defense Costs");
     
+    
+    
     doc.text(20, 165, "Third Party Limits(Bodily Injury and Property Damage)");
     
+    
+    
+    doc.setFontType("italic");
+    
+    doc.text(20, 32, resp.involvedInAccident);
+    
+    doc.text(20,75, resp.driverSufferFromDetails?resp.driverSufferFromDetails:"");
+    
+    doc.text(20, 90, resp.driverTrafficTicket?resp.driverTrafficTicket:"");
+    
+    doc.text(20, 100, resp.driverTrafficTicketDate);
 
+    doc.text(100, 100, resp.driverTrafficTicketDetails?resp.driverTrafficTicketDetails:"");
+    
+    doc.text(20, 110, resp.vehicleModified?resp.vehicleModified:"");
+    
+    doc.text(20, 120, resp.vehicleModifiedDetails?resp.vehicleModifiedDetails:"");
+    
+    doc.text(20, 140, resp.increasedLimits?resp.increasedLimits:"");
+    doc.text(110, 150, resp.wreckerFee?resp.wreckerFee:"");
+    
+    doc.text(110, 155, resp.medicalExpenses?resp.medicalExpenses:"");
+    
+    doc.text(110, 160, resp.manslaughterDefenceCosts?resp.manslaughterDefenceCosts:"");
+    
+    doc.text(110, 165, resp.thirdPartyLimit?resp.thirdPartyLimit:"");
+    
+    
+    
+}
+
+function lastPage(resp){
+    
+    doc.addPage();
 	doc.setFontSize("8");
 	doc.setFontType("bold");
-	doc.text(20, 175, "Disclaimer");
+	doc.text(20, 20, "Disclaimer");
 
 	doc.setFontType("normal");
-	doc.text(20, 178, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
+	doc.text(20, 23, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
 
-	doc.text(20, 181, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
+	doc.text(20, 26, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
 
-	doc.text(20, 186, "I declare that the information given above has been verified by original");
+	doc.text(20, 31, "I declare that the information given above has been verified by original");
 
-	doc.text(20, 188, "documents to ensure the veracity of the information given.");
+	doc.text(20, 33, "documents to ensure the veracity of the information given.");
 
 	doc.setFontType("bold");
-	doc.text(20, 215, "Customer service Representative");
+	doc.text(20, 60, "Customer service Representative");
 
-	doc.text(110, 188, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
-	doc.text(110, 191, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
+	doc.text(110, 33, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
+	doc.text(110, 36, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
 
 	doc.setFontType("normal");
 
-	doc.text(20, 218, "I/We declare that the above answers are true and that all particulars ");
-	doc.text(20, 221, "affecting the assessment of the risk have been disclosed.");
+	doc.text(20, 63, "I/We declare that the above answers are true and that all particulars ");
+	doc.text(20, 66, "affecting the assessment of the risk have been disclosed.");
 
-	doc.text(110, 198, "Surname:");
+	doc.text(110, 43, "Surname:");
 
-	doc.text(110, 201, "First Name:");
+	doc.text(110, 46, "First Name:");
 
-	doc.text(110, 204, "Middle Name:");
+	doc.text(110, 49, "Middle Name:");
 
-	doc.text(110, 207, "Date of Birth:");
+	doc.text(110, 52, "Date of Birth:");
 
-	doc.text(110, 210, "Nationality:");
+	doc.text(110, 55, "Nationality:");
 
-	doc.text(110, 213, "TRN No.:");
+	doc.text(110, 58, "TRN No.:");
 
-	doc.text(110, 216, "Address:");
+	doc.text(110, 61, "Address:");
 
 	doc.setFontType("bold");
 
-	doc.text(110, 195, "Agent Details");
+	doc.text(110, 40, "Agent Details");
 
-	doc.text(20, 225, "Proposer's Signature/Date");
+	doc.text(20, 70, "Proposer's Signature/Date");
 
-	doc.text(20, 255, "Joint Proposer's Signature Date");
+	doc.text(20, 100, "Joint Proposer's Signature Date");
 
-	doc.text(160, 195, "Agent Signature Date");
+	doc.text(160, 40, "Agent Signature Date");
 
 
 	//print signature
@@ -566,7 +653,7 @@ function setMotorVehiclePages(resp) {
 	var imgSignatureData = canvasSignature.toDataURL('image/JPEG');
 	$('#testimg').attr('src', imgSignatureData);
 
-	doc.addImage(imgSignatureData, 'JPG', 20, 230, 150, 20);
+	doc.addImage(imgSignatureData, 'JPG', 20, 75, 100, 20);
 
 
 	doc.setFontType("italic");
@@ -593,43 +680,112 @@ function setHomePropertyPages(resp) {
 	doc.setFontType("normal");
 
 	doc.text(20, 25, "Risk Address:");
+    
+    
 
 	doc.text(20, 35, "Is the home:");
+    
+    
 
 	doc.text(20, 50, "External Walls:");
+    
+   
+    
+    
 
 	doc.text(100, 50, "Roof:");
-
+    
+   
 	doc.text(20, 60, "Internal Walls:");
 
 	doc.text(20, 70, "External walls:");
+    
+    
 
 	doc.text(20, 80, "Internal Walls:");
 
 	doc.text(100, 70, "Roof:");
+    
+    
 
 	doc.text(20, 90, "Are the buildings in good state of repairs and will be so maintained?");
+    
+    
 
 	doc.text(20, 100, "Is the Dwelling occupied solely by you, your family and domestic employees?");
+    
+    
 
 	doc.text(20, 110, "If no, give the details of other occupants:");
+    
+    
 
 	doc.text(20, 120, "Is any part of the Dwelling or Outbuilding used for any income-earning activity?");
+    
+    
 
 	doc.text(20, 130, "If yes, give details:");
+    
+    
 
 	doc.text(20, 140, "Are all externally communicating doors, windows and other openings grilled?");
+    
+  
 
 	doc.text(20, 150, "If no, describe the security arrangements in place:");
 
 	doc.text(20, 160, "Does any institution or individual have a financial interest in the Property:");
+    
+    
 
 	doc.text(20, 170, "If yes, state their name and address:");
+    
+    
 
 	doc.text(20, 180, "Are there any Waterside Structures i.e. docks, jetties, piers, sea walls and any other structure abutting the sea, a ");
     
     doc.text(20, 183, "river or any other body of water?")
     
+    
+    
+    doc.text(20, 193, "If yes, please describe:");
+    
+    
+    
+    doc.setFontType("italic");
+
+    doc.text(20, 30, resp.homeRiskAddressStreetNo + " " + resp.homeRiskAddressStreetName + ", " + resp.homeRiskAddressTown + ", " + resp.homeRiskAddressParish );
+    
+    doc.text(20, 40, resp.homeType?resp.homeType:"");
+    
+    doc.text(50, 50, resp.constructionExternalWalls);
+    
+    doc.text(120, 50, resp.constructionRoof);
+
+    doc.text(70, 65, resp.garageOutBuildingExists);
+
+    doc.text(50, 70, resp.garageExternalWalls);
+    
+    doc.text(120, 70, resp.garageRoof);
+    
+    doc.text(20, 95, resp.homeInGoodState);
+    
+    doc.text(20, 105, resp.homeOccupiedByApplicantFamily);
+    
+    doc.text(20, 115, resp.homeOccupiedByApplicantFamilyIfNo);
+    
+    doc.text(20, 125, resp.homeUsedForIncomeActivity);
+    
+    doc.text(20, 135, resp.homeUsedForIncomeActivityDetails);
+    
+    doc.text(20, 165, resp.homeHaveInterestFromIndividual);
+    
+    doc.text(20, 175, resp.homeHaveInterestFromIndividualDetails);
+    
+    doc.text(20, 188, resp.homeHasWatersideStructure);
+    
+    doc.text(20, 198, resp.homeHasWatersideStructureDetails);
+
     doc.addPage();
     
     doc.setFontType("bold");
@@ -717,7 +873,7 @@ function setHomePropertyPages(resp) {
     
     doc.text(50, 119, " of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured to be insured be insured");
     
-    doc.text(50, 122, " separetly specified below.");
+    doc.text(50, 122, " separately specified below.");
     
     doc.text(20, 130, "Valuables include jewellery and other articles of gold, silver and or other precious metal, clocks, watches, cameras, camcorders, and other photographic");
     
@@ -773,7 +929,7 @@ function setHomePropertyPages(resp) {
     
     doc.text(20, 50, "The Total Sum Insured under the All Risks Section of the Policy");
     
-    doc.setFontType("normal");
+    doc.setFontType("italic");
     
         if (resp.HomeAllRiskArticleDescription0) {
 		doc.text(20, 38, resp.HomeAllRiskArticleDescription0 ? resp.HomeAllRiskArticleDescription0 : "");
@@ -801,12 +957,12 @@ function setHomePropertyPages(resp) {
 	}
     
     
+    doc.setFontType("normal");
     
-    doc.text(160, 50, "$" + resp.HomeAllRiskTotalAmount);
     
     doc.text(20, 55, "Select Territorial Limits Required");
     
-    doc.text(20, 60, resp.territorialLimit)
+    
     
     doc.text(160, 65, "Details");
     
@@ -814,120 +970,54 @@ function setHomePropertyPages(resp) {
     
     doc.text(20, 73, "covering any of the Property to be Insured");
     
-    doc.text(140, 70, resp.currentPolicyWithCompanyOrInsurer);
-    doc.text(180, 70, resp.currentPolicyWithCompanyOrInsurerDetails);
+    
     
     doc.text(20, 78, "Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:");
     
     doc.text(20, 81, "Declined to insure you?");
     
-    doc.text(140, 81, resp.HomeInsuranceDeclined);
-    doc.text(150, 81, resp.HomeInsuranceDeclinedDetails);
+    
     
     doc.text(20, 84, "Required special terms to insure you?");
     
-    doc.text(140, 84, resp.HomeInsuranceRequiredSpecialTerm);
-    doc.text(150, 84, resp.HomeInsuranceRequiredSpecialTermDetails);
+    
     
     doc.text(20, 87, "Cancelled or refused to renew your policy?");
     
-    doc.text(140, 87, resp.HomeInsuranceCancelled);
-    doc.text(150, 87, resp.HomeInsuranceCancelledDetails);
+    
     
     doc.text(20, 90, "Increased your premium on renewal");
     
-    doc.text(140, 90, resp.HomeInsuranceIncreasedPremium);
-    doc.text(150, 90, resp.HomeInsuranceIncreasedPremiumDetails);
+    
     
     
     doc.text(20, 95, "Have the Building and/or Contents of the Home to which this Proposal relates ever suffered");
     
     doc.text(20, 98, " damage by Hurricane, Earthquake or Flood");
     
-    doc.text(140, 95, resp.HomeInsurancePerilsSuffer);
-    doc.text(150, 95, resp.HomeInsurancePerilsSufferDetails);
+    
     
     doc.text(20, 103, "Have you ever sustained loss from any Perils to which this Proposal would apply?");
     
+    
+    doc.setFontType("italic");
+    
+    doc.text(160, 50, "$" + resp.HomeAllRiskTotalAmount);
+    doc.text(20, 60, resp.territorialLimit)
+    doc.text(140, 70, resp.currentPolicyWithCompanyOrInsurer);
+    doc.text(180, 70, resp.currentPolicyWithCompanyOrInsurerDetails);
+    doc.text(140, 81, resp.HomeInsuranceDeclined);
+    doc.text(150, 81, resp.HomeInsuranceDeclinedDetails);
+    doc.text(140, 84, resp.HomeInsuranceRequiredSpecialTerm);
+    doc.text(150, 84, resp.HomeInsuranceRequiredSpecialTermDetails);
+    doc.text(140, 87, resp.HomeInsuranceCancelled);
+    doc.text(150, 87, resp.HomeInsuranceCancelledDetails);
+    doc.text(140, 90, resp.HomeInsuranceIncreasedPremium);
+    doc.text(150, 90, resp.HomeInsuranceIncreasedPremiumDetails);
+    doc.text(140, 95, resp.HomeInsurancePerilsSuffer);
+    doc.text(150, 95, resp.HomeInsurancePerilsSufferDetails);
     doc.text(140, 103, resp.HomeInsuranceSufferLoss);
     doc.text(150, 103, resp.HomeInsuranceSufferLossDetails);
-    
-    doc.setFontSize("8");
-	doc.setFontType("bold");
-	doc.text(20, 175, "Disclaimer");
-
-	doc.setFontType("normal");
-	doc.text(20, 178, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
-
-	doc.text(20, 181, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
-
-	doc.text(20, 186, "I declare that the information given above has been verified by original");
-
-	doc.text(20, 188, "documents to ensure the veracity of the information given.");
-
-	doc.setFontType("bold");
-	doc.text(20, 215, "Customer service Representative");
-
-	doc.text(110, 188, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
-	doc.text(110, 191, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
-
-	doc.setFontType("normal");
-
-	doc.text(20, 218, "I/We declare that the above answers are true and that all particulars ");
-	doc.text(20, 221, "affecting the assessment of the risk have been disclosed.");
-
-	doc.text(110, 198, "Surname:");
-
-	doc.text(110, 201, "First Name:");
-
-	doc.text(110, 204, "Middle Name:");
-
-	doc.text(110, 207, "Date of Birth:");
-
-	doc.text(110, 210, "Nationality:");
-
-	doc.text(110, 213, "TRN No.:");
-
-	doc.text(110, 216, "Address:");
-
-	doc.setFontType("bold");
-
-	doc.text(110, 195, "Agent Details");
-
-	doc.text(20, 225, "Proposer's Signature/Date");
-
-	doc.text(20, 255, "Joint Proposer's Signature Date");
-
-	doc.text(160, 195, "Agent Signature Date");
-
-
-	//print signature
-	var svgSignature = document.getElementById('svg-signature').innerHTML; //atob(resp.signatureBytes);
-	svgSignature = svgSignature.replace(/\r?\n|\r/g, '').trim();
-
-	var canvasSignature = document.getElementById('canvas-signature');
-	var contextSignature = canvasSignature.getContext('2d');
-
-	contextSignature.clearRect(0, 0, canvasSignature.width, canvasSignature.height);
-
-	canvg(canvasSignature, svgSignature);
-
-	var imgSignatureData = canvasSignature.toDataURL('image/JPEG');
-	$('#testimg').attr('src', imgSignatureData);
-
-	doc.addImage(imgSignatureData, 'JPG', 20, 230, 100, 20);
-
-    
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
 }
