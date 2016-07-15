@@ -68,7 +68,7 @@
 					<div class="row" id="account-block">
 						<div class="col-lg-12">
 							<h1>Users</h1>
-							<div id="status"></div>
+							<div class="message"></div>
 							<button type="button" id="btnCreateNewUser" class="btn btn-link select">Create User</button>
 							<table class="table table-striped" id="userTable">
 								<thead>
@@ -95,6 +95,7 @@
 											<h4 class="modal-title">Manage User</h4>
 										</div>
 										<div class="modal-body">
+											<div class="message"></div>
 											<form class="form-horizontal" role="form">
 												<div class="form-group">
 													<label class="control-label col-sm-4" for="username">Username:</label>
@@ -216,10 +217,10 @@
 
 				function display(message, err) {
 						if (err) {
-							$('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+							$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
 							return;
 						}
-						$('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+						$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
 					}
 					/////////////
 				function listRoles() {
@@ -288,10 +289,9 @@
 				//save new user
 				//username, password, email, phone_number, given_name, family_name, gender
 				$("#create-user").click(function (e) {
-					//var username = $('#email').val().replace('@', '_').replace('.', '_');
-					//var password = '%R#Nr5ck555';
+					var password = generatePassword();
 					ir.signup($('#username').val(),
-						'%R#Nr5ck555',
+						password,
 						$('#email').val(),
 						$('#phone').val(),
 						$('#firstName').val(),
@@ -302,9 +302,8 @@
 								display(err.message, true);
 								return;
 							}
-							bootbox.alert("A security code has been emailed to the user.", function () {
-								$('#userModal').modal('hide');
-							});
+							display("The user has been created. An email, with the user credentials, has been sent to " + $('#email').val(), false);
+							$('#userModal').modal('hide');
 						});
 				});
 
@@ -334,7 +333,45 @@
 					})
 				}
 
+				var generatePassword = function (numLc, numUc, numDigits, numSpecial) {
+					numLc = numLc || 4;
+					numUc = numUc || 4;
+					numDigits = numDigits || 4;
+					numSpecial = numSpecial || 2;
 
+
+					var lcLetters = 'abcdefghijklmnopqrstuvwxyz';
+					var ucLetters = lcLetters.toUpperCase();
+					var numbers = '0123456789';
+					var special = '!?=#*$@+-.';
+
+					var getRand = function (values) {
+						return values.charAt(Math.floor(Math.random() * values.length));
+					}
+
+					//+ Jonas Raoni Soares Silva
+					//@ http://jsfromhell.com/array/shuffle [v1.0]
+					function shuffle(o) { //v1.0
+						for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+						return o;
+					};
+
+					var pass = [];
+					for (var i = 0; i < numLc; ++i) {
+						pass.push(getRand(lcLetters))
+					}
+					for (var i = 0; i < numUc; ++i) {
+						pass.push(getRand(ucLetters))
+					}
+					for (var i = 0; i < numDigits; ++i) {
+						pass.push(getRand(numbers))
+					}
+					for (var i = 0; i < numSpecial; ++i) {
+						pass.push(getRand(special))
+					}
+
+					return shuffle(pass).join('');
+				}
 
 				////////////
 
