@@ -658,7 +658,7 @@
 						populateApplicant(driverLicenseJson);
 						populateOtherItems();
 					} else {
-						GetDriverLicense(licenseNo, function (err, data) {
+						GetDriverLicense(null, licenseNo, function (err, data) {
 							if (err) {
 								alert(err);
 								return;

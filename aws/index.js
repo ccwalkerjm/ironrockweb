@@ -31,6 +31,8 @@ var CaptionBaseVehicleValue = 'vehicleValue';
 function ConvertToJson(r) {
 	try {
 		r = JSON.parse(r);
+		r = JSON.parse(r);
+		r = JSON.parse(r);
 	} catch (e) {
 		// not json
 	}
@@ -160,34 +162,6 @@ function loadQuotation($container, limitData) {
 	}
 }
 
-function GetDriverLicense(licenseNo, callback) {
-	var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + licenseNo;
-	$.ajax({
-		type: 'GET',
-		contentType: 'application/json',
-		url: serverUrl,
-		dataType: "json",
-		success: function (r) {
-			//success handling
-			//var json = JSON.parse(r);
-			r = ConvertToJson(r);
-			if (r.error_message) {
-				err = new Error('Invalid License No!');
-				callback(err);
-			} else if (r.Message) {
-				err = new Error('Invalid License No!');
-				callback(err);
-			} else {
-				callback(null, r);
-			}
-		},
-		error: function (err) {
-			//error handling
-			callback(err);
-		}
-	});
-}
-
 function populateApplicant(r) {
 	//id        
 	var egovDrivers = JSON.stringify(r);
@@ -315,28 +289,23 @@ function createFirstDriver() {
 
 
 //add driver
-function addDriver($this, id, callback) {
-	var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + id;
-	$.ajax({
-		type: 'GET',
-		contentType: 'application/json',
-		url: serverUrl,
-		dataType: "json",
-		success: function (json) {
-			//var json = JSON.parse(r);
-			json = ConvertToJson(json);
-			if (json.error_message) {
-				alert("Invalid ID!!");
-			} else if (json.Message) {
-				alert("Invalid ID!!");
-			} else {
-				callback(null, json);
-			}
-		},
-		error: function (err) {
-			//error handling
+function GetDriverLicense($this, id, callback) {
+	var ir = new ironrockcloudservice();
+	ir.getDriverLicenseDetails(id, function (err, r) {
+		if (err) {
 			callback(err);
-			//alert("error: " + data.statusText);
+		} else {
+			//var json = JSON.parse(r);
+			var r = ConvertToJson(r);
+			if (r.error_message) {
+				err = new Error('Invalid ID!');
+				callback(err);
+			} else if (r.Message) {
+				err = new Error('Invalid ID!');
+				callback(err);
+			} else {
+				callback(null, r);
+			}
 		}
 	});
 }
@@ -365,7 +334,7 @@ function doPrimaryFunctions() {
 	$('#regularDriversBtns').on('click', '.Add', function () {
 		var $this = $('#regularDriversBtns .Add');
 		var id = $('#regularDriverQueryID').val();
-		addDriver($this, id, function (err, r) {
+		GetDriverLicense($this, id, function (err, r) {
 			if (err) {
 				alert("error: " + err.statusText);
 			}
@@ -400,38 +369,11 @@ function doPrimaryFunctions() {
 
 	///
 	///////
-	/*$('#personal-main-page').on('click', '#getTRNDetails', function () {
-	    var id = $('#applicantTRN').val();
-	    var serverUrl = _apiBaseUrl + "/DriverLicense/?id=" + id;
-	    $.ajax({
-	        type: 'GET',
-	        contentType: 'application/json',
-	        url: serverUrl,
-	        dataType: "json",
-	        success: function (r) {
-	            //success handling
-	            //var json = JSON.parse(r);
-	            r = ConvertToJson(r);
-	            if (r.error_message) {
-	                alert("Invalid ID!!");
-	            } else if (r.Message) {
-	                alert("Invalid ID!!");
-	            } else {
-	                r.id = id;                    
-	                populateApplicant(r);
-	                createFirstDriver();
-	            }
-	        },
-	        error: function (err) {
-	            //error handling
-	            alert("error: " + err.statusText);
-	        }
-	    });
-	});*/
+
 
 	$('#personal-main-page').on('click', '#getTRNDetails', function () {
 		var licenseNo = $('#applicantTRN').val();
-		GetDriverLicense(licenseNo, function (err, data) {
+		GetDriverLicense(null, licenseNo, function (err, data) {
 			if (err) {
 				alert(err);
 				return;
@@ -439,7 +381,6 @@ function doPrimaryFunctions() {
 			data.id = licenseNo;
 			populateApplicant(data);
 			createFirstDriver();
-
 		});
 	});
 
@@ -479,58 +420,6 @@ function doPrimaryFunctions() {
 	$('#page-signature').on('click', '#clear-canvas', function () {
 		$('#signature').jSignature('clear');
 	});
-	/////Final//////////////////////
-
-
-
-
-	/*////////Validate and Get Quotation ////////////////
-	$('#page-quotation').on('click', '#get-quotation', function () {
-	    //var formData = $('form').serialize();
-	    var formData = JSON.parse(JSON.stringify($('form').serializeObject()));
-	    //remove all empty nodes
-	    $.each(formData, function (key, value) {
-	        if (value === "" || value === null) {
-	            delete formData[key];
-	        }
-	    });
-
-	    var serverUrl = _apiBaseUrl + "/ironrockquote/";
-	    var data = JSON.stringify(formData);
-	    console.log(formData);
-	    console.log(data);
-	    $.ajax({
-	        type: 'post',
-	        contentType: 'application/json',
-	        url: serverUrl,
-	        dataType: 'json',
-	        data: data,
-	        success: function (r) {
-	            //success handling
-	            //var r = JSON.parse(results);
-	            r = ConvertToJson(r);
-	            if (!r.success) {
-	                console.log(r);
-	                alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
-	            } else {
-	                loadQuotation(r);
-	                $('#quotation-number').val(r.quotation_number);
-	                $('#get-quotation').hide();
-	                $('#confirmQuotation').show();
-	            }
-	        },
-	        error: function (err) {
-	            //error handling
-	            console.log(err);
-	            alert("error: " + err.statusText);
-	        }
-	    });
-
-	});*/
-
-
-
-
 
 
 	//////////////////////////////////Insert vehicle
@@ -610,60 +499,44 @@ function doPrimaryFunctions() {
 
 
 	$('#taxOfficeVehicleDialog').on("click", "#queryVehicleSearch", function () {
-		var serverUrl = _apiBaseUrl + "/Vehicle/";
 		var plateno = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
 		var chassisno = $('#QueryVehicleChassisNo').val();
 
-		if (plateno) {
-			serverUrl = serverUrl + '?plateno=' + plateno; // = null, string chassisNo
-		} else if (chassisno) {
-			serverUrl = serverUrl + '?chassisno=' + chassisno; // = null, string chassisNo
-		} else {
+		if (plateno == null && chassisno == null) {
 			alert("Registration No and Chassis No cannot be blank");
 			return;
 		}
-
-		/*if (!VehicleRegistrationNo) {
-		    alert("Not valid!");
-		} else if (IsDuplicateVehicle(VehicleRegistrationNo)) {
-		    alert('Duplicate!');
-		}*/
 
 		if ($('#QueryVehicleSumInsured').val() < 1000) {
 			alert('Invalid Sum Insured!');
 			return;
 		}
 
-
-		$.ajax({
-			type: 'GET',
-			url: serverUrl,
-			dataType: "json",
-			success: function (r) {
-				//var json = JSON.parse(r);
-				r = ConvertToJson(r);
-				if (r.error_message || r.Message) {
-					bootbox.confirm("Chassis/Plate Number Not Found! Press OK to enter the details manually?", function (ans) {
-						if (ans) {
-							$('#queryVehicleAdd').show();
-							$('#queryVehicleSearch').hide();
-							$('#taxOfficeQueryManualEntry').show();
-							loadVehicleMakes();
-							loadVehicleModels();
-							loadBodyTypes();
-							loadVehicleColours();
-						}
-					});
-				} else {
-					r.sumInsured = $('#QueryVehicleSumInsured').val();
-					insertVehicle(r);
-					$('#taxOfficeVehicleDialog').modal('hide');
-				}
-			},
-			error: function (err) {
-				//error handling
+		var ir = new ironrockcloudservice();
+		ir.getVehicleDetails(plateno, chassisno, function (err, r) {
+			if (err) {
 				alert("Err:" + err.statusText);
+				return;
 			}
+			r = ConvertToJson(r);
+			if (r.error_message || r.Message) {
+				bootbox.confirm("Chassis/Plate Number Not Found! Press OK to enter the details manually?", function (ans) {
+					if (ans) {
+						$('#queryVehicleAdd').show();
+						$('#queryVehicleSearch').hide();
+						$('#taxOfficeQueryManualEntry').show();
+						loadVehicleMakes();
+						loadVehicleModels();
+						loadBodyTypes();
+						loadVehicleColours();
+					}
+				});
+			} else {
+				r.sumInsured = $('#QueryVehicleSumInsured').val();
+				insertVehicle(r);
+				$('#taxOfficeVehicleDialog').modal('hide');
+			}
+
 		});
 
 	});
