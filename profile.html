@@ -63,8 +63,9 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>IronRock Online Services</h1>
-				<p>We provide a list of online services.</p>
+				<h1>User Profile</h1>
+				<dl class="dl-horizontal" id="profile">
+				</dl>
 			</div>
 		</div>
 	</div>
@@ -102,7 +103,19 @@
 					var username = $this.getUsername();
 					if (username) {
 						$('#sidebar #globalUsername').text(username);
-						removeAdminLinks();
+						//set profile						
+						var dl = $('#profile');
+						var profile = localStorage.getItem("ironrockUserProfile");
+						if (profile) {
+							var item = JSON.parse(profile);
+							dl.append('<dt>UserName</dt><dd>' + item.username + '</dd>');
+							dl.append('<dt>First Name</dt><dd>' + item.given_name + '</dd>');
+							dl.append('<dt>Last Name</dt><dd>' + item.family_name + '</dd>');
+							dl.append('<dt>Email Address</dt><dd>' + item.email + '</dd>');
+							dl.append('<dt>Phone Number</dt><dd>' + item.phone_number + '</dd>');
+							dl.append('<dt>Role</dt><dd>' + item.role + '</dd>');
+							dl.append('<dt>Broker</dt><dd>' + item.broker + '</dd>');
+						}
 					} else {
 						location.assign('/login.html');
 					}
@@ -112,20 +125,6 @@
 					ir.signoff();
 					location.assign('/index.html');
 				})
-
-
-				function removeAdminLinks() {
-					var profile = localStorage.getItem("ironrockUserProfile");
-					var NotAdmin = true;
-					if (profile) {
-						var item = JSON.parse(profile);
-						if (item.role == 'Admin' || item.role == 'Staff') {
-							NotAdmin = false;
-						}
-					}
-					if (NotAdmin)
-						$('#sidebar').find('#adminLinks').remove();
-				}
 
 
 
