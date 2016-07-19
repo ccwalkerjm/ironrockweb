@@ -475,7 +475,7 @@ var ironrockcloudservice = (function () {
 		var payload = JSON.parse(data);
 		payload.auth = _getAuth();
 		var params = {
-			FunctionName: 'ironrockQuoteSearch',
+			FunctionName: 'ironrockQuoteSearch:2',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
