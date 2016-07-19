@@ -94,40 +94,23 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
-
+	<script src="/aws/index.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var ir = new ironrockcloudservice(function (err, $this) {
-					var username = $this.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-						//set profile						
-						var dl = $('#profile');
-						var profile = localStorage.getItem("ironrockUserProfile");
-						if (profile) {
-							var item = JSON.parse(profile);
-							dl.append('<dt>UserName</dt><dd>' + item.username + '</dd>');
-							dl.append('<dt>First Name</dt><dd>' + item.given_name + '</dd>');
-							dl.append('<dt>Last Name</dt><dd>' + item.family_name + '</dd>');
-							dl.append('<dt>Email Address</dt><dd>' + item.email + '</dd>');
-							dl.append('<dt>Phone Number</dt><dd>' + item.phone_number + '</dd>');
-							dl.append('<dt>Role</dt><dd>' + item.role + '</dd>');
-							dl.append('<dt>Broker</dt><dd>' + item.broker + '</dd>');
-						}
-					} else {
-						location.assign('/login.html');
-					}
-				});
-
-				$('#sidebar').on('click', '#logout', function () {
-					ir.signoff();
-					location.assign('/index.html');
-				})
-
-
-
+			doPrimaryFunctions(function () {
+				//set profile						
+				var dl = $('#profile');
+				var profile = localStorage.getItem("ironrockUserProfile");
+				if (profile) {
+					var item = JSON.parse(profile);
+					dl.append('<dt>UserName</dt><dd>' + item.username + '</dd>');
+					dl.append('<dt>First Name</dt><dd>' + item.given_name + '</dd>');
+					dl.append('<dt>Last Name</dt><dd>' + item.family_name + '</dd>');
+					dl.append('<dt>Email Address</dt><dd>' + item.email + '</dd>');
+					dl.append('<dt>Phone Number</dt><dd>' + item.phone_number + '</dd>');
+					dl.append('<dt>Role</dt><dd>' + item.role + '</dd>');
+					dl.append('<dt>Broker</dt><dd>' + item.broker + '</dd>');
+				}
 			});
 
 		});

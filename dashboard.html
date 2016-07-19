@@ -93,44 +93,11 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var ir = new ironrockcloudservice(function (err, $this) {
-					var username = $this.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-						removeAdminLinks();
-					} else {
-						location.assign('/login.html');
-					}
-				});
-
-				$('#sidebar').on('click', '#logout', function () {
-					ir.signoff();
-					location.assign('/index.html');
-				})
-
-
-				function removeAdminLinks() {
-					var profile = localStorage.getItem("ironrockUserProfile");
-					var NotAdmin = true;
-					if (profile) {
-						var item = JSON.parse(profile);
-						if (item.role == 'Admin' || item.role == 'Staff') {
-							NotAdmin = false;
-						}
-					}
-					if (NotAdmin)
-						$('#sidebar').find('#adminLinks').remove();
-				}
-
-
-
-			});
-
+		$(document).ready(function () {			
+			doPrimaryFunctions();
 		});
 	</script>
 

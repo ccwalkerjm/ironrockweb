@@ -12,7 +12,11 @@
 //});
 
 //global variables and functions
+//global object
 
+var g_ironrock_service; // = new ironrockcloudservice()
+//
+var $validator;
 var _apiBaseUrl = "https://api.courserv.com/ironrock"; //localhost:58633/api/";
 var _contentBaseUrl = "https://cdn.courserv.com/ironrock";
 var _IronRockPreliminaryData = "IronRockPreliminaryData";
@@ -28,6 +32,31 @@ var CaptionBaseVehicleColour = 'vehicleColour';
 var CaptionBaseVehicleStatus = 'vehicleStatus';
 var CaptionBaseVehicleValue = 'vehicleValue';
 
+var verificationFormText = '<div class="row">  ' +
+	'<div class="col-md-12"> ' +
+	'<form class="form-horizontal"> ' +
+	'<div class="form-group"> ' +
+	'<label class="col-md-4 control-label" for="verificationCode">Code</label> ' +
+	'<div class="col-md-4"> ' +
+	'<input id="verificationCode" name="verificationCode" type="text" placeholder="Verification Code" class="form-control input-md" required> ' +
+	'<span class="help-block">Verification Code</span> </div> ' +
+	'</div> ' +
+	'<div class="form-group"> ' +
+	'<label class="col-md-4 control-label" for="password">Password</label> ' +
+	'<div class="col-md-4"> ' +
+	'<input id="password" name="password" type="password" placeholder="New Password" class="form-control input-md" required> ' +
+	'<span class="help-block">Your New Password</span> </div> ' +
+	'</div> ' +
+	'<div class="form-group"> ' +
+	'<label class="col-md-4 control-label" for="confirmPassword">Confirm Password</label> ' +
+	'<div class="col-md-4"> ' +
+	'<input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required> ' +
+	'<span class="help-block">Confirm Password</span> </div> ' +
+	'</div> ' +
+	'</form> </div>  </div>';
+
+
+
 function ConvertToJson(r) {
 	try {
 		r = JSON.parse(r);
@@ -38,6 +67,160 @@ function ConvertToJson(r) {
 	}
 	return r;
 }
+
+///quote
+/////////////////////////////////////////Quote Forms//////////////////////////
+function setQuoteWizard(insuranceType,callback) {
+	var wizardTabs = $('#wizard-tabs');
+	var mainSectionUrl;
+	if (insuranceType == 'motor') {
+		$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
+		mainSectionUrl = "motorVehicleSection.html";
+		wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
+		wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
+		wizardTabs.append('<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>');
+		wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
+		wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
+	} else {
+		$('.page-header').html('<h1>Create Home Property Proposal</h1>');
+		mainSectionUrl = "homePropertySection.html";
+		wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
+		wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
+		wizardTabs.append('<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>');
+		wizardTabs.append('<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>');
+	}
+	wizardTabs.append('<li><a href="#final-page" data-toggle="tab">Complete</a></li>');
+
+	$.get(mainSectionUrl, function (pageData) {
+		$('.tab-content').prepend(pageData);
+
+		$.get('personalsection.html', function (pageData) {
+			$('.tab-content').prepend(pageData);
+			setBootstrapWizard(insuranceType);
+			LoadSettings(insuranceType, function (err) {
+				callback(err);				
+			});
+		});
+	});
+}
+
+
+//do wizard and load settings
+function LoadSettings(insuranceType, callback) {
+	//     $('#quote-wizard').bootstrapWizard();
+	var prelimData = localStorage.getItem(_IronRockPreliminaryData);
+	if (prelimData && prelimData != "null") {
+		doMiscellaneous();
+		//doPrimaryFunctions();
+		loadCountriesOptions();
+		loadOccupations(insuranceType == "motor");
+		if (insuranceType != "motor") {
+			loadRoofWallsTypes();
+		}
+		callback();
+	} else {
+		g_ironrock_service.getMiscOptions(function (err, r) {
+			if (err) {
+				callback(err);
+			} else {
+				var jsondata = ConvertToJson(r);
+				if (jsondata.success == undefined) jsondata.success = true;
+				if (jsondata.success) {
+					localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
+					doMiscellaneous();
+					//doPrimaryFunctions();
+					loadCountriesOptions();
+					loadOccupations(insuranceType == "motor");
+					if (insuranceType != "motor")
+						loadRoofWallsTypes();
+					callback();
+				} else {
+					callback(new Error(jsondata.error_message));
+				}
+			}
+		});
+	}
+}
+
+
+
+
+function setBootstrapWizard(insuranceType) {
+	$('#quote-wizard').bootstrapWizard({
+		'nextSelector': '.button-next',
+		'previousSelector': '.button-previous',
+		onNext: function (tab, navigation, index) {
+			var $valid = true;
+			switch (index) {
+			case 1:
+				$valid = $("#personal-main-page .ProposalForm").valid();
+				break;
+			case 2:
+				$valid = $("#personal-contact-page .ProposalForm").valid();
+				break;
+			case 3:
+				$valid = $("#personal-employer-details-page .ProposalForm").valid();
+				break;
+			}
+			if (insuranceType == "motor") {
+				switch (index) {
+				case 4:
+					$valid = $("#vehicle-particulars-page .ProposalForm").valid();
+					if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0) $valid = false;
+					break;
+				case 5:
+					//$valid = $("#vehicle-insurance-coverage-page .ProposalForm").valid();
+					break;
+				case 6:
+					$valid = $("#vehicle-driver-details-page .ProposalForm").valid();
+					break;
+				case 7:
+					//$valid = $("#vehicle-accidents-page .ProposalForm").valid();
+					break;
+				case 8:
+					//$valid = $("#vehicle-medical-history-page .ProposalForm").valid();
+					break;
+				}
+			} else {
+				switch (index) {
+				case 4:
+					$valid = $("#home-particulars-page .ProposalForm").valid();
+					break;
+				case 5:
+					$valid = $("#home-particulars-continued-page .ProposalForm").valid();
+					break;
+				case 6:
+					$valid = $("#home-property-details-page .ProposalForm").valid();
+					break;
+				case 7:
+					$valid = $("#home-all-risk-insurance-page .ProposalForm").valid();
+					break;
+				}
+			}
+			if (!$valid) {
+				$validator = $(".ProposalForm").validate();
+				$validator.focusInvalid();
+				$('#warning').fadeIn().delay(5000).fadeOut();
+				window.scrollTo(0, 0);
+				return false;
+			}
+
+		},
+		onTabClick: function () {
+			return false;
+		},
+		onTabShow: function (tab, navigation, index) {
+			var $total = navigation.find('li').length;
+			var $current = index + 1;
+			var $percent = ($current / $total) * 100;
+			$('#quote-wizard .progress-bar').css({
+				width: $percent + '%'
+			});
+		}
+	});
+}
+
+//////////////////////////////////////////////////////////////////////end quote
 
 
 //insert vehicle
@@ -290,8 +473,7 @@ function createFirstDriver() {
 
 //add driver
 function GetDriverLicense($this, id, callback) {
-	var ir = new ironrockcloudservice();
-	ir.getDriverLicenseDetails(id, function (err, r) {
+	g_ironrock_service.getDriverLicenseDetails(id, function (err, r) {
 		if (err) {
 			callback(err);
 		} else {
@@ -328,7 +510,212 @@ function GetDriverLicense($this, id, callback) {
 
 
 //$(document).ready(function (e) {
-function doPrimaryFunctions() {
+function doPrimaryFunctions(callback) {
+
+	///////////////////admin functions///////////////////////////////////////
+	var $body = $("body");
+
+
+
+	$(document).on({
+		ajaxStart: function () {
+			$body.addClass("loading");
+		},
+		ajaxStop: function () {
+			$body.removeClass("loading");
+		}
+	});
+
+	g_ironrock_service = new ironrockcloudservice(function (err, $this) {
+		if (err) {
+			g_ironrock_service.signoff();
+			location.assign('/index.html');
+			return;
+		}
+		if ($this.getUsername()) {
+			$('#sidebar').load("/sideBarAuthorised.html", function () {
+				$('#sidebar #globalUsername').text($this.getUsername());
+				App.init();
+				correctLinks();
+				if (callback && typeof callback == "function") {
+					callback();
+				}
+			});
+		} else {
+			if (location.pathname == '/index.html' ||
+				location.pathname == '/login.html' ||
+				location.pathname == '/forgotPassword.html') {
+				$('#sidebar').load("/sideBarAnonymous.html", function () {
+					App.init();
+				});
+			} else {
+				location.assign('/index.html');
+			}
+		}
+	});
+
+	//display message
+	function display(message, err) {
+		if (err) {
+			$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+			return;
+		}
+		$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+	}
+
+
+	function correctLinks() {
+		var profile = localStorage.getItem("ironrockUserProfile");
+		var NotAdmin = true;
+		if (profile) {
+			var item = JSON.parse(profile);
+			if (item.role == 'Admin' || item.role == 'Staff') {
+				NotAdmin = false;
+			}
+		}
+		if (NotAdmin)
+			$('#sidebar').find('#adminLinks').remove();
+	}
+
+
+	$('#sidebar').on('click', '#logout', function () {
+		g_ironrock_service.signoff();
+		location.assign('/index.html');
+	})
+
+
+	///login
+	$("#login_submit").click(function (e) {
+		g_ironrock_service = new ironrockcloudservice(function (err, obj) {
+			if (err) {
+				display(err.message, true);
+			} else {
+				obj.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
+					if (err) {
+						display(err.message, true);
+					} else {
+						var username = obj.getUsername();
+						obj.getUser(username, function (err, data) {
+							if (err) {
+								display(err.message, true);
+							} else {
+								localStorage.setItem("ironrockUserProfile", data.Payload);
+								location.assign('/dashboard.html');
+							}
+						});
+					}
+				});
+			}
+
+		});
+	});
+
+	//confirm account
+	$("#confirm_account_submit").click(function (e) {
+		var email_code = $('#email_code').val();
+		var username = $('#username').val();
+		g_ironrock_service.confirmSignup(username, email_code, function (err, data) {
+			if (err) {
+				display(err.message, true);
+			} else {
+				display(data, false);
+			}
+		});
+	});
+
+	//change password
+	$("#change_password_submit").click(function (e) {
+		var oldPassword = $('#oldPassword').val(),
+			newPassword = $("#newPassword").val(),
+			confirmPassword = $("#confirmPassword").val();
+		if (oldPassword && newPassword && newPassword == confirmPassword && newPassword != oldPassword) {
+			g_ironrock_service.changePassword($('#oldPassword').val(), $('#newPassword').val(), function (err) {
+				if (err) {
+					display(err.message, true);
+				} else {
+					location.assign('/dashboard.html');
+					//location.reload();
+				}
+			});
+		} else {
+			display("Invalid Entries", true);
+		}
+	});
+
+	///forgot password
+	$("#forgot_submit").click(function (e) {
+		g_ironrock_service.forgotPassword($('#login_username').val(), function (err, doVerification, obj) {
+			if (err) {
+				display(err.message, true);
+			} else {
+				if (doVerification) {
+					bootbox.dialog({
+						title: "Confirm Password",
+						message: verificationFormText,
+						buttons: {
+							success: {
+								label: "Confirm",
+								className: "btn-success",
+								callback: function () {
+									var verificationCode = $('#verificationCode').val();
+									var newPassword = $('#password').val();
+									var confirmPassword = $('#confirmPassword').val();
+									if (!verificationCode || !newPassword || newPassword != confirmPassword)
+										return false;
+									else
+										g_ironrock_service.confirmPassword(verificationCode, newPassword, obj);
+								}
+							}
+						}
+					});
+				} else {
+					display("Your password has been set. You can now login.", false);
+				}
+			}
+		});
+	});
+
+	///////////////////////quote create and update
+	$('#acceptDisclaimer').change(function () {
+		$('#submit-btn').prop("disabled", !$(this).is(':checked'));
+	});
+
+	$('#reset-btn').click(function () {
+		location.reload();
+	});
+
+	////submit
+	$('#submit-btn').click(function () {
+		//get signature data       
+		//var formData = $('form').serialize();
+		var jsonForm = $('form').serializeObject();
+		var formData = JSON.stringify(jsonForm);
+		g_ironrock_service.submitQuote(formData, function (err, r) {
+			if (err) {
+				alert("error: " + err.statusText);
+				return;
+			}
+			var r = ConvertToJson(r);
+			if (r.errorMessage) {
+				alert("error: " + r.errorMessage);
+				return;
+			}
+			if (!r.success) {
+				console.log(r);
+				alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
+			} else {
+				$('#disclaimerContainer').hide();
+				$('#submit-btn').hide();
+				$('#quotation-number').val(r.quotation_number);
+				var $container = $('#quotation');
+				loadQuotation($container, r);
+				$('.button-previous').prop('disabled', true);
+				$('.button-next').prop('disabled', true);
+			}
+		});
+
+	});
+	///////
 
 	//regular driver
 	$('#regularDriversBtns').on('click', '.Add', function () {
@@ -371,7 +758,7 @@ function doPrimaryFunctions() {
 	///////
 
 
-	$('#personal-main-page').on('click', '#getTRNDetails', function () {
+	$('#quote-wizard .tab-content').on('click', '#getTRNDetails', function () {
 		var licenseNo = $('#applicantTRN').val();
 		GetDriverLicense(null, licenseNo, function (err, data) {
 			if (err) {
@@ -386,7 +773,7 @@ function doPrimaryFunctions() {
 
 
 
-	$('#personal-main-page').on('click', '#clearTRNDetails', function () {
+	$('#quote-wizard .tab-content').on('click', '#clearTRNDetails', function () {
 		SetTRnDetails(false);
 		var imageSrc = "/images/dummy.jpg";
 		$('#applicantPhoto').attr('src', imageSrc); //
@@ -417,19 +804,19 @@ function doPrimaryFunctions() {
 	};
 
 	//clear signature
-	$('#page-signature').on('click', '#clear-canvas', function () {
+	$('#quote-wizard .tab-content').on('click', '#clear-canvas', function () {
 		$('#signature').jSignature('clear');
 	});
 
 
 	//////////////////////////////////Insert vehicle
-	$('#taxOfficeVehicleRefresh').click(function () {
+	$('#quote-wizard .tab-content').on("click", '#taxOfficeVehicleRefresh', function () {
 		$('#vehiclesToBeInsured .vehicle').remove();
 		$('#taxOfficeVehicleRefresh').hide();
 	});
 
 	//check whether new
-	$('input[type=radio][name=isNewVehicle]').change(function () {
+	$('#quote-wizard .tab-content').on("change", 'input[type=radio][name=isNewVehicle]', function () {
 		var select_value = $(this).val();
 		if (select_value == 'yes') {
 			$('#taxOfficeVehicleDialog .chassis').hide();
@@ -441,7 +828,7 @@ function doPrimaryFunctions() {
 	});
 
 	//get vehicle modal
-	$('#GetTaxOfficeVehicleDialog').click(function () {
+	$('#quote-wizard .tab-content').on("click", '#GetTaxOfficeVehicleDialog', function () {
 		$('#queryVehicleAdd').hide();
 		$('#queryVehicleSearch').show();
 		$('#taxOfficeQueryManualEntry').hide();
@@ -457,13 +844,13 @@ function doPrimaryFunctions() {
 
 
 
-	$('#QueryVehicleMake').change(function () {
+	$('#quote-wizard .tab-content').on("change", '#QueryVehicleMake', function () {
 		loadVehicleModels();
 	});
 
 
 	//manual entry
-	$('#taxOfficeVehicleDialog').on("click", "#queryVehicleAdd", function () {
+	$('#quote-wizard .tab-content').on("click", "#queryVehicleAdd", function () {
 		var r = {};
 
 		r.plateNo = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
@@ -512,8 +899,7 @@ function doPrimaryFunctions() {
 			return;
 		}
 
-		var ir = new ironrockcloudservice();
-		ir.getVehicleDetails(plateno, chassisno, function (err, r) {
+		g_ironrock_service.getVehicleDetails(plateno, chassisno, function (err, r) {
 			if (err) {
 				alert("Err:" + err.statusText);
 				return;

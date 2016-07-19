@@ -101,6 +101,9 @@
 		</div>
 	</div>
 
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
 			2016 &copy; Ironrock Insurance.
@@ -125,76 +128,60 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var ir = new ironrockcloudservice(function (err, $this) {
-					var username = $this.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-						listBrokers($this);
-					} else {
-						location.assign('/login.html');
-					}
-				});
-
-				$('#sidebar').on('click', '#logout', function () {
-						ir.signoff();
-						location.assign('/index.html');
-					})
-					////////////////////////////////////////////////
-
-				$('#save_broker').click(function () {
-					var code = $('#code').val();
-					var name = $('#name').val();
-					ir.createBroker(code, name, function (err, data) {
-						listBrokers(ir);
-					});
-				})
-
-				$('#delete_broker').click(function () {
-					if (confirm('Are you sure?')) {
-						var code = $('#code').val();
-						ir.deleteBroker(code, function (err, data) {
-							listBrokers(ir);
-						});
-					}
-				})
-
-				$('#brokerTable tbody').on('click', '.select', function (e) {
-					var id = e.target.id;
-					ir.getBroker(id, function (err, data) {
-						var item = JSON.parse(data.Payload);
-						$('#code').val(item.code);
-						$('#name').val(item.name);
-					});
-				})
-
-
-				function listBrokers(obj) {
-					obj.listBrokers(function (err, data) {
-						if (err) {
-							display(err.message, err);
-							return;
-						}
-						var tcontent = $('#brokerTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							tcontent.append('<tr><td>' + val.code +
-								'</td><td>' + val.name +
-								'</td><td><button type="button" id="' + val.code +
-								'" class="btn btn-link select">Select</button></td></tr>');
-						});
-					})
-				}
-
-
-
-
-
+			doPrimaryFunctions(function () {
+				listBrokers();
 			});
+
+
+			$('#save_broker').click(function () {
+				var code = $('#code').val();
+				var name = $('#name').val();
+				g_ironrock_service.createBroker(code, name, function (err, data) {
+					listBrokers();
+				});
+			})
+
+			$('#delete_broker').click(function () {
+				if (confirm('Are you sure?')) {
+					var code = $('#code').val();
+					g_ironrock_service.deleteBroker(code, function (err, data) {
+						listBrokers();
+					});
+				}
+			})
+
+			$('#brokerTable tbody').on('click', '.select', function (e) {
+				var id = e.target.id;
+				g_ironrock_service.getBroker(id, function (err, data) {
+					var item = JSON.parse(data.Payload);
+					$('#code').val(item.code);
+					$('#name').val(item.name);
+				});
+			})
+
+
+			function listBrokers() {
+				g_ironrock_service.listBrokers(function (err, data) {
+					if (err) {
+						display(err.message, err);
+						return;
+					}
+					var tcontent = $('#brokerTable tbody').html('');
+					var items = JSON.parse(data.Payload);
+					$.each(items, function (idx, val) {
+						tcontent.append('<tr><td>' + val.code +
+							'</td><td>' + val.name +
+							'</td><td><button type="button" id="' + val.code +
+							'" class="btn btn-link select">Select</button></td></tr>');
+					});
+				})
+			}
+
+
 		});
 	</script>
 

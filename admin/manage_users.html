@@ -85,6 +85,7 @@
 								<tbody></tbody>
 							</table>
 
+							
 							<!-- Modal -->
 							<div id="userModal" class="modal fade" role="dialog">
 								<div class="modal-dialog">
@@ -165,6 +166,7 @@
 		</div>
 	</div>
 
+	<div class="loadingModal"><!-- Place at bottom of page --></div>
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
 			2016 &copy; Ironrock Insurance.
@@ -189,190 +191,167 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var ir = new ironrockcloudservice(function (err, $this) {
-					var username = $this.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-						listRoles($this);
-						listBrokers($this);
-						listUsers($this);
-					} else {
-						location.assign('/login.html');
-					}
+			doPrimaryFunctions(function () {
+				listRoles();
+				listBrokers();
+				listUsers();
+			});
+
+			/////////////
+			function listRoles() {
+				g_ironrock_service.listRoles(function (err, data) {
+					var element = $('#role').html('<option>None</option>');
+					$.each(JSON.parse(data.Payload), function (idx, val) {
+						element.append('<option value="' + val + '">' + val + '</option>');
+					});
 				});
+			}
 
-
-				$('#sidebar').on('click', '#logout', function () {
-					ir.signoff();
-					location.assign('/index.html');
-				})
-
-				function display(message, err) {
-						if (err) {
-							$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-							return;
-						}
-						$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
-					}
-					/////////////
-				function listRoles($this) {
-					$this.listRoles(function (err, data) {
-						var element = $('#role').html('<option>None</option>');
-						$.each(JSON.parse(data.Payload), function (idx, val) {
-							element.append('<option value="' + val + '">' + val + '</option>');
-						});
+			function listBrokers() {
+				g_ironrock_service.listBrokers(function (err, data) {
+					var element = $('#broker').html('<option>None</option>');
+					$.each(JSON.parse(data.Payload), function (idx, val) {
+						element.append('<option value="' + val.code + '">' + val.name + '</option>');
 					});
-				}
+				});
+			}
 
-				function listBrokers($this) {
-					$this.listBrokers(function (err, data) {
-						var element = $('#broker').html('<option>None</option>');
-						$.each(JSON.parse(data.Payload), function (idx, val) {
-							element.append('<option value="' + val.code + '">' + val.name + '</option>');
-						});
-					});
-				}
-
-				$('#update-user').click(function () {
-					var username = $('#username').val();
-					var role = $('#role').val();
-					var broker = $('#broker').val();
-					ir.updateUser(username, role, broker, function (err, data) {
-						listUsers(ir);
-						$('#userModal').modal('hide');
-					});
-				})
+			$('#update-user').click(function () {
+				var username = $('#username').val();
+				var role = $('#role').val();
+				var broker = $('#broker').val();
+				g_ironrock_service.updateUser(username, role, broker, function (err, data) {
+					listUsers();
+					$('#userModal').modal('hide');
+				});
+			});
 
 
-				$('#userTable tbody').on('click', '.select', function (e) {
-					var username = e.target.id;
-					ir.getUser(username, function (err, data) {
-						var item = JSON.parse(data.Payload);
-						$('#username').val(item.username).prop("readonly", true);
-						$('#firstName').val(item.given_name).prop("readonly", true);
-						$('#lastName').val(item.family_name).prop("readonly", true);
-						$('#email').val(item.email).prop("readonly", true);
-						$('#phone').val(item.phone_number).prop("readonly", true);
-						$('#role').val(item.role).parent().parent().show();
-						$('#broker').val(item.broker).parent().parent().show();
-						$('#update-user').show();
-						$('#create-user').hide();
-						$('#userModal .modal-title').text('Update Agent');
-						$('#userModal').modal('show');
-					});
-				})
-
-
-				$('#btnCreateNewUser').click(function () {
-					$('#username').val('').prop("readonly", false);
-					$('#firstName').val('').prop("readonly", false);
-					$('#lastName').val('').prop("readonly", false);
-					$('#email').val('').prop("readonly", false);
-					$('#phone').val('').prop("readonly", false);
-					$('#role').parent().parent().hide();
-					$('#broker').parent().parent().hide();
-					$('#update-user').hide();
-					$('#create-user').show();
-					$('#userModal .modal-title').text('Create Agent');
+			$('#userTable tbody').on('click', '.select', function (e) {
+				var username = e.target.id;
+				g_ironrock_service.getUser(username, function (err, data) {
+					var item = JSON.parse(data.Payload);
+					$('#username').val(item.username).prop("readonly", true);
+					$('#firstName').val(item.given_name).prop("readonly", true);
+					$('#lastName').val(item.family_name).prop("readonly", true);
+					$('#email').val(item.email).prop("readonly", true);
+					$('#phone').val(item.phone_number).prop("readonly", true);
+					$('#role').val(item.role).parent().parent().show();
+					$('#broker').val(item.broker).parent().parent().show();
+					$('#update-user').show();
+					$('#create-user').hide();
+					$('#userModal .modal-title').text('Update Agent');
 					$('#userModal').modal('show');
 				});
+			});
 
 
-				//save new user
-				//username, password, email, phone_number, given_name, family_name, gender
-				$("#create-user").click(function (e) {
-					var password = generatePassword();
-					ir.signup($('#username').val(),
-						password,
-						$('#email').val(),
-						$('#phone').val(),
-						$('#firstName').val(),
-						$('#lastName').val(),
-						'Male',
-						function (err, result) {
-							if (err) {
-								display(err.message, true);
-								return;
-							}
-							display("The user has been created. An email, with the user credentials, has been sent to " + $('#email').val(), false);
-							$('#userModal').modal('hide');
-						});
-				});
+			$('#btnCreateNewUser').click(function () {
+				$('#username').val('').prop("readonly", false);
+				$('#firstName').val('').prop("readonly", false);
+				$('#lastName').val('').prop("readonly", false);
+				$('#email').val('').prop("readonly", false);
+				$('#phone').val('').prop("readonly", false);
+				$('#role').parent().parent().hide();
+				$('#broker').parent().parent().hide();
+				$('#update-user').hide();
+				$('#create-user').show();
+				$('#userModal .modal-title').text('Create Agent');
+				$('#userModal').modal('show');
+			});
 
 
-				function listUsers($this, role, broker) {
-					if (!role) role = null;
-					if (!broker) broker = null;
-					$this.listUsers(role, broker, function (err, data) {
+			//save new user
+			//username, password, email, phone_number, given_name, family_name, gender
+			$("#create-user").click(function (e) {
+				var password = generatePassword();
+				g_ironrock_service.signup($('#username').val(),
+					password,
+					$('#email').val(),
+					$('#phone').val(),
+					$('#firstName').val(),
+					$('#lastName').val(),
+					'Male',
+					function (err, result) {
 						if (err) {
-							display(err.message, err);
+							display(err.message, true);
 							return;
 						}
-						var tcontent = $('#userTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							var role = val.role ? val.role : '';
-							var broker = val.broker ? val.broker : '';
-							tcontent.append('<tr><td>' + val.username +
-								'</td><td>' + val.given_name +
-								'</td><td>' + val.family_name +
-								'</td><td>' + val.email_verified +
-								'</td><td>' + role +
-								'</td><td>' + broker +
-								'</td><td><button type="button" id="' + val.username +
-								'" class="btn btn-link select">Select</button></td></tr>');
-						});
-					})
-				}
-
-				var generatePassword = function (numLc, numUc, numDigits, numSpecial) {
-					numLc = numLc || 4;
-					numUc = numUc || 4;
-					numDigits = numDigits || 4;
-					numSpecial = numSpecial || 2;
-
-
-					var lcLetters = 'abcdefghijklmnopqrstuvwxyz';
-					var ucLetters = lcLetters.toUpperCase();
-					var numbers = '0123456789';
-					var special = '!?=#*$@+-.';
-
-					var getRand = function (values) {
-						return values.charAt(Math.floor(Math.random() * values.length));
-					}
-
-					//+ Jonas Raoni Soares Silva
-					//@ http://jsfromhell.com/array/shuffle [v1.0]
-					function shuffle(o) { //v1.0
-						for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-						return o;
-					};
-
-					var pass = [];
-					for (var i = 0; i < numLc; ++i) {
-						pass.push(getRand(lcLetters))
-					}
-					for (var i = 0; i < numUc; ++i) {
-						pass.push(getRand(ucLetters))
-					}
-					for (var i = 0; i < numDigits; ++i) {
-						pass.push(getRand(numbers))
-					}
-					for (var i = 0; i < numSpecial; ++i) {
-						pass.push(getRand(special))
-					}
-
-					return shuffle(pass).join('');
-				}
-
-				////////////
-
+						display("The user has been created. An email, with the user credentials, has been sent to " + $('#email').val(), false);
+						$('#userModal').modal('hide');
+					});
 			});
+
+
+			function listUsers(role, broker) {
+				if (!role) role = null;
+				if (!broker) broker = null;
+				g_ironrock_service.listUsers(role, broker, function (err, data) {
+					if (err) {
+						display(err.message, err);
+						return;
+					}
+					var tcontent = $('#userTable tbody').html('');
+					var items = JSON.parse(data.Payload);
+					$.each(items, function (idx, val) {
+						var role = val.role ? val.role : '';
+						var broker = val.broker ? val.broker : '';
+						tcontent.append('<tr><td>' + val.username +
+							'</td><td>' + val.given_name +
+							'</td><td>' + val.family_name +
+							'</td><td>' + val.email_verified +
+							'</td><td>' + role +
+							'</td><td>' + broker +
+							'</td><td><button type="button" id="' + val.username +
+							'" class="btn btn-link select">Select</button></td></tr>');
+					});
+				});
+			}
+
+			var generatePassword = function (numLc, numUc, numDigits, numSpecial) {
+				numLc = numLc || 4;
+				numUc = numUc || 4;
+				numDigits = numDigits || 4;
+				numSpecial = numSpecial || 2;
+
+
+				var lcLetters = 'abcdefghijklmnopqrstuvwxyz';
+				var ucLetters = lcLetters.toUpperCase();
+				var numbers = '0123456789';
+				var special = '!?=#*$@+-.';
+
+				var getRand = function (values) {
+					return values.charAt(Math.floor(Math.random() * values.length));
+				};
+
+				//+ Jonas Raoni Soares Silva
+				//@ http://jsfromhell.com/array/shuffle [v1.0]
+				function shuffle(o) { //v1.0
+					for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+					return o;
+				}
+
+				var pass = [];
+				for (var i = 0; i < numLc; ++i) {
+					pass.push(getRand(lcLetters));
+				}
+				for (var i = 0; i < numUc; ++i) {
+					pass.push(getRand(ucLetters));
+				}
+				for (var i = 0; i < numDigits; ++i) {
+					pass.push(getRand(numbers));
+				}
+				for (var i = 0; i < numSpecial; ++i) {
+					pass.push(getRand(special));
+				}
+
+				return shuffle(pass).join('');
+			}
+
 
 		});
 	</script>

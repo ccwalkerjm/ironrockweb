@@ -66,7 +66,7 @@
 				<h1>Confirm Account</h1>
 				<div class="row" id="login-block">
 					<div class="col-lg-6">
-						<div id="status"></div>
+						<div class="message"></div>
 						<!--                        <h2>Login</h2>-->
 						<p>Enter the username and the code received.</p>
 						<form class="form-horizontal" role="form">
@@ -84,7 +84,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button type="button" class="btn btn-default" id="submit">Submit</button>
+									<button type="button" class="btn btn-default" id="confirm_account_submit">Submit</button>
 								</div>
 							</div>
 						</form>
@@ -118,42 +118,13 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-
-
-			$('#sidebar').load("/sideBarAnonymous.html", function () {
-				App.init();
-			});
-			//display message
-			function display(message, err) {
-				if (err) {
-					$('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-					return;
-				}
-				$('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
-			}
-			var ir = new ironrockcloudservice();
-			///login
-			$("#submit").click(function (e) {
-				var email_code = $('#email_code').val();
-				var username = $('#username').val();
-				ir.confirmSignup(username, email_code, function (err, data) {
-					if (err) {
-						display(err.message, true);
-					} else {
-						display(data, false);
-					}
-				});
-			});
-
+			doPrimaryFunctions();
 		});
 	</script>
-
-
-
-
 </body>
 
 </html>

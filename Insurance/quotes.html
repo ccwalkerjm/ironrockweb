@@ -123,21 +123,38 @@
 							</div>
 						</div>
 					</section>
-					<section id="wizard" style="display:none">
+					<section id="quote-section" style="display:none">
 						<div class="page-header">
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-default" id="returntoQuotes">Return</button>
-							<button type="button" class="btn btn-info" id="getPDF">Proposal Form</button>
-							<button type="button" class="btn btn-info" id="convert">Convert to Policy</button>
-							<button type="button" class="btn btn-info" id="upload">Upload Documents</button>
+							<button type="button" id="returntoQuotes" class="btn btn-default" aria-label="Left Align" title="Return to Quotes">
+								<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+							</button>
+
+							<button type="button" id="getPDF" class="btn btn-default" aria-label="Left Align" title="Generate PDF Document">
+								<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+							</button>
+
+							<button type="button" id="convert" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
+								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							</button>
+
+							<button type="button" id="upload" class="btn btn-default" aria-label="Left Align" title="Upload Documents">
+								<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+							</button>
 						</div>
 						<hr/>
-						<div id="rootwizard">
+						<div id="quote-wizard">
 							<div class="navbar">
 								<div class="navbar-inner">
 									<div class="container">
 										<ul id="wizard-tabs">
+											<li><a href="#personal-main-page" data-toggle="tab">Personal</a>
+											</li>
+											<li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
+											</li>
+											<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -207,6 +224,9 @@
 		</div>
 	</div>
 
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
 			2016 &copy; Ironrock Insurance.
@@ -366,328 +386,186 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var currentQuote = {};
-				var ir = new ironrockcloudservice();
+			var currentQuote;
+			doPrimaryFunctions(function () {
+				var today = new Date();
+				var yyyy = today.getFullYear();
+				var lastYear = yyyy - 1;
+				$('#dateFr').val(lastYear + '-01-01');
+				$('#dateTo').val(yyyy + '-12-31');
+			});
 
+			function getBaseUrl() {
+				var re = new RegExp(/^.*\//);
+				return re.exec(window.location.href);
+			}
 
-				ir.init(function () {
-					var username = ir.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-						var today = new Date();
-						var yyyy = today.getFullYear();
-						var lastYear = yyyy - 1;
-						$('#dateFr').val(lastYear + '-01-01');
-						$('#dateTo').val(yyyy + '-12-31');
-					} else {
-						location.assign('/login.html');
+			$('#doSearch').click(function () {
+				var searchData = {};
+
+				searchData.quoteNo = $('#quoteNo').val();
+				searchData.IdNum = $('#ident').val();
+				searchData.firstName = $('#firstname').val();
+				searchData.lastName = $('#lastname').val();
+				searchData.dateFr = $('#dateFr').val();
+				searchData.dateTo = $('#dateTo').val();
+				searchData.type = $('#insuranceType').val();
+				var payload = JSON.stringify(searchData);
+
+				g_ironrock_service.searchQuotes(payload, function (err, resp) {
+					if (err) {
+						alert("error: " + err.statusText);
+						return;
 					}
+					if (resp == null) {
+						alert('No quotes returned!');
+						return;
+					}
+					resp = ConvertToJson(resp);
+					var quotes = resp.sort(function (a, b) {
+						return b.id - a.id;
+					});
+					// ascending order
+
+					var dlTable = $('#quotesTable tbody').html('');
+					$.each(quotes, function (idx, r) {
+						var data = r.request; // JSON.parse(r.request);
+						dlTable.append('<tr><td>' + r.id + '</td><td>' +
+							data.FirstName + '</td><td>' +
+							data.applicantSurname + '</td><td>' +
+							data.insuranceType + '</td><td>' +
+							r.broker + '</td><td><button class="btn btn-link select" id="' + r.id + '">Select</button></td></tr>');
+					})
 				});
 
-
-				$('#sidebar').on('click', '#logout', function () {
-					ir.signoff();
-					location.assign('/index.html');
-				})
+			});
 
 
-				function getBaseUrl() {
-					var re = new RegExp(/^.*\//);
-					return re.exec(window.location.href);
+
+			$('#returntoQuotes').click(function () {
+				location.reload();
+				/*$('#quotes').show();
+				$('#quote-section').hide();
+				//remove quote
+				$('#personal-main-page').remove();
+				$('#personal-contact-page').remove();
+				$('#personal-employer-details-page').remove();
+				if (currentQuote.insuranceType == 'motor') {
+				    $('#vehicle-particulars-page').remove();
+				    $('#vehicle-insurance-coverage-page').remove();
+				    $('#vehicle-driver-details-page').remove();
+				    $('#vehicle-accidents-page').remove();
+				    $('#vehicle-medical-history-page').remove();
+				} else {
+				    $('#home-particulars-page').remove();
+				    $('#home-particulars-continued-page').remove();
+				    $('#home-property-details-page').remove();
+				    $('#home-all-risk-insurance-page').remove();
 				}
+				$('#quote-wizard').empty();
+				$('#quotation').empty();
+				//last reset currentQuote
+				currentQuote = {};*/
+			});
 
-				$('#doSearch').click(function () {
-					var searchData = {};
 
-					searchData.quoteNo = $('#quoteNo').val();
-					searchData.IdNum = $('#ident').val();
-					searchData.firstName = $('#firstname').val();
-					searchData.lastName = $('#lastname').val();
-					searchData.dateFr = $('#dateFr').val();
-					searchData.dateTo = $('#dateTo').val();
-					searchData.type = $('#insuranceType').val();
-					var payload = JSON.stringify(searchData);
+			$('#quotesTable tbody').on('click', '.select', function (e) {
+				var id = e.target.id;
+				g_ironrock_service.getQuote(id, function (err, resp) {
+					if (err) {
+						alert("error: " + err.message);
+						return;
+					}
 
-					ir.searchQuotes(payload, function (err, resp) {
+					currentQuote = JSON.parse(resp);
+					currentQuote.applicantQuoteNo = id;
+					//DisplayQuote();
+					setQuoteWizard(currentQuote.insuranceType, function (err) {
 						if (err) {
-							alert("error: " + err.statusText);
+							bootbox.alert(err.message);
 							return;
 						}
-						resp = JSON.parse(resp);
-						var quotes = resp.sort(function (a, b) {
-							return b.id - a.id;
-						});
-						// ascending order
-
-						var dlTable = $('#quotesTable tbody').html('');
-						$.each(quotes, function (idx, r) {
-							var data = r.request; // JSON.parse(r.request);
-							dlTable.append('<tr><td>' + r.id + '</td><td>' +
-								data.FirstName + '</td><td>' +
-								data.applicantSurname + '</td><td>' +
-								data.insuranceType + '</td><td></td><td><button class="btn btn-link select" id="' + r.id + '">Select</button></td></tr>');
-						})
-					});
-
-				});
-
-				$('#returntoQuotes').click(function () {
-					location.reload();
-					/*$('#quotes').show();
-					$('#wizard').hide();
-					//remove quote
-					$('#personal-main-page').remove();
-					$('#personal-contact-page').remove();
-					$('#personal-employer-details-page').remove();
-					if (currentQuote.insuranceType == 'motor') {
-					    $('#vehicle-particulars-page').remove();
-					    $('#vehicle-insurance-coverage-page').remove();
-					    $('#vehicle-driver-details-page').remove();
-					    $('#vehicle-accidents-page').remove();
-					    $('#vehicle-medical-history-page').remove();
-					} else {
-					    $('#home-particulars-page').remove();
-					    $('#home-particulars-continued-page').remove();
-					    $('#home-property-details-page').remove();
-					    $('#home-all-risk-insurance-page').remove();
-					}
-					$('#rootwizard').empty();
-					$('#quotation').empty();
-					//last reset currentQuote
-					currentQuote = {};*/
-				});
-
-
-				$('#quotesTable tbody').on('click', '.select', function (e) {
-					var id = e.target.id;
-					ir.getQuote(id, function (err, resp) {
-						if (err) {
-							alert("error: " + err.statusText);
-							return;
-						}
-						currentQuote = JSON.parse(resp);
-						currentQuote.applicantQuoteNo = id;
-						DisplayQuote();
-					});
-				});
-
-
-
-				function DisplayQuote() {
-					//variables
-					var mainSectionUrl;
-					var DisplayQuoteNo = '<h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>';
-
-					//load wizard
-					var wizardTabs = $('#wizard-tabs');
-					wizardTabs.html('<li><a href="#personal-main-page" data-toggle="tab">Personal</a></li>' +
-						'<li><a href="#personal-contact-page" data-toggle="tab">Contact</a></li>' +
-						'<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a></li>');
-
-					if (currentQuote.insuranceType == 'motor') {
-						$('.page-header').html('<h1>Motor Vehicle Proposal</h1>' + DisplayQuoteNo);
-						mainSectionUrl = "motorVehicleSection.html";
-						wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
-						wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
-					} else {
-						$('.page-header').html('<h1>Home Property Proposal</h1>' + DisplayQuoteNo);
-						mainSectionUrl = "homePropertySection.html";
-						wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
-						wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
-						wizardTabs.append('<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>');
-						wizardTabs.append('<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>');
-					}
-					wizardTabs.append('<li><a href="#final-page" data-toggle="tab">Complete</a></li>');
-
-					$.get(mainSectionUrl, function (r) {
-						$('.tab-content').prepend(r);
-						InsertPersonalSection(function () {
-							LoadSettings(currentQuote.insuranceType);
-							$('.tab-content').find('#insuranceType').val(currentQuote.insuranceType);
-							//show quote wizard
-							$('#wizard').show();
-							$('#quotes').hide();
-						});
-					});
-
-					//$('#introduction').hide();
-
-				}
-
-				//load personal sections
-				function InsertPersonalSection(callback) {
-					$.get('personalsection.html', function (r) {
-						$('.tab-content').prepend(r);
-						callback();
-					});
-				}
-
-				//do wizard and load settings
-				function LoadSettings(insurancetype) {
-					doWizard(insurancetype);
-					//     $('#rootwizard').bootstrapWizard();
-					var prelimData = localStorage.getItem(_IronRockPreliminaryData);
-					if (prelimData && prelimData != "null") {
-						doMiscellaneous();
-						doPrimaryFunctions();
-						loadCountriesOptions();
-						loadOccupations(insurancetype == "motor");
-						if (insurancetype != "motor") loadRoofWallsTypes();
-						populateQuote();
-					} else {
-						var serverUrl = _apiBaseUrl + "/misc";
-						$.ajax({
-							type: 'GET',
-							//contentType: 'application/json',
-							url: serverUrl,
-							dataType: 'json',
-							success: function (r) {
-								var jsondata = ConvertToJson(r);
-								if (jsondata.success == undefined) jsondata.success = true;
-								if (jsondata.success) {
-									localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
-									doMiscellaneous();
-									doPrimaryFunctions();
-									loadCountriesOptions();
-									loadOccupations(insurancetype == "motor");
-									if (insurancetype != "motor") loadRoofWallsTypes();
-									//populate quote
-									populateQuote();
-								} else {
-									alert(jsondata.error_message);
-								}
-							},
-							error: function (err) {
-								alert(err);
-							}
-						});
-					}
-				}
-
-
-				var $validator = $(".ProposalForm").validate();
-
-				function doWizard(insurancetype) {
-					$('#rootwizard').bootstrapWizard({
-						'nextSelector': '.button-next',
-						'previousSelector': '.button-previous',
-						onNext: function (tab, navigation, index) {
-							var $valid = true;
-							switch (index) {
-							case 1:
-								$valid = $("#personal-main-page .ProposalForm").valid();
-								break;
-							case 2:
-								$valid = $("#personal-contact-page .ProposalForm").valid();
-								break;
-							case 3:
-								$valid = $("#personal-employer-details-page .ProposalForm").valid();
-								break;
-							}
-							if (insurancetype == "motor") {
-								switch (index) {
-								case 4:
-									$valid = $("#vehicle-particulars-page .ProposalForm").valid();
-									if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0) $valid = false;
-									break;
-								case 5:
-									//$valid = $("#vehicle-insurance-coverage-page .ProposalForm").valid();
-									break;
-								case 6:
-									$valid = $("#vehicle-driver-details-page .ProposalForm").valid();
-									break;
-								case 7:
-									//$valid = $("#vehicle-accidents-page .ProposalForm").valid();
-									break;
-								case 8:
-									//$valid = $("#vehicle-medical-history-page .ProposalForm").valid();
-									break;
-								}
-							} else {
-								switch (index) {
-								case 4:
-									$valid = $("#home-particulars-page .ProposalForm").valid();
-									break;
-								case 5:
-									$valid = $("#home-particulars-continued-page .ProposalForm").valid();
-									break;
-								case 6:
-									$valid = $("#home-property-details-page .ProposalForm").valid();
-									break;
-								case 7:
-									$valid = $("#home-all-risk-insurance-page .ProposalForm").valid();
-									break;
-								}
-							}
-							if (!$valid) {
-								//$validator.focusInvalid();
-								$('#warning').fadeIn().delay(5000).fadeOut();
-								window.scrollTo(0, 0);
-								return false;
-							}
-
-						},
-						onTabClick: function () {
-							return false;
-						},
-						onTabShow: function (tab, navigation, index) {
-							var $total = navigation.find('li').length;
-							var $current = index + 1;
-							var $percent = ($current / $total) * 100;
-							$('#rootwizard .progress-bar').css({
-								width: $percent + '%'
-							});
-						}
-					});
-				}
-
-				$('#getPDF').click(function () {
-					CreatePDF(currentQuote)
-				})
-
-
-				function populateQuote() {
-					var licenseNo = currentQuote.applicantIDnumber;
-					if (currentQuote.egovDriversLicenseDetails) {
-						var driverLicenseJson = JSON.parse(currentQuote.egovDriversLicenseDetails);
-						populateApplicant(driverLicenseJson);
-						populateOtherItems();
-					} else {
-						GetDriverLicense(null, licenseNo, function (err, data) {
+						populateQuote(function (err) {
 							if (err) {
-								alert(err);
-								return;
+								alert(err.message);
+							} else {
+								//populate images and canvases
+								fillLogoCanvas();
+								fillSignatureCanvas();
+								$('#quotes').hide();
+								$('#quote-section').show();
 							}
+						});
+					});
+				});
+			});
+
+
+			/*function DisplayQuote() { //variables var mainSectionUrl; var DisplayQuoteNo = '
+<h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>'; //load wizard var wizardTabs = $('#wizard-tabs'); wizardTabs.html('
+<li><a href="#personal-main-page" data-toggle="tab">Personal</a></li>' + '
+<li><a href="#personal-contact-page" data-toggle="tab">Contact</a></li>' + '
+<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a></li>'); if (currentQuote.insuranceType == 'motor') { $('.page-header').html('
+<h1>Motor Vehicle Proposal</h1>' + DisplayQuoteNo); mainSectionUrl = "motorVehicleSection.html"; wizardTabs.append('
+<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>'); wizardTabs.append('
+<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>'); wizardTabs.append('
+<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>'); wizardTabs.append('
+<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>'); wizardTabs.append('
+<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>'); } else { $('.page-header').html('
+<h1>Home Property Proposal</h1>' + DisplayQuoteNo); mainSectionUrl = "homePropertySection.html"; wizardTabs.append('
+<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>'); wizardTabs.append('
+<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>'); wizardTabs.append('
+<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>'); wizardTabs.append('
+<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>'); } wizardTabs.append('
+<li><a href="#final-page" data-toggle="tab">Complete</a></li>'); $.get(mainSectionUrl, function (r) { $('.tab-content').prepend(r); InsertPersonalSection(function () { LoadSettings(currentQuote.insuranceType); $('.tab-content').find('#insuranceType').val(currentQuote.insuranceType); //show quote wizard $('#wizard').show(); $('#quotes').hide(); }); }); //$('#introduction').hide(); }*/
+
+
+
+
+
+
+
+
+			function populateQuote(callback) {
+				var licenseNo = currentQuote.applicantIDnumber;
+				if (currentQuote.egovDriversLicenseDetails) {
+					var driverLicenseJson = JSON.parse(currentQuote.egovDriversLicenseDetails);
+					populateApplicant(driverLicenseJson);
+					populateOtherItems();
+					callback();
+				} else {
+					GetDriverLicense(null, licenseNo, function (err, data) {
+						if (err) {
+							callback(err);
+						} else {
 							data.id = licenseNo;
 							populateApplicant(data);
 							populateOtherItems();
-							//populate images and canvases
-							fillLogoCanvas();
-							fillSignatureCanvas();
+							callback();
+						}
 
-						});
-					}
+					});
 				}
+			}
+
+			$('#getPDF').click(function () {
+				CreatePDF(currentQuote)
+			})
+
+			function fillLogoCanvas() {
+				var ctx = document.getElementById("canvas-logo").getContext("2d");
+				ctx.fillStyle = '#ffffff';
+				var img = new Image();
+
+				img.onload = function () {
+					ctx.drawImage(img, 0, 0, 300, 150);
+				};
+				img.src = "/images/IronRockLogoTest.png";
+			}
 
 
-				function fillLogoCanvas() {
-					var ctx = document.getElementById("canvas-logo").getContext("2d");
-					ctx.fillStyle = '#ffffff';
-					var img = new Image();
-
-					img.onload = function () {
-						ctx.drawImage(img, 0, 0, 300, 150);
-					};
-					img.src = "/images/IronRockLogoTest.png";
-				}
-
-
-				function fillSignatureCanvas() {
+			function fillSignatureCanvas() {
+				if (currentQuote.signatureBytes) {
 					var svgContainer = document.getElementById('svg-signature');
 					//$('#svg-signature').append(atob(currentQuote.signatureBytes));									
 					svgContainer.innerHTML = atob(currentQuote.signatureBytes);
@@ -703,182 +581,135 @@
 					backgroundRectElement.setAttribute("style", "fill:white");
 					svg.insertBefore(backgroundRectElement, svg.childNodes[0]);
 				}
+			}
 
 
 
-				var populateOtherItems = function () {
-					//applicant details
-					$('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
-					$('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
-					$('#applicantAlias').val(currentQuote.applicantAlias);
-					$('#applicantNationality').val(currentQuote.applicantNationality);
-					$('#applicantIDType').val(currentQuote.applicantIDType);
-					$('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
+			var populateOtherItems = function () {
+				//applicant details
+				$('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
+				$('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
+				$('#applicantAlias').val(currentQuote.applicantAlias);
+				$('#applicantNationality').val(currentQuote.applicantNationality);
+				$('#applicantIDType').val(currentQuote.applicantIDType);
+				$('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
 
-					//contact
-					$('#SourceOfFunds').val(currentQuote.SourceOfFunds ? currentQuote.SourceOfFunds : "");
-					$('#applicantMobileNumber').val(currentQuote.applicantMobileNumber);
-					$('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
-					$('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
-					$('#applicantHomeStreetName').val(currentQuote.applicantHomeStreetName);
-					$('#applicantHomeTown').val(currentQuote.applicantHomeTown);
-					$('#applicantHomeParish').val(currentQuote.applicantHomeParish);
-					$('#applicantHomePostalCode').val(currentQuote.applicantHomePostalCode);
-					$('#applicantHomeState').val(currentQuote.applicantHomeState);
-					$('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
+				//contact
+				$('#SourceOfFunds').val(currentQuote.SourceOfFunds ? currentQuote.SourceOfFunds : "");
+				$('#applicantMobileNumber').val(currentQuote.applicantMobileNumber);
+				$('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
+				$('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
+				$('#applicantHomeStreetName').val(currentQuote.applicantHomeStreetName);
+				$('#applicantHomeTown').val(currentQuote.applicantHomeTown);
+				$('#applicantHomeParish').val(currentQuote.applicantHomeParish);
+				$('#applicantHomePostalCode').val(currentQuote.applicantHomePostalCode);
+				$('#applicantHomeState').val(currentQuote.applicantHomeState);
+				$('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
 
-					//mailing address
-					$('#mailingAddressSame').val(currentQuote.mailingAddressSame);
-					$('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
-					$('#appplicantMailStreetName').val(currentQuote.appplicantMailStreetName);
-					$('#applicantMailTown').val(currentQuote.applicantMailTown);
-					$('#applicantMailParish').val(currentQuote.applicantMailParish);
-					$('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
-					$('#applicantMailState').val(currentQuote.applicantMailState);
-					$('#applicantMailCountry').val(currentQuote.applicantMailCountry);
+				//mailing address
+				$('#mailingAddressSame').val(currentQuote.mailingAddressSame);
+				$('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
+				$('#appplicantMailStreetName').val(currentQuote.appplicantMailStreetName);
+				$('#applicantMailTown').val(currentQuote.applicantMailTown);
+				$('#applicantMailParish').val(currentQuote.applicantMailParish);
+				$('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
+				$('#applicantMailState').val(currentQuote.applicantMailState);
+				$('#applicantMailCountry').val(currentQuote.applicantMailCountry);
 
-					//employment
-					$('#applicantOccupation').val(currentQuote.applicantOccupation);
-					$('#employerName').val(currentQuote.employerName);
-					$('#employerStreetName').val(currentQuote.employerStreetName);
-					$('#employerTown').val(currentQuote.employerTown);
-					$('#employerParish').val(currentQuote.employerParish);
-					$('#employerPostalCode').val(currentQuote.employerPostalCode);
-					$('#employerState').val(currentQuote.employerState);
-					$('#employerNationality').val(currentQuote.employerNationality);
+				//employment
+				$('#applicantOccupation').val(currentQuote.applicantOccupation);
+				$('#employerName').val(currentQuote.employerName);
+				$('#employerStreetName').val(currentQuote.employerStreetName);
+				$('#employerTown').val(currentQuote.employerTown);
+				$('#employerParish').val(currentQuote.employerParish);
+				$('#employerPostalCode').val(currentQuote.employerPostalCode);
+				$('#employerState').val(currentQuote.employerState);
+				$('#employerNationality').val(currentQuote.employerNationality);
 
-					//insert vehicle0
-					if (currentQuote.vehicleRegistrationNo0) {
-						var vehicle0 = {};
-						vehicle0.plateNo = currentQuote.vehicleRegistrationNo0;
-						vehicle0.chassisNo = currentQuote.vehicleChassisNo0;
-						vehicle0.make = currentQuote.vehicleMake0;
-						vehicle0.model = currentQuote.vehicleModel0;
-						vehicle0.year = currentQuote.vehicleYear0;
-						vehicle0.vehicleBodyType = currentQuote.vehicleBody0;
-						//vehicle0.vehicleType = "Sedan";
-						vehicle0.engineNo = currentQuote.vehicleEngineType0;
-						vehicle0.colour = currentQuote.vehicleColour0;
-						vehicle0.vehicleStatus = currentQuote.vehicleStatus0;
-						vehicle0.sumInsured = currentQuote.vehicleValue0;
-						insertVehicle(vehicle0);
-					}
-					if (currentQuote.vehicleRegistrationNo1) {
-						var vehicle1 = {};
-						vehicle1.plateNo = currentQuote.vehicleRegistrationNo1;
-						vehicle1.chassisNo = currentQuote.vehicleChassisNo1;
-						vehicle1.make = currentQuote.vehicleMake1;
-						vehicle1.model = currentQuote.vehicleModel1;
-						vehicle1.year = currentQuote.vehicleYear1;
-						vehicle1.vehicleBodyType = currentQuote.vehicleBody1;
-						//vehicle1.vehicleType = "Sedan";
-						vehicle1.engineNo = currentQuote.vehicleEngineType1;
-						vehicle1.colour = currentQuote.vehicleColour1;
-						vehicle1.vehicleStatus = currentQuote.vehicleStatus1;
-						vehicle1.sumInsured = currentQuote.vehicleValue1;
-						insertVehicle(vehicle1);
-					}
+				//insert vehicle0
+				if (currentQuote.vehicleRegistrationNo0) {
+					var vehicle0 = {};
+					vehicle0.plateNo = currentQuote.vehicleRegistrationNo0;
+					vehicle0.chassisNo = currentQuote.vehicleChassisNo0;
+					vehicle0.make = currentQuote.vehicleMake0;
+					vehicle0.model = currentQuote.vehicleModel0;
+					vehicle0.year = currentQuote.vehicleYear0;
+					vehicle0.vehicleBodyType = currentQuote.vehicleBody0;
+					//vehicle0.vehicleType = "Sedan";
+					vehicle0.engineNo = currentQuote.vehicleEngineType0;
+					vehicle0.colour = currentQuote.vehicleColour0;
+					vehicle0.vehicleStatus = currentQuote.vehicleStatus0;
+					vehicle0.sumInsured = currentQuote.vehicleValue0;
+					insertVehicle(vehicle0);
+				}
+				if (currentQuote.vehicleRegistrationNo1) {
+					var vehicle1 = {};
+					vehicle1.plateNo = currentQuote.vehicleRegistrationNo1;
+					vehicle1.chassisNo = currentQuote.vehicleChassisNo1;
+					vehicle1.make = currentQuote.vehicleMake1;
+					vehicle1.model = currentQuote.vehicleModel1;
+					vehicle1.year = currentQuote.vehicleYear1;
+					vehicle1.vehicleBodyType = currentQuote.vehicleBody1;
+					//vehicle1.vehicleType = "Sedan";
+					vehicle1.engineNo = currentQuote.vehicleEngineType1;
+					vehicle1.colour = currentQuote.vehicleColour1;
+					vehicle1.vehicleStatus = currentQuote.vehicleStatus1;
+					vehicle1.sumInsured = currentQuote.vehicleValue1;
+					insertVehicle(vehicle1);
+				}
 
-					if (currentQuote.vehicleRegistrationNo2) {
-						var vehicle2 = {};
-						vehicle2.plateNo = currentQuote.vehicleRegistrationNo2;
-						vehicle2.chassisNo = currentQuote.vehicleChassisNo2;
-						vehicle2.make = currentQuote.vehicleMake2;
-						vehicle2.model = currentQuote.vehicleModel2;
-						vehicle2.year = currentQuote.vehicleYear2;
-						vehicle2.vehicleBodyType = currentQuote.vehicleBody2;
-						//vehicle2.vehicleType = "Sedan";
-						vehicle2.engineNo = currentQuote.vehicleEngineType2;
-						vehicle2.colour = currentQuote.vehicleColour2;
-						vehicle2.vehicleStatus = currentQuote.vehicleStatus2;
-						vehicle2.sumInsured = currentQuote.vehicleValue2;
-						insertVehicle(vehicle2);
-					}
-
-
-					$('#startDate').val(currentQuote.startDate);
-
-					//add first driver
-					if (currentQuote.regularDriversDL0) {
-						$('#regularDriversId').show();
-						$('.regularDriversCls:last .name input').val(currentQuote.regularDriversName0);
-						$('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation0);
-						//$('#regularDriversOccupation0').val(currentQuote.occupation);
-						$('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth0);
-						$('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL0);
-						$('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate0);
-						$('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue0);
-						$('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer0);
-					}
-
-					//add second
-					if (currentQuote.regularDriversDL0 && currentQuote.regularDriversDL1) {
-						var elementGroup = $('.regularDriversCls:last');
-						elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
-						resetRegularDriver();
-
-						$('.regularDriversCls:last .name input').val(currentQuote.regularDriversName1);
-						$('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation1);
-						//$('#regularDriversOccupation0').val(currentQuote.occupation);
-						$('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth1);
-						$('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL1);
-						$('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate1);
-						$('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue1);
-						$('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
-					}
+				if (currentQuote.vehicleRegistrationNo2) {
+					var vehicle2 = {};
+					vehicle2.plateNo = currentQuote.vehicleRegistrationNo2;
+					vehicle2.chassisNo = currentQuote.vehicleChassisNo2;
+					vehicle2.make = currentQuote.vehicleMake2;
+					vehicle2.model = currentQuote.vehicleModel2;
+					vehicle2.year = currentQuote.vehicleYear2;
+					vehicle2.vehicleBodyType = currentQuote.vehicleBody2;
+					//vehicle2.vehicleType = "Sedan";
+					vehicle2.engineNo = currentQuote.vehicleEngineType2;
+					vehicle2.colour = currentQuote.vehicleColour2;
+					vehicle2.vehicleStatus = currentQuote.vehicleStatus2;
+					vehicle2.sumInsured = currentQuote.vehicleValue2;
+					insertVehicle(vehicle2);
 				}
 
 
+				$('#startDate').val(currentQuote.startDate);
 
+				//add first driver
+				if (currentQuote.regularDriversDL0) {
+					$('#regularDriversId').show();
+					$('.regularDriversCls:last .name input').val(currentQuote.regularDriversName0);
+					$('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation0);
+					//$('#regularDriversOccupation0').val(currentQuote.occupation);
+					$('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth0);
+					$('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL0);
+					$('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate0);
+					$('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue0);
+					$('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer0);
+				}
 
-				//events
+				//add second
+				if (currentQuote.regularDriversDL0 && currentQuote.regularDriversDL1) {
+					var elementGroup = $('.regularDriversCls:last');
+					elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
+					resetRegularDriver();
 
-				$('#acceptDisclaimer').change(function () {
-					$('#submit-btn').prop("disabled", !$(this).is(':checked'));
-				});
-
-				$('#reset-btn').click(function () {
-					location.reload();
-				});
-
-				////submit
-				$('#submit-btn').click(function () {
-					//get signature data       
-					//var formData = $('form').serialize();
-					var jsonForm = $('form').serializeObject();
-					var formData = JSON.stringify(jsonForm);
-					ir.submitQuote(formData, function (err, r) {
-						if (err) {
-							alert("error: " + err.statusText);
-							return;
-						}
-						var r = ConvertToJson(r);
-						if (r.errorMessage) {
-							alert("error: " + r.errorMessage);
-							return;
-						}
-						if (!r.success) {
-							console.log(r);
-							alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
-						} else {
-							$('#disclaimerContainer').hide();
-							$('#submit-btn').hide();
-							$('#quotation-number').val(r.quotation_number);
-							var $container = $('#quotation');
-							loadQuotation($container, r);
-							$('.button-previous').prop('disabled', true);
-							$('.button-next').prop('disabled', true);
-						}
-					});
-
-				});
+					$('.regularDriversCls:last .name input').val(currentQuote.regularDriversName1);
+					$('.regularDriversCls:last .occupation select').val(currentQuote.regularDriversOccupation1);
+					//$('#regularDriversOccupation0').val(currentQuote.occupation);
+					$('.regularDriversCls:last .DateOfBirth input').val(currentQuote.regularDriversDateOfBirth1);
+					$('.regularDriversCls:last .DriversDL input').val(currentQuote.regularDriversDL1);
+					$('.regularDriversCls:last .DriversDLExpirationDate input').val(currentQuote.regularDriversDLExpirationDate1);
+					$('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue1);
+					$('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
+				}
+			}
 
 
 
 
-
-
-			});
 		});
 	</script>
 

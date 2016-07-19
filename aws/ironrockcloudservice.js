@@ -1,5 +1,9 @@
 // Class definition 
 var ironrockcloudservice = (function () {
+	//edited July 18, 2016 4:27pm
+	//fixed lambda error..
+	//edited July 18, 2016 10:14 am
+	//added misc..
 	'use strict';
 	/*jslint nomen: true */
 	//private properties and methods
@@ -38,6 +42,9 @@ var ironrockcloudservice = (function () {
 			console.log(_creds);
 		}
 	};
+
+
+
 
 	var _getAuth = function () {
 		var auth = {};
@@ -442,31 +449,49 @@ var ironrockcloudservice = (function () {
 			"auth": _getAuth()
 		};
 		var params = {
-			FunctionName: 'ironrockquote:2',
+			FunctionName: 'ironrockquote:3',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
 		_lambda.invoke(params, function (err, results) {
 			if (err)
 				callback(err);
-			else
-				callback(null, results.Payload);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload == null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
 		});
 	};
 
 
 	//search for quote
 	ironrockcloudservice.prototype.searchQuotes = function (data, callback) {
+		var payload = JSON.parse(data);
+		payload.auth = _getAuth();
 		var params = {
-			FunctionName: 'ironrockQuoteSearch:1',
-			Payload: data
+			FunctionName: 'ironrockQuoteSearch',
+			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
 		_lambda.invoke(params, function (err, results) {
 			if (err)
 				callback(err);
-			else
-				callback(null, results.Payload);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload === null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
 		});
 	};
 
@@ -481,8 +506,16 @@ var ironrockcloudservice = (function () {
 		_lambda.invoke(params, function (err, results) {
 			if (err)
 				callback(err);
-			else
-				callback(null, results.Payload);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload === null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
 		});
 	};
 
@@ -500,8 +533,16 @@ var ironrockcloudservice = (function () {
 		_lambda.invoke(params, function (err, results) {
 			if (err)
 				callback(err);
-			else
-				callback(null, results.Payload);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload === null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
 		});
 	};
 
@@ -520,10 +561,42 @@ var ironrockcloudservice = (function () {
 		_lambda.invoke(params, function (err, results) {
 			if (err)
 				callback(err);
-			else
-				callback(null, results.Payload);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload === null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
 		});
 	};
+
+	//get misc
+	ironrockcloudservice.prototype.getMiscOptions = function (callback) {
+		var params = {
+			FunctionName: 'ironrock-misc:2',
+			Payload: null
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			if (err)
+				callback(err);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (payload === null) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, results.Payload);
+				}
+			}
+		});
+	};
+
 
 	return ironrockcloudservice;
 }());

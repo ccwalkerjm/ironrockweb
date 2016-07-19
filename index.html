@@ -93,12 +93,11 @@
     <script src="/aws/aws-sdk-2.3.19.min.js"></script>
     <!--Iron Rock Custom Library-->
     <script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#sidebar').load("/sideBarAnonymous.html", function () {
-                App.init();
-            });
+			doPrimaryFunctions();
         });
     </script>
 

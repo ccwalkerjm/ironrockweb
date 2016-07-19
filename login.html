@@ -66,7 +66,7 @@
 				<h1>Login</h1>
 				<div class="row" id="login-block">
 					<div class="col-lg-6">
-						<div id="status"></div>
+						<div class="message"></div>
 						<!--                        <h2>Login</h2>-->
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
@@ -117,46 +117,13 @@
 	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
 	<!--Iron Rock Custom Library-->
 	<script src="/aws/ironrockcloudservice.js"></script>
+	<script src="/aws/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAnonymous.html", function () {
-				App.init();
-			});
-			//display message
-			function display(message, err) {
-				if (err) {
-					$('#status').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-					return;
-				}
-				$('#status').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
-			}
-			var ir = new ironrockcloudservice();
-			///login
-			$("#login_submit").click(function (e) {
-				ir.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
-					if (err) {
-						display(err.message, true);
-					} else {
-						var username = obj.getUsername();
-						ir.getUser(username, function (err, data) {
-							if (err) {
-								display(err.message, true);
-							} else {
-								localStorage.setItem("ironrockUserProfile", data.Payload);
-								location.assign('/dashboard.html');
-							}
-						});
-						//location.reload();
-					}
-				});
-			});
-
+			doPrimaryFunctions();
 		});
 	</script>
-
-
-
 
 </body>
 

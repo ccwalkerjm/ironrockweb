@@ -57,7 +57,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="clearfix" />
+	<!--	<div class="clearfix" />-->
 
 
 	<div class="page-container">
@@ -77,11 +77,11 @@
 							</div>
 						</div>
 					</section>
-					<section id="wizard" style="display:none">
+					<section id="quote-section" style="display:none">
 						<div class="page-header">
 						</div>
 
-						<div id="rootwizard">
+						<div id="quote-wizard">
 
 							<div class="navbar">
 								<div class="navbar-inner">
@@ -155,6 +155,9 @@
 		</div>
 	</div>
 
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
 
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
@@ -297,240 +300,30 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				App.init();
-				var ir = new ironrockcloudservice(function (err, obj) {
-					var username = obj.getUsername();
-					if (username) {
-						$('#sidebar #globalUsername').text(username);
-					} else {
-						location.assign('/login.html');
+			doPrimaryFunctions();
+			////////////////////////////////////
+
+			$('[data-toggle="tooltip"]').tooltip();
+
+
+			$('.insuranceSelection').click(function (e) {
+				var $this = $(this);
+				var insuranceType = $this.attr('id');
+				setQuoteWizard(insuranceType, function (err) {
+					if (err) {
+						bootbox.alert(err.message);
+						return;
 					}
+					$('.tab-content').find('#insuranceType').val(insuranceType);
+					$('#introduction').hide();
+					$('#quote-section').show();
 				});
-
-
-				$('#sidebar').on('click', '#logout', function () {
-						ir.signoff();
-						location.assign('/index.html');
-					})
-					////////////////////////////////////
-				$body = $("body");
-
-				$(document).on({
-					ajaxStart: function () {
-						$body.addClass("loading");
-					},
-					ajaxStop: function () {
-						$body.removeClass("loading");
-					}
-				});
-
-				$('[data-toggle="tooltip"]').tooltip();
-
-
-				$('.insuranceSelection').click(function (e) {
-					var $this = $(this);
-					var insuranceType = $this.attr('id');
-					var wizardTabs = $('#wizard-tabs');
-					var mainSectionUrl;
-					if (insuranceType == 'motor') {
-						$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
-						mainSectionUrl = "motorVehicleSection.html";
-						wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
-						wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
-						wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
-					} else {
-						$('.page-header').html('<h1>Create Home Property Proposal</h1>');
-						mainSectionUrl = "homePropertySection.html";
-						wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
-						wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
-						wizardTabs.append('<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>');
-						wizardTabs.append('<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>');
-					}
-					wizardTabs.append('<li><a href="#final-page" data-toggle="tab">Complete</a></li>');
-
-					$.get(mainSectionUrl, function (r) {
-						$('.tab-content').prepend(r);
-						InsertPersonalSection(function () {
-							LoadSettings(insuranceType);
-							$('.tab-content').find('#insuranceType').val(insuranceType);
-							$('#introduction').hide();
-							$('#wizard').show();
-						});
-					});
-
-				})
-
-				//load personal sections
-				function InsertPersonalSection(callback) {
-					$.get('personalsection.html', function (r) {
-						$('.tab-content').prepend(r);
-						callback();
-					});
-				}
-
-				//do wizard and load settings
-				function LoadSettings(insurancetype) {
-					doWizard(insurancetype);
-					//     $('#rootwizard').bootstrapWizard();
-					var prelimData = localStorage.getItem(_IronRockPreliminaryData);
-					if (prelimData && prelimData != "null") {
-						doMiscellaneous();
-						doPrimaryFunctions();
-						loadCountriesOptions();
-						loadOccupations(insurancetype == "motor");
-						if (insurancetype != "motor") loadRoofWallsTypes();
-					} else {
-						var serverUrl = _apiBaseUrl + "/misc";
-						$.ajax({
-							type: 'GET',
-							//contentType: 'application/json',
-							url: serverUrl,
-							dataType: 'json',
-							success: function (r) {
-								var jsondata = ConvertToJson(r);
-								if (jsondata.success == undefined) jsondata.success = true;
-								if (jsondata.success) {
-									localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
-									doMiscellaneous();
-									doPrimaryFunctions();
-									loadCountriesOptions();
-									loadOccupations(insurancetype == "motor");
-									if (insurancetype != "motor") loadRoofWallsTypes();
-								} else {
-									alert(jsondata.error_message);
-								}
-							},
-							error: function (err) {
-								alert(err);
-							}
-						});
-					}
-				}
-
-
-				var $validator = $(".ProposalForm").validate();
-
-				function doWizard(insurancetype) {
-					$('#rootwizard').bootstrapWizard({
-						'nextSelector': '.button-next',
-						'previousSelector': '.button-previous',
-						onNext: function (tab, navigation, index) {
-							var $valid = true;
-							switch (index) {
-							case 1:
-								$valid = $("#personal-main-page .ProposalForm").valid();
-								break;
-							case 2:
-								$valid = $("#personal-contact-page .ProposalForm").valid();
-								break;
-							case 3:
-								$valid = $("#personal-employer-details-page .ProposalForm").valid();
-								break;
-							}
-							if (insurancetype == "motor") {
-								switch (index) {
-								case 4:
-									$valid = $("#vehicle-particulars-page .ProposalForm").valid();
-									if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0) $valid = false;
-									break;
-								case 5:
-									//$valid = $("#vehicle-insurance-coverage-page .ProposalForm").valid();
-									break;
-								case 6:
-									$valid = $("#vehicle-driver-details-page .ProposalForm").valid();
-									break;
-								case 7:
-									//$valid = $("#vehicle-accidents-page .ProposalForm").valid();
-									break;
-								case 8:
-									//$valid = $("#vehicle-medical-history-page .ProposalForm").valid();
-									break;
-								}
-							} else {
-								switch (index) {
-								case 4:
-									$valid = $("#home-particulars-page .ProposalForm").valid();
-									break;
-								case 5:
-									$valid = $("#home-particulars-continued-page .ProposalForm").valid();
-									break;
-								case 6:
-									$valid = $("#home-property-details-page .ProposalForm").valid();
-									break;
-								case 7:
-									$valid = $("#home-all-risk-insurance-page .ProposalForm").valid();
-									break;
-								}
-							}
-							if (!$valid) {
-								//$validator.focusInvalid();
-								$('#warning').fadeIn().delay(5000).fadeOut();
-								window.scrollTo(0, 0);
-								return false;
-							}
-
-						},
-						onTabClick: function () {
-							return false;
-						},
-						onTabShow: function (tab, navigation, index) {
-							var $total = navigation.find('li').length;
-							var $current = index + 1;
-							var $percent = ($current / $total) * 100;
-							$('#rootwizard .progress-bar').css({
-								width: $percent + '%'
-							});
-						}
-					});
-				}
-
-
-				$('#acceptDisclaimer').change(function () {
-					$('#submit-btn').prop("disabled", !$(this).is(':checked'));
-				});
-
-				$('#reset-btn').click(function () {
-					location.reload();
-				});
-
-				////submit
-				$('#submit-btn').click(function () {
-					//get signature data       
-					//var formData = $('form').serialize();
-					var jsonForm = $('form').serializeObject();
-					var formData = JSON.stringify(jsonForm);
-					ir.submitQuote(formData, function (err, r) {
-						if (err) {
-							alert("error: " + err.statusText);
-							return;
-						}
-						var r = ConvertToJson(r);
-						if (r.errorMessage) {
-							alert("error: " + r.errorMessage);
-							return;
-						}
-						if (!r.success) {
-							console.log(r);
-							alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
-						} else {
-							$('#disclaimerContainer').hide();
-							$('#submit-btn').hide();
-							$('#quotation-number').val(r.quotation_number);
-							var $container = $('#quotation');
-							loadQuotation($container, r);
-							$('.button-previous').prop('disabled', true);
-							$('.button-next').prop('disabled', true);
-						}
-					});
-
-				});
-				/////////////////////////////////////
-
-
 			});
+
+
+
+			/////////////////////////////////////
+
 
 		});
 	</script>
