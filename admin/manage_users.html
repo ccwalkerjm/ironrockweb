@@ -268,7 +268,7 @@
 			//save new user
 			//username, password, email, phone_number, given_name, family_name, gender
 			$("#create-user").click(function (e) {
-				var password = generatePassword();
+				var password = g_ironrock_service.generateRandomCode();
 				g_ironrock_service.signup($('#username').val(),
 					password,
 					$('#email').val(),
@@ -312,47 +312,7 @@
 				});
 			}
 
-			var generatePassword = function (numLc, numUc, numDigits, numSpecial) {
-				numLc = numLc || 4;
-				numUc = numUc || 4;
-				numDigits = numDigits || 4;
-				numSpecial = numSpecial || 2;
-
-
-				var lcLetters = 'abcdefghijklmnopqrstuvwxyz';
-				var ucLetters = lcLetters.toUpperCase();
-				var numbers = '0123456789';
-				var special = '!?=#*$@+-.';
-
-				var getRand = function (values) {
-					return values.charAt(Math.floor(Math.random() * values.length));
-				};
-
-				//+ Jonas Raoni Soares Silva
-				//@ http://jsfromhell.com/array/shuffle [v1.0]
-				function shuffle(o) { //v1.0
-					for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-					return o;
-				}
-
-				var pass = [];
-				for (var i = 0; i < numLc; ++i) {
-					pass.push(getRand(lcLetters));
-				}
-				for (var i = 0; i < numUc; ++i) {
-					pass.push(getRand(ucLetters));
-				}
-				for (var i = 0; i < numDigits; ++i) {
-					pass.push(getRand(numbers));
-				}
-				for (var i = 0; i < numSpecial; ++i) {
-					pass.push(getRand(special));
-				}
-
-				return shuffle(pass).join('');
-			}
-
-
+			
 		});
 	</script>
 

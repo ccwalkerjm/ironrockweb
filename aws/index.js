@@ -507,7 +507,14 @@ function GetDriverLicense($this, id, callback) {
     return returnVal;
 }*/
 
-
+//display message
+	function display(message, err){
+		if (err) {
+			$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+			return;
+		}
+		$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+	}
 
 //$(document).ready(function (e) {
 function doPrimaryFunctions(callback) {
@@ -553,17 +560,7 @@ function doPrimaryFunctions(callback) {
 			}
 		}
 	});
-
-	//display message
-	function display(message, err) {
-		if (err) {
-			$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-			return;
-		}
-		$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
-	}
-
-
+	
 	function correctLinks() {
 		var profile = localStorage.getItem("ironrockUserProfile");
 		var NotAdmin = true;

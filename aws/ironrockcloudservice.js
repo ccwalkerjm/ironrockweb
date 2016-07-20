@@ -463,7 +463,7 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
@@ -489,7 +489,7 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
@@ -513,7 +513,7 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
@@ -540,7 +540,7 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
@@ -568,7 +568,7 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
@@ -591,11 +591,192 @@ var ironrockcloudservice = (function () {
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
 				} else {
-					callback(null, results.Payload);
+					callback(null, payload);
 				}
 			}
 		});
 	};
+
+
+
+
+	//get upload policy
+	ironrockcloudservice.prototype.getUploadPolicy = function (quoteNo, callback) {
+		var payload = {
+			"quoteNo": quoteNo,
+			"auth": _getAuth()
+		};
+		var params = {
+			FunctionName: 'ironrockS3uploadPolicy',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			if (err)
+				callback(err);
+			else {
+				var policy = JSON.parse(results.Payload);
+				if (policy === null) {
+					callback();
+				} else if (policy.errorMessage) {
+					callback(new Error(policy.errorMessage));
+				} else {
+					callback(null, policy);
+				}
+			}
+		});
+	};
+
+
+	//upload document to S#
+	ironrockcloudservice.prototype.uploadToS3 = function (quoteNo, file, name, callback) {
+		if (file.type != 'application/pdf') {
+			callback(new Error("Only PDF documents allowed"));
+			return;
+		}
+		var newFilename = this.generateRandomCode(8, 4);
+		newFilename = newFilename.replace(/[^A-Z0-9]/ig, "_");
+		var profile = JSON.parse(localStorage.getItem("ironrockUserProfile"));
+		var params = {
+			Key: 'quotes/' + newFilename + ".pdf",
+			ContentType: file.type,
+			Body: file,
+			ACL: 'private',
+			Metadata: {
+				"quoteNo": quoteNo,
+				"broker": profile.broker,
+				"agent": profile.username,
+				"document_name": name,
+				"original_filename": file.name,
+			},
+		};
+		var _s3 = new AWS.S3({
+			params: {
+				Bucket: 'ironrockdocuments.courserv.com'
+			}
+		});
+		_s3.putObject(params, function (err, results) {
+			callback(err);
+		});
+	};
+
+
+	//get object in S3
+	ironrockcloudservice.prototype.getPdfDocument = function (key, callback) {
+		var params = {
+			Key: key
+		};
+		var _s3 = new AWS.S3({
+			params: {
+				Bucket: 'ironrockdocuments.courserv.com'
+			}
+		});
+		_s3.getObject(params, function (err, results) {
+			if (err) {
+				callback(err);
+
+			} else {
+				if (results.Body) {
+					callback(err, results.Body);
+				} else {
+					callback();
+				}
+			}
+		});
+	};
+
+
+
+	//get document list
+	ironrockcloudservice.prototype.getDocuments = function (quoteNo, callback) {
+		var dynamodb = new AWS.DynamoDB({
+			apiVersion: '2012-08-10'
+		});
+		dynamodb.query({
+			TableName: 'ironRockS3Documents',
+			KeyConditions: {
+				"quoteNo": {
+					"AttributeValueList": [
+						{
+							"N": quoteNo.toString()
+                            }
+                            ],
+					"ComparisonOperator": "EQ"
+				}
+			},
+		}, function (err, data) {
+			if (err) {
+				console.log(err);
+				callback(err);
+			} else {
+				var ReturnedList = [];
+
+				for (var i = 0; i < data.Items.length; i++) {
+					var item = {};
+					item.quoteNo = data.Items[i].quoteNo.N;
+					item.key = data.Items[i].key.S;
+					item.name = data.Items[i].name.S;
+					item.fileName = data.Items[i].originalFilename.S;
+					item.key = data.Items[i].key.S;
+					ReturnedList.push(item);
+				}
+				callback(null, ReturnedList);
+			}
+		});
+
+	};
+
+
+
+
+
+
+
+
+
+	//generate random code
+	ironrockcloudservice.prototype.generateRandomCode = function (numLc, numUc, numDigits, numSpecial) {
+		numLc = numLc || 4;
+		numUc = numUc || 4;
+		numDigits = numDigits || 4;
+		numSpecial = numSpecial || 2;
+
+
+		var lcLetters = 'abcdefghijklmnopqrstuvwxyz';
+		var ucLetters = lcLetters.toUpperCase();
+		var numbers = '0123456789';
+		var special = '!?=#*$@+-.';
+
+		var getRand = function (values) {
+			return values.charAt(Math.floor(Math.random() * values.length));
+		};
+
+		//+ Jonas Raoni Soares Silva
+		//@ http://jsfromhell.com/array/shuffle [v1.0]
+		function shuffle(o) { //v1.0
+			for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+			return o;
+		}
+
+		var pass = [];
+		for (var i = 0; i < numLc; ++i) {
+			pass.push(getRand(lcLetters));
+		}
+		for (var i = 0; i < numUc; ++i) {
+			pass.push(getRand(ucLetters));
+		}
+		for (var i = 0; i < numDigits; ++i) {
+			pass.push(getRand(numbers));
+		}
+		for (var i = 0; i < numSpecial; ++i) {
+			pass.push(getRand(special));
+		}
+
+		return shuffle(pass).join('');
+	}
+
+
+
 
 
 	return ironrockcloudservice;

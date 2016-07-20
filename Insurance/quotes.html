@@ -139,7 +139,7 @@
 								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
 							</button>
 
-							<button type="button" id="upload" class="btn btn-default" aria-label="Left Align" title="Upload Documents">
+							<button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
 								<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -351,6 +351,36 @@
 	</div>
 
 
+	<!--Upload Modal -->
+	<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="uploadModalLabel">Upload Documents</h4>
+				</div>
+				<div class="modal-body">
+					<div class="message"></div>
+					<div class="form-group">
+						<label for="DocumentName">Document Name:</label>
+						<input type="text" class="form-control" id="DocumentName">
+					</div>
+
+					<input type="file" name="file" style="visibility:hidden;" id="document-chooser" />
+					<label>Choose A File</label>
+					<div class="input-append">
+						<span id="subfile" class="form-control"></span>
+						<a class="btn btn-default" onclick="$('#document-chooser').click();">Browse</a>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="upload-document">Upload</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="/Scripts/bootbox.js"></script>
 	<script src="/Scripts/jquery.validate.js"></script>
 	<script src="/Scripts/jquery.bootstrap.wizard.js"></script>
@@ -429,16 +459,47 @@
 
 					var dlTable = $('#quotesTable tbody').html('');
 					$.each(quotes, function (idx, r) {
-						var data = r.request; // JSON.parse(r.request);
+						var data = r.request; // ConvertToJson(r.request);
 						dlTable.append('<tr><td>' + r.id + '</td><td>' +
 							data.FirstName + '</td><td>' +
 							data.applicantSurname + '</td><td>' +
 							data.insuranceType + '</td><td>' +
-							r.broker + '</td><td><button class="btn btn-link select" id="' + r.id + '">Select</button></td></tr>');
+							r.broker + '</td><td><button class="btn btn-link select" id="' +
+							r.id + '">Select</button></td></tr>');
 					})
 				});
 
 			});
+
+			$('#document-chooser').change(function () {
+				$('#subfile').text($(this).val());
+			});
+
+			$('#getUploadModal').click(function () {
+				$('#uploadModal').modal('show');
+			});
+
+			$('#uploadModal').on('hidden.bs.modal', function () {
+				$('#DocumentName').val('');
+				$('#subfile').text('');
+			})
+
+			$('#upload-document').click(function () {
+				var fileChooser = document.getElementById('document-chooser');
+				var name = document.getElementById('DocumentName').value;
+				var file = fileChooser.files[0];
+				if (file) {
+					g_ironrock_service.uploadToS3(currentQuote.applicantQuoteNo, file, name, function (err) {
+						if (err) {
+							display(err.message, err);
+						} else {
+							display('Document Uploaded');
+							$('#DocumentName').val('');
+							$('#subfile').text('');
+						}
+					});
+				}
+			})
 
 
 
@@ -477,7 +538,7 @@
 						return;
 					}
 
-					currentQuote = JSON.parse(resp);
+					currentQuote = ConvertToJson(resp);
 					currentQuote.applicantQuoteNo = id;
 					//DisplayQuote();
 					setQuoteWizard(currentQuote.insuranceType, function (err) {
@@ -489,6 +550,7 @@
 							if (err) {
 								alert(err.message);
 							} else {
+								DisplayHeader();
 								//populate images and canvases
 								fillLogoCanvas();
 								fillSignatureCanvas();
@@ -501,35 +563,21 @@
 			});
 
 
-			/*function DisplayQuote() { //variables var mainSectionUrl; var DisplayQuoteNo = '
-<h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>'; //load wizard var wizardTabs = $('#wizard-tabs'); wizardTabs.html('
-<li><a href="#personal-main-page" data-toggle="tab">Personal</a></li>' + '
-<li><a href="#personal-contact-page" data-toggle="tab">Contact</a></li>' + '
-<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a></li>'); if (currentQuote.insuranceType == 'motor') { $('.page-header').html('
-<h1>Motor Vehicle Proposal</h1>' + DisplayQuoteNo); mainSectionUrl = "motorVehicleSection.html"; wizardTabs.append('
-<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>'); wizardTabs.append('
-<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>'); wizardTabs.append('
-<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>'); wizardTabs.append('
-<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>'); wizardTabs.append('
-<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>'); } else { $('.page-header').html('
-<h1>Home Property Proposal</h1>' + DisplayQuoteNo); mainSectionUrl = "homePropertySection.html"; wizardTabs.append('
-<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>'); wizardTabs.append('
-<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>'); wizardTabs.append('
-<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>'); wizardTabs.append('
-<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>'); } wizardTabs.append('
-<li><a href="#final-page" data-toggle="tab">Complete</a></li>'); $.get(mainSectionUrl, function (r) { $('.tab-content').prepend(r); InsertPersonalSection(function () { LoadSettings(currentQuote.insuranceType); $('.tab-content').find('#insuranceType').val(currentQuote.insuranceType); //show quote wizard $('#wizard').show(); $('#quotes').hide(); }); }); //$('#introduction').hide(); }*/
+			function DisplayHeader() {
+				var DisplayQuoteNo = '<h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>';
+				if (currentQuote.insuranceType == 'motor') {
+					$('.page-header').html('<h1>Motor Vehicle Proposal</h1>' + DisplayQuoteNo);
 
-
-
-
-
-
+				} else {
+					$('.page-header').html('<h1>Home Property Proposal</h1>' + DisplayQuoteNo);
+				}
+			}
 
 
 			function populateQuote(callback) {
 				var licenseNo = currentQuote.applicantIDnumber;
 				if (currentQuote.egovDriversLicenseDetails) {
-					var driverLicenseJson = JSON.parse(currentQuote.egovDriversLicenseDetails);
+					var driverLicenseJson = ConvertToJson(currentQuote.egovDriversLicenseDetails);
 					populateApplicant(driverLicenseJson);
 					populateOtherItems();
 					callback();
@@ -592,6 +640,7 @@
 				$('#applicantAlias').val(currentQuote.applicantAlias);
 				$('#applicantNationality').val(currentQuote.applicantNationality);
 				$('#applicantIDType').val(currentQuote.applicantIDType);
+				$('#applicantQuoteNo').val(currentQuote.applicantQuoteNo);
 				$('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
 
 				//contact
