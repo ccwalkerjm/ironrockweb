@@ -588,6 +588,7 @@ function doPrimaryFunctions(callback) {
 			if (err) {
 				display(err.message, true);
 			} else {
+				obj.signoff();
 				obj.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
 					if (err) {
 						display(err.message, true);

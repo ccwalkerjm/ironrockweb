@@ -535,15 +535,11 @@
 					if (err) {
 						display(err.message, err);
 					} else {
-						try {
-							window.open("data:application/pdf;base64," + btoa(body));
-						} catch (err) {
-							var encodedBody = btoa(unescape(encodeURIComponent(body)));
-							bootbox.dialog({
-								title: "Click to Download Document",
-								message: '<a href="data:application/pdf;base64,' + encodedBody + '">Click to Download</a>'
-							});
-						}
+						var file = new Blob([body], {
+							type: 'application/pdf'
+						});
+						var fileURL = URL.createObjectURL(file);
+						window.open(fileURL);
 					}
 				});
 			})

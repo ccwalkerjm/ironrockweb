@@ -29,23 +29,18 @@ var ironrockcloudservice = (function () {
 	AWSCognito.config.region = AWS_REGION;
 	AWSCognito.config.credentials = _creds;
 
+	AWSCognito.config.update({
+		accessKeyId: 'anything',
+		secretAccessKey: 'anything'
+	});
 
 	var _userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(_poolData);
 	var _cognitoUser = _userPool.getCurrentUser();
 
-	//get session details
-	var _updateSession = function (session) {
-		if (session && session.isValid()) {
-			_creds.params.Logins = {};
-			_creds.params.Logins[PROVIDER_NAME] = session.getIdToken().getJwtToken();
-			_creds.expired = true;
-			console.log(_creds);
-		}
-	};
 
 
-
-
+	//private methods
+	//Get auth details for lambda authentication
 	var _getAuth = function () {
 		var auth = {};
 		if (_cognitoUser) {
@@ -65,6 +60,17 @@ var ironrockcloudservice = (function () {
 		return auth;
 	};
 
+	//get session details	
+	var _updateSession = function (session) {
+		if (session && session.isValid()) {
+			_creds.params.Logins = {};
+			_creds.params.Logins[PROVIDER_NAME] = session.getIdToken().getJwtToken();
+			_creds.expired = true;
+			console.log(_creds);
+		}
+	};
+
+
 	//constructor
 	function ironrockcloudservice(callback) {
 
@@ -72,6 +78,7 @@ var ironrockcloudservice = (function () {
 		//must run last.  will check if user is valid...
 		//this.init = function (callback) {
 		var $this = this;
+		_cognitoUser = _userPool.getCurrentUser();
 		if (_cognitoUser === null) {
 			if (callback && typeof callback == "function") {
 				callback(null, $this);
@@ -85,14 +92,26 @@ var ironrockcloudservice = (function () {
 				_cognitoUser = null;
 				callback(new Error('Account has been expired!. Please login again!')); //   null, $this);
 			} else {
+				/*AWS.config.credentials.get(function (err) {
+					if (err) {
+						console.log(err);
+						_cognitoUser.signOut();
+						_cognitoUser = null;
+						callback(new Error('Account has been expired!. Please login again!')); //   null, $this);
+					} else {*/
 				_updateSession(session);
 				if (callback && typeof callback == "function") {
 					callback(null, $this);
 				}
+				/*}
+				});*/
 			}
 		});
 	}
 
+
+
+	//public methods
 	ironrockcloudservice.prototype.setCredentials = function (callback) {
 		AWS.config.credentials.get(function (err) {
 			if (err) {
@@ -120,6 +139,7 @@ var ironrockcloudservice = (function () {
 	ironrockcloudservice.prototype.signoff = function () {
 		if (_cognitoUser !== null) {
 			_cognitoUser.signOut();
+			_cognitoUser = null;
 		}
 	};
 
@@ -212,6 +232,7 @@ var ironrockcloudservice = (function () {
 				}
 			},
 			onFailure: function (err) {
+				//_cognitoUser = null;
 				if (callback && typeof callback == "function") {
 					callback(err, $this);
 				}
@@ -241,6 +262,7 @@ var ironrockcloudservice = (function () {
 				callback(null, false, result);
 			},
 			onFailure: function (err) {
+				_cognitoUser = null;
 				callback(err);
 			},
 			inputVerificationCode() {
