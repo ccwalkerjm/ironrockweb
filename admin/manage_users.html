@@ -85,7 +85,7 @@
 								<tbody></tbody>
 							</table>
 
-							
+
 							<!-- Modal -->
 							<div id="userModal" class="modal fade" role="dialog">
 								<div class="modal-dialog">
@@ -166,7 +166,9 @@
 		</div>
 	</div>
 
-	<div class="loadingModal"><!-- Place at bottom of page --></div>
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
 			2016 &copy; Ironrock Insurance.
@@ -269,6 +271,7 @@
 			//username, password, email, phone_number, given_name, family_name, gender
 			$("#create-user").click(function (e) {
 				var password = g_ironrock_service.generateRandomCode();
+				password = password.replace(/[^A-Z]/ig, "");
 				g_ironrock_service.signup($('#username').val(),
 					password,
 					$('#email').val(),
@@ -312,7 +315,7 @@
 				});
 			}
 
-			
+
 		});
 	</script>
 

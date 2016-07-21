@@ -357,25 +357,40 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="uploadModalLabel">Upload Documents</h4>
+					<h4 class="modal-title" id="uploadModalLabel">Document List</h4>
 				</div>
 				<div class="modal-body">
 					<div class="message"></div>
+					<table class="table" id="documents">
+						<thead>
+							<tr>
+								<th>
+									Name
+								</th>
+								<th>
+									FileName
+								</th>
+								<th>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<hr/>
+					<h4>Upload Document</h4>
 					<div class="form-group">
 						<label for="DocumentName">Document Name:</label>
 						<input type="text" class="form-control" id="DocumentName">
 					</div>
-
-					<input type="file" name="file" style="visibility:hidden;" id="document-chooser" />
-					<label>Choose A File</label>
-					<div class="input-append">
-						<span id="subfile" class="form-control"></span>
-						<a class="btn btn-default" onclick="$('#document-chooser').click();">Browse</a>
+					<div class="form-group">
+						<input type="file" class="form-control" name="file" id="document-chooser" />
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" id="upload-document">Upload</button>
+					<button type="button" class="btn btn-info" id="refresh-document-list">Refresh</button>
 				</div>
 			</div>
 		</div>
@@ -471,9 +486,6 @@
 
 			});
 
-			$('#document-chooser').change(function () {
-				$('#subfile').text($(this).val());
-			});
 
 			$('#getUploadModal').click(function () {
 				$('#uploadModal').modal('show');
@@ -481,8 +493,12 @@
 
 			$('#uploadModal').on('hidden.bs.modal', function () {
 				$('#DocumentName').val('');
-				$('#subfile').text('');
-			})
+				$('#document-chooser').val('');
+			});
+
+			$('#refresh-document-list').click(function () {
+				listDocuments();
+			});
 
 			$('#upload-document').click(function () {
 				var fileChooser = document.getElementById('document-chooser');
@@ -495,10 +511,41 @@
 						} else {
 							display('Document Uploaded');
 							$('#DocumentName').val('');
-							$('#subfile').text('');
+							$('#document-chooser').val('');
+							listDocuments();
 						}
 					});
 				}
+			})
+
+			function listDocuments() {
+				g_ironrock_service.getDocumentList(currentQuote.applicantQuoteNo, function (err, documentList) {
+					var $tbody = $('#documents tbody').empty();
+					$.each(documentList, function (idx, item) {
+						$tbody.append('<tr><td>' + item.name + '</td>' +
+							'<td>' + item.fileName + '</td>' +
+							'<td><button type="button" class="btn btn-link documents-list" id="' + item.key + '">Select</button></td><tr>');
+					});
+				});
+			}
+
+			$('#documents').on('click', '.documents-list', function (e) {
+				var key = e.target.id;
+				g_ironrock_service.getPdfDocument(key, function (err, body) {
+					if (err) {
+						display(err.message, err);
+					} else {
+						try {
+							window.open("data:application/pdf;base64," + btoa(body));
+						} catch (err) {
+							var encodedBody = btoa(unescape(encodeURIComponent(body)));
+							bootbox.dialog({
+								title: "Click to Download Document",
+								message: '<a href="data:application/pdf;base64,' + encodedBody + '">Click to Download</a>'
+							});
+						}
+					}
+				});
 			})
 
 
@@ -551,6 +598,7 @@
 								alert(err.message);
 							} else {
 								DisplayHeader();
+								listDocuments();
 								//populate images and canvases
 								fillLogoCanvas();
 								fillSignatureCanvas();

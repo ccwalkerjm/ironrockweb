@@ -72,7 +72,6 @@ var ironrockcloudservice = (function () {
 		//must run last.  will check if user is valid...
 		//this.init = function (callback) {
 		var $this = this;
-		//AWS.config.credentials.get(function (err) {
 		if (_cognitoUser === null) {
 			if (callback && typeof callback == "function") {
 				callback(null, $this);
@@ -94,8 +93,18 @@ var ironrockcloudservice = (function () {
 		});
 	}
 
+	ironrockcloudservice.prototype.setCredentials = function (callback) {
+		AWS.config.credentials.get(function (err) {
+			if (err) {
+				console.log(err);
+				callback(err);
+			} else {
+				console.log(_creds);
+				callback(null, _creds);
+			}
+		})
 
-
+	};
 
 	ironrockcloudservice.prototype.getUsername = function () {
 		if (_cognitoUser === null || _cognitoUser.signInUserSession === null) {
@@ -688,7 +697,7 @@ var ironrockcloudservice = (function () {
 
 
 	//get document list
-	ironrockcloudservice.prototype.getDocuments = function (quoteNo, callback) {
+	ironrockcloudservice.prototype.getDocumentList = function (quoteNo, callback) {
 		var dynamodb = new AWS.DynamoDB({
 			apiVersion: '2012-08-10'
 		});

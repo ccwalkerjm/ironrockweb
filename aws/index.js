@@ -70,7 +70,7 @@ function ConvertToJson(r) {
 
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
-function setQuoteWizard(insuranceType,callback) {
+function setQuoteWizard(insuranceType, callback) {
 	var wizardTabs = $('#wizard-tabs');
 	var mainSectionUrl;
 	if (insuranceType == 'motor') {
@@ -98,7 +98,7 @@ function setQuoteWizard(insuranceType,callback) {
 			$('.tab-content').prepend(pageData);
 			setBootstrapWizard(insuranceType);
 			LoadSettings(insuranceType, function (err) {
-				callback(err);				
+				callback(err);
 			});
 		});
 	});
@@ -508,13 +508,13 @@ function GetDriverLicense($this, id, callback) {
 }*/
 
 //display message
-	function display(message, err){
-		if (err) {
-			$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-			return;
-		}
-		$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+function display(message, err) {
+	if (err) {
+		$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
+		return;
 	}
+	$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+}
 
 //$(document).ready(function (e) {
 function doPrimaryFunctions(callback) {
@@ -551,7 +551,8 @@ function doPrimaryFunctions(callback) {
 		} else {
 			if (location.pathname == '/index.html' ||
 				location.pathname == '/login.html' ||
-				location.pathname == '/forgotPassword.html') {
+				location.pathname == '/forgotPassword.html' ||
+				location.pathname == '/confirmAccount.html') {
 				$('#sidebar').load("/sideBarAnonymous.html", function () {
 					App.init();
 				});
@@ -560,7 +561,7 @@ function doPrimaryFunctions(callback) {
 			}
 		}
 	});
-	
+
 	function correctLinks() {
 		var profile = localStorage.getItem("ironrockUserProfile");
 		var NotAdmin = true;
