@@ -71,32 +71,73 @@ function ConvertToJson(r) {
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
-	var wizardTabs = $('#wizard-tabs');
+	var wizardTabs = $('.stepwizard-row');
 	var mainSectionUrl;
+	var finalStepNo = 0;
 	if (insuranceType == 'motor') {
 		$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
 		mainSectionUrl = "motorVehicleSection.html";
-		wizardTabs.append('<li><a href="#vehicle-particulars-page" data-toggle="tab">Vehicle Particulars</a> </li>');
-		wizardTabs.append('<li><a href="#vehicle-insurance-coverage-page" data-toggle="tab">Coverage</a></li>');
-		wizardTabs.append('<li><a href="#vehicle-driver-details-page" data-toggle="tab">Driver Details</a></li>');
-		wizardTabs.append('<li><a href="#vehicle-accidents-page" data-toggle="tab">Accidents</a></li>');
-		wizardTabs.append('<li><a href="#vehicle-medical-history-page" data-toggle="tab">Conditions/Limits</a></li>');
+		var particularStep = $('<div/>').addClass('stepwizard-step');
+		particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle">4</a>');
+		particularStep.append('<p>Particulars</p>');
+		particularStep.appendTo(wizardTabs);
+		//
+		var coverageStep = $('<div/>').addClass('stepwizard-step');
+		coverageStep.append('<a href="#vehicle-insurance-coverage-page" type="button" class="btn btn-default btn-circle">5</a>');
+		coverageStep.append('<p>Coverage</p>');
+		coverageStep.appendTo(wizardTabs);
+		//
+		var driverStep = $('<div/>').addClass('stepwizard-step');
+		driverStep.append('<a href="#vehicle-driver-details-page" type="button" class="btn btn-default btn-circle">6</a>');
+		driverStep.append('<p>Driver</p>');
+		driverStep.appendTo(wizardTabs);
+		//
+		var accidentStep = $('<div/>').addClass('stepwizard-step');
+		accidentStep.append('<a href="#vehicle-accidents-page" type="button" class="btn btn-default btn-circle">7</a>');
+		accidentStep.append('<p>Accidents</p>');
+		accidentStep.appendTo(wizardTabs);
+		//
+		var conditionStep = $('<div/>').addClass('stepwizard-step');
+		conditionStep.append('<a href="#vehicle-medical-history-page" type="button" class="btn btn-default btn-circle">8</a>');
+		conditionStep.append('<p>Conditions</p>');
+		conditionStep.appendTo(wizardTabs);
+		finalStepNo = 9;
 	} else {
 		$('.page-header').html('<h1>Create Home Property Proposal</h1>');
 		mainSectionUrl = "homePropertySection.html";
-		wizardTabs.append('<li><a href="#home-particulars-page" data-toggle="tab">Home Particulars</a> </li>');
-		wizardTabs.append('<li><a href="#home-particulars-continued-page" data-toggle="tab">Continued</a></li>');
-		wizardTabs.append('<li><a href="#home-property-details-page" data-toggle="tab">Details</a></li>');
-		wizardTabs.append('<li><a href="#home-all-risk-insurance-page" data-toggle="tab">Risks</a></li>');
+		var homeParticularStep = $('<div/>').addClass('stepwizard-step');
+		homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle">4</a>');
+		homeParticularStep.append('<p>Particulars-1</p>');
+		homeParticularStep.appendTo(wizardTabs);
+		//
+		var homeParticular2Step = $('<div/>').addClass('stepwizard-step');
+		homeParticular2Step.append('<a href="#home-particulars-continued-page" type="button" class="btn btn-default btn-circle">5</a>');
+		homeParticular2Step.append('<p>Particulars-2</p>');
+		homeParticular2Step.appendTo(wizardTabs);
+		//
+		var detailStep = $('<div/>').addClass('stepwizard-step');
+		detailStep.append('<a href="#home-property-details-page" type="button" class="btn btn-default btn-circle">6</a>');
+		detailStep.append('<p>Details</p>');
+		detailStep.appendTo(wizardTabs);
+		//
+		var riskStep = $('<div/>').addClass('stepwizard-step');
+		riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle">7</a>');
+		riskStep.append('<p>Risks</p>');
+		riskStep.appendTo(wizardTabs);
+		finalStepNo = 8;
 	}
-	wizardTabs.append('<li><a href="#final-page" data-toggle="tab">Complete</a></li>');
+	var completeStep = $('<div/>').addClass('stepwizard-step');
+	completeStep.append('<a href="#final-page" type="button" class="btn btn-default btn-circle">' + finalStepNo + '</a>');
+	completeStep.append('<p>Final</p>');
+	completeStep.appendTo(wizardTabs);
 
 	$.get(mainSectionUrl, function (pageData) {
-		$('.tab-content').prepend(pageData);
+		$('#pages').prepend(pageData);
 
 		$.get('personalsection.html', function (pageData) {
-			$('.tab-content').prepend(pageData);
-			setBootstrapWizard(insuranceType);
+			$('#pages').prepend(pageData);
+			runWizard();
+			//setBootstrapWizard(insuranceType);
 			LoadSettings(insuranceType, function (err) {
 				callback(err);
 			});
@@ -141,6 +182,60 @@ function LoadSettings(insuranceType, callback) {
 		});
 	}
 }
+
+function runWizard() {
+	var navListItems = $('div.setup-panel div a'),
+		allWells = $('.setup-content'),
+		allNextBtn = $('.nextBtn'),
+		allPrevBtn = $('.prevBtn');
+
+	allWells.hide();
+
+	navListItems.click(function (e) {
+		e.preventDefault();
+		var $target = $($(this).attr('href')),
+			$item = $(this);
+
+		if (!$item.hasClass('disabled')) {
+			navListItems.removeClass('btn-primary').addClass('btn-default');
+			$item.addClass('btn-primary');
+			allWells.hide();
+			$target.show();
+			$target.find('input:eq(0)').focus();
+		}
+	});
+
+	allNextBtn.click(function () {
+		var curStep = $(this).closest(".setup-content"),
+			curStepBtn = curStep.attr("id"),
+			nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+			curInputs = curStep.find("input[type='text'],input[type='url']"),
+			isValid = true;
+
+		$(".form-group").removeClass("has-error");
+		for (var i = 0; i < curInputs.length; i++) {
+			if (!curInputs[i].validity.valid) {
+				isValid = false;
+				$(curInputs[i]).closest(".form-group").addClass("has-error");
+			}
+		}
+
+		if (isValid)
+			nextStepWizard.removeAttr('disabled').trigger('click');
+	});
+
+	allPrevBtn.click(function () {
+		var curStep = $(this).closest(".setup-content"),
+			curStepBtn = curStep.attr("id"),
+			prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
+
+		$(".form-group").removeClass("has-error");
+		prevStepWizard.removeAttr('disabled').trigger('click');
+	});
+
+	$('div.setup-panel div a.btn-primary').trigger('click');
+}
+
 
 
 
@@ -518,12 +613,10 @@ function display(message, err) {
 
 //$(document).ready(function (e) {
 function doPrimaryFunctions(callback) {
+	//new wizard  july 21, 2016
 
 	///////////////////admin functions///////////////////////////////////////
 	var $body = $("body");
-
-
-
 	$(document).on({
 		ajaxStart: function () {
 			$body.addClass("loading");
