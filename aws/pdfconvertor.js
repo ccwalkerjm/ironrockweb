@@ -8,6 +8,8 @@ const startingYPoint = 20;
 const startingYFirstPagePoint = 50;
 
 function CreatePDF(resp) {
+	console.log(resp);
+
 	doc = new jsPDF();
 	doc.setFontSize(12);
 	if (resp.insuranceType === 'motor') {
@@ -68,8 +70,8 @@ function CreatePDF(resp) {
 
 	doc.setFontType("italic");
 	doc.text(50, 80, resp.applicantSurname);
-	/*doc.text(50, 85, resp.applicantFirstName);
-	doc.text(50, 90, resp.applicantMiddleName);*/
+	doc.text(50, 85, resp.applicantFirstName);
+	doc.text(50, 90, resp.applicantMiddleName);
 	doc.text(50, 95, resp.applicantTitle);
 	doc.text(50, 100, resp.applicantOccupation);
 	doc.text(150, 80, resp.applicantMothersMaidenName);

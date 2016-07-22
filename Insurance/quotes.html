@@ -63,162 +63,91 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<div class='container'>
-					<section id="quotes">
-						<h1>Quotes</h1>
-						<div class="row">
-							<div class="col-md-4">
-								<h2>Quote Search</h2>
-								<form role="form">
-									<div class="form-group">
-										<label for="quoteNo">Quote No:</label>
-										<input type="number" class="form-control" id="quoteNo">
-									</div>
-									<div class="form-group">
-										<label for="ident">ID No:</label>
-										<input type="number" class="form-control" id="ident">
-									</div>
-									<div class="form-group">
-										<label for="firstname">First Name:</label>
-										<input type="text" class="form-control" id="firstname">
-									</div>
-									<div class="form-group">
-										<label for="lastname">Last Name:</label>
-										<input type="text" class="form-control" id="lastname">
-									</div>
-									<div class="form-group">
-										<label for="dateFr">Date From:</label>
-										<input type="date" class="form-control" id="dateFr">
-									</div>
-									<div class="form-group">
-										<label for="dateTo">Date To:</label>
-										<input type="date" class="form-control" id="dateTo">
-									</div>
-									<div class="form-group">
-										<label for="insuranceType">Type:</label>
-										<select class="form-control" id="insuranceType">
-											<option value="">All Types</option>
-											<option value="motor">Motor Vehicle</option>
-											<option value="property">Home Property</option>
-										</select>
-									</div>
-									<button type="button" class="btn btn-default" id="doSearch">Submit</button>
-								</form>
-							</div>
-							<div class="col-md-4">
-								<h2>Quotes</h2>
-								<table class="table" id="quotesTable">
-									<thead>
-										<tr>
-											<td>Quote Number</td>
-											<td>First Name</td>
-											<td>Last Name</td>
-											<td>Type</td>
-											<td>Broker</td>
-											<td></td>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
-							</div>
-						</div>
-					</section>
-					<section id="quote-section" style="display:none">
-						<div class="page-header">
-						</div>
-						<div class="btn-group">
-							<button type="button" id="returntoQuotes" class="btn btn-default" aria-label="Left Align" title="Return to Quotes">
-								<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-							</button>
 
-							<button type="button" id="getPDF" class="btn btn-default" aria-label="Left Align" title="Generate PDF Document">
-								<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-							</button>
-
-							<button type="button" id="convert" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
-								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-							</button>
-
-							<button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
-								<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-							</button>
-						</div>
-						<hr/>
-						<div id="quote-wizard">
-							<div class="navbar">
-								<div class="navbar-inner">
-									<div class="container">
-										<ul id="wizard-tabs">
-											<li><a href="#personal-main-page" data-toggle="tab">Personal</a>
-											</li>
-											<li><a href="#personal-contact-page" data-toggle="tab">Contact</a>
-											</li>
-											<li><a href="#personal-employer-details-page" data-toggle="tab">Employee</a>
-											</li>
-										</ul>
-									</div>
+				<div id="quotes" class='container'>
+					<h1>Quotes</h1>
+					<div class="row">
+						<div class="col-md-4">
+							<h2>Quote Search</h2>
+							<form role="form">
+								<div class="form-group">
+									<label for="quoteNo">Quote No:</label>
+									<input type="number" class="form-control" id="quoteNo">
 								</div>
-							</div>
-							<div id="bar" class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-							</div>
-							<div class="alert alert-warning" id="warning" style="display:none">
-								<strong>Warning!</strong> The Page has invalid entries.
-							</div>
-
-							<div class="tab-content">
-
-								<div class="tab-pane" id="final-page">
-									<div id="disclaimerContainer">
-										<!--										<img id="image" src="/images/IronRockLogoSmall.png" width="109" height="30" />-->
-										<canvas id="canvas-logo" style="display:none"></canvas>
-										<br/>
-										<canvas id="canvas-signature" style="display:none"></canvas>
-										<div id="svg-signature">
-										</div>
-
-										<h4>Disclaimer:</h4>
-										<p>
-											The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
-										</p>
-
-										<div class="form-inline">
-											<div class="checkbox">
-												<label>
-													Do you accept the Disclaimer?
-													<input class="form-control" type="checkbox" id="acceptDisclaimer">
-												</label>
-											</div>
-										</div>
-									</div>
-									<div>
-										<button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
-										<button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
-									</div>
-									<input type="hidden" id="quotation-number" />
-									<div id="quotation"></div>
+								<div class="form-group">
+									<label for="ident">ID No:</label>
+									<input type="number" class="form-control" id="ident">
 								</div>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-
-								<!--navigations -->
-								<div style="float:right">
-									<input type='button' class='btn btn-primary button-next btn-lg' name='next' value='Next' />
+								<div class="form-group">
+									<label for="firstname">First Name:</label>
+									<input type="text" class="form-control" id="firstname">
 								</div>
-								<div style="float:left">
-									<input type='button' class='btn btn-primary button-previous btn-lg' name='previous' value='Previous' />
+								<div class="form-group">
+									<label for="lastname">Last Name:</label>
+									<input type="text" class="form-control" id="lastname">
 								</div>
-							</div>
-
+								<div class="form-group">
+									<label for="dateFr">Date From:</label>
+									<input type="date" class="form-control" id="dateFr">
+								</div>
+								<div class="form-group">
+									<label for="dateTo">Date To:</label>
+									<input type="date" class="form-control" id="dateTo">
+								</div>
+								<div class="form-group">
+									<label for="insuranceType">Type:</label>
+									<select class="form-control" id="insuranceType">
+										<option value="">All Types</option>
+										<option value="motor">Motor Vehicle</option>
+										<option value="property">Home Property</option>
+									</select>
+								</div>
+								<button type="button" class="btn btn-default" id="doSearch">Submit</button>
+							</form>
 						</div>
+						<div class="col-md-4">
+							<h2>Quotes</h2>
+							<table class="table" id="quotesTable">
+								<thead>
+									<tr>
+										<td>Quote Number</td>
+										<td>First Name</td>
+										<td>Last Name</td>
+										<td>Type</td>
+										<td>Broker</td>
+										<td></td>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-					</section>
+				<div class="container" id="quoteContainer" style="display:none">
+
+					<div class="page-header">
+					</div>
+					<div class="btn-group">
+						<button type="button" id="returntoQuotes" class="btn btn-default" aria-label="Left Align" title="Return to Quotes">
+							<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+						</button>
+
+						<button type="button" id="getPDF" class="btn btn-default" aria-label="Left Align" title="Generate PDF Document">
+							<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+						</button>
+
+						<button type="button" id="convert" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
+							<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+						</button>
+
+						<button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
+							<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+						</button>
+					</div>
+					<hr/>
+					<div id="quote-section">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -235,118 +164,6 @@
 			<span class="go-top">
 			    <i class="fa fa-angle-up"></i>
 		    </span>
-		</div>
-	</div>
-
-
-
-	<!-- Modal -->
-	<div id="taxOfficeVehicleDialog" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Add Vehicle</h4>
-				</div>
-				<div class="modal-body">
-
-					<h2>Add Vehicle</h2>
-					<div id="taxOfficeQuery">
-						<div class="row registration">
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleRegistrationNo">Registration No.:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="text" name="QueryVehicleRegistrationNo" id="QueryVehicleRegistrationNo" value="">
-							</div>
-						</div>
-
-						<div class="row chassis">
-							<!--style="display:none">-->
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleChassisNo">Chassis No.:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="text" name="QueryVehicleChassisNo" id="QueryVehicleChassisNo" value="">
-							</div>
-						</div>
-
-						<div id="taxOfficeQueryManualEntry" style="display:none">
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleEngineNo">Engine No.:</label>
-								</div>
-								<div class="col-md-8">
-									<input class="form-control" type="text" name="QueryVehicleEngineNo" id="QueryVehicleEngineNo" value="">
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleMake">Make:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleMake" id="QueryVehicleMake"></select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleModel">Model:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleModel" id="QueryVehicleModel"></select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleBodyType">Body Type:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleBodyType" id="QueryVehicleBodyType"></select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleColour">Colour:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleColour" id="QueryVehicleColour"></select>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleYear">Year:</label>
-								</div>
-								<div class="col-md-8">
-									<input class="form-control" type="number" name="QueryVehicleYear" id="QueryVehicleYear" value="">
-								</div>
-							</div>
-						</div>
-
-						<div class="row sum-insured">
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleSumInsured">Sum Being Insured:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="number" name="QueryVehicleSumInsured" id="QueryVehicleSumInsured" value="">
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button id="queryVehicleSearch" type="button" class="btn btn-primary">Add</button>
-					<button id="queryVehicleAdd" type="button" class="btn btn-primary" style="display:none">Add</button>
-				</div>
-			</div>
-
 		</div>
 	</div>
 
@@ -457,7 +274,9 @@
 				searchData.type = $('#insuranceType').val();
 				var payload = JSON.stringify(searchData);
 
+				setLoadingState(true);
 				g_ironrock_service.searchQuotes(payload, function (err, resp) {
+					setLoadingState(false);
 					if (err) {
 						alert("error: " + err.statusText);
 						return;
@@ -505,7 +324,9 @@
 				var name = document.getElementById('DocumentName').value;
 				var file = fileChooser.files[0];
 				if (file) {
+					setLoadingState(true);
 					g_ironrock_service.uploadToS3(currentQuote.applicantQuoteNo, file, name, function (err) {
+						setLoadingState(false);
 						if (err) {
 							display(err.message, err);
 						} else {
@@ -519,7 +340,9 @@
 			})
 
 			function listDocuments() {
+				setLoadingState(true);
 				g_ironrock_service.getDocumentList(currentQuote.applicantQuoteNo, function (err, documentList) {
+					setLoadingState(false);
 					var $tbody = $('#documents tbody').empty();
 					$.each(documentList, function (idx, item) {
 						$tbody.append('<tr><td>' + item.name + '</td>' +
@@ -531,7 +354,9 @@
 
 			$('#documents').on('click', '.documents-list', function (e) {
 				var key = e.target.id;
+				setLoadingState(true);
 				g_ironrock_service.getPdfDocument(key, function (err, body) {
+					setLoadingState(false);
 					if (err) {
 						display(err.message, err);
 					} else {
@@ -547,35 +372,21 @@
 
 
 			$('#returntoQuotes').click(function () {
-				location.reload();
-				/*$('#quotes').show();
-				$('#quote-section').hide();
+				//location.reload();
+				$('#quotes').show();
+				$('#quoteContainer').hide();
 				//remove quote
-				$('#personal-main-page').remove();
-				$('#personal-contact-page').remove();
-				$('#personal-employer-details-page').remove();
-				if (currentQuote.insuranceType == 'motor') {
-				    $('#vehicle-particulars-page').remove();
-				    $('#vehicle-insurance-coverage-page').remove();
-				    $('#vehicle-driver-details-page').remove();
-				    $('#vehicle-accidents-page').remove();
-				    $('#vehicle-medical-history-page').remove();
-				} else {
-				    $('#home-particulars-page').remove();
-				    $('#home-particulars-continued-page').remove();
-				    $('#home-property-details-page').remove();
-				    $('#home-all-risk-insurance-page').remove();
-				}
-				$('#quote-wizard').empty();
-				$('#quotation').empty();
+				$('#quote-section').empty();
 				//last reset currentQuote
-				currentQuote = {};*/
+				currentQuote = {};
 			});
 
 
 			$('#quotesTable tbody').on('click', '.select', function (e) {
 				var id = e.target.id;
+				setLoadingState(true);
 				g_ironrock_service.getQuote(id, function (err, resp) {
+					setLoadingState(false);
 					if (err) {
 						alert("error: " + err.message);
 						return;
@@ -599,7 +410,7 @@
 								fillLogoCanvas();
 								fillSignatureCanvas();
 								$('#quotes').hide();
-								$('#quote-section').show();
+								$('#quoteContainer').show();
 							}
 						});
 					});
@@ -658,20 +469,24 @@
 
 			function fillSignatureCanvas() {
 				if (currentQuote.signatureBytes) {
-					var svgContainer = document.getElementById('svg-signature');
-					//$('#svg-signature').append(atob(currentQuote.signatureBytes));									
-					svgContainer.innerHTML = atob(currentQuote.signatureBytes);
-					var svg = svgContainer.getElementsByTagName('svg')[0];
-					var width = svg.getAttribute("width");
-					var height = svg.getAttribute("height");
-					//Create a rect in SVG's namespace
-					var backgroundRectElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-					backgroundRectElement.setAttribute("x", "0");
-					backgroundRectElement.setAttribute("y", "0");
-					backgroundRectElement.setAttribute("width", 600);
-					backgroundRectElement.setAttribute("height", 150);
-					backgroundRectElement.setAttribute("style", "fill:white");
-					svg.insertBefore(backgroundRectElement, svg.childNodes[0]);
+					try {
+						var svgContainer = document.getElementById('svg-signature');
+						//$('#svg-signature').append(atob(currentQuote.signatureBytes));									
+						svgContainer.innerHTML = atob(currentQuote.signatureBytes);
+						var svg = svgContainer.getElementsByTagName('svg')[0];
+						var width = svg.getAttribute("width");
+						var height = svg.getAttribute("height");
+						//Create a rect in SVG's namespace
+						var backgroundRectElement = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+						backgroundRectElement.setAttribute("x", "0");
+						backgroundRectElement.setAttribute("y", "0");
+						backgroundRectElement.setAttribute("width", 600);
+						backgroundRectElement.setAttribute("height", 150);
+						backgroundRectElement.setAttribute("style", "fill:white");
+						svg.insertBefore(backgroundRectElement, svg.childNodes[0]);
+					} catch (err) {
+
+					}
 				}
 			}
 
