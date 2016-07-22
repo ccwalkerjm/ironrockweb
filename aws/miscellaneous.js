@@ -12,13 +12,13 @@ function doMiscellaneous() {
 
 
 	///
-	$('#quote-wizard .tab-content').on('change', '#applicantOccupation', function () {
+	$('#quote-section').on('change', '#applicantOccupation', function () {
 		if ($('#applicantIDnumber').val() == $('.regularDriversCls:last .DriversDL input').val()) {
 			var applicantOccupation = $("#applicantOccupation option:selected");
 			var occupationIndex = applicantOccupation.index();
 			var occupationValue = applicantOccupation.val();
 			//$('.selDiv option:eq(1)').prop('selected', true)			
-			var driverOccupation = $('#quote-wizard .tab-content').find('.regularDriversCls:last .occupation');
+			var driverOccupation = $('#quote-section').find('.regularDriversCls:last .occupation');
 			driverOccupation.find('option').eq(occupationIndex).prop('selected', true);
 
 		}
@@ -1747,7 +1747,7 @@ var _countries = [
 ];
 
 function loadCountriesOptions() {
-	var countryElements = $('#quote-wizard .countries');
+	var countryElements = $('#quote-section .countries');
 	countryElements.each(function (index, item) {
 		var selectObj = $(this);
 		selectObj.html('');

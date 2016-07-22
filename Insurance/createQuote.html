@@ -64,6 +64,7 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
+
 				<div class="container" id="introduction">
 					<h2>Prepare Proposal</h2>
 					<p>Click the appropriate button to prepare the proposal</p>
@@ -77,70 +78,7 @@
 					</div>
 				</div>
 
-				<div class="container" id="quote-section" style="display:none">
-					<div class="stepwizard">
-						<div class="stepwizard-row setup-panel">
-							<div class="stepwizard-step">
-								<a href="#personal-main-page" type="button" class="btn btn-primary btn-circle">1</a>
-								<p>Personal</p>
-							</div>
-							<div class="stepwizard-step">
-								<a href="#personal-contact-page" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-								<p>Contact</p>
-							</div>
-							<div class="stepwizard-step">
-								<a href="#personal-employer-details-page" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-								<p>Employment</p>
-							</div>
-						</div>
-					</div>
-					<div class="alert alert-warning" id="warning" style="display:none">
-						<strong>Warning!</strong> The Page has invalid entries.
-					</div>
-
-					<div id="pages">
-					<div class="row setup-content" id="final-page">
-						<div class="col-xs-12">
-							<div class="col-md-12">
-								<h3>Final</h3>
-								<div id="disclaimerContainer">
-									<h4>Disclaimer:</h4>
-									<p>
-										The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
-									</p>
-
-									<div class="form-inline">
-										<div class="checkbox">
-											<label>
-												Do you accept the Disclaimer?
-												<input class="form-control" type="checkbox" id="acceptDisclaimer">
-											</label>
-										</div>
-									</div>
-								</div>
-								<div>
-									<button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
-									<button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
-								</div>
-								<input type="hidden" id="quotation-number" />
-								<div id="quotation"></div>
-
-								<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
-								<button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>
-
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					
-
-				</div>
-
-
-
-
-
+				<div class="container" id="quote-section" style="display:none"></div>
 
 			</div>
 		</div>
@@ -161,115 +99,6 @@
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div id="taxOfficeVehicleDialog" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Add Vehicle</h4>
-				</div>
-				<div class="modal-body">
-
-					<h2>Add Vehicle</h2>
-					<div id="taxOfficeQuery">
-						<div class="row registration">
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleRegistrationNo">Registration No.:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="text" name="QueryVehicleRegistrationNo" id="QueryVehicleRegistrationNo" value="">
-							</div>
-						</div>
-
-						<div class="row chassis">
-							<!--style="display:none">-->
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleChassisNo">Chassis No.:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="text" name="QueryVehicleChassisNo" id="QueryVehicleChassisNo" value="">
-							</div>
-						</div>
-
-						<div id="taxOfficeQueryManualEntry" style="display:none">
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleEngineNo">Engine No.:</label>
-								</div>
-								<div class="col-md-8">
-									<input class="form-control" type="text" name="QueryVehicleEngineNo" id="QueryVehicleEngineNo" value="">
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleMake">Make:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleMake" id="QueryVehicleMake"></select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleModel">Model:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleModel" id="QueryVehicleModel"></select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleBodyType">Body Type:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleBodyType" id="QueryVehicleBodyType"></select>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleColour">Colour:</label>
-								</div>
-								<div class="col-md-8">
-									<select class="form-control" name="QueryVehicleColour" id="QueryVehicleColour"></select>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<div class="col-md-4">
-									<label class="control-label" for="QueryVehicleYear">Year:</label>
-								</div>
-								<div class="col-md-8">
-									<input class="form-control" type="number" name="QueryVehicleYear" id="QueryVehicleYear" value="">
-								</div>
-							</div>
-						</div>
-
-						<div class="row sum-insured">
-							<div class="col-md-4">
-								<label class="control-label" for="QueryVehicleSumInsured">Sum Being Insured:</label>
-							</div>
-							<div class="col-md-8">
-								<input class="form-control" type="number" name="QueryVehicleSumInsured" id="QueryVehicleSumInsured" value="">
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button id="queryVehicleSearch" type="button" class="btn btn-primary">Add</button>
-					<button id="queryVehicleAdd" type="button" class="btn btn-primary" style="display:none">Add</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
 
 	<script src="/Scripts/bootbox.js"></script>
 	<script src="/Scripts/jquery.validate.js"></script>
@@ -305,7 +134,7 @@
 						bootbox.alert(err.message);
 						return;
 					}
-					$('.tab-content').find('#insuranceType').val(insuranceType);
+					$('#quote-section').find('#insuranceType').val(insuranceType);
 					$('#introduction').hide();
 					$('#quote-section').show();
 				});

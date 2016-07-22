@@ -56,7 +56,15 @@ var verificationFormText = '<div class="row">  ' +
 	'</form> </div>  </div>';
 
 
+//loader
+function setLoadingState(loadingState) {
+	if (loadingState)
+		$("body").addClass("loading");
+	else
+		$("body").removeClass("loading");
+}
 
+//convert to json without error
 function ConvertToJson(r) {
 	try {
 		r = JSON.parse(r);
@@ -71,79 +79,98 @@ function ConvertToJson(r) {
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
-	var wizardTabs = $('.stepwizard-row');
-	var mainSectionUrl;
-	var finalStepNo = 0;
-	if (insuranceType == 'motor') {
-		$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
-		mainSectionUrl = "motorVehicleSection.html";
-		var particularStep = $('<div/>').addClass('stepwizard-step');
-		particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle">4</a>');
-		particularStep.append('<p>Particulars</p>');
-		particularStep.appendTo(wizardTabs);
-		//
-		var coverageStep = $('<div/>').addClass('stepwizard-step');
-		coverageStep.append('<a href="#vehicle-insurance-coverage-page" type="button" class="btn btn-default btn-circle">5</a>');
-		coverageStep.append('<p>Coverage</p>');
-		coverageStep.appendTo(wizardTabs);
-		//
-		var driverStep = $('<div/>').addClass('stepwizard-step');
-		driverStep.append('<a href="#vehicle-driver-details-page" type="button" class="btn btn-default btn-circle">6</a>');
-		driverStep.append('<p>Driver</p>');
-		driverStep.appendTo(wizardTabs);
-		//
-		var accidentStep = $('<div/>').addClass('stepwizard-step');
-		accidentStep.append('<a href="#vehicle-accidents-page" type="button" class="btn btn-default btn-circle">7</a>');
-		accidentStep.append('<p>Accidents</p>');
-		accidentStep.appendTo(wizardTabs);
-		//
-		var conditionStep = $('<div/>').addClass('stepwizard-step');
-		conditionStep.append('<a href="#vehicle-medical-history-page" type="button" class="btn btn-default btn-circle">8</a>');
-		conditionStep.append('<p>Conditions</p>');
-		conditionStep.appendTo(wizardTabs);
-		finalStepNo = 9;
-	} else {
-		$('.page-header').html('<h1>Create Home Property Proposal</h1>');
-		mainSectionUrl = "homePropertySection.html";
-		var homeParticularStep = $('<div/>').addClass('stepwizard-step');
-		homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle">4</a>');
-		homeParticularStep.append('<p>Particulars-1</p>');
-		homeParticularStep.appendTo(wizardTabs);
-		//
-		var homeParticular2Step = $('<div/>').addClass('stepwizard-step');
-		homeParticular2Step.append('<a href="#home-particulars-continued-page" type="button" class="btn btn-default btn-circle">5</a>');
-		homeParticular2Step.append('<p>Particulars-2</p>');
-		homeParticular2Step.appendTo(wizardTabs);
-		//
-		var detailStep = $('<div/>').addClass('stepwizard-step');
-		detailStep.append('<a href="#home-property-details-page" type="button" class="btn btn-default btn-circle">6</a>');
-		detailStep.append('<p>Details</p>');
-		detailStep.appendTo(wizardTabs);
-		//
-		var riskStep = $('<div/>').addClass('stepwizard-step');
-		riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle">7</a>');
-		riskStep.append('<p>Risks</p>');
-		riskStep.appendTo(wizardTabs);
-		finalStepNo = 8;
-	}
-	var completeStep = $('<div/>').addClass('stepwizard-step');
-	completeStep.append('<a href="#final-page" type="button" class="btn btn-default btn-circle">' + finalStepNo + '</a>');
-	completeStep.append('<p>Final</p>');
-	completeStep.appendTo(wizardTabs);
 
-	$.get(mainSectionUrl, function (pageData) {
-		$('#pages').prepend(pageData);
+	setLoadingState(true);
+	$.get('quoteWizard.html', function (pageData) {
+		$('#quote-section').prepend(pageData);
 
-		$.get('personalsection.html', function (pageData) {
-			$('#pages').prepend(pageData);
-			runWizard();
-			//setBootstrapWizard(insuranceType);
-			LoadSettings(insuranceType, function (err) {
-				callback(err);
-			});
+		var wizardTabs = $('.stepwizard-row');
+
+		var finalStepNo = 0;
+		if (insuranceType == 'motor') {
+			$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
+
+			var particularStep = $('<div/>').addClass('stepwizard-step');
+			particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
+			particularStep.append('<p>Particulars</p>');
+			particularStep.appendTo(wizardTabs);
+			//
+			var coverageStep = $('<div/>').addClass('stepwizard-step');
+			coverageStep.append('<a href="#vehicle-insurance-coverage-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
+			coverageStep.append('<p>Coverage</p>');
+			coverageStep.appendTo(wizardTabs);
+			//
+			var driverStep = $('<div/>').addClass('stepwizard-step');
+			driverStep.append('<a href="#vehicle-driver-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
+			driverStep.append('<p>Driver</p>');
+			driverStep.appendTo(wizardTabs);
+			//
+			var accidentStep = $('<div/>').addClass('stepwizard-step');
+			accidentStep.append('<a href="#vehicle-accidents-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
+			accidentStep.append('<p>Accidents</p>');
+			accidentStep.appendTo(wizardTabs);
+			//
+			var conditionStep = $('<div/>').addClass('stepwizard-step');
+			conditionStep.append('<a href="#vehicle-medical-history-page" type="button" class="btn btn-default btn-circle" disabled>8</a>');
+			conditionStep.append('<p>Conditions</p>');
+			conditionStep.appendTo(wizardTabs);
+			finalStepNo = 9;
+		} else {
+			$('.page-header').html('<h1>Create Home Property Proposal</h1>');
+
+			var homeParticularStep = $('<div/>').addClass('stepwizard-step');
+			homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
+			homeParticularStep.append('<p>Particulars-1</p>');
+			homeParticularStep.appendTo(wizardTabs);
+			//
+			var homeParticular2Step = $('<div/>').addClass('stepwizard-step');
+			homeParticular2Step.append('<a href="#home-particulars-continued-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
+			homeParticular2Step.append('<p>Particulars-2</p>');
+			homeParticular2Step.appendTo(wizardTabs);
+			//
+			var detailStep = $('<div/>').addClass('stepwizard-step');
+			detailStep.append('<a href="#home-property-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
+			detailStep.append('<p>Details</p>');
+			detailStep.appendTo(wizardTabs);
+			//
+			var riskStep = $('<div/>').addClass('stepwizard-step');
+			riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
+			riskStep.append('<p>Risks</p>');
+			riskStep.appendTo(wizardTabs);
+			finalStepNo = 8;
+		}
+		var completeStep = $('<div/>').addClass('stepwizard-step');
+		completeStep.append('<a href="#final-page" type="button" class="btn btn-default btn-circle" disabled>' + finalStepNo + '</a>');
+		completeStep.append('<p>Final</p>');
+		completeStep.appendTo(wizardTabs);
+
+		cleanUpPages(insuranceType);
+		runWizard();
+		//setBootstrapWizard(insuranceType);
+		LoadSettings(insuranceType, function (err) {
+			setLoadingState(false);
+			callback(err);
 		});
 	});
 }
+
+
+function cleanUpPages(insuranceType) {
+	if (insuranceType == 'motor') {
+		$('#quote-section #home-particulars-page').remove();
+		$('#quote-section #home-particulars-continued-page').remove();
+		$('#quote-section #home-property-details-page').remove();
+		$('#quote-section #home-all-risk-insurance-page').remove();
+	} else {
+		$('#quote-section #vehicle-particulars-page').remove();
+		$('#quote-section #vehicle-insurance-coverage-page').remove();
+		$('#quote-section #vehicle-driver-details-page').remove();
+		$('#quote-section #vehicle-accidents-page').remove();
+		$('#quote-section #vehicle-medical-history-page').remove();
+	}
+}
+
+
 
 
 //do wizard and load settings
@@ -160,7 +187,9 @@ function LoadSettings(insuranceType, callback) {
 		}
 		callback();
 	} else {
+		setLoadingState(true);
 		g_ironrock_service.getMiscOptions(function (err, r) {
+			setLoadingState(false);
 			if (err) {
 				callback(err);
 			} else {
@@ -209,26 +238,32 @@ function runWizard() {
 		var curStep = $(this).closest(".setup-content"),
 			curStepBtn = curStep.attr("id"),
 			nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-			curInputs = curStep.find("input[type='text'],input[type='url']"),
+			curInputs = curStep.find("input[type='text'],input[type='date'],input[type='url'],input[type='number'],input[type='email']"),
 			isValid = true;
 
 		$(".form-group").removeClass("has-error");
 		for (var i = 0; i < curInputs.length; i++) {
 			if (!curInputs[i].validity.valid) {
+				console.log(curInputs[i]);
 				isValid = false;
 				$(curInputs[i]).closest(".form-group").addClass("has-error");
 			}
 		}
-
+		//custom 
+		isValid = getSpecificValidation(curStep, isValid);
 		if (isValid)
 			nextStepWizard.removeAttr('disabled').trigger('click');
+		else {
+			$('#warning').fadeIn().delay(5000).fadeOut();
+			window.scrollTo(0, 0);
+		}
+
 	});
 
 	allPrevBtn.click(function () {
 		var curStep = $(this).closest(".setup-content"),
 			curStepBtn = curStep.attr("id"),
 			prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
-
 		$(".form-group").removeClass("has-error");
 		prevStepWizard.removeAttr('disabled').trigger('click');
 	});
@@ -240,79 +275,37 @@ function runWizard() {
 
 
 
-function setBootstrapWizard(insuranceType) {
-	$('#quote-wizard').bootstrapWizard({
-		'nextSelector': '.button-next',
-		'previousSelector': '.button-previous',
-		onNext: function (tab, navigation, index) {
-			var $valid = true;
-			switch (index) {
-			case 1:
-				$valid = $("#personal-main-page .ProposalForm").valid();
-				break;
-			case 2:
-				$valid = $("#personal-contact-page .ProposalForm").valid();
-				break;
-			case 3:
-				$valid = $("#personal-employer-details-page .ProposalForm").valid();
-				break;
-			}
-			if (insuranceType == "motor") {
-				switch (index) {
-				case 4:
-					$valid = $("#vehicle-particulars-page .ProposalForm").valid();
-					if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0) $valid = false;
-					break;
-				case 5:
-					//$valid = $("#vehicle-insurance-coverage-page .ProposalForm").valid();
-					break;
-				case 6:
-					$valid = $("#vehicle-driver-details-page .ProposalForm").valid();
-					break;
-				case 7:
-					//$valid = $("#vehicle-accidents-page .ProposalForm").valid();
-					break;
-				case 8:
-					//$valid = $("#vehicle-medical-history-page .ProposalForm").valid();
-					break;
-				}
-			} else {
-				switch (index) {
-				case 4:
-					$valid = $("#home-particulars-page .ProposalForm").valid();
-					break;
-				case 5:
-					$valid = $("#home-particulars-continued-page .ProposalForm").valid();
-					break;
-				case 6:
-					$valid = $("#home-property-details-page .ProposalForm").valid();
-					break;
-				case 7:
-					$valid = $("#home-all-risk-insurance-page .ProposalForm").valid();
-					break;
-				}
-			}
-			if (!$valid) {
-				$validator = $(".ProposalForm").validate();
-				$validator.focusInvalid();
-				$('#warning').fadeIn().delay(5000).fadeOut();
-				window.scrollTo(0, 0);
-				return false;
-			}
-
-		},
-		onTabClick: function () {
-			return false;
-		},
-		onTabShow: function (tab, navigation, index) {
-			var $total = navigation.find('li').length;
-			var $current = index + 1;
-			var $percent = ($current / $total) * 100;
-			$('#quote-wizard .progress-bar').css({
-				width: $percent + '%'
-			});
+function getSpecificValidation($curStep, $valid) {
+	var id = $curStep.attr('id');
+	switch (id) {
+	case 'personal-main-page':
+		if ($('#getTRNDetails').is(":visible")) {
+			$valid = false;
+			$('#applicantTRN').closest(".form-group").addClass("has-error");
 		}
-	});
+		break;
+	case 'vehicle-particulars-page':
+		if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0)
+			$valid = false;
+		break;
+	case 'vehicle-insurance-coverage-page':
+		break;
+	case 'vehicle-driver-details-page':
+		break;
+	case 'vehicle-accidents-page':
+		break;
+	case 'vehicle-medical-history-page':
+		break;
+	case 'home-particulars-page':
+		break;
+	case 'home-particulars-continued-page':
+		break;
+	case 'home-property-details-page':
+		break;
+	case 'home-all-risk-insurance-page':
+		break;
+	}
+	return $valid;
 }
 
 //////////////////////////////////////////////////////////////////////end quote
@@ -568,7 +561,9 @@ function createFirstDriver() {
 
 //add driver
 function GetDriverLicense($this, id, callback) {
+	setLoadingState(true);
 	g_ironrock_service.getDriverLicenseDetails(id, function (err, r) {
+		setLoadingState(false);
 		if (err) {
 			callback(err);
 		} else {
@@ -616,17 +611,22 @@ function doPrimaryFunctions(callback) {
 	//new wizard  july 21, 2016
 
 	///////////////////admin functions///////////////////////////////////////
-	var $body = $("body");
+
+	//spinning loader
 	$(document).on({
 		ajaxStart: function () {
-			$body.addClass("loading");
+			$("body").addClass("loading");
 		},
 		ajaxStop: function () {
-			$body.removeClass("loading");
+			$("body").removeClass("loading");
 		}
 	});
+	setLoadingState(true);
+
+
 
 	g_ironrock_service = new ironrockcloudservice(function (err, $this) {
+		setLoadingState(false);
 		if (err) {
 			g_ironrock_service.signoff();
 			location.assign('/index.html');
@@ -677,12 +677,15 @@ function doPrimaryFunctions(callback) {
 
 	///login
 	$("#login_submit").click(function (e) {
+		setLoadingState(true);
 		g_ironrock_service = new ironrockcloudservice(function (err, obj) {
 			if (err) {
+				setLoadingState(false);
 				display(err.message, true);
 			} else {
 				obj.signoff();
 				obj.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
+					setLoadingState(false);
 					if (err) {
 						display(err.message, true);
 					} else {
@@ -721,7 +724,9 @@ function doPrimaryFunctions(callback) {
 			newPassword = $("#newPassword").val(),
 			confirmPassword = $("#confirmPassword").val();
 		if (oldPassword && newPassword && newPassword == confirmPassword && newPassword != oldPassword) {
+			setLoadingState(true);
 			g_ironrock_service.changePassword($('#oldPassword').val(), $('#newPassword').val(), function (err) {
+				setLoadingState(false);
 				if (err) {
 					display(err.message, true);
 				} else {
@@ -736,7 +741,9 @@ function doPrimaryFunctions(callback) {
 
 	///forgot password
 	$("#forgot_submit").click(function (e) {
+		setLoadingState(true);
 		g_ironrock_service.forgotPassword($('#login_username').val(), function (err, doVerification, obj) {
+			setLoadingState(false);
 			if (err) {
 				display(err.message, true);
 			} else {
@@ -768,23 +775,25 @@ function doPrimaryFunctions(callback) {
 	});
 
 	///////////////////////quote create and update
-	$('#acceptDisclaimer').change(function () {
+	$('#quote-section').on('change', '#acceptDisclaimer', function () {
 		$('#submit-btn').prop("disabled", !$(this).is(':checked'));
 	});
 
-	$('#reset-btn').click(function () {
+	$('#quote-section').on('click', '#reset-btn', function () {
 		location.reload();
 	});
 
 	////submit
-	$('#submit-btn').click(function () {
+	$('#quote-section').on('click', '#submit-btn', function () {
 		//get signature data       
 		//var formData = $('form').serialize();
 		var jsonForm = $('form').serializeObject();
 		var formData = JSON.stringify(jsonForm);
+		setLoadingState(true);
 		g_ironrock_service.submitQuote(formData, function (err, r) {
+			setLoadingState(false);
 			if (err) {
-				alert("error: " + err.statusText);
+				alert("error: " + err.message);
 				return;
 			}
 			var r = ConvertToJson(r);
@@ -810,12 +819,12 @@ function doPrimaryFunctions(callback) {
 	///////
 
 	//regular driver
-	$('#regularDriversBtns').on('click', '.Add', function () {
+	$('#quote-section').on('click', '#regularDriversBtns .Add', function () {
 		var $this = $('#regularDriversBtns .Add');
 		var id = $('#regularDriverQueryID').val();
 		GetDriverLicense($this, id, function (err, r) {
 			if (err) {
-				alert("error: " + err.statusText);
+				alert("error: " + err.message);
 			}
 			if (!err) {
 				$('#regularDriverQueryID').val('');
@@ -837,7 +846,7 @@ function doPrimaryFunctions(callback) {
 		});
 	});
 
-	$('#regularDriversBtns').on('click', '.Reset', function () {
+	$('#quote-section').on('click', '#regularDriversBtns .Reset', function () {
 		$('.regularDriversCls').not('.regularDriversCls:first').remove();
 		$('.regularDriversCls').find('input:text').val('');
 		$('#regularDriversId').hide()
@@ -850,7 +859,7 @@ function doPrimaryFunctions(callback) {
 	///////
 
 
-	$('#quote-wizard .tab-content').on('click', '#getTRNDetails', function () {
+	$('#quote-section').on('click', '#getTRNDetails', function () {
 		var licenseNo = $('#applicantTRN').val();
 		GetDriverLicense(null, licenseNo, function (err, data) {
 			if (err) {
@@ -865,7 +874,7 @@ function doPrimaryFunctions(callback) {
 
 
 
-	$('#quote-wizard .tab-content').on('click', '#clearTRNDetails', function () {
+	$('#quote-section').on('click', '#clearTRNDetails', function () {
 		SetTRnDetails(false);
 		var imageSrc = "/images/dummy.jpg";
 		$('#applicantPhoto').attr('src', imageSrc); //
@@ -896,19 +905,19 @@ function doPrimaryFunctions(callback) {
 	};
 
 	//clear signature
-	$('#quote-wizard .tab-content').on('click', '#clear-canvas', function () {
+	$('#quote-section').on('click', '#clear-canvas', function () {
 		$('#signature').jSignature('clear');
 	});
 
 
 	//////////////////////////////////Insert vehicle
-	$('#quote-wizard .tab-content').on("click", '#taxOfficeVehicleRefresh', function () {
+	$('#quote-section').on("click", '#taxOfficeVehicleRefresh', function () {
 		$('#vehiclesToBeInsured .vehicle').remove();
 		$('#taxOfficeVehicleRefresh').hide();
 	});
 
 	//check whether new
-	$('#quote-wizard .tab-content').on("change", 'input[type=radio][name=isNewVehicle]', function () {
+	$('#quote-section').on("change", 'input[type=radio][name=isNewVehicle]', function () {
 		var select_value = $(this).val();
 		if (select_value == 'yes') {
 			$('#taxOfficeVehicleDialog .chassis').hide();
@@ -920,7 +929,7 @@ function doPrimaryFunctions(callback) {
 	});
 
 	//get vehicle modal
-	$('#quote-wizard .tab-content').on("click", '#GetTaxOfficeVehicleDialog', function () {
+	$('#quote-section').on("click", '#GetTaxOfficeVehicleDialog', function () {
 		$('#queryVehicleAdd').hide();
 		$('#queryVehicleSearch').show();
 		$('#taxOfficeQueryManualEntry').hide();
@@ -936,13 +945,13 @@ function doPrimaryFunctions(callback) {
 
 
 
-	$('#quote-wizard .tab-content').on("change", '#QueryVehicleMake', function () {
+	$('#quote-section').on("change", '#QueryVehicleMake', function () {
 		loadVehicleModels();
 	});
 
 
 	//manual entry
-	$('#quote-wizard .tab-content').on("click", "#queryVehicleAdd", function () {
+	$('#quote-section').on("click", "#queryVehicleAdd", function () {
 		var r = {};
 
 		r.plateNo = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
@@ -977,7 +986,7 @@ function doPrimaryFunctions(callback) {
 	});
 
 
-	$('#taxOfficeVehicleDialog').on("click", "#queryVehicleSearch", function () {
+	$('#quote-section').on("click", "#queryVehicleSearch", function () {
 		var plateno = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
 		var chassisno = $('#QueryVehicleChassisNo').val();
 
@@ -991,9 +1000,11 @@ function doPrimaryFunctions(callback) {
 			return;
 		}
 
+		setLoadingState(true);
 		g_ironrock_service.getVehicleDetails(plateno, chassisno, function (err, r) {
+			setLoadingState(false);
 			if (err) {
-				alert("Err:" + err.statusText);
+				alert("Err:" + err.message);
 				return;
 			}
 			r = ConvertToJson(r);
@@ -1020,7 +1031,7 @@ function doPrimaryFunctions(callback) {
 	});
 
 
-	$('#vehiclesToBeInsured').on('click', '.deleteVehicleRow', function () {
+	$('#quote-section').on('click', '#vehiclesToBeInsured .deleteVehicleRow', function () {
 		var tr = $(this).closest('tr');
 		tr.remove();
 		reIndexVehicles();
