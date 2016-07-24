@@ -376,7 +376,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:3',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -397,7 +397,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:3',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -408,19 +408,17 @@ var ironrockcloudservice = (function () {
 
 
 	//create broker
-	ironrockcloudservice.prototype.createBroker = function (brokerCode, BrokerName, callback) {
+	ironrockcloudservice.prototype.createBroker = function (data, callback) {
 		var jsonRequest = {};
+		if (data.logo === null) data.logo = '#';
 		jsonRequest.request = {
 			'cmd': 'createBroker',
-			'data': {
-				'code': brokerCode,
-				'name': BrokerName
-			}
+			'data': data
 		};
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:3',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -430,19 +428,17 @@ var ironrockcloudservice = (function () {
 	};
 
 	//modify broker
-	ironrockcloudservice.prototype.modifyBroker = function (brokerCode, BrokerName, callback) {
+	ironrockcloudservice.prototype.modifyBroker = function (data, callback) {
 		var jsonRequest = {};
+		if (data.logo === null) data.logo = '#';
 		jsonRequest.request = {
 			'cmd': 'modifyBroker',
-			'data': {
-				'code': brokerCode,
-				'name': BrokerName
-			}
+			'data': data
 		};
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:3',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -463,7 +459,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:3',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();

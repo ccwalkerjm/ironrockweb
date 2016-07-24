@@ -66,21 +66,8 @@
 				<div class="row" id="account-block">
 					<div class="col-lg-6">
 						<h1>Brokers</h1>
-						<div id="status"></div>
-
-						<form class="form-inline" role="form">
-							<div class="form-group">
-								<label for="code">Code:</label>
-								<input type="text" class="form-control" id="code">
-							</div>
-							<div class="form-group">
-								<label for="name">Name:</label>
-								<input type="text" class="form-control" id="name">
-							</div>
-							<button type="button" class="btn btn-link" id="save_broker">Save</button>
-							<button type="button" class="btn btn-link" id="delete_broker">Delete</button>
-						</form>
-
+						<div class="message"></div>
+						<button type="button" id="btnCreateBroker" class="btn btn-link select">Create Broker</button>
 						<table class="table table-striped" id="brokerTable">
 							<thead>
 								<tr>
@@ -94,84 +81,65 @@
 					</div>
 				</div>
 
+				<!-- Modal -->
+				<div id="brokerModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Manage Broker</h4>
+							</div>
+							<div class="modal-body">
+								<div class="message"></div>
+								<form class="form-horizontal" role="form">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="code">code:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="code" />
+										</div>
+									</div>
 
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="name">name:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="name" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="globalName">Global Name:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="globalName" />
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-sm-offset-4 col-sm-8">
+											<input type="file" class="form-control" id="inpLogo" />
+											<br/>
+											<img id="imgLogo" src="#" alt="Logo" />
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" id="delete-broker">Delete</button>
+								<button type="button" class="btn btn-primary" id="update-broker">Update</button>
+								<button type="button" class="btn btn-primary" id="create-broker">Create</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
 
 
 			</div>
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div id="brokerModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Manage Broker</h4>
-				</div>
-				<div class="modal-body">
-					<div class="message"></div>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="username">Username:</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="username" readonly>
-							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="firstName">FirstName:</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="firstName" readonly>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="lastName">Last Name:</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="lastName" readonly>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="email">Email:</label>
-							<div class="col-sm-8">
-								<input type="email" class="form-control" id="email" readonly>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="phone">Phone:</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="phone" readonly>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="role">Role:</label>
-							<div class="col-sm-8">
-								<select id="role" class="form-control"></select>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-4" for="broker">Broker:</label>
-							<div class="col-sm-8">
-								<select id="broker" class="form-control"></select>
-							</div>
-						</div>
-
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="update-user">Update</button>
-					<button type="button" class="btn btn-primary" id="create-user">Create</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
 
 	<div class="loadingModal">
 		<!-- Place at bottom of page -->
@@ -209,26 +177,80 @@
 			});
 
 
-			$('#save_broker').click(function () {
-				var code = $('#code').val();
-				var name = $('#name').val();
+			$('#create-broker').click(function () {
+				var dataInput = {};
+				dataInput.code = $('#code').val().toUpperCase();
+				dataInput.name = $('#name').val();
+				dataInput.globalName = $('#globalName').val();
+				dataInput.logo = $('#imgLogo').attr('src');
+				if (!(dataInput.code).match(/[a-z]/i)) {
+					alert('Code must contain letters only');
+					return;
+				}
+
+				if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
+					alert('Code,Name or GlobalName cannot be null!');
+					return;
+				}
+				if (!dataInput.logo) {
+					dataInput.logo = '#';
+				}
 				setLoadingState(true);
-				g_ironrock_service.createBroker(code, name, function (err, data) {
+				g_ironrock_service.createBroker(dataInput, function (err, data) {
 					setLoadingState(false);
+					$('#brokerModal').modal('hide');
 					listBrokers();
 				});
 			})
 
-			$('#delete_broker').click(function () {
+
+			$('#update-broker').click(function () {
+				var dataInput = {};
+				dataInput.code = $('#code').val();
+				dataInput.name = $('#name').val();
+				dataInput.globalName = $('#globalName').val();
+				dataInput.logo = $('#imgLogo').attr('src');
+				if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
+					alert('Code,Name or GlobalName cannot be null!');
+					return;
+				}
+				if (!dataInput.logo) {
+					dataInput.logo = '#';
+				}
+				setLoadingState(true);
+				g_ironrock_service.modifyBroker(dataInput, function (err, data) {
+					setLoadingState(false);
+					$('#brokerModal').modal('hide');
+					listBrokers();
+				});
+			})
+
+
+			$('#delete-broker').click(function () {
 				if (confirm('Are you sure?')) {
 					var code = $('#code').val();
 					setLoadingState(true);
 					g_ironrock_service.deleteBroker(code, function (err, data) {
 						setLoadingState(false);
 						listBrokers();
+						$('#brokerModal').modal('hide');
 					});
 				}
 			})
+
+
+			$('#btnCreateBroker').click(function () {
+				$('#code').val('').prop('readonly', false);
+				$('#name').val('').prop('readonly', false);
+				$('#globalName').val('').prop('readonly', false);
+				$('#imgLogo').attr('src', '');
+				$("#inpLogo").val('');
+				$('#update-broker').hide();
+				$('#delete-broker').hide();
+				$('#create-broker').show();
+				$('#brokerModal .modal-title').text('Create Broker');
+				$('#brokerModal').modal('show');
+			});
 
 			$('#brokerTable tbody').on('click', '.select', function (e) {
 				var id = e.target.id;
@@ -236,11 +258,35 @@
 				g_ironrock_service.getBroker(id, function (err, data) {
 					setLoadingState(false);
 					var item = JSON.parse(data.Payload);
-					$('#code').val(item.code);
+					$('#code').val(item.code).prop('readonly', true);
 					$('#name').val(item.name);
+					$('#globalName').val(item.globalName);
+					$('#imgLogo').attr('src', item.logo);
+					$("#inpLogo").val('');
+					$('#update-broker').show();
+					$('#create-broker').hide();
+					$('#delete-broker').show();
+					$('#brokerModal .modal-title').text('Update Broker');
+					$('#brokerModal').modal('show');
 				});
 			})
 
+			$("#inpLogo").change(function () {
+				readImgLogoURL(this);
+			});
+
+			function readImgLogoURL(input) {
+
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function (e) {
+						$('#imgLogo').attr('src', e.target.result);
+					}
+
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
 
 			function listBrokers(obj) {
 				setLoadingState(true);
