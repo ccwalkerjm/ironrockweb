@@ -15,6 +15,7 @@
 //global object
 
 var g_ironrock_service; // = new ironrockcloudservice()
+var g_quote_wizard_html;
 //
 var $validator;
 var _apiBaseUrl = "https://api.courserv.com/ironrock"; //localhost:58633/api/";
@@ -79,79 +80,83 @@ function ConvertToJson(r) {
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
+	if (g_quote_wizard_html == null) {
+		g_quote_wizard_html = $('#quote-section').html();
+	}
+	$('#quote-section').html(g_quote_wizard_html);
 
 	setLoadingState(true);
-	$.get('quoteWizard.html', function (pageData) {
-		$('#quote-section').prepend(pageData);
+	//$.get('quoteWizard.html', function (pageData) {
+	//	$('#quote-section').prepend(pageData);
 
-		var wizardTabs = $('.stepwizard-row');
+	var wizardTabs = $('.stepwizard-row');
 
-		var finalStepNo = 0;
-		if (insuranceType == 'motor') {
-			$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
+	var finalStepNo = 0;
+	if (insuranceType == 'motor') {
+		$('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
 
-			var particularStep = $('<div/>').addClass('stepwizard-step');
-			particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
-			particularStep.append('<p>Particulars</p>');
-			particularStep.appendTo(wizardTabs);
-			//
-			var coverageStep = $('<div/>').addClass('stepwizard-step');
-			coverageStep.append('<a href="#vehicle-insurance-coverage-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
-			coverageStep.append('<p>Coverage</p>');
-			coverageStep.appendTo(wizardTabs);
-			//
-			var driverStep = $('<div/>').addClass('stepwizard-step');
-			driverStep.append('<a href="#vehicle-driver-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
-			driverStep.append('<p>Driver</p>');
-			driverStep.appendTo(wizardTabs);
-			//
-			var accidentStep = $('<div/>').addClass('stepwizard-step');
-			accidentStep.append('<a href="#vehicle-accidents-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
-			accidentStep.append('<p>Accidents</p>');
-			accidentStep.appendTo(wizardTabs);
-			//
-			var conditionStep = $('<div/>').addClass('stepwizard-step');
-			conditionStep.append('<a href="#vehicle-medical-history-page" type="button" class="btn btn-default btn-circle" disabled>8</a>');
-			conditionStep.append('<p>Conditions</p>');
-			conditionStep.appendTo(wizardTabs);
-			finalStepNo = 9;
-		} else {
-			$('.page-header').html('<h1>Create Home Property Proposal</h1>');
+		var particularStep = $('<div/>').addClass('stepwizard-step');
+		particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
+		particularStep.append('<p>Particulars</p>');
+		particularStep.appendTo(wizardTabs);
+		//
+		var coverageStep = $('<div/>').addClass('stepwizard-step');
+		coverageStep.append('<a href="#vehicle-insurance-coverage-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
+		coverageStep.append('<p>Coverage</p>');
+		coverageStep.appendTo(wizardTabs);
+		//
+		var driverStep = $('<div/>').addClass('stepwizard-step');
+		driverStep.append('<a href="#vehicle-driver-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
+		driverStep.append('<p>Driver</p>');
+		driverStep.appendTo(wizardTabs);
+		//
+		var accidentStep = $('<div/>').addClass('stepwizard-step');
+		accidentStep.append('<a href="#vehicle-accidents-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
+		accidentStep.append('<p>Accidents</p>');
+		accidentStep.appendTo(wizardTabs);
+		//
+		var conditionStep = $('<div/>').addClass('stepwizard-step');
+		conditionStep.append('<a href="#vehicle-medical-history-page" type="button" class="btn btn-default btn-circle" disabled>8</a>');
+		conditionStep.append('<p>Conditions</p>');
+		conditionStep.appendTo(wizardTabs);
+		finalStepNo = 9;
+	} else {
+		$('.page-header').html('<h1>Create Home Property Proposal</h1>');
 
-			var homeParticularStep = $('<div/>').addClass('stepwizard-step');
-			homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
-			homeParticularStep.append('<p>Particulars-1</p>');
-			homeParticularStep.appendTo(wizardTabs);
-			//
-			var homeParticular2Step = $('<div/>').addClass('stepwizard-step');
-			homeParticular2Step.append('<a href="#home-particulars-continued-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
-			homeParticular2Step.append('<p>Particulars-2</p>');
-			homeParticular2Step.appendTo(wizardTabs);
-			//
-			var detailStep = $('<div/>').addClass('stepwizard-step');
-			detailStep.append('<a href="#home-property-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
-			detailStep.append('<p>Details</p>');
-			detailStep.appendTo(wizardTabs);
-			//
-			var riskStep = $('<div/>').addClass('stepwizard-step');
-			riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
-			riskStep.append('<p>Risks</p>');
-			riskStep.appendTo(wizardTabs);
-			finalStepNo = 8;
-		}
-		var completeStep = $('<div/>').addClass('stepwizard-step');
-		completeStep.append('<a href="#final-page" type="button" class="btn btn-default btn-circle" disabled>' + finalStepNo + '</a>');
-		completeStep.append('<p>Final</p>');
-		completeStep.appendTo(wizardTabs);
+		var homeParticularStep = $('<div/>').addClass('stepwizard-step');
+		homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
+		homeParticularStep.append('<p>Particulars-1</p>');
+		homeParticularStep.appendTo(wizardTabs);
+		//
+		var homeParticular2Step = $('<div/>').addClass('stepwizard-step');
+		homeParticular2Step.append('<a href="#home-particulars-continued-page" type="button" class="btn btn-default btn-circle" disabled>5</a>');
+		homeParticular2Step.append('<p>Particulars-2</p>');
+		homeParticular2Step.appendTo(wizardTabs);
+		//
+		var detailStep = $('<div/>').addClass('stepwizard-step');
+		detailStep.append('<a href="#home-property-details-page" type="button" class="btn btn-default btn-circle" disabled>6</a>');
+		detailStep.append('<p>Details</p>');
+		detailStep.appendTo(wizardTabs);
+		//
+		var riskStep = $('<div/>').addClass('stepwizard-step');
+		riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
+		riskStep.append('<p>Risks</p>');
+		riskStep.appendTo(wizardTabs);
+		finalStepNo = 8;
+	}
+	var completeStep = $('<div/>').addClass('stepwizard-step');
+	completeStep.append('<a href="#final-page" type="button" class="btn btn-default btn-circle" disabled>' + finalStepNo + '</a>');
+	completeStep.append('<p>Final</p>');
+	completeStep.appendTo(wizardTabs);
 
-		cleanUpPages(insuranceType);
-		runWizard();
-		//setBootstrapWizard(insuranceType);
-		LoadSettings(insuranceType, function (err) {
-			setLoadingState(false);
-			callback(err);
-		});
+	cleanUpPages(insuranceType);
+	runWizard();
+	//setBootstrapWizard(insuranceType);
+	LoadSettings(insuranceType, function (err) {
+		setLoadingState(false);
+		callback(err);
 	});
+
 }
 
 
@@ -612,6 +617,7 @@ function doPrimaryFunctions(callback) {
 
 	///////////////////admin functions///////////////////////////////////////
 
+
 	//spinning loader
 	$(document).on({
 		ajaxStart: function () {
@@ -632,41 +638,101 @@ function doPrimaryFunctions(callback) {
 			location.assign('/index.html');
 			return;
 		}
+		var sideBarAnchor = $("<div/>").addClass('page-sidebar navbar-collapse collapse');
+		var sideBarMenu = $('<ul/>').addClass('page-sidebar-menu');
+		var sidebarmenuToggler = $('<li/>').addClass('sidebar-toggler-wrapper').html('<div class="sidebar-toggler hidden-phone"></div>');
+		sidebarmenuToggler.appendTo(sideBarMenu);
+		var HomeMenuOption = $('<li/>').addClass('start');
+		var HomeMenoOptionLink = $('<a/>').html('<i class="fa fa-home"></i>');
+		var HomeMenuTitle = $('<span/>').addClass('title');
+		//
+		var UserMenuOption = $('<li/>');
+		var UserMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-user"></i>');
+		var UserMenuTitle = $('<span/>').addClass('title');
+		var UserSubMenu = $('<ul/>').addClass('sub-menu');
+		//
+		var InsuranceMenuOption = $('<li/>');
+		var InsuranceMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-briefcase"></i>');
+		var InsuranceMenuTitle = $('<span/>').addClass('title').text('Policies/Quotes');
+		var InsuranceSubMenu = $('<ul/>').addClass('sub-menu');
+		//
+		var adminMenuOption = $('<li/>');
+		var adminMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-cogs"></i>');
+		var adminMenuTitle = $('<span/>').addClass('title').text('Admin');
+		var adminSubMenu = $('<ul/>').addClass('sub-menu').html('<li><a href="/Admin/manage_brokers.html">Brokers</a><li><a href="/Admin/manage_users.html">Agents</a>');
+
+
+		var valid_page = false;
 		if ($this.getUsername()) {
-			$('#sidebar').load("/sideBarAuthorised.html", function () {
-				$('#sidebar #globalUsername').text($this.getUsername());
-				App.init();
-				correctLinks();
-				if (callback && typeof callback == "function") {
-					callback();
+			valid_page = true;
+
+			//Home Option
+			HomeMenoOptionLink.attr('href', '/dashboard.html');
+			HomeMenuTitle.text('Dashboard').appendTo(HomeMenoOptionLink);
+			HomeMenoOptionLink.appendTo(HomeMenuOption);
+
+			sideBarMenu.append(HomeMenuOption);
+
+
+			//Insurance Option
+			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
+			InsuranceMenuOption.append(InsuranceMenoOptionLink);
+			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a><li><a href="/Insurance/quotes.html">Query Quotes</a></ul>');
+
+			sideBarMenu.append(InsuranceMenuOption);
+
+
+			//User 
+			UserMenuTitle.text($this.getUsername());
+			UserSubMenu.html('<li><a href="/profile.html">View Profile</a><li><a href="/changePassword.html">Change Password</a><li><a href="#"id="logout">Logout</a>')
+
+			UserMenoOptionLink.append(UserMenuTitle).append('<span class="arrow "></span>');
+			UserMenuOption.append(UserMenoOptionLink).append(UserSubMenu);
+
+			sideBarMenu.append(UserMenuOption);
+
+			//admin
+			var profile = localStorage.getItem("ironrockUserProfile");
+
+			if (profile) {
+				var item = JSON.parse(profile);
+				if (item.role == 'Admin' || item.role == 'Staff') {
+					adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
+					adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
+					sideBarMenu.append(adminMenuOption);
 				}
-			});
-		} else {
-			if (location.pathname == '/index.html' ||
-				location.pathname == '/login.html' ||
-				location.pathname == '/forgotPassword.html' ||
-				location.pathname == '/confirmAccount.html') {
-				$('#sidebar').load("/sideBarAnonymous.html", function () {
-					App.init();
-				});
-			} else {
-				location.assign('/index.html');
 			}
+
+		} else if (location.pathname == '/index.html' ||
+			location.pathname == '/login.html' ||
+			location.pathname == '/forgotPassword.html' ||
+			location.pathname == '/confirmAccount.html') {
+
+			valid_page = true;
+			//Home Option
+			HomeMenoOptionLink.attr('href', '/home.html');
+			HomeMenuTitle.text('Home').appendTo(HomeMenoOptionLink);
+			HomeMenoOptionLink.appendTo(HomeMenuOption);
+
+			sideBarMenu.append(HomeMenuOption);
+			//User		
+			UserSubMenu.html('<li><a href="/login.html">Login</a><li><a href="/forgotPassword.html">Forgot Password</a>')
+
+			UserMenoOptionLink.append(UserMenuTitle.text('User Login')).append('<span class="arrow "></span>');
+			UserMenuOption.append(UserMenoOptionLink).append(UserSubMenu);
+
+			sideBarMenu.append(UserMenuOption);
+		}
+		if (valid_page == true) {
+			$('#sidebar').append(sideBarAnchor.append(sideBarMenu));
+			App.init();
+			if (callback && typeof callback == "function") {
+				callback(null, $this);
+			}
+		} else {
+			location.assign('/index.html');
 		}
 	});
-
-	function correctLinks() {
-		var profile = localStorage.getItem("ironrockUserProfile");
-		var NotAdmin = true;
-		if (profile) {
-			var item = JSON.parse(profile);
-			if (item.role == 'Admin' || item.role == 'Staff') {
-				NotAdmin = false;
-			}
-		}
-		if (NotAdmin)
-			$('#sidebar').find('#adminLinks').remove();
-	}
 
 
 	$('#sidebar').on('click', '#logout', function () {

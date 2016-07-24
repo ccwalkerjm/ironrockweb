@@ -451,7 +451,7 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
-	//modify broker
+	//delete broker
 	ironrockcloudservice.prototype.deleteBroker = function (brokerCode, callback) {
 		var jsonRequest = {};
 		jsonRequest.request = {

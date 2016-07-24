@@ -181,7 +181,6 @@
 	</div>
 
 
-
 	<script src="/Scripts/bootbox.js"></script>
 	<!--Required Libraries-->
 	<script src="/aws/jsbn.js"></script>
@@ -197,15 +196,18 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			doPrimaryFunctions(function () {
-				listRoles();
-				listBrokers();
-				listUsers();
+			doPrimaryFunctions(function (err, obj) {
+				listRoles(obj);
+				listBrokers(obj);
+				listUsers(null, null, obj);
 			});
 
 			/////////////
-			function listRoles() {
-				g_ironrock_service.listRoles(function (err, data) {
+			function listRoles(obj) {
+				setLoadingState(true);
+				var obj = obj == null ? g_ironrock_service : obj; //
+				obj.listRoles(function (err, data) {
+					setLoadingState(false);
 					var element = $('#role').html('<option>None</option>');
 					$.each(JSON.parse(data.Payload), function (idx, val) {
 						element.append('<option value="' + val + '">' + val + '</option>');
@@ -213,8 +215,11 @@
 				});
 			}
 
-			function listBrokers() {
-				g_ironrock_service.listBrokers(function (err, data) {
+			function listBrokers(obj) {
+				setLoadingState(true);
+				var obj = obj == null ? g_ironrock_service : obj; //
+				obj.listBrokers(function (err, data) {
+					setLoadingState(false);
 					var element = $('#broker').html('<option>None</option>');
 					$.each(JSON.parse(data.Payload), function (idx, val) {
 						element.append('<option value="' + val.code + '">' + val.name + '</option>');
@@ -226,7 +231,9 @@
 				var username = $('#username').val();
 				var role = $('#role').val();
 				var broker = $('#broker').val();
+				setLoadingState(true);
 				g_ironrock_service.updateUser(username, role, broker, function (err, data) {
+					setLoadingState(false);
 					listUsers();
 					$('#userModal').modal('hide');
 				});
@@ -235,7 +242,9 @@
 
 			$('#userTable tbody').on('click', '.select', function (e) {
 				var username = e.target.id;
+				setLoadingState(true);
 				g_ironrock_service.getUser(username, function (err, data) {
+					setLoadingState(false);
 					var item = JSON.parse(data.Payload);
 					$('#username').val(item.username).prop("readonly", true);
 					$('#firstName').val(item.given_name).prop("readonly", true);
@@ -290,10 +299,11 @@
 			});
 
 
-			function listUsers(role, broker) {
+			function listUsers(role, broker, obj) {
 				if (!role) role = null;
 				if (!broker) broker = null;
-				g_ironrock_service.listUsers(role, broker, function (err, data) {
+				var obj = obj == null ? g_ironrock_service : obj; //
+				obj.listUsers(role, broker, function (err, data) {
 					if (err) {
 						display(err.message, err);
 						return;
