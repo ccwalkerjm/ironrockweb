@@ -293,7 +293,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -314,7 +314,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -332,7 +332,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -356,7 +356,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:2',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -376,7 +376,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:3',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -397,7 +397,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:3',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -418,7 +418,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:3',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -438,7 +438,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:3',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -459,7 +459,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:3',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -858,7 +858,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -879,7 +879,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -899,7 +899,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -921,7 +921,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc',
+			FunctionName: 'ironrockAdminFunc:4',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
