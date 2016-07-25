@@ -804,6 +804,46 @@ var ironrockcloudservice = (function () {
 
 
 
+	//get Broker details----public access
+	ironrockcloudservice.prototype.getBroker = function (code, callback) {
+		var dynamodb = new AWS.DynamoDB({
+			apiVersion: '2012-08-10'
+		});
+		var params = {
+			TableName: 'IronRockBrokers',
+			Key: {
+				code: {
+					S: code
+				}
+			}
+		};
+		dynamodb.getItem(params, function (err, data) {
+			if (err) {
+				console.log(err);
+				callback(err);
+			} else {
+				console.log(data);
+				var result = {};
+				if (data.Item) {
+					result.code = data.Item.code.S;
+					result.name = data.Item.name.S;
+					try {
+						result.globalName = data.Item.globalName.S;
+					} catch (err) {
+						result.globalName = '';
+					}
+					try {
+						result.logo = data.Item.logo.S;
+					} catch (err) {
+						result.logo = '';
+					}
+				}
+				console.log(result);
+				callback(null, result);
+
+			}
+		});
+	};
 
 
 	return ironrockcloudservice;
