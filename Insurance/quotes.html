@@ -133,9 +133,10 @@
 						<h2>Prepare Proposal</h2>
 						<div class="row">
 							<div class="col-md-12">
-								<a href="#" class="btn btn-link" id="quotes">Return to Quotes</a>
+								<a href="#" class="btn btn-link returntoQuotes">Return to Quotes</a>
 							</div>
 						</div>
+
 
 						<p>Click the appropriate button to prepare the proposal</p>
 
@@ -155,7 +156,7 @@
 						</div>
 
 						<div class="btn-group">
-							<button type="button" id="returntoQuotes" class="btn btn-default" aria-label="Left Align" title="Return to Quotes">
+							<button type="button" class="btn btn-default returntoQuotes" aria-label="Left Align" title="Return to Quotes">
 								<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
 							</button>
 
@@ -2535,7 +2536,7 @@
 
 
 
-			$('#quoteContainer').on('click', '#returntoQuotes', function () {
+			$('#quoteContainer').on('click', '.returntoQuotes', function () {
 				//location.reload();
 				$('#quotes').show();
 				$('#quoteContainer').hide();
