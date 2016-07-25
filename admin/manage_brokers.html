@@ -128,6 +128,7 @@
 								<button type="button" class="btn btn-primary" id="delete-broker">Delete</button>
 								<button type="button" class="btn btn-primary" id="update-broker">Update</button>
 								<button type="button" class="btn btn-primary" id="create-broker">Create</button>
+								<button type="button" class="btn btn-primary" id="devices">Devices</button>
 							</div>
 						</div>
 
@@ -135,181 +136,301 @@
 				</div>
 
 
+				<!-- Modal -->
+				<div id="deviceModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Manage Device</h4>
+							</div>
+							<div class="modal-body">
+								<div class="message"></div>
+
+								<table class="table" id="deviceTable">
+									<thead>
+										<tr>
+											<th>
+												Device
+											</th>
+											<th>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" id="add-device">Add Device</button>
+							</div>
+
+						</div>
+					</div>
+
+
+
+				</div>
 			</div>
 		</div>
-	</div>
 
 
 
-	<div class="loadingModal">
-		<!-- Place at bottom of page -->
-	</div>
-	<div class="footer" style="background-color:rgb(231,231,231)!important">
-		<div class="footer-inner">
-			2016 &copy; Ironrock Insurance.
+		<div class="loadingModal">
+			<!-- Place at bottom of page -->
 		</div>
-		<div class="footer-tools">
-			<span class="go-top">
+		<div class="footer" style="background-color:rgb(231,231,231)!important">
+			<div class="footer-inner">
+				2016 &copy; Ironrock Insurance.
+			</div>
+			<div class="footer-tools">
+				<span class="go-top">
 			    <i class="fa fa-angle-up"></i>
 		    </span>
+			</div>
 		</div>
-	</div>
 
 
 
-	<script src="/Scripts/bootbox.js"></script>
-	<!--Required Libraries-->
-	<script src="/aws/jsbn.js"></script>
-	<script src="/aws/jsbn2.js"></script>
-	<script src="/aws/sjcl.js"></script>
-	<script src="/aws/moment.min.js"></script>
-	<script src="/aws/aws-cognito-sdk.min.js"></script>
-	<script src="/aws/amazon-cognito-identity.min.js"></script>
-	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
-	<!--Iron Rock Custom Library-->
-	<script src="/aws/ironrockcloudservice.js"></script>
-	<script src="/aws/index.js"></script>
+		<script src="/Scripts/bootbox.js"></script>
+		<!--Required Libraries-->
+		<script src="/aws/jsbn.js"></script>
+		<script src="/aws/jsbn2.js"></script>
+		<script src="/aws/sjcl.js"></script>
+		<script src="/aws/moment.min.js"></script>
+		<script src="/aws/aws-cognito-sdk.min.js"></script>
+		<script src="/aws/amazon-cognito-identity.min.js"></script>
+		<script src="/aws/aws-sdk-2.3.19.min.js"></script>
+		<!--Iron Rock Custom Library-->
+		<script src="/aws/ironrockcloudservice.js"></script>
+		<script src="/aws/index.js"></script>
 
-	<script type="text/javascript">
-		$(document).ready(function () {
-			doPrimaryFunctions(function (err, obj) {
-				listBrokers(obj);
-			});
-
-
-			$('#create-broker').click(function () {
-				var dataInput = {};
-				dataInput.code = $('#code').val().toUpperCase();
-				dataInput.name = $('#name').val();
-				dataInput.globalName = $('#globalName').val();
-				dataInput.logo = $('#imgLogo').attr('src');
-				if (!(dataInput.code).match(/[a-z]/i)) {
-					alert('Code must contain letters only');
-					return;
-				}
-
-				if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
-					alert('Code,Name or GlobalName cannot be null!');
-					return;
-				}
-				if (!dataInput.logo) {
-					dataInput.logo = '#';
-				}
-				setLoadingState(true);
-				g_ironrock_service.createBroker(dataInput, function (err, data) {
-					setLoadingState(false);
-					$('#brokerModal').modal('hide');
-					listBrokers();
+		<script type="text/javascript">
+			$(document).ready(function () {
+				doPrimaryFunctions(function (err, obj) {
+					listBrokers(obj);
 				});
-			})
 
 
-			$('#update-broker').click(function () {
-				var dataInput = {};
-				dataInput.code = $('#code').val();
-				dataInput.name = $('#name').val();
-				dataInput.globalName = $('#globalName').val();
-				dataInput.logo = $('#imgLogo').attr('src');
-				if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
-					alert('Code,Name or GlobalName cannot be null!');
-					return;
-				}
-				if (!dataInput.logo) {
-					dataInput.logo = '#';
-				}
-				setLoadingState(true);
-				g_ironrock_service.modifyBroker(dataInput, function (err, data) {
-					setLoadingState(false);
-					$('#brokerModal').modal('hide');
-					listBrokers();
-				});
-			})
 
-
-			$('#delete-broker').click(function () {
-				if (confirm('Are you sure?')) {
-					var code = $('#code').val();
-					setLoadingState(true);
-					g_ironrock_service.deleteBroker(code, function (err, data) {
-						setLoadingState(false);
-						listBrokers();
-						$('#brokerModal').modal('hide');
+				var getDevices = function (callback) {
+					var brokerCode = $("#brokerModal #code").val();
+					g_ironrock_service.listDevices(brokerCode, function (err, data) {
+						var tcontent = $('#deviceTable tbody').html('');
+						var items = JSON.parse(data.Payload);
+						$.each(items, function (idx, val) {
+							tcontent.append('<tr><td>' + val.deviceId +
+								'</td><td><button type="button" id="' + val.deviceId +
+								'" class="btn btn-link deleteDevice">Delete</button></td></tr>');
+						});
+						callback(err);
+						//
 					});
 				}
-			})
 
 
-			$('#btnCreateBroker').click(function () {
-				$('#code').val('').prop('readonly', false);
-				$('#name').val('').prop('readonly', false);
-				$('#globalName').val('').prop('readonly', false);
-				$('#imgLogo').attr('src', '');
-				$("#inpLogo").val('');
-				$('#update-broker').hide();
-				$('#delete-broker').hide();
-				$('#create-broker').show();
-				$('#brokerModal .modal-title').text('Create Broker');
-				$('#brokerModal').modal('show');
-			});
-
-			$('#brokerTable tbody').on('click', '.select', function (e) {
-				var id = e.target.id;
-				setLoadingState(true);
-				g_ironrock_service.getBroker(id, function (err, data) {
-					setLoadingState(false);
-					var item = JSON.parse(data.Payload);
-					$('#code').val(item.code).prop('readonly', true);
-					$('#name').val(item.name);
-					$('#globalName').val(item.globalName);
-					$('#imgLogo').attr('src', item.logo);
-					$("#inpLogo").val('');
-					$('#update-broker').show();
-					$('#create-broker').hide();
-					$('#delete-broker').show();
-					$('#brokerModal .modal-title').text('Update Broker');
-					$('#brokerModal').modal('show');
+				$('#devices').click(function () {
+					setLoadingState(true);
+					getDevices(function () {
+						setLoadingState(false);
+						$('#deviceModal').modal('show');
+					});
 				});
-			})
 
-			$("#inpLogo").change(function () {
-				readImgLogoURL(this);
-			});
 
-			function readImgLogoURL(input) {
 
-				if (input.files && input.files[0]) {
-					var reader = new FileReader();
+				$('#add-device').click(function () {
+					bootbox.prompt('Device ID', function (deviceId) {
+						setLoadingState(true);
+						var devicejson = {};
+						devicejson.deviceId = deviceId;
+						devicejson.brokerCode = $("#brokerModal #code").val();
+						g_ironrock_service.createDevice(devicejson, function (err, data) {
+							getDevices(function () {
+								setLoadingState(false);
+							});
+							//$('#deviceModal').modal('hide');
+						});
 
-					reader.onload = function (e) {
-						$('#imgLogo').attr('src', e.target.result);
-					}
-					reader.readAsDataURL(input.files[0]);
-				}
-			}
+					});
+				});
 
-			function listBrokers(obj) {
-				setLoadingState(true);
-				obj = obj == null ? g_ironrock_service : obj;
-				obj.listBrokers(function (err, data) {
-					setLoadingState(false);
-					if (err) {
-						display(err.message, err);
-						return;
-					}
-					var tcontent = $('#brokerTable tbody').html('');
-					var items = JSON.parse(data.Payload);
-					$.each(items, function (idx, val) {
-						tcontent.append('<tr><td>' + val.code +
-							'</td><td>' + val.name +
-							'</td><td><button type="button" id="' + val.code +
-							'" class="btn btn-link select">Select</button></td></tr>');
+				$('#deviceTable tbody').on('click', '.deleteDevice', function (e) {
+					var id = e.target.id;
+					setLoadingState(true);
+					g_ironrock_service.deleteDevice(id, function (err, data) {
+						getDevices(function () {
+							setLoadingState(false);
+						});
 					});
 				})
-			}
+
+				/////end devices
 
 
-		});
-	</script>
+				function listBrokers(obj) {
+					setLoadingState(true);
+					obj = obj == null ? g_ironrock_service : obj;
+					obj.listBrokers(function (err, data) {
+						setLoadingState(false);
+						if (err) {
+							display(err.message, err);
+							return;
+						}
+						var tcontent = $('#brokerTable tbody').html('');
+						var items = JSON.parse(data.Payload);
+						$.each(items, function (idx, val) {
+							tcontent.append('<tr><td>' + val.code +
+								'</td><td>' + val.name +
+								'</td><td><button type="button" id="' + val.code +
+								'" class="btn btn-link select">Select</button></td></tr>');
+						});
+					})
+				}
+
+
+
+
+
+
+
+
+
+				$('#create-broker').click(function () {
+					var dataInput = {};
+					dataInput.code = $('#code').val().toUpperCase();
+					dataInput.name = $('#name').val();
+					dataInput.globalName = $('#globalName').val();
+					dataInput.logo = $('#imgLogo').attr('src');
+					if (!(dataInput.code).match(/[a-z]/i)) {
+						alert('Code must contain letters only');
+						return;
+					}
+
+					if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
+						alert('Code,Name or GlobalName cannot be null!');
+						return;
+					}
+					if (!dataInput.logo) {
+						dataInput.logo = '#';
+					}
+					setLoadingState(true);
+					g_ironrock_service.createBroker(dataInput, function (err, data) {
+						setLoadingState(false);
+						$('#brokerModal').modal('hide');
+						listBrokers();
+					});
+				})
+
+
+				$('#update-broker').click(function () {
+					var dataInput = {};
+					dataInput.code = $('#code').val();
+					dataInput.name = $('#name').val();
+					dataInput.globalName = $('#globalName').val();
+					dataInput.logo = $('#imgLogo').attr('src');
+					if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
+						alert('Code,Name or GlobalName cannot be null!');
+						return;
+					}
+					if (!dataInput.logo) {
+						dataInput.logo = '#';
+					}
+					setLoadingState(true);
+					g_ironrock_service.modifyBroker(dataInput, function (err, data) {
+						setLoadingState(false);
+						$('#brokerModal').modal('hide');
+						listBrokers();
+					});
+				})
+
+
+				$('#delete-broker').click(function () {
+					if (confirm('Are you sure?')) {
+						var code = $('#code').val();
+						setLoadingState(true);
+						g_ironrock_service.deleteBroker(code, function (err, data) {
+							setLoadingState(false);
+							listBrokers();
+							$('#brokerModal').modal('hide');
+						});
+					}
+				})
+
+
+				$('#btnCreateBroker').click(function () {
+					$('#code').val('').prop('readonly', false);
+					$('#name').val('').prop('readonly', false);
+					$('#globalName').val('').prop('readonly', false);
+					$('#imgLogo').attr('src', '');
+					$("#inpLogo").val('');
+					$('#update-broker').hide();
+					$('#delete-broker').hide();
+					$('#create-broker').show();
+					$('#brokerModal .modal-title').text('Create Broker');
+					$('#brokerModal').modal('show');
+				});
+
+				$('#brokerTable tbody').on('click', '.select', function (e) {
+					var id = e.target.id;
+					setLoadingState(true);
+					g_ironrock_service.getBroker(id, function (err, data) {
+						setLoadingState(false);
+						var item = JSON.parse(data.Payload);
+						$('#code').val(item.code).prop('readonly', true);
+						$('#name').val(item.name);
+						$('#globalName').val(item.globalName);
+						$('#imgLogo').attr('src', item.logo);
+						$("#inpLogo").val('');
+						$('#update-broker').show();
+						$('#create-broker').hide();
+						$('#delete-broker').show();
+						$('#brokerModal .modal-title').text('Update Broker');
+						$('#brokerModal').modal('show');
+					});
+				})
+
+				$("#inpLogo").change(function () {
+					readImgLogoURL(this);
+				});
+
+				function readImgLogoURL(input) {
+
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+
+						reader.onload = function (e) {
+							$('#imgLogo').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(input.files[0]);
+					}
+				}
+
+				function listBrokers(obj) {
+					setLoadingState(true);
+					obj = obj == null ? g_ironrock_service : obj;
+					obj.listBrokers(function (err, data) {
+						setLoadingState(false);
+						if (err) {
+							display(err.message, err);
+							return;
+						}
+						var tcontent = $('#brokerTable tbody').html('');
+						var items = JSON.parse(data.Payload);
+						$.each(items, function (idx, val) {
+							tcontent.append('<tr><td>' + val.code +
+								'</td><td>' + val.name +
+								'</td><td><button type="button" id="' + val.code +
+								'" class="btn btn-link select">Select</button></td></tr>');
+						});
+					})
+				}
+
+
+			});
+		</script>
 
 
 

@@ -110,7 +110,7 @@
 		});
 
 		$('#getBroker').click(function () {
-			g_ironrock_service.getBroker($('#code').val(), function (err, data) {
+			g_ironrock_service.getPubicBroker($('#code').val(), function (err, data) {
 				$('#desc').html('Broker Name:<b>' + data.name + '</b>');
 				$('#img').attr('src', data.logo);
 			});

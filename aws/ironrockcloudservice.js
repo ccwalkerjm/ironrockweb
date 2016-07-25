@@ -805,7 +805,7 @@ var ironrockcloudservice = (function () {
 
 
 	//get Broker details----public access
-	ironrockcloudservice.prototype.getBroker = function (code, callback) {
+	ironrockcloudservice.prototype.getPubicBroker = function (code, callback) {
 		var dynamodb = new AWS.DynamoDB({
 			apiVersion: '2012-08-10'
 		});
@@ -844,6 +844,92 @@ var ironrockcloudservice = (function () {
 			}
 		});
 	};
+
+	//devices
+	//list Devices
+	ironrockcloudservice.prototype.listDevices = function (brokerCode, callback) {
+		var jsonRequest = {};
+		jsonRequest.request = {
+			'cmd': 'listDevices',
+			'data': {
+				'brokerCode': brokerCode
+			}
+		};
+		jsonRequest.auth = _getAuth();
+		var requestSerialized = JSON.stringify(jsonRequest);
+		var params = {
+			FunctionName: 'ironrockAdminFunc',
+			Payload: requestSerialized
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+	//get Device
+	ironrockcloudservice.prototype.getDevice = function (DeviceId, callback) {
+		var jsonRequest = {};
+		jsonRequest.request = {
+			'cmd': 'getDevice',
+			'data': {
+				'deviceId': DeviceId
+			}
+		};
+		jsonRequest.auth = _getAuth();
+		var requestSerialized = JSON.stringify(jsonRequest);
+		var params = {
+			FunctionName: 'ironrockAdminFunc',
+			Payload: requestSerialized
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+
+	//create Device
+	ironrockcloudservice.prototype.createDevice = function (data, callback) {
+		var jsonRequest = {};
+		jsonRequest.request = {
+			'cmd': 'createDevice',
+			'data': data
+		};
+		jsonRequest.auth = _getAuth();
+		var requestSerialized = JSON.stringify(jsonRequest);
+		var params = {
+			FunctionName: 'ironrockAdminFunc',
+			Payload: requestSerialized
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+
+	//delete Device
+	ironrockcloudservice.prototype.deleteDevice = function (DeviceId, callback) {
+		var jsonRequest = {};
+		jsonRequest.request = {
+			'cmd': 'deleteDevice',
+			'data': {
+				'deviceId': DeviceId
+			}
+		};
+		jsonRequest.auth = _getAuth();
+		var requestSerialized = JSON.stringify(jsonRequest);
+		var params = {
+			FunctionName: 'ironrockAdminFunc',
+			Payload: requestSerialized
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+	//end devices brokerking//
 
 
 	return ironrockcloudservice;
