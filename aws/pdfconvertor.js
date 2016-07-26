@@ -79,20 +79,20 @@ function CreatePDF(resp) {
 	doc.text(150, 90, resp.applicantIDType);
 	doc.text(150, 95, resp.applicantIDnumber);
 	doc.text(150, 100, resp.applicationIDExpirationDate);
-	/* doc.text(150, 105, resp.SourceOfFunds); */
+    doc.text(150, 105, resp.SourceOfFunds); 
 
 	doc.text(20, 120, resp.applicantHomeStreetName);
 	doc.text(20, 130, resp.applicantHomeTown);
 	doc.text(50, 135, resp.applicantHomeParish);
-	/* doc.text(150, 115, resp.applicantTRN); */
+	//doc.text(150, 115, resp.applicantTRN); 
 	doc.text(150, 120, resp.applicantEmailAddress);
-	/* doc.text(150, 125, resp.ApplicantMobileNumber);
-	 */
+	doc.text(150, 125, resp.applicantMobileNumber);
+
 	doc.text(150, 130, resp.applicantHomeNumber);
 	doc.text(150, 135, resp.applicantWorkNumber);
 	/* doc.text(20, 150, resp.applicantMailStreetName); */
 	doc.text(20, 160, resp.applicantMailTown);
-	//doc.text(50, 165, resp.applicantMailParish);
+	doc.text(50, 165, resp.applicantMailParish);
 	doc.text(150, 145, resp.applicantDateOfBirth);
 	doc.text(150, 150, resp.applicantPlaceOfBirth);
 	doc.text(150, 155, resp.applicantNationality);
@@ -309,11 +309,11 @@ function setMotorVehiclePages(resp) {
 
 	doc.setFontType("italic");
 
-	/* doc.text(20, 50, resp.isOwnerOfVehicle); */
+	doc.text(20, 50, resp.isOwnerOfVehicle);
 
 	doc.text(20, 60, resp.nameAddressOfOwner);
 
-	/*  doc.text(20, 70, resp.trailerUsed); */
+	doc.text(20, 70, resp.trailerUsed); 
 
 	doc.text(50, 90, resp.lienHolderNameInFull);
 
