@@ -84,13 +84,30 @@ function CreatePDF(resp) {
 	doc.text(20, 120, resp.applicantHomeStreetName);
 	doc.text(20, 130, resp.applicantHomeTown);
 	doc.text(50, 135, resp.applicantHomeParish);
-	//doc.text(150, 115, resp.applicantTRN); 
+	doc.text(150, 115, resp.applicantIDnumber); 
 	doc.text(150, 120, resp.applicantEmailAddress);
 	doc.text(150, 125, resp.applicantMobileNumber);
 
 	doc.text(150, 130, resp.applicantHomeNumber);
 	doc.text(150, 135, resp.applicantWorkNumber);
-	/* doc.text(20, 150, resp.applicantMailStreetName); */
+     if(resp.mailingAddressSame=="yes"){
+        doc.text(20, 150, resp.applicantHomeStreetName);
+    }else{
+        doc.text(20, 150, resp.applicantMailStreetName);
+    }
+    
+    if(resp.mailingAddressSame=="yes"){
+        doc.text(20, 160, resp.applicantHomeTown);
+    }else{
+        doc.text(20, 160, resp.applicantMailTown);
+    }
+    
+    if(resp.mailingAddressSame=="yes"){
+        doc.text(50, 165, resp.applicantHomeParish);
+    }else{
+       doc.text(50, 165, resp.applicantMailParish);
+    }
+	
 	doc.text(20, 160, resp.applicantMailTown);
 	doc.text(50, 165, resp.applicantMailParish);
 	doc.text(150, 145, resp.applicantDateOfBirth);
@@ -272,7 +289,7 @@ function setMotorVehiclePages(resp) {
 	doc.setFontType("bold");
 	doc.text(20, 85, "Lien Holder");
 
-	doc.text(20, 110, "Select cover required(tick the appropriate box)");
+	doc.text(20, 110, "Select cover required");
 
 	doc.setFontType("normal");
 	doc.text(20, 45, "Are you the owner of the vehicle(s) and is/are/they registered in your name?");
@@ -322,10 +339,12 @@ function setMotorVehiclePages(resp) {
 	doc.text(150, 100, resp.lienHolderTown);
 
 	doc.text(150, 105, resp.lienHolderParish);
+    
+    doc.text(20, 115, resp.insuranceCoverage);
 
 	doc.text(20, 125, resp.vehicleUsedAs);
 
-	/* doc.text(20, 135, resp.vehicleAntiTheftDevice); */
+	doc.text(20, 135, resp.vehicleAntiTheftDevice); 
 
 	doc.text(20, 145, resp.vehicleAntiTheftDeviceName + " " + resp.vehicleAntiTheftDeviceType + " " + resp.vehicleAntiTheftDeviceNameOfProvider);
 
@@ -600,44 +619,44 @@ function lastPage(resp) {
 
 	doc.text(20, 26, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
 
-	doc.text(20, 31, "I declare that the information given above has been verified by original");
+	doc.text(20, 31, "I declare that the information given above has been verified by original documents to ensure the veracity of the information given.");
 
-	doc.text(20, 33, "documents to ensure the veracity of the information given.");
+	
 
 	doc.setFontType("bold");
 	doc.text(20, 60, "Customer service Representative");
 
-	doc.text(110, 33, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT");
-	doc.text(110, 36, "IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
+	doc.text(20, 130, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
+	
 
 	doc.setFontType("normal");
 
-	doc.text(20, 63, "I/We declare that the above answers are true and that all particulars ");
-	doc.text(20, 66, "affecting the assessment of the risk have been disclosed.");
+	doc.text(20, 63, "I/We declare that the above answers are true and that all particulars affecting the assessment of the risk have been disclosed.");
+	
 
-	doc.text(110, 43, "Surname:");
+	doc.text(20, 142, "Surname:");
 
-	doc.text(110, 46, "First Name:");
+	doc.text(20, 145, "First Name:");
 
-	doc.text(110, 49, "Middle Name:");
+	doc.text(20, 148, "Middle Name:");
 
-	doc.text(110, 52, "Date of Birth:");
+	doc.text(20, 151, "Date of Birth:");
 
-	doc.text(110, 55, "Nationality:");
+	doc.text(20, 154, "Nationality:");
 
-	doc.text(110, 58, "TRN No.:");
+	doc.text(20, 157, "TRN No.:");
 
-	doc.text(110, 61, "Address:");
+	doc.text(20, 160, "Address:");
 
 	doc.setFontType("bold");
 
-	doc.text(110, 40, "Agent Details");
+	doc.text(20, 139, "Agent Details");
 
 	doc.text(20, 70, "Proposer's Signature/Date");
 
 	doc.text(20, 100, "Joint Proposer's Signature Date");
 
-	doc.text(160, 40, "Agent Signature Date");
+	doc.text(20, 163, "Agent Signature Date");
 
 
 	if (resp.signatureBytes) {
