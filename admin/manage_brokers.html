@@ -228,7 +228,7 @@
 						callback(err);
 						//
 					});
-				}
+				};
 
 
 				$('#devices').click(function () {
@@ -265,32 +265,9 @@
 							setLoadingState(false);
 						});
 					});
-				})
+				});
 
 				/////end devices
-
-
-				function listBrokers(obj) {
-					setLoadingState(true);
-					obj = obj == null ? g_ironrock_service : obj;
-					obj.listBrokers(function (err, data) {
-						setLoadingState(false);
-						if (err) {
-							display(err.message, err);
-							return;
-						}
-						var tcontent = $('#brokerTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							tcontent.append('<tr><td>' + val.code +
-								'</td><td>' + val.name +
-								'</td><td><button type="button" id="' + val.code +
-								'" class="btn btn-link select">Select</button></td></tr>');
-						});
-					})
-				}
-
-
 
 
 
@@ -322,7 +299,7 @@
 						$('#brokerModal').modal('hide');
 						listBrokers();
 					});
-				})
+				});
 
 
 				$('#update-broker').click(function () {
@@ -344,7 +321,7 @@
 						$('#brokerModal').modal('hide');
 						listBrokers();
 					});
-				})
+				});
 
 
 				$('#delete-broker').click(function () {
@@ -357,7 +334,7 @@
 							$('#brokerModal').modal('hide');
 						});
 					}
-				})
+				});
 
 
 				$('#btnCreateBroker').click(function () {
@@ -390,7 +367,7 @@
 						$('#brokerModal .modal-title').text('Update Broker');
 						$('#brokerModal').modal('show');
 					});
-				})
+				});
 
 				$("#inpLogo").change(function () {
 					readImgLogoURL(this);
@@ -403,14 +380,14 @@
 
 						reader.onload = function (e) {
 							$('#imgLogo').attr('src', e.target.result);
-						}
+						};
 						reader.readAsDataURL(input.files[0]);
 					}
 				}
 
 				function listBrokers(obj) {
 					setLoadingState(true);
-					obj = obj == null ? g_ironrock_service : obj;
+					obj = obj ? obj : g_ironrock_service;
 					obj.listBrokers(function (err, data) {
 						setLoadingState(false);
 						if (err) {
@@ -425,8 +402,35 @@
 								'</td><td><button type="button" id="' + val.code +
 								'" class="btn btn-link select">Select</button></td></tr>');
 						});
-					})
+					});
 				}
+
+
+				/*function listBrokers(obj) {
+					setLoadingState(true);
+					obj = obj === null ? g_ironrock_service : obj;
+					obj.listBrokers(function (err, data) {
+						setLoadingState(false);
+						if (err) {
+							display(err.message, err);
+							return;
+						}
+						var tcontent = $('#brokerTable tbody').html('');
+						var items = JSON.parse(data.Payload);
+						$.each(items, function (idx, val) {
+							tcontent.append('<tr><td>' + val.code +
+								'</td><td>' + val.name +
+								'</td><td><button type="button" id="' + val.code +
+								'" class="btn btn-link select">Select</button></td></tr>');
+						});
+					});
+				}*/
+
+
+
+
+
+
 
 
 			});

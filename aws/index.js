@@ -80,7 +80,7 @@ function ConvertToJson(r) {
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
-	if (g_quote_wizard_html == null) {
+	if (!g_quote_wizard_html) {
 		g_quote_wizard_html = $('#quote-section').html();
 	}
 	$('#quote-section').html(g_quote_wizard_html);
@@ -448,7 +448,7 @@ function populateApplicant(r) {
 	//address
 	$('#applicantSurname').val(r.lastName);
 	$('#applicantFirstName').val(r.firstName);
-	$('#FirstName').val(r.firstName);
+	//$('#FirstName').val(r.firstName);
 	$('#applicantMiddleName').val(r.middleName);
 	$('#applicantDateOfBirth').val(r.dateOfBirth.substring(0, 10));
 	$('#applicantTitle').val(r.gender == 'M' ? 'Mr.' : 'Ms.');
@@ -873,7 +873,7 @@ function doPrimaryFunctions(callback) {
 			} else {
 				$('#disclaimerContainer').hide();
 				$('#submit-btn').hide();
-				$('#quotation-number').val(r.quotation_number);
+				$('#quotation_number').val(r.quotation_number);
 				var $container = $('#quotation');
 				loadQuotation($container, r);
 				$('.button-previous').prop('disabled', true);
@@ -1056,7 +1056,7 @@ function doPrimaryFunctions(callback) {
 		var plateno = $('#QueryVehicleRegistrationNo').val().replace(/ /g, '').toUpperCase();
 		var chassisno = $('#QueryVehicleChassisNo').val();
 
-		if (plateno == null && chassisno == null) {
+		if (!plateno && !chassisno) {
 			alert("Registration No and Chassis No cannot be blank");
 			return;
 		}

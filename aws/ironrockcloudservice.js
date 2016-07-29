@@ -1,17 +1,21 @@
+//'use strict';
+/*jshint esversion: 6 */
+/*jslint nomen: true */
 // Class definition 
+
 var ironrockcloudservice = (function () {
 	//edited July 18, 2016 4:27pm
 	//fixed lambda error..
 	//edited July 18, 2016 10:14 am
 	//added misc..
 	'use strict';
-	/*jslint nomen: true */
-	//private properties and methods
 	const IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
 	const USER_POOL_ID = 'us-east-1_sXSIoZ4vD';
 	const CLIENT_ID = '65qcrqbc1tkru2unrkegerschk';
 	const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
 	const AWS_REGION = 'us-east-1';
+	//private properties and methods
+
 
 	var _creds = new AWS.CognitoIdentityCredentials({
 		IdentityPoolId: IDENTITY_POOL
@@ -376,7 +380,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc:5',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();

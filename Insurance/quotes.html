@@ -57,20 +57,20 @@
 			</ul>
 		</div>
 	</div>
-	<div class="clearfix" />
+	<div class="clearfix"></div>
 
 	<div class="page-container">
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
 
-				<div id="quotes" class='container'>
+				<div id="quotes" class='container' style="display:none">
 					<h1>Quotes</h1>
 					<p>
 						<button type="button" class="btn btn-link" id="createQuote">Create Quote</button>
 					</p>
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-4" id="searchColumn" style="display:none">
 							<h2>Quote Search</h2>
 							<form role="form">
 								<div class="form-group">
@@ -108,8 +108,11 @@
 								<button type="button" class="btn btn-default" id="doSearch">Submit</button>
 							</form>
 						</div>
-						<div class="col-md-4">
-							<h2>Quotes</h2>
+						<div class="col-md-8">
+							<h2>Selected Quotes</h2>
+							<p>
+								<button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button>
+							</p>
 							<table class="table" id="quotesTable">
 								<thead>
 									<tr>
@@ -205,7 +208,7 @@
 										<input type="hidden" id="signatureImageType" name="signatureImageType" />
 										<input type="hidden" id="insuranceType" name="insuranceType" />
 										<input type="hidden" id="egovDriversLicenseDetails" name="egovDriversLicenseDetails" />
-										<input type="hidden" id="applicantQuoteNo" name="applicantQuoteNo" />
+										<input type="hidden" id="quotation_number" name="quotation_number" />
 
 										<div class="form-inline" role="form">
 											<div class="form-group">
@@ -233,7 +236,6 @@
 													<div class="form-group">
 														<label class="control-label col-sm-2" for="applicantFirstName">FirstName:</label>
 														<div class="col-sm-10">
-															<input type="hidden" id="FirstName" name="FirstName" />
 															<input required class="form-control" type="text" id="applicantFirstName" name="applicantFirstName" placeholder="Enter FirstName" readonly>
 														</div>
 													</div>
@@ -2189,7 +2191,7 @@
 										<button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
 										<button type="button" id="reset-btn" class="btn btn-warning">Reset</button>
 									</div>
-									<input type="hidden" id="quotation-number" />
+
 									<div id="quotation"></div>
 
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
@@ -2413,14 +2415,66 @@
 		$(document).ready(function () {
 			var currentQuote;
 			doPrimaryFunctions(function (err, obj) {
+				//
+				if (!g_quote_wizard_html) {
+					g_quote_wizard_html = $('#quote-section').html();
+				}
+				$('#quote-section').html(g_quote_wizard_html);
+				////
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
 				$('#dateFr').val(lastYear + '-01-01');
 				$('#dateTo').val(yyyy + '-12-31');
-				var urlParts = location.href.split("#");
-				if (urlParts[1] == "createQuote") createQuote();
+				//var urlParts = location.hash.split("#");
+				if (location.hash == "#createQuote")
+					createQuote();
+				else {
+					queryQuotes();
+					$("#doSearch").trigger("click");
+				}
 			});
+
+			$('#sidebar').on('click', 'a', function (e) {
+				e.preventDefault();
+				var urlParts = $(this).attr('href').split("#");
+				if (urlParts[1] == "createQuote") {
+					createQuote();
+				} else if (urlParts[0] == '/Insurance/quotes.html') {
+					queryQuotes();
+				} else {
+					location.href = $(this).attr('href');
+				}
+			})
+
+
+			//create quote selection
+			$('#createQuote').click(function () {
+				createQuote();
+			});
+
+			function queryQuotes() {
+				$('#quotes').show();
+				$('#quoteContainer').hide();
+				$('#newQuoteTypeSelection').hide();
+				//$('#quote-section').hide();
+				$('#quote-section').empty();
+				//last reset currentQuote
+				currentQuote = {};
+			}
+
+			function createQuote() {
+				currentQuote = null;
+				$('#quotes').hide();
+				$('#quoteContainer').show();
+				$('#newQuoteTypeSelection').show();
+				$('#quote-section').hide();
+			}
+
+			$('#searchBtn').click(function () {
+				$('#searchColumn').toggle();
+			})
+
 
 			function getBaseUrl() {
 				var re = new RegExp(/^.*\//);
@@ -2440,35 +2494,47 @@
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
-				g_ironrock_service.searchQuotes(payload, function (err, resp) {
+				g_ironrock_service.searchQuotes(payload, function (err, quoteList) {
 					setLoadingState(false);
 					if (err) {
 						alert("error: " + err.statusText);
 						return;
 					}
-					if (resp == null) {
+					if (!quoteList) {
 						alert('No quotes returned!');
 						return;
 					}
-					resp = ConvertToJson(resp);
-					var quotes = resp.sort(function (a, b) {
-						return b.id - a.id;
+					g_ironrock_service.listBrokers(function (err, data) {
+						var brokers = JSON.parse(data.Payload);
+						quoteList = ConvertToJson(quoteList);
+						var quotes = quoteList.sort(function (a, b) {
+							return b.id - a.id;
+						});
+						// ascending order
+						var dlTable = $('#quotesTable tbody').html('');
+						$.each(quotes, function (idx, r) {
+							var data = r.request; // ConvertToJson(r.request);
+							var brokerName = r.broker;
+							$.each(brokers, function (i, b) {
+								if (b.code == r.broker) {
+									brokerName = b.name;
+								}
+							});
+							dlTable.append('<tr><td>' + r.id + '</td><td>' +
+								data.applicantFirstName + '</td><td>' +
+								data.applicantSurname + '</td><td>' +
+								data.insuranceType + '</td><td>' +
+								brokerName + '</td><td><button class="btn btn-link select" id="' +
+								r.id + '">Select</button></td></tr>');
+						})
 					});
-					// ascending order
-
-					var dlTable = $('#quotesTable tbody').html('');
-					$.each(quotes, function (idx, r) {
-						var data = r.request; // ConvertToJson(r.request);
-						dlTable.append('<tr><td>' + r.id + '</td><td>' +
-							data.FirstName + '</td><td>' +
-							data.applicantSurname + '</td><td>' +
-							data.insuranceType + '</td><td>' +
-							r.broker + '</td><td><button class="btn btn-link select" id="' +
-							r.id + '">Select</button></td></tr>');
-					})
 				});
 
+
+
 			});
+
+
 
 
 			$('#quoteContainer').on('click', '#getUploadModal', function () {
@@ -2538,26 +2604,9 @@
 
 			$('#quoteContainer').on('click', '.returntoQuotes', function () {
 				//location.reload();
-				$('#quotes').show();
-				$('#quoteContainer').hide();
-				//remove quote
-				$('#quote-section').empty();
-				//last reset currentQuote
-				currentQuote = {};
+				queryQuotes();
+				//location.href = "/insurance/quotes.html"
 			});
-
-			//create quote selection
-			$('#createQuote').click(function () {
-				createQuote();
-			});
-
-			function createQuote() {
-				currentQuote = null;
-				$('#quotes').hide();
-				$('#quoteContainer').show();
-				$('#newQuoteTypeSelection').show();
-				$('#quote-section').hide();
-			}
 
 
 			//select new quote type
@@ -2605,14 +2654,15 @@
 							} else {
 								DisplayHeader();
 								listDocuments();
-								//populate images and canvases
-								fillLogoCanvas();
-								fillSignatureCanvas();
+								//display correct sections
 								$('#quotes').hide();
 								$('#quoteContainer').show();
 								$('#newQuoteTypeSelection').hide();
 								$('#quote-section').show();
-								///
+								//populate images and canvases
+								fillLogoCanvas();
+								fillSignatureCanvas();
+								//show links 
 								$('#getPDF').prop('disabled', false);
 								$('#convert').prop('disabled', false);
 								$('#getUploadModal').prop('disabled', false);
@@ -2704,7 +2754,7 @@
 				$('#applicantAlias').val(currentQuote.applicantAlias);
 				$('#applicantNationality').val(currentQuote.applicantNationality);
 				$('#applicantIDType').val(currentQuote.applicantIDType);
-				$('#applicantQuoteNo').val(currentQuote.applicantQuoteNo);
+				$('#quotation_number').val(currentQuote.applicantQuoteNo);
 				$('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
 
 				//contact
