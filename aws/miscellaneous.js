@@ -37,15 +37,14 @@ function doMiscellaneous() {
 
 	//medical history
 	$('.medicalCondition').change(function () {
-		var isChecked = false;
+		var isCheckedYes = false;
 		$('.medicalCondition').each(function (index, element) {
-			var checked_value = $(element).is(':checked');
-			if (checked_value) {
-				isChecked = true;
+			if ($(element).is(':checked') && $(element).val() == "yes") {
+				isCheckedYes = true;
 				return true;
 			}
 		})
-		if (isChecked) {
+		if (isCheckedYes) {
 			$('#medicalConditionDetails').show();
 		} else {
 			$('#medicalConditionDetails').hide();
@@ -68,11 +67,12 @@ function doMiscellaneous() {
 
 
 
-	$('input[type=radio][name=garageOutBuildingExists]').change(function () {
+	$('#quote-section').on('change', 'input[type=radio][name=garageOutBuildingExists]', function () {
+		var details = $('#home-particulars-page .garageOutBuildingClass');
 		if (this.value == 'yes') {
-			$('#divGarageOutBuilding').show();
-		} else if (this.value == 'transfer') {
-			$('#divGarageOutBuilding').hide();
+			details.show();
+		} else {
+			details.hide();
 		}
 	});
 
@@ -126,16 +126,6 @@ function doMiscellaneous() {
 		});
 		$('#HomeInsuranceContentTotalAmount').val(GetTotal(valList));
 	});
-
-
-
-	$('input[type=radio][name=homeInGoodState]').change(function () {
-		if (this.value == 'no')
-			$('#divhomeInGoodStateDetails').show();
-		else
-			$('#divhomeInGoodStateDetails').hide();
-	});
-
 
 
 	//homeHasWatersideStructure
@@ -195,7 +185,7 @@ function doMiscellaneous() {
 	//homeInGoodState
 	//$('#homeInGoodState').change(function () {
 	$('input[type=radio][name=homeInGoodState]').change(function () {
-		if (this.value == 'yes') {
+		if (this.value == 'no') {
 			$('#divhomeInGoodStateDetails').show();
 		} else {
 			$('#divhomeInGoodStateDetails').hide();
@@ -529,8 +519,8 @@ function resetAllAccident() {
 //Used As
 function setVehicleUsedAs(select_value) {
 	//hide and uncheck all inexperinecd driver elements
-	$('#InexperiencedDriverBlock input').prop('checked', false); // Unchecks it
-	$('#InexperiencedDriverBlock label, #InexperiencedDriverBlock input').hide();
+	//$('#InexperiencedDriverBlock input').prop('checked', false); // Unchecks it
+	//$('#InexperiencedDriverBlock label, #InexperiencedDriverBlock input').hide();
 	//$('label[for=a], input#a').hide();
 	//show relevant inputs
 	switch (select_value) {
@@ -538,17 +528,29 @@ function setVehicleUsedAs(select_value) {
 	case "CarriagePassengersNotHire": //private commercial
 	case "CarriagePassengersHire": //private commercial
 	case "CommercialTravelling": //private commercial
-		$('label[for=23YearsOldPrivateCommercial], input#23YearsOldPrivateCommercial').show();
-		$('label[for=36MonthsGeneralLicencePrivateCommercial], input#36MonthsGeneralLicencePrivateCommercial').show();
+		$('#23YearsOldPrivateCommercial').show();
+		$('#36MonthGeneralLicense').show();
+		$('#25yearsOldGeneral').hide();
+		$('#5YearsGeneralPublicCommercial').hide();
+		$('#21YearsPrivateCars').hide();
+		$('#24MonthsPrivateLicense').hide();
 		break;
 	case "GeneralCartage": //General Cartage  
-		$('label[for=25YearsOldGeneralCartage], input#25YearsOldGeneralCartage').show();
-		$('label[for=5YearsGeneralLicencePublicCommercial], input#5YearsGeneralLicencePublicCommercial').show();
+		$('#25yearsOldGeneral').show();
+		$('#5YearsGeneralPublicCommercial').show();
+		$('#23YearsOldPrivateCommercial').hide();
+		$('#36MonthGeneralLicense').hide();
+		$('#21YearsPrivateCars').hide();
+		$('#24MonthsPrivateLicense').hide();
 		break;
 	case "SocialDomesticPleasure": //private car
 	case "SocialDomesticPleasureBusiness": //private car
-		$('label[for=21YearsOldPrivateCars], input#21YearsOldPrivateCars').show();
-		$('label[for=24MonthsPrivateLicence], input#24MonthsPrivateLicence').show();
+		$('#21YearsPrivateCars').show();
+		$('#24MonthsPrivateLicense').show();
+		$('#25yearsOldGeneral').hide();
+		$('#5YearsGeneralPublicCommercial').hide();
+		$('#23YearsOldPrivateCommercial').hide();
+		$('#36MonthGeneralLicense').hide();
 		break;
 	}
 }
@@ -677,6 +679,10 @@ function resetRegularDriver() {
 		{
 			"class": "DriversDL",
 			"name": "regularDriversDL"
+        },
+		{
+			"class": "DriversDLExpirationDate",
+			"name": "regularDriversDLExpirationDate"
         },
 		{
 			"class": "DriversDLOriginalDateOfIssue",
@@ -1764,13 +1770,13 @@ function loadCountriesOptions() {
 function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle) {
 	var firstElement = elementClass.first();
 	var lastElement = elementClass.last();
-	var i = 0;
+	//var i = 0;
 
-	elementClass.each(function (index, e) {
+	elementClass.each(function (i, e) {
 		var element = $(this);
 		//change ids and names
-		$.each(objectList, function (jIndex, item) {
-			element.find('.' + item.class + ' input').attr('id', item.name + i).attr('name', item.name + i);
+		$.each(objectList, function (j, item) {
+			element.find('.' + item.class + ' :input').attr('id', item.name + i).attr('name', item.name + i);
 			element.find('.' + item.class + ' label').attr('for', item.name + i);
 		})
 
@@ -1789,7 +1795,7 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
 			element.find('.' + addBtnName).hide();
 		}
 		//change title
-		element.find('h4').text(elementTitle + ' ' + ++i);
+		element.find('h4').text(elementTitle + ' ' + (i + 1).toString());
 	});
 }
 

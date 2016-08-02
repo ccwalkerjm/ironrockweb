@@ -854,6 +854,8 @@ function doPrimaryFunctions(callback) {
 		//get signature data       
 		//var formData = $('form').serialize();
 		var jsonForm = $('form').serializeObject();
+		if (!parseInt(jsonForm.quotation_number))
+			delete jsonForm["quotation_number"];
 		var formData = JSON.stringify(jsonForm);
 		setLoadingState(true);
 		g_ironrock_service.submitQuote(formData, function (err, r) {

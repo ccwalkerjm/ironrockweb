@@ -64,7 +64,7 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 
-				<div id="quotes" class='container' style="display:none">
+				<div id="quotes" class="container" style="display:none">
 					<h1>Quotes</h1>
 					<p>
 						<button type="button" class="btn btn-link" id="createQuote">Create Quote</button>
@@ -74,32 +74,32 @@
 							<h2>Quote Search</h2>
 							<form role="form">
 								<div class="form-group">
-									<label for="quoteNo">Quote No:</label>
-									<input type="number" class="form-control" id="quoteNo">
+									<label for="searchQuoteNo">Quote No:</label>
+									<input type="number" class="form-control" id="searchQuoteNo">
 								</div>
 								<div class="form-group">
-									<label for="ident">ID No:</label>
-									<input type="number" class="form-control" id="ident">
+									<label for="searchId">ID No:</label>
+									<input type="number" class="form-control" id="searchId">
 								</div>
 								<div class="form-group">
-									<label for="firstname">First Name:</label>
-									<input type="text" class="form-control" id="firstname">
+									<label for="searchFirstname">First Name:</label>
+									<input type="text" class="form-control" id="searchFirstname">
 								</div>
 								<div class="form-group">
-									<label for="lastname">Last Name:</label>
-									<input type="text" class="form-control" id="lastname">
+									<label for="searchLastname">Last Name:</label>
+									<input type="text" class="form-control" id="searchLastname">
 								</div>
 								<div class="form-group">
-									<label for="dateFr">Date From:</label>
-									<input type="date" class="form-control" id="dateFr">
+									<label for="searchDateFr">Date From:</label>
+									<input type="date" class="form-control" id="searchDateFr">
 								</div>
 								<div class="form-group">
-									<label for="dateTo">Date To:</label>
-									<input type="date" class="form-control" id="dateTo">
+									<label for="searchDateTo">Date To:</label>
+									<input type="date" class="form-control" id="searchDateTo">
 								</div>
 								<div class="form-group">
-									<label for="insuranceType">Type:</label>
-									<select class="form-control" id="insuranceType">
+									<label for="searchInsuranceType">Type:</label>
+									<select class="form-control" id="searchInsuranceType">
 										<option value="">All Types</option>
 										<option value="motor">Motor Vehicle</option>
 										<option value="property">Home Property</option>
@@ -287,7 +287,7 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="control-label col-sm-2" for="applicantIDType" class="select">ID Type:</label>
+												<label class="control-label col-sm-2 select" for="applicantIDType">ID Type:</label>
 												<div class="col-sm-10">
 													<select class="form-control" id="applicantIDType" name="applicantIDType">
 														<option value="national">National ID</option>
@@ -310,6 +310,7 @@
 											</div>
 										</div>
 									</form>
+									<br/>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
 							</div>
@@ -419,10 +420,10 @@
 											<div class="controls-row">
 												<label class="control-label">Is Mailing Address Same as Home Address?</label>
 												<label class="radio inline">
-													<input type="radio" value="yes" name="mailingAddressSame" checked />Yes
+													<input type="radio" value="yes" name="mailingAddressSame" checked="checked">Yes
 												</label>
 												<label class="radio inline">
-													<input type="radio" value="no" name="mailingAddressSame" />No
+													<input type="radio" value="no" name="mailingAddressSame">No
 												</label>
 											</div>
 										</div>
@@ -488,6 +489,8 @@
 											</div>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -579,12 +582,13 @@
 												<div class="controls-row">
 													<label class="control-label"> Have you or any relative or close associate been entrusted with prominent pubic functions (e.g. Member of Parliament,
 														<br/>
-														<p align="left"> Senator or Mayor, Senior Government Official, Judiciary, Security forces)? </label>
-													<label class="radio inline">
-														<input type="radio" value="yes" name="applicantRelativeInPublicOffice" />Yes
+														<p align="left"> Senator or Mayor, Senior Government Official, Judiciary, Security forces)?</p>
 													</label>
 													<label class="radio inline">
-														<input type="radio" value="no" name="applicantRelativeInPublicOffice" checked />No
+														<input type="radio" value="yes" name="applicantRelativeInPublicOffice">Yes
+													</label>
+													<label class="radio inline">
+														<input type="radio" value="no" name="applicantRelativeInPublicOffice" checked="checked">No
 													</label>
 												</div>
 											</div>
@@ -633,6 +637,8 @@
 											</div>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -681,7 +687,7 @@
 										<div class="form-group">
 											<label class="control-label col-md-2" for="startDate">Insurance Start Date:</label>
 											<div class="col-md-10">
-												<input required class="form-control" name="startDate" type="date" id="startDate" placeholder="Start Date" />
+												<input required class="form-control startDate" name="startDate" type="date" placeholder="Start Date" />
 											</div>
 										</div>
 
@@ -691,10 +697,10 @@
 													<div class="controls-row">
 														<label class="control-label">Are you the owner of the vehicle?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="isOwnerOfVehicle" checked />Yes
+															<input type="radio" value="yes" name="isOwnerOfVehicle" checked="checked">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="isOwnerOfVehicle" />No
+															<input type="radio" value="no" name="isOwnerOfVehicle">No
 														</label>
 													</div>
 												</div>
@@ -718,10 +724,10 @@
 													<div class="controls-row">
 														<label class="control-label">Will a trailer be used?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="trailerUsed" />Yes
+															<input type="radio" value="yes" name="trailerUsed">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="trailerUsed" checked />No
+															<input type="radio" value="no" name="trailerUsed" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -739,10 +745,10 @@
 														<div class="controls-row">
 															<label class="control-label">Is there a Lien Holder?</label>
 															<label class="radio inline">
-																<input type="radio" value="yes" name="lienHolder" />Yes
+																<input type="radio" value="yes" name="lienHolder">Yes
 															</label>
 															<label class="radio inline">
-																<input type="radio" value="no" name="lienHolder" checked />No
+																<input type="radio" value="no" name="lienHolder" checked="checked">No
 															</label>
 														</div>
 													</div>
@@ -790,6 +796,8 @@
 										</div>
 
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -839,10 +847,10 @@
 													<div class="controls-row">
 														<label class="control-label">Is the vehicle fitted with an anti-theft device?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="vehicleAntiTheftDevice" />Yes
+															<input type="radio" value="yes" name="vehicleAntiTheftDevice">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="vehicleAntiTheftDevice" checked />No
+															<input type="radio" value="no" name="vehicleAntiTheftDevice" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -869,10 +877,10 @@
 													<div class="controls-row">
 														<label class="control-label">Will you have regular custody of the vehicle?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="vehicleRegularCustody" checked />Yes
+															<input type="radio" value="yes" name="vehicleRegularCustody" checked="checked">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="vehicleRegularCustody" />No
+															<input type="radio" value="no" name="vehicleRegularCustody">No
 														</label>
 													</div>
 												</div>
@@ -895,10 +903,10 @@
 														<div class="controls-row">
 															<label class="control-label">Is the vehicle garaged at the Proposer's home address?</label>
 															<label class="radio inline">
-																<input type="radio" value="yes" name="vehicleGaragedAtProposersHome" checked />Yes
+																<input type="radio" value="yes" name="vehicleGaragedAtProposersHome" checked="checked">Yes
 															</label>
 															<label class="radio inline">
-																<input type="radio" value="no" name="vehicleGaragedAtProposersHome" />No
+																<input type="radio" value="no" name="vehicleGaragedAtProposersHome">No
 															</label>
 														</div>
 													</div>
@@ -941,10 +949,10 @@
 													<div class="controls-row">
 														<label class="control-label">Is the Proposer now insured or was previously insured in respect of any vehicles(s)?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="proposerInsured" />Yes
+															<input type="radio" value="yes" name="proposerInsured">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="proposerInsured" checked />No
+															<input type="radio" value="no" name="proposerInsured" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -964,10 +972,10 @@
 													<div class="controls-row">
 														<label class="control-label">Is the proposer entitled to No Claim Discount from previous insurer(s) in respect of any vehicle(s) described in the proposal?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="proposerEntitledToNOClaimDiscount" />Yes
+															<input type="radio" value="yes" name="proposerEntitledToNOClaimDiscount">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="proposerEntitledToNOClaimDiscount" checked />No
+															<input type="radio" value="no" name="proposerEntitledToNOClaimDiscount" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -986,13 +994,12 @@
 													<div class="controls-row">
 														<label class="control-label">Do you have any other insurance(s) with IronRock Insurance
 															<br/>Company Ltd.?
-															<p align="left">
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="applicantOtherInsurer" />Yes
+															<input type="radio" value="yes" name="applicantOtherInsurer">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="applicantOtherInsurer" checked />No
+															<input type="radio" value="no" name="applicantOtherInsurer" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1018,7 +1025,7 @@
                                                                 <li>Cancelled or refused to renew an existing insurance?</li>
                                                             </ul>">Declined/Cancelled/Problematic Previous Insurance?:</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="applicantPreviouslyInsured" />Yes
+															<input type="radio" value="yes" name="applicantPreviouslyInsured">Yes
 														</label>
 														<label class="radio inline">
 															<input type="radio" value="no" name="applicantPreviouslyInsured" checked/>No
@@ -1050,6 +1057,8 @@
 											</div>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1106,42 +1115,42 @@
 
 										<hr/>
 
-										<p>Will anyone driving your motor vehicle:</p>
+										<h4>Will anyone driving your motor vehicle:</h4>
 										<div id="InexperiencedDriverBlock" class="row">
 											<div class="col-md-6">
-												<h4>Be under the age of:</h4>
-												<div class="form-inline">
+												<p>Be under the age of:</p>
+												<div class="form-inline" id="21YearsPrivateCars">
 													<div class="controls-row">
 														<label class="control-label">21 Years Old</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="21YearsOldPrivateCars" />Yes
+															<input type="radio" value="yes" name="21YearsOldPrivateCars">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="21YearsOldPrivateCars" />No
+															<input type="radio" value="no" name="21YearsOldPrivateCars">No
 														</label>
 													</div>
 												</div>
 
-												<div class="form-inline">
+												<div class="form-inline" id="23YearsOldPrivateCommercial">
 													<div class="controls-row">
 														<label class="control-label">23 Years Old</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="23YearsOldPrivateCommercial" />Yes
+															<input type="radio" value="yes" name="23YearsOldPrivateCommercial">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="23YearsOldPrivateCommercial" />No
+															<input type="radio" value="no" name="23YearsOldPrivateCommercial">No
 														</label>
 													</div>
 												</div>
 
-												<div class="form-inline">
+												<div class="form-inline" id="25yearsOldGeneral">
 													<div class="controls-row">
 														<label class="control-label">25 Years Old</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="25YearsOldGeneralCartage" />Yes
+															<input type="radio" value="yes" name="25YearsOldGeneralCartage">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="25YearsOldGeneralCartage" />No
+															<input type="radio" value="no" name="25YearsOldGeneralCartage">No
 														</label>
 													</div>
 												</div>
@@ -1151,29 +1160,28 @@
 											</div>
 
 											<div class="col-md-6">
-												<h4>Have Driving Experience less than:</h4>
-
-												<div class="form-inline">
+												<p>Have Driving Experience less than:</p>
+												<div class="form-inline" id="24MonthsPrivateLicense">
 													<div class="controls-row">
 														<label class="control-label">24 Months Private Licence</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="24MonthsPrivateLicence" />Yes
+															<input type="radio" value="yes" name="24MonthsPrivateLicence">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="24MonthsPrivateLicence" />No
+															<input type="radio" value="no" name="24MonthsPrivateLicence">No
 														</label>
 													</div>
 												</div>
 
 
-												<div class="form-inline">
+												<div class="form-inline" id="36MonthGeneralLicense">
 													<div class="controls-row">
 														<label class="control-label">36 Months General Licence-Private Commercial</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="36MonthsGeneralLicencePrivateCommercial" />Yes
+															<input type="radio" value="yes" name="36MonthsGeneralLicencePrivateCommercial">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="36MonthsGeneralLicencePrivateCommercial" />No
+															<input type="radio" value="no" name="36MonthsGeneralLicencePrivateCommercial">No
 														</label>
 													</div>
 												</div>
@@ -1181,14 +1189,14 @@
 
 
 
-												<div class="form-inline">
+												<div class="form-inline" id="5YearsGeneralPublicCommercial">
 													<div class="controls-row">
 														<label class="control-label">5 Years General Licence-Public Commercial</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="5YearsGeneralLicencePublicCommercial" />Yes
+															<input type="radio" value="yes" name="5YearsGeneralLicencePublicCommercial">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="5YearsGeneralLicencePublicCommercial" />No
+															<input type="radio" value="no" name="5YearsGeneralLicencePublicCommercial">No
 														</label>
 													</div>
 												</div>
@@ -1200,6 +1208,8 @@
 										</div>
 
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1221,10 +1231,10 @@
 											<div class="controls-row">
 												<label class="control-label"></label>
 												<label class="radio inline">
-													<input type="radio" value="yes" name="involvedInAccident" />Yes
+													<input type="radio" value="yes" name="involvedInAccident">Yes
 												</label>
 												<label class="radio inline">
-													<input type="radio" value="no" name="involvedInAccident" checked />No
+													<input type="radio" value="no" name="involvedInAccident" checked="checked">No
 												</label>
 											</div>
 										</div>
@@ -1277,6 +1287,8 @@
 											</div>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1293,31 +1305,28 @@
 										<div class="row">
 											<div class="col-md-6">
 
-
 												<div class="form-inline">
 													<div class="controls-row">
 														<label class="control-label">Defective vision or hearing?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision" />Yes
+															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision" checked />No
+															<input type="radio" value="no" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision" checked="checked">No
 														</label>
 													</div>
 												</div>
 												<br/>
-
-
 
 
 												<div class="form-inline">
 													<div class="controls-row">
 														<label class="control-label">Diabetes, Epilepsy, complaints of the heart or any other disease</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDiabetesEpilepsyHeartDisease" />Yes
+															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDiabetesEpilepsyHeartDisease">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="driverSufferFromDiabetesEpilepsyHeartDisease" class="medicalCondition" checked />No
+															<input type="radio" value="no" name="driverSufferFromDiabetesEpilepsyHeartDisease" class="medicalCondition" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1325,15 +1334,14 @@
 												<br/>
 
 
-
 												<div class="form-inline">
 													<div class="controls-row">
 														<label class="control-label">Any other physical or mental infirmity</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity" />Yes
+															<input type="radio" value="yes" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity" checked />No
+															<input type="radio" value="no" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1352,23 +1360,17 @@
 										<hr/>
 										<div class="row">
 											<div class="col-md-6">
-
-
 												<div class="form-inline">
 													<div class="controls-row">
 														<label class="control-label">Have you or any person who to your knowledge will drive received any traffic ticket(s) and or have been convicted of any offence in connection with the driving of any motor vehicle within the last three (3) years?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="driverTrafficTicket" />Yes
+															<input type="radio" value="yes" name="driverTrafficTicket">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="driverTrafficTicket" checked />No
+															<input type="radio" value="no" name="driverTrafficTicket" checked="checked">No
 														</label>
 													</div>
 												</div>
-
-
-
-
 											</div>
 											<div class="col-md-6">
 												<div id="driverTrafficTicketDetailGroup">
@@ -1395,10 +1397,10 @@
 													<div class="controls-row">
 														<label class="control-label">Has the vehicle been modified or converted from makers' standard specification or do you intend to do so?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="vehicleModified" />Yes
+															<input type="radio" value="yes" name="vehicleModified">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="vehicleModified" checked />No
+															<input type="radio" value="no" name="vehicleModified" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1485,6 +1487,8 @@
 											</select>
 										</fieldset>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1570,17 +1574,16 @@
 													<div class="controls-row">
 														<label class="control-label">Garages or Out Buildings?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="garageOutBuildingExists" />Yes
+															<input type="radio" value="yes" name="garageOutBuildingExists">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="garageOutBuildingExists" checked />No
+															<input type="radio" value="no" name="garageOutBuildingExists" checked="checked">No
 														</label>
 													</div>
 												</div>
 											</div>
 										</div>
 
-										<div id="divGarageOutBuilding"></div>
 										<div class="form-group garageOutBuildingClass" style="display:none">
 											<label for="garageExternalWalls">External Walls:</label>
 											<textarea class="form-control" name="garageExternalWalls" id="garageExternalWalls"></textarea>
@@ -1591,6 +1594,8 @@
 											<textarea class="form-control" name="garageRoof" id="garageRoof"></textarea>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1606,12 +1611,13 @@
 											<div class="col-md-6">
 												<div class="form-inline">
 													<div class="controls-row">
-														<label class="control-label">Are the buildings in a good state of repair and will they be so maintained?</label>
+														<label class="control-label">Are the buildings in a good state of repairs and will they be
+															<br/> so maintained?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="homeInGoodState" checked />Yes
+															<input type="radio" value="yes" name="homeInGoodState" checked="checked">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="homeInGoodState" />No
+															<input type="radio" value="no" name="homeInGoodState">No
 														</label>
 													</div>
 												</div>
@@ -1633,13 +1639,12 @@
 													<div class="controls-row">
 														<label class="control-label">Is the Dwelling occupied solely by you, your family
 															<br/> and domestic employees?
-															<p align="left">
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked />Yes
+															<input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked="checked">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="homeOccupiedByApplicantFamily" />No
+															<input type="radio" value="no" name="homeOccupiedByApplicantFamily">No
 														</label>
 													</div>
 												</div>
@@ -1666,10 +1671,10 @@
 													<div class="controls-row">
 														<label class="control-label">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="homeUsedForIncomeActivity" />Yes
+															<input type="radio" value="yes" name="homeUsedForIncomeActivity">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="homeUsedForIncomeActivity" checked />No
+															<input type="radio" value="no" name="homeUsedForIncomeActivity" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1693,10 +1698,10 @@
 													<div class="controls-row">
 														<label class="control-label">Does any institution or individual have a financial interest in the property?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="homeHaveInterestFromIndividual" />Yes
+															<input type="radio" value="yes" name="homeHaveInterestFromIndividual">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="homeHaveInterestFromIndividual" checked />No
+															<input type="radio" value="no" name="homeHaveInterestFromIndividual" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1722,10 +1727,10 @@
 													<div class="controls-row">
 														<label class="control-label">Are there any Waterside Structures?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="homeHasWatersideStructure" />Yes
+															<input type="radio" value="yes" name="homeHasWatersideStructure">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="homeHasWatersideStructure" checked />No
+															<input type="radio" value="no" name="homeHasWatersideStructure" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1744,6 +1749,8 @@
 										</div>
 
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1767,9 +1774,9 @@
 
 										<div class="form-group">
 											<label for="startDate">Insurance Start Date:</label>
-											<input class="form-control" name="startDate" type="date" id="startDate" placeholder="Start Date" />
+											<input class="form-control startDate" name="startDate" type="date" placeholder="Start Date" />
 											<label for="currency">Currency:</label>
-											<select class="form-control" name="currency" id="currency">
+											<select class="form-control currency" name="currency">
 												<option value="JA">Jamaican Dollar</option>
 												<option value="USD">United States Dollar</option>
 											</select>
@@ -1883,6 +1890,8 @@
 											</div>
 										</div>
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -1954,10 +1963,10 @@
 													<div class="controls-row">
 														<label class="control-label">Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="currentPolicyWithCompanyOrInsurer" />Yes
+															<input type="radio" value="yes" name="currentPolicyWithCompanyOrInsurer">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="currentPolicyWithCompanyOrInsurer" checked />No
+															<input type="radio" value="no" name="currentPolicyWithCompanyOrInsurer" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -1982,10 +1991,10 @@
 													<div class="controls-row">
 														<label class="control-label">Declined to insure you?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsuranceDeclined" />Yes
+															<input type="radio" value="yes" name="HomeInsuranceDeclined">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsuranceDeclined" checked />No
+															<input type="radio" value="no" name="HomeInsuranceDeclined" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2008,10 +2017,10 @@
 													<div class="controls-row">
 														<label class="control-label">Required special terms to insure you?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsuranceRequiredSpecialTerm" />Yes
+															<input type="radio" value="yes" name="HomeInsuranceRequiredSpecialTerm">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsuranceRequiredSpecialTerm" checked />No
+															<input type="radio" value="no" name="HomeInsuranceRequiredSpecialTerm" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2036,10 +2045,10 @@
 													<div class="controls-row">
 														<label class="control-label">Cancelled or refused to renew your policy?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsuranceCancelled" />Yes
+															<input type="radio" value="yes" name="HomeInsuranceCancelled">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsuranceCancelled" checked />No
+															<input type="radio" value="no" name="HomeInsuranceCancelled" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2068,10 +2077,10 @@
 													<div class="controls-row">
 														<label class="control-label">Increased your premium on renewal?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsuranceIncreasedPremium" />Yes
+															<input type="radio" value="yes" name="HomeInsuranceIncreasedPremium">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsuranceIncreasedPremium" checked />No
+															<input type="radio" value="no" name="HomeInsuranceIncreasedPremium" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2100,10 +2109,10 @@
 													<div class="controls-row">
 														<label class="control-label">Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsurancePerilsSuffer" />Yes
+															<input type="radio" value="yes" name="HomeInsurancePerilsSuffer">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsurancePerilsSuffer" checked />No
+															<input type="radio" value="no" name="HomeInsurancePerilsSuffer" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2131,10 +2140,10 @@
 													<div class="controls-row">
 														<label class="control-label">Have you ever sustained loss from any Perils to which this Proposal would apply?</label>
 														<label class="radio inline">
-															<input type="radio" value="yes" name="HomeInsuranceSufferLoss" />Yes
+															<input type="radio" value="yes" name="HomeInsuranceSufferLoss">Yes
 														</label>
 														<label class="radio inline">
-															<input type="radio" value="no" name="HomeInsuranceSufferLoss" checked />No
+															<input type="radio" value="no" name="HomeInsuranceSufferLoss" checked="checked">No
 														</label>
 													</div>
 												</div>
@@ -2154,6 +2163,8 @@
 
 
 									</form>
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 								</div>
@@ -2194,8 +2205,10 @@
 
 									<div id="quotation"></div>
 
+									<br/>
+									<br/>
 									<button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
-									<button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>
+									<!--									<button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>-->
 
 								</div>
 							</div>
@@ -2424,8 +2437,8 @@
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
-				$('#dateFr').val(lastYear + '-01-01');
-				$('#dateTo').val(yyyy + '-12-31');
+				$('#searchDateFr').val(lastYear + '-01-01');
+				$('#searchDateTo').val(yyyy + '-12-31');
 				//var urlParts = location.hash.split("#");
 				if (location.hash == "#createQuote")
 					createQuote();
@@ -2484,13 +2497,13 @@
 			$('#doSearch').click(function () {
 				var searchData = {};
 
-				searchData.quoteNo = $('#quoteNo').val();
-				searchData.IdNum = $('#ident').val();
-				searchData.firstName = $('#firstname').val();
-				searchData.lastName = $('#lastname').val();
-				searchData.dateFr = $('#dateFr').val();
-				searchData.dateTo = $('#dateTo').val();
-				searchData.type = $('#insuranceType').val();
+				searchData.quoteNo = $('#searchQuoteNo').val();
+				searchData.IdNum = $('#searchId').val();
+				searchData.firstName = $('#searchFirstname').val();
+				searchData.lastName = $('#searchLastname').val();
+				searchData.dateFr = $('#searchDateFr').val();
+				searchData.dateTo = $('#searchDateTo').val();
+				searchData.type = $('#searchInsuranceType').val();
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
@@ -2838,7 +2851,7 @@
 				}
 
 
-				$('#startDate').val(currentQuote.startDate);
+				$('.startDate').val(currentQuote.startDate);
 
 				//add first driver
 				if (currentQuote.regularDriversDL0) {
