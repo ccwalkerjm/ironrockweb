@@ -77,14 +77,21 @@ function ConvertToJson(r) {
 	return r;
 }
 
-///quote
-/////////////////////////////////////////Quote Forms//////////////////////////
-function setQuoteWizard(insuranceType, callback) {
+
+
+function initPage() {
 	if (!g_quote_wizard_html) {
 		g_quote_wizard_html = $('#quote-section').html();
 	}
 	$('#quote-section').html(g_quote_wizard_html);
+}
 
+///quote
+/////////////////////////////////////////Quote Forms//////////////////////////
+function setQuoteWizard(insuranceType, callback) {
+	initPage();
+
+	/////////////////////////////
 	setLoadingState(true);
 	//$.get('quoteWizard.html', function (pageData) {
 	//	$('#quote-section').prepend(pageData);
@@ -407,9 +414,13 @@ function reIndexVehicles() {
 	if (sumInsured < 2000000) {
 		$("#lessthan2mill").show();
 		$("#2millandgreater").hide();
+		$('#thirdPartyLimits2millsLess').prop("disabled", false);
+		$('#hirdPartyLimits2millsGreater').prop("disabled", true);
 	} else {
 		$("#lessthan2mill").hide();
 		$("#2millandgreater").show();
+		$('#thirdPartyLimits2millsLess').prop("disabled", true);
+		$('#hirdPartyLimits2millsGreater').prop("disabled", false);
 	}
 	$('#vehicleCnt').val($('#vehiclesToBeInsured tbody tr').length);
 }
@@ -677,14 +688,14 @@ function doPrimaryFunctions(callback) {
 			//Insurance Option
 			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
 			InsuranceMenuOption.append(InsuranceMenoOptionLink);
-			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a><li><a href="/Insurance/quotes.html">Query Quotes</a></ul>');
+			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li></ul>');
 
 			sideBarMenu.append(InsuranceMenuOption);
 
 
 			//User 
 			UserMenuTitle.text($this.getUsername());
-			UserSubMenu.html('<li><a href="/profile.html">View Profile</a><li><a href="/changePassword.html">Change Password</a><li><a href="#"id="logout">Logout</a>')
+			UserSubMenu.html('<li><a href="/profile.html">View Profile</a></li><li><a href="/changePassword.html">Change Password</a></li><li><a href="#"id="logout">Logout</a></li>')
 
 			UserMenoOptionLink.append(UserMenuTitle).append('<span class="arrow "></span>');
 			UserMenuOption.append(UserMenoOptionLink).append(UserSubMenu);

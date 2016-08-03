@@ -107,9 +107,9 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label col-sm-4" for="globalName">Global Name:</label>
+										<label class="control-label col-sm-4" for="trn">TRN:</label>
 										<div class="col-sm-8">
-											<input type="text" class="form-control" id="globalName" />
+											<input type="text" class="form-control" id="trn" />
 										</div>
 									</div>
 
@@ -279,15 +279,15 @@
 					var dataInput = {};
 					dataInput.code = $('#code').val().toUpperCase();
 					dataInput.name = $('#name').val();
-					dataInput.globalName = $('#globalName').val();
+					dataInput.trn = $('#trn').val();
 					dataInput.logo = $('#imgLogo').attr('src');
 					if (!(dataInput.code).match(/[a-z]/i)) {
 						alert('Code must contain letters only');
 						return;
 					}
 
-					if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
-						alert('Code,Name or GlobalName cannot be null!');
+					if (!dataInput.code || !dataInput.name || !dataInput.trn) {
+						alert('Code,Name or TRN cannot be null!');
 						return;
 					}
 					if (!dataInput.logo) {
@@ -306,10 +306,10 @@
 					var dataInput = {};
 					dataInput.code = $('#code').val();
 					dataInput.name = $('#name').val();
-					dataInput.globalName = $('#globalName').val();
+					dataInput.trn = $('#trn').val();
 					dataInput.logo = $('#imgLogo').attr('src');
-					if (!dataInput.code || !dataInput.name || !dataInput.globalName) {
-						alert('Code,Name or GlobalName cannot be null!');
+					if (!dataInput.code || !dataInput.name || !dataInput.trn) {
+						alert('Code,Name or TRN cannot be null!');
 						return;
 					}
 					if (!dataInput.logo) {
@@ -340,7 +340,7 @@
 				$('#btnCreateBroker').click(function () {
 					$('#code').val('').prop('readonly', false);
 					$('#name').val('').prop('readonly', false);
-					$('#globalName').val('').prop('readonly', false);
+					$('#trn').val('').prop('readonly', false);
 					$('#imgLogo').attr('src', '');
 					$("#inpLogo").val('');
 					$('#update-broker').hide();
@@ -358,7 +358,7 @@
 						var item = JSON.parse(data.Payload);
 						$('#code').val(item.code).prop('readonly', true);
 						$('#name').val(item.name);
-						$('#globalName').val(item.globalName);
+						$('#trn').val(item.trn);
 						$('#imgLogo').attr('src', item.logo);
 						$("#inpLogo").val('');
 						$('#update-broker').show();

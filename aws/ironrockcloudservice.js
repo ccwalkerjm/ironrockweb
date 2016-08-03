@@ -380,7 +380,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:5',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -401,7 +401,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -422,7 +422,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -442,7 +442,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -463,7 +463,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -934,6 +934,21 @@ var ironrockcloudservice = (function () {
 		});
 	};
 	//end devices brokerking//
+
+	//get policies
+	ironrockcloudservice.prototype.getPolicies = function (callback) {
+		var payload = {};
+		payload.username = _cognitoUser.getUsername();
+		var params = {
+			FunctionName: 'ironrockGetPolicies',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
 
 
 	return ironrockcloudservice;

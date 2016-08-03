@@ -1461,9 +1461,10 @@
 										</fieldset>
 
 										<fieldset class="form-group limit" id="lessthan2mill" style="display:none">
-											<label class="control-label" for="thirdPartyLimits">
-												Third Party Limits (Bodily Injury and Property Damage) Sums Insured &lt; $2M</label>
-											<select class="form-control" name="thirdPartyLimits" id="thirdPartyLimits">
+											<label class="control-label" for="thirdPartyLimits2millsLess">
+												Third Party Limits</label>
+											<!--(Bodily Injury and Property Damage) Sums Insured &lt; $2M-->
+											<select class="form-control" name="thirdPartyLimits" id="thirdPartyLimits2millsLess">
 												<optgroup label="Standard Limit">
 													<option value="$3M/$5M/$5M">$3M/$5M/$5M</option>
 												</optgroup>
@@ -1476,8 +1477,9 @@
 										</fieldset>
 
 										<fieldset class="form-group limit" id="2millandgreater" style="display:none">
-											<label class="control-label" for="sumsInsured">Sums Insured ≥ $2M</label>
-											<select class="form-control" name="sumsInsured" id="sumsInsured">
+											<label class="control-label" for="thirdPartyLimits2millsGreater">Third Party Limits</label>
+											<!--Sums Insured ≥ $2M-->
+											<select class="form-control" name="thirdPartyLimits" id="thirdPartyLimits2millsGreater">
 												<optgroup label="Standard Limit">
 													<option value="$5M/$10M/$5M">$5M/$10M/$5M</option>
 												</optgroup>
@@ -2428,12 +2430,13 @@
 		$(document).ready(function () {
 			var currentQuote;
 			doPrimaryFunctions(function (err, obj) {
-				//
-				if (!g_quote_wizard_html) {
+				//				
+				/*if (!g_quote_wizard_html) {
 					g_quote_wizard_html = $('#quote-section').html();
 				}
-				$('#quote-section').html(g_quote_wizard_html);
-				////
+				$('#quote-section').html(g_quote_wizard_html);*/
+				//
+				initPage();
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
