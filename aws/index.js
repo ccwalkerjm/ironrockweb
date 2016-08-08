@@ -433,12 +433,12 @@ function reIndexVehicles() {
 		$("#lessthan2mill").show();
 		$("#2millandgreater").hide();
 		$('#thirdPartyLimits2millsLess').prop("disabled", false);
-		$('#hirdPartyLimits2millsGreater').prop("disabled", true);
+		$('#thirdPartyLimits2millsGreater').prop("disabled", true);
 	} else {
 		$("#lessthan2mill").hide();
 		$("#2millandgreater").show();
 		$('#thirdPartyLimits2millsLess').prop("disabled", true);
-		$('#hirdPartyLimits2millsGreater').prop("disabled", false);
+		$('#thirdPartyLimits2millsGreater').prop("disabled", false);
 	}
 	$('#vehicleCnt').val($('#vehiclesToBeInsured tbody tr').length);
 }
@@ -575,7 +575,7 @@ function loadVehicleModels() {
 
 ///create first driver from applicant details
 function createFirstDriver() {
-	if (!$('#regularDriversId').is(":visible") && $('#applicantIDType').val() == 'driverLicense') {
+	if (!$('#regularDriversId').is(":visible") && $('#applicantIDType').val().toLowerCase() == 'trn') {
 		//var occupation = $('#applicantOccupation').val();
 		var occupationIndex = $("#applicantOccupation option:selected").index()
 		var elel = $('.regularDriversCls:last .occupation select');

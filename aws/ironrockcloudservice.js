@@ -480,7 +480,7 @@ var ironrockcloudservice = (function () {
 			"auth": _getAuth()
 		};
 		var params = {
-			FunctionName: 'ironrockSubmitQuote', //'ironrockquote'
+			FunctionName: 'ironrockquote', //'ironrockSubmitQuote',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();

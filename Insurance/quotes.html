@@ -246,6 +246,25 @@
 															<input required class="form-control" type="date" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="control-label col-sm-2" for="applicantIDnumber">ID Number:</label>
+														<div class="col-sm-10">
+															<input required class="form-control" type="number" id="applicantIDnumber" name="applicantIDnumber" placeholder="Enter ID Number" readonly>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label col-sm-2" for="applicationIDExpirationDate">Expiration Date:</label>
+														<div class="col-sm-10">
+															<input required class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="" readonly>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label col-sm-2 select" for="applicantIDType">ID Type:</label>
+														<div class="col-sm-10">
+															<input required class="form-control" type="text" id="applicantIDType" name="applicantIDType" placeholder="ID Type" value="TRN" readonly>
+														</div>
+													</div>
+
 												</div>
 											</div>
 										</div>
@@ -275,7 +294,7 @@
 													<select class="form-control countries" name="applicantNationality" id="applicantNationality"></select>
 												</div>
 											</div>
-											<div class="form-group">
+											<!--<div class="form-group">
 												<label class="control-label col-sm-2 select" for="applicantIDType">ID Type:</label>
 												<div class="col-sm-10">
 													<select class="form-control" id="applicantIDType" name="applicantIDType">
@@ -284,9 +303,9 @@
 														<option value="driverLicense" selected>Driver's Licence</option>
 													</select>
 												</div>
-											</div>
+											</div>-->
 										</div>
-										<div class="form-group">
+										<!--<div class="form-group">
 											<label class="control-label col-sm-2" for="applicantIDnumber">ID Number:</label>
 											<div class="col-sm-10">
 												<input required class="form-control" type="number" id="applicantIDnumber" name="applicantIDnumber" placeholder="Enter ID Number">
@@ -297,7 +316,7 @@
 											<div class="col-sm-10">
 												<input required class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="">
 											</div>
-										</div>
+										</div>-->
 									</form>
 									<br/>
 									<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
@@ -1410,7 +1429,7 @@
 											<label class="control-label" for="wreckerFee">Protection and Removal (Wrecker Fee):</label>
 											<select class="form-control" name="wreckerFee" id="wreckerFee">
 												<optgroup label="Standard Limit">
-													<option value="StandardLimit">$35,000 </option>
+													<option value="StandardLimit">$35,000</option>
 												</optgroup>
 												<optgroup label="Increased Limits">
 													<option value="50000">$50,000</option>
@@ -1452,14 +1471,14 @@
 											<label class="control-label" for="thirdPartyLimits2millsLess">
 												Third Party Limits</label>
 											<!--(Bodily Injury and Property Damage) Sums Insured &lt; $2M-->
-											<select class="form-control" name="thirdPartyLimits" id="thirdPartyLimits2millsLess">
+											<select class="form-control" name="limit_group" id="thirdPartyLimits2millsLess">
 												<optgroup label="Standard Limit">
-													<option value="$3M/$5M/$5M">$3M/$5M/$5M</option>
+													<option value="Standard – up to $1,999,999">$3M/$5M/$5M</option>
 												</optgroup>
 												<optgroup label="Increased Limits">
-													<option value="$5M/$7.5M/$5M">$5M/$7.5M/$5M</option>
-													<option value="$5M/$10M/$5M">$5M/$10M/$5M</option>
-													<option value="$10M/$10M/$10M">$10M/$10M/$10M</option>
+													<option value="Increased Limits – Option 1 Under $2M">$5M/$7.5M/$5M</option>
+													<option value="Increased Limits – Option 2 under $2M">$5M/$10M/$5M</option>
+													<option value="Increased Limits – Option 3">$10M/$10M/$10M</option>
 												</optgroup>
 											</select>
 										</fieldset>
@@ -1467,12 +1486,12 @@
 										<fieldset class="form-group limit" id="2millandgreater" style="display:none">
 											<label class="control-label" for="thirdPartyLimits2millsGreater">Third Party Limits</label>
 											<!--Sums Insured ≥ $2M-->
-											<select class="form-control" name="thirdPartyLimits" id="thirdPartyLimits2millsGreater">
+											<select class="form-control" name="limit_group" id="thirdPartyLimits2millsGreater">
 												<optgroup label="Standard Limit">
-													<option value="$5M/$10M/$5M">$5M/$10M/$5M</option>
+													<option value="Standard Limit - $2M and above">$5M/$10M/$5M</option>
 												</optgroup>
 												<optgroup label="Increased Limits">
-													<option value="$10M/$10M/$10M">$10M/$10M/$10M</option>
+													<option value="Increased Limit - Option 1 $2M and above">$10M/$10M/$10M</option>
 												</optgroup>
 											</select>
 										</fieldset>
@@ -2391,9 +2410,9 @@
 						<div class="col-md-12">
 							<form class="form-horizontal">
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="startDate">Start Date</label>
+									<label class="col-md-4 control-label" for="policyStartDate">Start Date</label>
 									<div class="col-md-4">
-										<input id="startDate" name="startDate" type="date" placeholder="Start Date" class="form-control">
+										<input id="policyStartDate" name="policyStartDate" type="date" placeholder="Start Date" class="form-control">
 									</div>
 								</div>
 								<div class="form-group">
