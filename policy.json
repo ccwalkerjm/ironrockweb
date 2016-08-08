@@ -1,0 +1,132 @@
+{
+	"success": true,
+	"policies": [
+		{
+			"policy": {
+				"policy_id": "",
+				"policy_number": 0,
+				"account_name": "",
+				"agreed_value": false,
+				"billing_account_code": "",
+				"branch": "",
+				"cancel_date": "00/00/0000",
+				"cancel_reason_details": "",
+				"country": "",
+				"currency": "",
+				"date_for_renewal": "00/00/0000",
+				"date_for_renewal_to_start": "00/00/0000",
+				"date_proposal_signed": "00/00/0000",
+				"effective_cancel_date": "00/00/0000 00:00:00",
+				"estimated_maximum_loss ": 0,
+				"end_date": "00/00/0000 00:00:00",
+				"endorsements_that_apply": "",
+				"fa_excess_description": "",
+				"fa_excess_percent": 0,
+				"group_name": "",
+				"inception_date": "00/00/0000",
+				"is_cancelled": false,
+				"is_loss_of_profit_policy": false,
+				"is_premium_financed": false,
+				"is_pre-existing_policy": false,
+				"memo": "",
+				"occupancy": "",
+				"peril_type": "",
+				"policy_prefix": "",
+				"sections_that_dont_apply": "",
+				"source_account_code": "",
+				"source_comm_rate": 0,
+				"source_name": "",
+				"start_date": "00/00/0000 00:00:00",
+				"territorial_limits": "",
+				"usage_category": "",
+				"warranties_do_not_apply": "",
+				"type_of_cover": "",
+				"status": "",
+				"sum_insured": 0,
+				"annual_premium": 0,
+				"renewal_premium": 0,
+				"insured_text": "",
+				"insured": [
+					{
+						"is_main_insured": false,
+						"global_name": {
+							"global_name_id": "",
+							"global_name_number": 0,
+							"company_name": "",
+							"dob": "00/00/0000",
+							"drivers_licence_country": "",
+							"drivers_licence_date_issued": "00/00/0000",
+							"drivers_licence_first_issued": "00/00/0000",
+							"drivers_licence_number": "",
+							"email_address": "",
+							"employment_type": "",
+							"first_name": "",
+							"gender": "",
+							"is_a_company": false,
+							"is_a_service_provider": false,
+							"last_name": "",
+							"locations": [
+								{
+									"location_id": "",
+									"is_main_location": false,
+									"altitude": "",
+									"block": "",
+									"building_label": "",
+									"building_number": "",
+									"complex_name": "",
+									"country": "",
+									"general_area": "",
+									"international_area": "",
+									"is_international_address": "",
+									"island": "",
+									"latitude": "",
+									"longitude": "",
+									"parish": "",
+									"postal_zip_code": "",
+									"street_name": "",
+									"street_number": "",
+									"street_type": "",
+									"town": "",
+									"unit_number": "",
+									"phone_numbers": [
+										{
+											"phone_number_id": "",
+											"type": "",
+											"carrier": "",
+											"extension_or_range": "",
+											"phone_number": ""
+                                        }
+                                    ]
+                                }
+                            ],
+							"maiden_name": "",
+							"mailing_name": "",
+							"marital_status": "",
+							"middle_name": "",
+							"national_id": "",
+							"national_id_not_required": false,
+							"national_id_type": "",
+							"nationality": "",
+							"notes": "",
+							"occupation": "",
+							"place_of_birth": "",
+							"salutation_name": "",
+							"service_type": "",
+							"tax_id_number": "",
+							"title": "",
+							"phone_numbers": [
+								{
+									"phone_number_id": "",
+									"type": "",
+									"carrier": "",
+									"extension_or_range": "",
+									"phone_number": ""
+                                }
+                            ]
+						}
+                    }
+                ]
+			}
+        }
+    ]
+}

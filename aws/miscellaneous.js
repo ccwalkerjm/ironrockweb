@@ -478,13 +478,11 @@ function SetHomeInsuranceValue() {
 //set accident years
 function setAllAccidentsYears() {
 	var currentYear = new Date().getFullYear();
-	for (var i = 1; i < 4; i++) {
-		currentYear = currentYear - i;
+	for (var i = 0; i < 3; i++) {
 		var option = $('<option/>');
-		option.attr('Value', currentYear);
-		option.text(currentYear);
-		option.appendTo($('#accidentYear'));
-
+		option.val(currentYear - i);
+		option.text(currentYear - i);
+		option.appendTo($('#accidentYear0'));
 	}
 }
 

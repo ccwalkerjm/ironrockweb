@@ -297,7 +297,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -318,7 +318,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -336,7 +336,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -360,7 +360,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -480,7 +480,7 @@ var ironrockcloudservice = (function () {
 			"auth": _getAuth()
 		};
 		var params = {
-			FunctionName: 'ironrockquote', //ironrockSubmitQuote', //'ironrockquote'
+			FunctionName: 'ironrockSubmitQuote', //'ironrockquote'
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
@@ -862,7 +862,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -883,7 +883,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -903,7 +903,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -925,7 +925,7 @@ var ironrockcloudservice = (function () {
 		jsonRequest.auth = _getAuth();
 		var requestSerialized = JSON.stringify(jsonRequest);
 		var params = {
-			FunctionName: 'ironrockAdminFunc:4',
+			FunctionName: 'ironrockAdminFunc',
 			Payload: requestSerialized
 		};
 		var _lambda = new AWS.Lambda();
@@ -934,6 +934,19 @@ var ironrockcloudservice = (function () {
 		});
 	};
 	//end devices brokerking//
+
+	//convert to Policy
+	ironrockcloudservice.prototype.convertToPolicy = function (payload, callback) {
+		payload.username = _cognitoUser.getUsername();
+		var params = {
+			FunctionName: 'ironrockQuoteToPolicy',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
 
 	//get policies
 	ironrockcloudservice.prototype.getPolicies = function (callback) {

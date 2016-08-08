@@ -22,18 +22,7 @@
 	<link href="/assets/css/themes/default.css" rel="stylesheet">
 	<link href="/assets/css/custom.css" rel="stylesheet">
 	<link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
-	<!--@Scripts.Render("~/bundles/jquery")-->
-	<script src="/Scripts/jquery-2.2.3.js"></script>
-	<script src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
-	<script src="/assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
-	<script src="/assets/scripts/app.js"></script>
-	<script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>
-	<script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="/assets/plugins/jquery.blockui.min.js"></script>
-	<script src="/assets/plugins/jquery.cokie.min.js"></script>
-	<script src="/assets/plugins/uniform/jquery.uniform.min.js"></script>
-	<script src="/assets/plugins/select2/select2.min.js"></script>
+
 
 </head>
 
@@ -160,19 +149,19 @@
 
 						<div class="btn-group">
 							<button type="button" class="btn btn-default returntoQuotes" aria-label="Left Align" title="Return to Quotes">
-								<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Return
 							</button>
 
 							<button type="button" id="getPDF" class="btn btn-default" aria-label="Left Align" title="Generate PDF Document">
-								<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;PDF
 							</button>
 
-							<button type="button" id="convert" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
-								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							<button type="button" id="convertToPolicy" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
+								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>&nbsp;Convert
 							</button>
 
 							<button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
-								<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp; Documents
 							</button>
 						</div>
 						<hr/>
@@ -646,7 +635,6 @@
 						</div>
 
 						<!--Motor vehicle Sections-->
-
 						<div class="row setup-content" id="vehicle-particulars-page">
 							<div class="col-xs-12">
 								<div class="col-md-12">
@@ -1499,7 +1487,6 @@
 						</div>
 
 						<!--Home Property Sections-->
-
 						<div class="row setup-content" id="home-particulars-page">
 							<div class="col-xs-12">
 								<div class="col-md-12">
@@ -2174,7 +2161,6 @@
 						</div>
 
 						<!--Final Page -->
-
 						<div class="row setup-content" id="final-page">
 							<div class="col-xs-12">
 								<div class="col-md-12">
@@ -2215,8 +2201,6 @@
 								</div>
 							</div>
 						</div>
-						<!--	</div>-->
-
 
 						<!-- Modal -->
 						<div id="taxOfficeVehicleDialog" class="modal fade" role="dialog">
@@ -2393,6 +2377,86 @@
 		</div>
 	</div>
 
+	<!--Convert To Polciy-->
+	<div class="modal fade" id="convertToPolicyModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Convert To Policy</h4>
+				</div>
+				<div class="modal-body">
+					<div class="message"></div>
+					<div class="row">
+						<div class="col-md-12">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="startDate">Start Date</label>
+									<div class="col-md-4">
+										<input id="startDate" name="startDate" type="date" placeholder="Start Date" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="policyPeriod">Periods</label>
+									<div class="col-md-4">
+										<input id="policyPeriod" name="policyPeriod" type="number" placeholder="Period in Months" class="form-control" value="12">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="signedDate">Date Signed</label>
+									<div class="col-md-4">
+										<input id="signedDate" name="signedDate" type="date" placeholder="Date Signed" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="branch">Branch</label>
+									<div class="col-md-4">
+										<input id="branch" name="branch" type="text" placeholder="Branch" class="form-control" value="Head Office">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="usageCategory">Usage Category</label>
+									<div class="col-md-4">
+										<input id="usageCategory" name="usageCategory" type="text" placeholder="Usage Category" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="premiumFinanceCompanyCode">Company Code</label>
+									<div class="col-md-4">
+										<input id="premiumFinanceCompanyCode" name="premiumFinanceCompanyCode" type="text" placeholder="Premium Finance Company Code" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="memo">Memo</label>
+									<div class="col-md-4">
+										<textarea id="memo" name="memo" placeholder="Memo" class="form-control"></textarea>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="createPolicy">Create Policy</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--@Scripts.Render("~/bundles/jquery")-->
+	<script src="/Scripts/jquery-2.2.3.js"></script>
+	<script src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+	<script src="/assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/assets/scripts/app.js"></script>
+	<script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>
+	<script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/assets/plugins/jquery.blockui.min.js"></script>
+	<script src="/assets/plugins/jquery.cokie.min.js"></script>
+	<script src="/assets/plugins/uniform/jquery.uniform.min.js"></script>
+	<script src="/assets/plugins/select2/select2.min.js"></script>
+	<!--end jquery-->
 	<script src="/Scripts/bootbox.js"></script>
 	<script src="/Scripts/jquery.validate.js"></script>
 	<script src="/Scripts/jquery.bootstrap.wizard.js"></script>
@@ -2461,7 +2525,7 @@
 				} else {
 					location.href = $(this).attr('href');
 				}
-			})
+			});
 
 
 			//create quote selection
@@ -2489,7 +2553,7 @@
 
 			$('#searchBtn').click(function () {
 				$('#searchColumn').toggle();
-			})
+			});
 
 
 			function getBaseUrl() {
@@ -2542,16 +2606,41 @@
 								data.insuranceType + '</td><td>' +
 								brokerName + '</td><td><button class="btn btn-link select" id="' +
 								r.id + '">Select</button></td></tr>');
-						})
+						});
 					});
 				});
 
-
-
 			});
 
+			$('#quote-section').on('click', '#convertToPolicy', function () {
+				$('#convertToPolicyModal').modal('show');
+			});
 
-
+			$('#convertToPolicyModal').on('click', '#createPolicy', function () {
+				setLoadingState(true);
+				var policyData = $('#convertToPolicyModal form').serializeObject();
+				policyData.quoteNo = currentQuote.applicantQuoteNo;
+				g_ironrock_service.convertToPolicy(policyData, function (err, result) {
+					setLoadingState(false);
+					if (err) {
+						display(err.message, err);
+						return;
+					}
+					result = JSON.parse(result.Payload);
+					if (result && result.errorMessage) {
+						//lambda error
+						display(result.errorMessage, true);
+						return;
+					}
+					if (result && result.error_message) {
+						//epic error
+						display(err.message, err);
+						return;
+					}
+					display("Policy Created.");
+					$('#convertToPolicyModal').modal('hide');
+				});
+			});
 
 			$('#quoteContainer').on('click', '#getUploadModal', function () {
 				$('#uploadModal').modal('show');
@@ -2584,7 +2673,7 @@
 						}
 					});
 				}
-			})
+			});
 
 			function listDocuments() {
 				setLoadingState(true);
@@ -2614,7 +2703,7 @@
 						window.open(fileURL);
 					}
 				});
-			})
+			});
 
 
 
@@ -2723,8 +2812,8 @@
 			}
 
 			$('#quoteContainer').on('click', '#getPDF', function () {
-				CreatePDF(currentQuote)
-			})
+				CreatePDF(currentQuote);
+			});
 
 			function fillLogoCanvas() {
 				var ctx = document.getElementById("canvas-logo").getContext("2d");
@@ -2884,7 +2973,7 @@
 					$('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue1);
 					$('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
 				}
-			}
+			};
 
 
 

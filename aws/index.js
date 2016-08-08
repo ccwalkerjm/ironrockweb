@@ -77,8 +77,26 @@ function ConvertToJson(r) {
 	return r;
 }
 
+//convert form to json///
+$.fn.serializeObject = function () {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function () {
+		if (o[this.name] !== undefined) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
 
 
+
+//init Page
 function initPage() {
 	if (!g_quote_wizard_html) {
 		g_quote_wizard_html = $('#quote-section').html();
@@ -688,7 +706,7 @@ function doPrimaryFunctions(callback) {
 			//Insurance Option
 			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
 			InsuranceMenuOption.append(InsuranceMenoOptionLink);
-			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li></ul>');
+			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="/mobileapp.html">Mobile App</a></li></ul>');
 
 			sideBarMenu.append(InsuranceMenuOption);
 
@@ -965,23 +983,6 @@ function doPrimaryFunctions(callback) {
 		$('#applicantHomeStreetName').val('');
 	});
 
-
-	////////////////////////////////////////
-	$.fn.serializeObject = function () {
-		var o = {};
-		var a = this.serializeArray();
-		$.each(a, function () {
-			if (o[this.name] !== undefined) {
-				if (!o[this.name].push) {
-					o[this.name] = [o[this.name]];
-				}
-				o[this.name].push(this.value || '');
-			} else {
-				o[this.name] = this.value || '';
-			}
-		});
-		return o;
-	};
 
 	//clear signature
 	$('#quote-section').on('click', '#clear-canvas', function () {

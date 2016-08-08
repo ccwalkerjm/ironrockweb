@@ -94,30 +94,103 @@
 								<div class="message"></div>
 								<form class="form-horizontal" role="form">
 									<div class="form-group">
-										<label class="control-label col-sm-4" for="code">code:</label>
-										<div class="col-sm-8">
+										<label class="control-label col-sm-3" for="code">code:</label>
+										<div class="col-sm-9">
 											<input type="text" class="form-control" id="code" />
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-sm-4" for="name">name:</label>
-										<div class="col-sm-8">
+										<label class="control-label col-sm-3" for="name">name:</label>
+										<div class="col-sm-9">
 											<input type="text" class="form-control" id="name" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label col-sm-4" for="trn">TRN:</label>
-										<div class="col-sm-8">
+										<label class="control-label col-sm-3" for="trn">TRN:</label>
+										<div class="col-sm-9">
 											<input type="text" class="form-control" id="trn" />
 										</div>
 									</div>
 
+									<hr/>
 									<div class="row">
-										<div class="col-sm-offset-4 col-sm-8">
+										<div class="col-sm-3">
+											Logo
+										</div>
+										<div class="col-sm-9">
 											<input type="file" class="form-control" id="inpLogo" />
 											<br/>
 											<img id="imgLogo" src="#" alt="Logo" />
+										</div>
+									</div>
+									<hr/>
+									<div class="row">
+										<div class="col-sm-3">
+											Motor Vehicle Rates
+										</div>
+										<div class="col-sm-9">
+											<div class="table-responsive">
+												<table class="table table-condensed" td="manual-rates">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Value</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody id="manual-rates-body">
+														<tr>
+															<td>
+																<input type="text" id="manual-name" />
+															</td>
+															<td>
+																<input type="text" id="manual-value" />
+															</td>
+															<td>
+																<button type="button" id="manual-add" class="btn btn-link">
+																	Add
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<hr/>
+									<div class="row">
+										<div class="col-sm-3">
+											Home Ownship Rates
+										</div>
+										<div class="col-sm-9">
+											<div class="table-responsive">
+												<table class="table table-condensed" td="hoc-manual-rates">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Value</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody id="hoc-manual-rates-body">
+														<tr>
+															<td>
+																<input type="text" id="hoc-manual-name" />
+															</td>
+															<td>
+																<input type="text" id="hoc-manual-value" />
+															</td>
+															<td>
+																<button type="button" id="hoc-manual-add" class="btn btn-link">
+																	Add
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
 
@@ -128,51 +201,12 @@
 								<button type="button" class="btn btn-primary" id="delete-broker">Delete</button>
 								<button type="button" class="btn btn-primary" id="update-broker">Update</button>
 								<button type="button" class="btn btn-primary" id="create-broker">Create</button>
-								<button type="button" class="btn btn-primary" id="devices">Devices</button>
 							</div>
 						</div>
 
 					</div>
 				</div>
 
-
-				<!-- Modal -->
-				<div id="deviceModal" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Manage Device</h4>
-							</div>
-							<div class="modal-body">
-								<div class="message"></div>
-
-								<table class="table" id="deviceTable">
-									<thead>
-										<tr>
-											<th>
-												Device
-											</th>
-											<th>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary" id="add-device">Add Device</button>
-							</div>
-
-						</div>
-					</div>
-
-
-
-				</div>
 			</div>
 		</div>
 
@@ -214,62 +248,93 @@
 				});
 
 
+				//motor vehicle manual rates
+				$('#manual-add').click(function () {
+					var manual_name = $('#manual-name').val();
+					var manual_value = $('#manual-value').val();
 
-				var getDevices = function (callback) {
-					var brokerCode = $("#brokerModal #code").val();
-					g_ironrock_service.listDevices(brokerCode, function (err, data) {
-						var tcontent = $('#deviceTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							tcontent.append('<tr><td>' + val.deviceId +
-								'</td><td><button type="button" id="' + val.deviceId +
-								'" class="btn btn-link deleteDevice">Delete</button></td></tr>');
-						});
-						callback(err);
-						//
+					var validEntry = true;
+
+					if (!manual_name || !manual_value) {
+						alert('Blank Entry!');
+						validEntry = false;
+					}
+					//check if name already exist
+					$.each($('#manual-rates-body').find('tr'), function (idx, tr) {
+						var x_name = $(tr).find('td').eq(0).text();
+						if (manual_name == x_name) {
+							alert('Duplicate Entry!');
+							validEntry = false;
+							return;
+						}
 					});
-				};
-
-
-				$('#devices').click(function () {
-					setLoadingState(true);
-					getDevices(function () {
-						setLoadingState(false);
-						$('#deviceModal').modal('show');
-					});
+					if (validEntry) {
+						var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+						$('#manual-rates-body').prepend(newEntry);
+						$('#manual-name').val('');
+						$('#manual-value').val('');
+					}
 				});
 
-
-
-				$('#add-device').click(function () {
-					bootbox.prompt('Device ID', function (deviceId) {
-						setLoadingState(true);
-						var devicejson = {};
-						devicejson.deviceId = deviceId;
-						devicejson.brokerCode = $("#brokerModal #code").val();
-						g_ironrock_service.createDevice(devicejson, function (err, data) {
-							getDevices(function () {
-								setLoadingState(false);
-							});
-							//$('#deviceModal').modal('hide');
-						});
-
-					});
+				$('#manual-rates-body').on('click', '.manual-delete', function (e) {
+					$(this).parent().parent().remove();
 				});
 
-				$('#deviceTable tbody').on('click', '.deleteDevice', function (e) {
-					var id = e.target.id;
-					setLoadingState(true);
-					g_ironrock_service.deleteDevice(id, function (err, data) {
-						getDevices(function () {
-							setLoadingState(false);
-						});
+				//Home Ownership manual rates
+				$('#hoc-manual-add').click(function () {
+					var manual_name = $('#hoc-manual-name').val();
+					var manual_value = $('#hoc-manual-value').val();
+
+					var validEntry = true;
+
+					if (!manual_name || !manual_value) {
+						alert('Blank Entry!');
+						validEntry = false;
+					}
+					//check if name already exist
+					$.each($('#hoc-manual-rates-body').find('tr'), function (idx, tr) {
+						var x_name = $(tr).find('td').eq(0).text();
+						if (manual_name == x_name) {
+							alert('Duplicate Entry!');
+							validEntry = false;
+							return;
+						}
 					});
+					if (validEntry) {
+						var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+						$('#hoc-manual-rates-body').prepend(newEntry);
+						$('#hoc-manual-name').val('');
+						$('#hoc-manual-value').val('');
+					}
 				});
 
-				/////end devices
+				$('#hoc-manual-rates-body').on('click', '.manual-delete', function (e) {
+					$(this).parent().parent().remove();
+				});
 
+				//common functions for manual rates
+				function getManualRates(tbody) {
+					var manual_rates = [];
+					var rows = tbody.children();
+					$.each(rows, function (idx, tr) {
+						if (idx == rows.length - 1) {
+							return false;
+						}
+						var manual_rate_entry = {};
+						manual_rate_entry.name = $(tr).find('td').eq(0).text();
+						manual_rate_entry.value = $(tr).find('td').eq(1).text();
+						manual_rates.push(manual_rate_entry);
+					});
+					return manual_rates;
+				}
 
+				function populateManualRates(manualRates, tbody) {
+					tbody.children().not(":last").remove();
+					$.each(manualRates, function (idx, entry) {
+						var newEntry = '<tr><td>' + entry.name + '</td><td>' + entry.value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+						tbody.prepend(newEntry);
+					});
+				}
 
 
 
@@ -281,6 +346,8 @@
 					dataInput.name = $('#name').val();
 					dataInput.trn = $('#trn').val();
 					dataInput.logo = $('#imgLogo').attr('src');
+					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
+					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
 					if (!(dataInput.code).match(/[a-z]/i)) {
 						alert('Code must contain letters only');
 						return;
@@ -308,6 +375,8 @@
 					dataInput.name = $('#name').val();
 					dataInput.trn = $('#trn').val();
 					dataInput.logo = $('#imgLogo').attr('src');
+					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
+					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
 					if (!dataInput.code || !dataInput.name || !dataInput.trn) {
 						alert('Code,Name or TRN cannot be null!');
 						return;
@@ -343,6 +412,8 @@
 					$('#trn').val('').prop('readonly', false);
 					$('#imgLogo').attr('src', '');
 					$("#inpLogo").val('');
+					populateManualRates([], $('#manual-rates-body'));
+					populateManualRates([], $('#hoc-manual-rates-body'));
 					$('#update-broker').hide();
 					$('#delete-broker').hide();
 					$('#create-broker').show();
@@ -361,10 +432,12 @@
 						$('#trn').val(item.trn);
 						$('#imgLogo').attr('src', item.logo);
 						$("#inpLogo").val('');
+						populateManualRates(item.manual_rates, $('#manual-rates-body'));
+						populateManualRates(item.hoc_manual_rates, $('#hoc-manual-rates-body'));
 						$('#update-broker').show();
 						$('#create-broker').hide();
 						$('#delete-broker').show();
-						$('#brokerModal .modal-title').text('Update Broker');
+						$('#brokerModal .modal-title').text('Manage Broker');
 						$('#brokerModal').modal('show');
 					});
 				});
@@ -404,33 +477,6 @@
 						});
 					});
 				}
-
-
-				/*function listBrokers(obj) {
-					setLoadingState(true);
-					obj = obj === null ? g_ironrock_service : obj;
-					obj.listBrokers(function (err, data) {
-						setLoadingState(false);
-						if (err) {
-							display(err.message, err);
-							return;
-						}
-						var tcontent = $('#brokerTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							tcontent.append('<tr><td>' + val.code +
-								'</td><td>' + val.name +
-								'</td><td><button type="button" id="' + val.code +
-								'" class="btn btn-link select">Select</button></td></tr>');
-						});
-					});
-				}*/
-
-
-
-
-
-
 
 
 			});
