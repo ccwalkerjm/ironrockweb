@@ -79,35 +79,35 @@ function CreatePDF(resp) {
 	doc.text(150, 90, resp.applicantIDType);
 	doc.text(150, 95, resp.applicantIDnumber);
 	doc.text(150, 100, resp.applicationIDExpirationDate);
-    doc.text(150, 105, resp.SourceOfFunds); 
+	doc.text(150, 105, resp.SourceOfFunds);
 
 	doc.text(20, 120, resp.applicantHomeStreetName);
 	doc.text(20, 130, resp.applicantHomeTown);
 	doc.text(50, 135, resp.applicantHomeParish);
-	doc.text(150, 115, resp.applicantIDnumber); 
+	doc.text(150, 115, resp.applicantIDnumber);
 	doc.text(150, 120, resp.applicantEmailAddress);
 	doc.text(150, 125, resp.applicantMobileNumber);
 
 	doc.text(150, 130, resp.applicantHomeNumber);
 	doc.text(150, 135, resp.applicantWorkNumber);
-     if(resp.mailingAddressSame=="yes"){
-        doc.text(20, 150, resp.applicantHomeStreetName);
-    }else{
-        doc.text(20, 150, resp.applicantMailStreetName);
-    }
-    
-    if(resp.mailingAddressSame=="yes"){
-        doc.text(20, 160, resp.applicantHomeTown);
-    }else{
-        doc.text(20, 160, resp.applicantMailTown);
-    }
-    
-    if(resp.mailingAddressSame=="yes"){
-        doc.text(50, 165, resp.applicantHomeParish);
-    }else{
-       doc.text(50, 165, resp.applicantMailParish);
-    }
-	
+	if (resp.mailingAddressSame == "yes") {
+		doc.text(20, 150, resp.applicantHomeStreetName);
+	} else {
+		doc.text(20, 150, resp.applicantMailStreetName);
+	}
+
+	if (resp.mailingAddressSame == "yes") {
+		doc.text(20, 160, resp.applicantHomeTown);
+	} else {
+		doc.text(20, 160, resp.applicantMailTown);
+	}
+
+	if (resp.mailingAddressSame == "yes") {
+		doc.text(50, 165, resp.applicantHomeParish);
+	} else {
+		doc.text(50, 165, resp.applicantMailParish);
+	}
+
 	doc.text(20, 160, resp.applicantMailTown);
 	doc.text(50, 165, resp.applicantMailParish);
 	doc.text(150, 145, resp.applicantDateOfBirth);
@@ -330,7 +330,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 60, resp.nameAddressOfOwner);
 
-	doc.text(20, 70, resp.trailerUsed); 
+	doc.text(20, 70, resp.trailerUsed);
 
 	doc.text(50, 90, resp.lienHolderNameInFull);
 
@@ -339,12 +339,12 @@ function setMotorVehiclePages(resp) {
 	doc.text(150, 100, resp.lienHolderTown);
 
 	doc.text(150, 105, resp.lienHolderParish);
-    
-    doc.text(20, 115, resp.insuranceCoverage);
+
+	doc.text(20, 115, resp.insuranceCoverage);
 
 	doc.text(20, 125, resp.vehicleUsedAs);
 
-	doc.text(20, 135, resp.vehicleAntiTheftDevice); 
+	doc.text(20, 135, resp.vehicleAntiTheftDevice);
 
 	doc.text(20, 145, resp.vehicleAntiTheftDeviceName + " " + resp.vehicleAntiTheftDeviceType + " " + resp.vehicleAntiTheftDeviceNameOfProvider);
 
@@ -601,7 +601,29 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(110, 160, resp.manslaughterDefenceCosts ? resp.manslaughterDefenceCosts : "");
 
-	doc.text(110, 165, resp.thirdPartyLimit ? resp.thirdPartyLimit : "");
+	//doc.text(110, 165, resp.thirdPartyLimit ? resp.thirdPartyLimit : "");
+	switch (resp.thirdPartyLimit) {
+	case "standard1":
+		doc.text(110, 165, 'Standard Limits - $3M/ $5M/ $5M');
+		break;
+	case "increased1Option1":
+		doc.text(110, 165, 'Increased Limits - $5M/$7.5M/$5M');
+		break;
+	case "increased1Option2":
+		doc.text(110, 165, 'Increased Limits - $5M/ 10M/ $5M');
+		break;
+	case "increased1Option3":
+		doc.text(110, 165, 'Increased Limits - $10M/ $10M/ $10M');
+		break;
+	case "standard2":
+		doc.text(110, 165, 'Standard Limits - $5M/ $10M/ $5M');
+		break;
+	case "increased2Option1":
+		doc.text(110, 165, 'Increased Limits - $10M/ $10M/ $10M');
+		break;
+	default:
+		break;
+	}
 
 
 
@@ -621,18 +643,18 @@ function lastPage(resp) {
 
 	doc.text(20, 31, "I declare that the information given above has been verified by original documents to ensure the veracity of the information given.");
 
-	
+
 
 	doc.setFontType("bold");
 	doc.text(20, 60, "Customer service Representative");
 
 	doc.text(20, 130, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
-	
+
 
 	doc.setFontType("normal");
 
 	doc.text(20, 63, "I/We declare that the above answers are true and that all particulars affecting the assessment of the risk have been disclosed.");
-	
+
 
 	doc.text(20, 142, "Surname:");
 

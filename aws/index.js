@@ -429,16 +429,15 @@ function reIndexVehicles() {
 		TableRow.find('.ValueVehicleStatus').attr("id", CaptionBaseVehicleStatus + index).attr("name", CaptionBaseVehicleStatus + index);
 		sumInsured = sumInsured + parseFloat(TableRow.find('.ValueVehicleValue').val());
 	});
+	var thirdPartyLimit = $('#thirdPartyLimit').empty();
 	if (sumInsured < 2000000) {
-		$("#lessthan2mill").show();
-		$("#2millandgreater").hide();
-		$('#thirdPartyLimits2millsLess').prop("disabled", false);
-		$('#thirdPartyLimits2millsGreater').prop("disabled", true);
+		thirdPartyLimit.append('<option value="standard1">Standard Limits-$3M/$5M/$5M</option>');
+		thirdPartyLimit.append('<option value="increased1Option1">Increased Limits-$5M/$7.5M/$5M</option>');
+		thirdPartyLimit.append('<option value="increased1Option2">Increased Limits-$5M/10M/$5M</option>');
+		thirdPartyLimit.append('<option value="increased1Option3">Increased Limits-$10M/$10M/$10M</option>');
 	} else {
-		$("#lessthan2mill").hide();
-		$("#2millandgreater").show();
-		$('#thirdPartyLimits2millsLess').prop("disabled", true);
-		$('#thirdPartyLimits2millsGreater').prop("disabled", false);
+		thirdPartyLimit.append('<option value="standard2">Standard Limits-$5M/$10M/$5M</option>');
+		thirdPartyLimit.append('<option value="increased2Option1">Increased Limits-$10M/$10M/$10M</option>');
 	}
 	$('#vehicleCnt').val($('#vehiclesToBeInsured tbody tr').length);
 }
@@ -705,7 +704,7 @@ function doPrimaryFunctions(callback) {
 			//Insurance Option
 			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
 			InsuranceMenuOption.append(InsuranceMenoOptionLink);
-			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="/mobileapp.html">Mobile App</a></li></ul>');
+			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a></li></ul>');
 
 			sideBarMenu.append(InsuranceMenuOption);
 
