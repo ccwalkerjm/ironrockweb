@@ -63,8 +63,16 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>IRIe</h1>
-				<p>IronRock Insurance E-services.</p>
+				<h1>IronRock Online Services</h1>
+				<p>We provide a list of online services.</p>
+				<img id="img" />
+				<br/>
+				<span id="desc"></span>
+				<br/>
+				<br/>
+				<br/>Broker Code:
+				<input type="text" id="code" />
+				<button type="button" id="getBroker">Get Broker</button>
 
 			</div>
 		</div>
@@ -72,7 +80,7 @@
 
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
-			2016 &copy; IronRock Insurance.
+			2016 &copy; Ironrock Insurance.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
@@ -101,7 +109,16 @@
 			doPrimaryFunctions();
 		});
 
+		$('#getBroker').click(function () {
+			g_ironrock_service.getPubicBroker($('#code').val(), function (err, data) {
+				$('#desc').html('Broker Name:<b>' + data.name + '</b>');
+				$('#img').attr('src', data.logo);
+			});
+		});
 	</script>
+
+
+
 
 </body>
 
