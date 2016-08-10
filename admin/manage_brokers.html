@@ -113,6 +113,20 @@
 										</div>
 									</div>
 
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="globalName">Global Name Id:</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="globalName" readonly/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="source_id">Source Id:</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="source_id" />
+										</div>
+									</div>
+
 									<hr/>
 									<div class="row">
 										<div class="col-sm-3">
@@ -345,6 +359,7 @@
 					dataInput.code = $('#code').val().toUpperCase();
 					dataInput.name = $('#name').val();
 					dataInput.trn = $('#trn').val();
+					dataInput.source_id = $('#source_id').val();
 					dataInput.logo = $('#imgLogo').attr('src');
 					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
 					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
@@ -374,6 +389,7 @@
 					dataInput.code = $('#code').val();
 					dataInput.name = $('#name').val();
 					dataInput.trn = $('#trn').val();
+					dataInput.source_id = $('#source_id').val();
 					dataInput.logo = $('#imgLogo').attr('src');
 					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
 					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
@@ -430,6 +446,8 @@
 						$('#code').val(item.code).prop('readonly', true);
 						$('#name').val(item.name);
 						$('#trn').val(item.trn);
+						$('#source_id').val(item.source_id);
+						$('#globalName').val(item.globalName);
 						$('#imgLogo').attr('src', item.logo);
 						$("#inpLogo").val('');
 						populateManualRates(item.manual_rates, $('#manual-rates-body'));

@@ -125,7 +125,7 @@ var ironrockcloudservice = (function () {
 				console.log(_creds);
 				callback(null, _creds);
 			}
-		})
+		});
 
 	};
 
@@ -489,7 +489,7 @@ var ironrockcloudservice = (function () {
 				callback(err);
 			else {
 				var payload = JSON.parse(results.Payload);
-				if (payload == null) {
+				if (!payload) {
 					callback();
 				} else if (payload.errorMessage) {
 					callback(new Error(payload.errorMessage));
@@ -954,6 +954,21 @@ var ironrockcloudservice = (function () {
 		payload.username = _cognitoUser.getUsername();
 		var params = {
 			FunctionName: 'ironrockGetPolicies',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+
+	//get sources
+	ironrockcloudservice.prototype.getSources = function (callback) {
+		var payload = {};
+		payload.username = _cognitoUser.getUsername();
+		var params = {
+			FunctionName: 'ironrockGetSources',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();

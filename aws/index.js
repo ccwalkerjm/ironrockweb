@@ -688,8 +688,7 @@ function doPrimaryFunctions(callback) {
 		var adminMenuOption = $('<li/>');
 		var adminMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-cogs"></i>');
 		var adminMenuTitle = $('<span/>').addClass('title').text('Admin');
-		var adminSubMenu = $('<ul/>').addClass('sub-menu').html('<li><a href="/Admin/manage_brokers.html">Brokers</a><li><a href="/Admin/manage_users.html">Agents</a>');
-
+		var adminSubMenu = $('<ul/>').addClass('sub-menu').html('<li><a href="/Admin/manage_sources.html">Sources</a></li><li><a href="/Admin/manage_brokers.html">Brokers</a></li><li><a href="/Admin/manage_users.html">Agents</a></li>');
 
 		var valid_page = false;
 		if ($this.getUsername()) {
