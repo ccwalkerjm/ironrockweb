@@ -87,11 +87,11 @@
 									<input type="date" class="form-control" id="searchDateTo">
 								</div>
 								<div class="form-group">
-									<label for="searchDateTo">Policy:</label>
+									<label for="searchPolicy">Policy:</label>
 									<select class="form-control" id="searchPolicy">
-										<option value="">Any</option>
-										<option value="motor">Policies Only</option>
-										<option value="property">Quotes Only</option>
+										<option value="all">Any</option>
+										<option value="policy">Policies Only</option>
+										<option value="quote">Quotes Only</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -170,6 +170,10 @@
 
 							<button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
 								<span class="glyphicon glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp; Documents
+							</button>
+
+							<button type="button" id="viewPolicy" class="btn btn-default" aria-label="Left Align" title="View Policy">
+								<span class="glyphicon glyphicon glyphicon-saved" aria-hidden="true"></span>&nbsp;Policy
 							</button>
 						</div>
 						<hr/>
@@ -2735,6 +2739,7 @@
 					$('#getPDF').prop('disabled', true);
 					$('#convert').prop('disabled', true);
 					$('#getUploadModal').prop('disabled', true);
+					$('#viewPolicy').prop('disabled', true);
 				});
 			});
 
@@ -2751,8 +2756,10 @@
 						return;
 					}
 
-					currentQuote = ConvertToJson(resp);
+					currentQuote = ConvertToJson(resp.request);
 					currentQuote.applicantQuoteNo = id;
+					currentQuote.policy_id = resp.policy_id;
+					currentQuote.policy_status = resp.status;
 					//DisplayQuote();
 					setQuoteWizard(currentQuote.insuranceType, function (err) {
 						if (err) {
@@ -2777,10 +2784,16 @@
 								$('#getPDF').prop('disabled', false);
 								$('#convert').prop('disabled', false);
 								$('#getUploadModal').prop('disabled', false);
+								//policy
+								$('#viewPolicy').prop('disabled', currentQuote.policy_status != "policy_created");
 							}
 						});
 					});
 				});
+			});
+
+			$('#quoteContainer').on('click', '#viewPolicy', function () {
+				alert(currentQuote.policy_id);
 			});
 
 

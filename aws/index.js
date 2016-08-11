@@ -639,7 +639,7 @@ function display(message, err) {
 		message = '<strong>Error:</strong>' + message;
 	} else {
 		_$message.addClass('alert alert-info');
-		message = '<strong>Error:</strong>' + message;
+		message = '<strong>Message:</strong>' + message;
 	}
 	_$message.html(message).fadeIn().delay(10000).fadeOut();
 }
