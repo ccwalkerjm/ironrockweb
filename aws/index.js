@@ -32,6 +32,7 @@ var CaptionBaseVehicleType = 'vehicleType';
 var CaptionBaseVehicleColour = 'vehicleColour';
 var CaptionBaseVehicleStatus = 'vehicleStatus';
 var CaptionBaseVehicleValue = 'vehicleValue';
+var _$message;
 
 var verificationFormText = '<div class="row">  ' +
 	'<div class="col-md-12"> ' +
@@ -632,19 +633,24 @@ function GetDriverLicense($this, id, callback) {
 
 //display message
 function display(message, err) {
+	_$message.removeAttr('class');
 	if (err) {
-		$('.message').removeClass().addClass('alert alert-warning').html('<strong>Error:</strong>' + message).fadeIn().delay(10000).fadeOut();
-		return;
+		_$message.addClass('alert alert-warning');
+		message = '<strong>Error:</strong>' + message;
+	} else {
+		_$message.addClass('alert alert-info');
+		message = '<strong>Error:</strong>' + message;
 	}
-	$('.message').removeClass().addClass('alert alert-info').html('<strong>Info:</strong>' + message).fadeIn().delay(10000).fadeOut();
+	_$message.html(message).fadeIn().delay(10000).fadeOut();
 }
 
-//$(document).ready(function (e) {
 function doPrimaryFunctions(callback) {
 	//new wizard  july 21, 2016
 
 	///////////////////admin functions///////////////////////////////////////
 
+	//set message 
+	_$message = $(document).find('.message');
 
 	//spinning loader
 	$(document).on({

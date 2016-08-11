@@ -87,6 +87,14 @@
 									<input type="date" class="form-control" id="searchDateTo">
 								</div>
 								<div class="form-group">
+									<label for="searchDateTo">Policy:</label>
+									<select class="form-control" id="searchPolicy">
+										<option value="">Any</option>
+										<option value="motor">Policies Only</option>
+										<option value="property">Quotes Only</option>
+									</select>
+								</div>
+								<div class="form-group">
 									<label for="searchInsuranceType">Type:</label>
 									<select class="form-control" id="searchInsuranceType">
 										<option value="">All Types</option>
@@ -1470,9 +1478,9 @@
 										<fieldset class="form-group">
 											<label class="control-label" for="thirdPartyLimit">
 												Third Party Limits</label>
-											<select class="form-control" name="thirdPartyLimit" id="thirdPartyLimit">												
+											<select class="form-control" name="thirdPartyLimit" id="thirdPartyLimit">
 											</select>
-										</fieldset>										
+										</fieldset>
 									</form>
 									<br/>
 									<br/>
@@ -2568,6 +2576,7 @@
 				searchData.dateFr = $('#searchDateFr').val();
 				searchData.dateTo = $('#searchDateTo').val();
 				searchData.type = $('#searchInsuranceType').val();
+				searchData.policy = $('#searchPolicy').val();
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
@@ -2635,7 +2644,7 @@
 						return;
 					}
 					display("Policy Created.");
-					$('#convertToPolicyModal').modal('hide');
+					//$('#convertToPolicyModal').modal('hide');
 				});
 			});
 
