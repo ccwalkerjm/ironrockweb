@@ -244,20 +244,46 @@
                 $('#summary dl').append('<dt>Branch</dt><dd>' + policyObj.policy.branch + '</dd>');
                 $('#summary dl').append('<dt>Date Signed</dt><dd>' + policyObj.policy.date_proposal_signed + '</dd>');
                 $('#summary dl').append('<dt>Currency</dt><dd>' + policyObj.policy.currency + '</dd>');
-                //$('#summary dl').append('<dt>Agreed Value</dt><dd>' + policyObj.policy.agreed_value + '</dd>');
-                //$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + policyObj.policy.auto_renewal + '</dd>');
-                //$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
-                //$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
+                $('#summary dl').append('<dt>Agreed Value</dt><dd>' + policyObj.policy.agreed_value + '</dd>');
+                $('#summary dl').append('<dt>Auto Renewal</dt><dd>' + policyObj.policy.auto_renewal + '</dd>');
+                $('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
+                $('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
                 
+                populateInsureds(policyObj.policy.insureds, policyObj.global_names)
                 //populate risks
                 if(policyObj.risks[0].chassis_number)
                     populateMVRisks(policyObj.risks);
                 else
                     populateHOCRisks(policyObj.risks);                
                 
+                console.log(policyObj);
 			}
             
             
+            function populateInsureds(insureds, globalNames){
+                var table = $('#Insured table');
+                table.find('thead').html('<tr><th>ID</th><th>Type</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Town/City</th></tr>')
+                var tbody = table.find('tbody').empty();
+                $.each(insureds,function(idx,insured){
+                    var insuredDetail = getDetails(insured,globalNames);
+                    tbody.append('<tr><td>'+insuredDetail.national_id+ '</td><td>'+insuredDetail.national_id_type+'</td><td>'+insuredDetail.first_name+'</td><td>'+insuredDetail.last_name+'</td><td></td><td></td></tr>');
+                })                
+            }
+            
+            
+            function getDetails(insured,globalNames)
+            {
+                var details = {};
+                $.each(globalNames, function (idx, globalName){
+                    if(insured.national_id == globalName.national_id && insured.national_id_type == globalName.national_id_type){
+                        details.national_id = globalName.national_id;
+                        details.national_id_type = globalName.national_id_type;
+                        details.first_name = globalName.first_name;
+                        details.last_name = globalName.last_name;                        
+                    }
+                });
+                return details;
+            }
             
 
             function populateMVRisks(risks){
