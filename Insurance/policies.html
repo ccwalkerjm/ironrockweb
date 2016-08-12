@@ -130,11 +130,17 @@
 							</div>
 							<div id="risk" class="tab-pane fade">
 								<h3>Risks</h3>
-								<table class="table"></table>
+								<table class="table">
+                                <thead></thead>
+                                    <tbody></tbody>
+                                </table>
 							</div>
 							<div id="Insured" class="tab-pane fade">
 								<h3>Insured</h3>
-								<table class="table"></table>
+								<table class="table">
+                                <thead></thead>
+                                    <tbody></tbody>
+                                </table>
 							</div>
 						</div>
 					</div>
@@ -235,8 +241,43 @@
 				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
 				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
 				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
+                $('#summary dl').append('<dt>Branch</dt><dd>' + policyObj.policy.branch + '</dd>');
+                $('#summary dl').append('<dt>Date Signed</dt><dd>' + policyObj.policy.date_proposal_signed + '</dd>');
+                $('#summary dl').append('<dt>Currency</dt><dd>' + policyObj.policy.currency + '</dd>');
+                //$('#summary dl').append('<dt>Agreed Value</dt><dd>' + policyObj.policy.agreed_value + '</dd>');
+                //$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + policyObj.policy.auto_renewal + '</dd>');
+                //$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
+                //$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
+                
+                //populate risks
+                if(policyObj.risks[0].chassis_number)
+                    populateMVRisks(policyObj.risks);
+                else
+                    populateHOCRisks(policyObj.risks);                
+                
 			}
+            
+            
+            
 
+            function populateMVRisks(risks){
+                var table = $('#risk table');
+                table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th>Sum&nbsp;Insured</th></tr>')
+                var tbody = table.find('tbody').empty();
+                $.each(risks,function(idx,risk){
+                    tbody.append('<tr><td>'+risk.registration_number+ '</td><td>'+risk.chassis_number+'</td><td>'+risk.make+'</td><td>'+risk.model+'</td><td>'+risk.year+'</td><td>'+risk.sum_insured+'</td></tr>');
+                })                
+            }
+            
+            function populateHOCRisks(risks){
+                var table = $('#risk table');
+                table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th>Sum&nbsp;Insured</th></tr>')
+                var tbody = table.find('tbody').empty();
+                $.each(risks,function(idx,risk){
+                    tbody.append('<tr><td>'+risk.usage_code+ '</td><td>'+risk.risk_item_type+'</td><td>'+risk.building_year_built+'</td><td>'+risk.construction_of_roof+'</td><td>'+risk.construction_of_wall+'</td><td>'+risk.height_in_storeys+'</td><td>'+risk.sum_insured+'</td></tr>');
+                })                           
+            }
+            
 
 			$('#gotoPolicies').click(function () {
 				$('#queryPolicySection').show();
