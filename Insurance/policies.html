@@ -116,6 +116,7 @@
 				<section id="viewPolicySection" style="display:none">
 					<div class="container">
 						<h2>Policy</h2>
+						<button class="btn btn-link" id="gotoPolicies" type="button">Return</button>
 						<ul class="nav nav-tabs">
 							<li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
 							<li><a data-toggle="tab" href="#risk">Risks</a></li>
@@ -192,26 +193,20 @@
 				var lastYear = yyyy - 1;
 				$('#searchDateFr').val(lastYear + '-01-01');
 				$('#searchDateTo').val(yyyy + '-12-31');
-				var policy_id = getQueryStringParams("policy_id");
-				if (policy_id) {
-					displayPolicy(policy_id, obj);
+				var policyObj = localStorage.getItem('_ironrockPolicyObject');
+				if (policyObj) {
+					localStorage.removeItem('_ironrockPolicyObject');
+					policyObj = JSON.parse(policyObj);
+					populatePolicy(policyObj);
 				} else {
 					$('#queryPolicySection').show();
 					$('#viewPolicySection').hide();
 				}
 			});
 
+
 			//test api			
 			function displayPolicy(policy_id, obj) {
-				var policyObj = sessionStorage.getItem('_ironrockPolicyObject');
-				if (policyObj) {
-					//sessionStorage.removeItem('_ironrockPolicyObject');
-					policyObj = JSON.parse(policyObj);
-					if (policy_id == policyObj.policy.policy_id) {
-						populatePolicy(policyObj);
-						return;
-					}
-				}
 				setLoadingState(true);
 				obj = obj || g_ironrock_service;
 				obj.getPolicy(policy_id, function (err, data) {
@@ -220,7 +215,7 @@
 						setLoadingState(false);
 					} else {
 						setLoadingState(false);
-						policyObj = JSON.parse(data.Payload);
+						var policyObj = JSON.parse(data.Payload);
 						if (policyObj.errorMessage) {
 							display(policyObj.errorMessage, true);
 						} else if (!policyObj.success) {
@@ -240,8 +235,13 @@
 				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
 				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
 				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
-
 			}
+
+
+			$('#gotoPolicies').click(function () {
+				$('#queryPolicySection').show();
+				$('#viewPolicySection').hide();
+			});
 
 
 

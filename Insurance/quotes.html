@@ -2652,8 +2652,8 @@
 						return;
 					}
 					console.log(result);
-					sessionStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
-					location.assign('policies.html?policy_id=' + encodeURIComponent(result.policy.policy_id));
+					localStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
+					location.assign('policies.html');
 				});
 			});
 
