@@ -67,10 +67,6 @@
 									<input type="number" class="form-control" id="searchQuoteNo">
 								</div>
 								<div class="form-group">
-									<label for="searchId">ID No:</label>
-									<input type="number" class="form-control" id="searchId">
-								</div>
-								<div class="form-group">
 									<label for="searchFirstname">First Name:</label>
 									<input type="text" class="form-control" id="searchFirstname">
 								</div>
@@ -2574,7 +2570,6 @@
 				var searchData = {};
 
 				searchData.quoteNo = $('#searchQuoteNo').val();
-				searchData.IdNum = $('#searchId').val();
 				searchData.firstName = $('#searchFirstname').val();
 				searchData.lastName = $('#searchLastname').val();
 				searchData.dateFr = $('#searchDateFr').val();
@@ -2585,37 +2580,46 @@
 
 				setLoadingState(true);
 				g_ironrock_service.searchQuotes(payload, function (err, quoteList) {
-					setLoadingState(false);
 					if (err) {
 						alert("error: " + err.statusText);
+						setLoadingState(false);
 						return;
 					}
 					if (!quoteList) {
 						alert('No quotes returned!');
+						setLoadingState(false);
 						return;
 					}
 					g_ironrock_service.listBrokers(function (err, data) {
+						setLoadingState(false);
 						var brokers = JSON.parse(data.Payload);
 						quoteList = ConvertToJson(quoteList);
 						var quotes = quoteList.sort(function (a, b) {
 							return b.id - a.id;
 						});
 						// ascending order
+						$('#quotesTable thead').html('<tr><th>Quote&nbsp;No</th><th>Date</th><th>First&nbsp;Name</th><th>Last&nbsp;Name</th><th>Type</th><th>Broker</th><th>Policy&nbsp;No</th><th></th></tr>');
 						var dlTable = $('#quotesTable tbody').html('');
-						$.each(quotes, function (idx, r) {
-							var data = r.request; // ConvertToJson(r.request);
-							var brokerName = r.broker;
+						$.each(quotes, function (idx, quote) {
+							var brokerName = quote.broker;
 							$.each(brokers, function (i, b) {
-								if (b.code == r.broker) {
+								if (b.code == quote.broker) {
 									brokerName = b.name;
 								}
 							});
-							dlTable.append('<tr><td>' + r.id + '</td><td>' +
-								data.applicantFirstName + '</td><td>' +
-								data.applicantSurname + '</td><td>' +
-								data.insuranceType + '</td><td>' +
-								brokerName + '</td><td><button class="btn btn-link select" id="' +
-								r.id + '">Select</button></td></tr>');
+							var date = new Date();
+							var day = date.getDate(quote.startDate);
+							var monthIndex = date.getMonth() + 1;
+							var year = date.getFullYear();
+							var dateFormat = day + '/' + monthIndex + '/' + year;
+							dlTable.append('<tr><td>' + quote.id + '</td><td>' +
+								dateFormat + '</td><td>' +
+								quote.firstName + '</td><td>' +
+								quote.lastName + '</td><td>' +
+								quote.type + '</td><td>' +
+								brokerName + '</td><td>' +
+								quote.policy_number + '</td><td>' +
+								'<button class="btn btn-link select" id="' + quote.id + '">Select</button></td></tr>');
 						});
 					});
 				});
@@ -2642,13 +2646,14 @@
 						display(result.errorMessage, true);
 						return;
 					}
-					if (result && result.error_message) {
+					if (result && !result.success) {
 						//epic error
-						display(err.message, err);
+						display(result.error_message, err);
 						return;
 					}
-					display("Policy Created.");
-					//$('#convertToPolicyModal').modal('hide');
+					console.log(result);
+					sessionStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
+					location.assign('policies.html?policy_id=' + encodeURIComponent(result.policy.policy_id));
 				});
 			});
 

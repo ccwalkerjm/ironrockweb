@@ -57,6 +57,21 @@ var verificationFormText = '<div class="row">  ' +
 	'</div> ' +
 	'</form> </div>  </div>';
 
+//manage query strings
+function getQueryStringParams(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
 
 //loader
 function setLoadingState(loadingState) {

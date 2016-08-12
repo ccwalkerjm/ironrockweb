@@ -63,47 +63,88 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>Policies</h1>
-				<table class="table" id="policyTable">
-					<thead>
-						<tr>
-							<th>
-								Policy No.
-							</th>
-							<th>
-								Account Name
-							</th>
-							<th>
-								Source
-							</th>
-							<th>
-								Country
-							</th>
-							<th>
-								Expiry
-							</th>
-							<th>
-								Risks
-							</th>
-							<th>
-								Curr
-							</th>
-							<th>
-								Sum Insured
-							</th>
-							<th>
-								Premium
-							</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="message"></div>
+				<section id="queryPolicySection" style="display:none">
+					<h1>Policies</h1>
+					<div class="row">
+						<div class="col-md-4" id="searchColumn" style="display:none">
+							<h2>Policy Search</h2>
+							<form role="form">
+								<div class="form-group">
+									<label for="searchPolicyNo">Policy No</label>
+									<input type="number" class="form-control" id="searchPolicyNo">
+								</div>
+								<div class="form-group">
+									<label for="searchFirstname">First Name:</label>
+									<input type="text" class="form-control" id="searchFirstname">
+								</div>
+								<div class="form-group">
+									<label for="searchLastname">Last Name:</label>
+									<input type="text" class="form-control" id="searchLastname">
+								</div>
+								<div class="form-group">
+									<label for="searchDateFr">Date From:</label>
+									<input type="date" class="form-control" id="searchDateFr">
+								</div>
+								<div class="form-group">
+									<label for="searchDateTo">Date To:</label>
+									<input type="date" class="form-control" id="searchDateTo">
+								</div>
+								<div class="form-group">
+									<label for="searchInsuranceType">Type:</label>
+									<select class="form-control" id="searchInsuranceType">
+										<option value="">All Types</option>
+										<option value="motor">Motor Vehicle</option>
+										<option value="property">Home Property</option>
+									</select>
+								</div>
+								<button type="button" class="btn btn-default" id="doSearch">Submit</button>
+							</form>
+						</div>
+						<div class="col-md-8">
+							<h2>Selected Policies</h2>
+							<p>
+								<button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button>
+							</p>
+							<table class="table" id="policiesTable">
+								<thead></thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+				<section id="viewPolicySection" style="display:none">
+					<div class="container">
+						<h2>Policy</h2>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
+							<li><a data-toggle="tab" href="#risk">Risks</a></li>
+							<li><a data-toggle="tab" href="#Insured">Insured</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="summary" class="tab-pane fade in active">
+								<h3>Summary</h3>
+								<dl class="dl-horizontal">
+								</dl>
+							</div>
+							<div id="risk" class="tab-pane fade">
+								<h3>Risks</h3>
+								<table class="table"></table>
+							</div>
+							<div id="Insured" class="tab-pane fade">
+								<h3>Insured</h3>
+								<table class="table"></table>
+							</div>
+						</div>
+					</div>
+
+				</section>
 			</div>
 		</div>
 	</div>
-
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
 			2016 &copy; Ironrock Insurance.
@@ -145,25 +186,133 @@
 	<script type="text/javascript">
 		$(document).ready(function () {
 			doPrimaryFunctions(function (err, obj) {
-				listPolicies(obj);
+				initPage();
+				var today = new Date();
+				var yyyy = today.getFullYear();
+				var lastYear = yyyy - 1;
+				$('#searchDateFr').val(lastYear + '-01-01');
+				$('#searchDateTo').val(yyyy + '-12-31');
+				var policy_id = getQueryStringParams("policy_id");
+				if (policy_id) {
+					displayPolicy(policy_id, obj);
+				} else {
+					$('#queryPolicySection').show();
+					$('#viewPolicySection').hide();
+				}
 			});
-			//test api
 
-			function listPolicies(obj) {
-				obj = obj ? obj : g_ironrock_service;
-				obj.getPolicies(function (err, result) {
+			//test api			
+			function displayPolicy(policy_id, obj) {
+				var policyObj = sessionStorage.getItem('_ironrockPolicyObject');
+				if (policyObj) {
+					//sessionStorage.removeItem('_ironrockPolicyObject');
+					policyObj = JSON.parse(policyObj);
+					if (policy_id == policyObj.policy.policy_id) {
+						populatePolicy(policyObj);
+						return;
+					}
+				}
+				setLoadingState(true);
+				obj = obj || g_ironrock_service;
+				obj.getPolicy(policy_id, function (err, data) {
 					if (err) {
-						alert(err);
+						display(err.message, err);
+						setLoadingState(false);
 					} else {
-						var data = ConvertToJson(result.Payload);
-						if (data.success) {
-							$.each(data.policies, function (idx, obj) {
-
-							});
+						setLoadingState(false);
+						policyObj = JSON.parse(data.Payload);
+						if (policyObj.errorMessage) {
+							display(policyObj.errorMessage, true);
+						} else if (!policyObj.success) {
+							display(policyObj.error_message, true);
+						} else {
+							populatePolicy(policyObj);
 						}
 					}
 				});
 			}
+
+
+			function populatePolicy(policyObj) {
+				$('#queryPolicySection').hide();
+				$('#viewPolicySection').show();
+				$('#summary dl').empty();
+				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
+				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
+				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
+
+			}
+
+
+
+			$('#policiesTable').on('click', '.select', function (e) {
+				displayPolicy(e.target.id)
+			})
+
+			$('#searchBtn').click(function () {
+				$('#searchColumn').toggle();
+			});
+			//search policies
+			$('#doSearch').click(function () {
+				var searchData = {};
+
+				searchData.policyNo = $('#searchPolicyNo').val();
+				searchData.firstName = $('#searchFirstname').val();
+				searchData.lastName = $('#searchLastname').val();
+				searchData.dateFr = $('#searchDateFr').val();
+				searchData.dateTo = $('#searchDateTo').val();
+				searchData.type = $('#searchInsuranceType').val();
+				searchData.policy = "policy";
+				var payload = JSON.stringify(searchData);
+
+				setLoadingState(true);
+				g_ironrock_service.searchQuotes(payload, function (err, quoteList) {
+					if (err) {
+						setLoadingState(false);
+						display(err.message, true);
+						return;
+					}
+					if (!quoteList) {
+						setLoadingState(false);
+						display('No quotes returned!');
+						return;
+					}
+					g_ironrock_service.listBrokers(function (err, data) {
+						setLoadingState(false);
+						var brokers = JSON.parse(data.Payload);
+						quoteList = ConvertToJson(quoteList);
+						var quotes = quoteList.sort(function (a, b) {
+							return b.id - a.id;
+						});
+						// ascending order
+						$('#policiesTable thead').html('<tr><th>Policy&nbsp;No</th><th>Date</th><th>First&nbsp;Name</th><th>Last&nbsp;Name</th><th>Type</th><th>Broker</th></tr>');
+						var dlTable = $('#policiesTable tbody').html('');
+						$.each(quotes, function (idx, policy) {
+							var brokerName = policy.broker;
+							$.each(brokers, function (i, b) {
+								if (b.code == policy.broker) {
+									brokerName = b.name;
+								}
+							});
+							var date = new Date();
+							var day = date.getDate(policy.startDate);
+							var monthIndex = date.getMonth() + 1;
+							var year = date.getFullYear();
+							var dateFormat = day + '/' + monthIndex + '/' + year;
+							dlTable.append('<tr><td>' + policy.policy_number + '</td><td>' +
+								dateFormat + '</td><td>' +
+								policy.firstName + '</td><td>' +
+								policy.lastName + '</td><td>' +
+								policy.type + '</td><td>' +
+								brokerName + '</td><td><button class="btn btn-link select" id="' +
+								policy.policy_id + '">Select</button></td></tr>');
+						});
+					});
+				});
+
+			});
+
+
 
 		});
 	</script>
