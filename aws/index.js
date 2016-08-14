@@ -58,18 +58,15 @@ var verificationFormText = '<div class="row">  ' +
 	'</form> </div>  </div>';
 
 //manage query strings
-function getQueryStringParams(sParam)
-{
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++)
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam)
-        {
-            return sParameterName[1];
-        }
-    }
+function getQueryStringParams(sParam) {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	for (var i = 0; i < sURLVariables.length; i++) {
+		var sParameterName = sURLVariables[i].split('=');
+		if (sParameterName[0] == sParam) {
+			return sParameterName[1];
+		}
+	}
 }
 
 
@@ -708,7 +705,11 @@ function doPrimaryFunctions(callback) {
 		var adminMenuOption = $('<li/>');
 		var adminMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-cogs"></i>');
 		var adminMenuTitle = $('<span/>').addClass('title').text('Admin');
-		var adminSubMenu = $('<ul/>').addClass('sub-menu').html('<li><a href="/Admin/manage_sources.html">Sources</a></li><li><a href="/Admin/manage_brokers.html">Brokers</a></li><li><a href="/Admin/manage_users.html">Agents</a></li>');
+		var adminSubMenu = $('<ul/>').addClass('sub-menu').html('' +
+			'<li><a href="/Admin/manage_sources.html">Sources</a></li>' +
+			'<li><a href="/Admin/manage_brokers.html">Brokers</a></li>' +
+			'<li><a href="/Admin/manage_notifications.html">Notifications</a></li>' +
+			'<li><a href="/Admin/manage_users.html">Agents</a></li>');
 
 		var valid_page = false;
 		if ($this.getUsername()) {

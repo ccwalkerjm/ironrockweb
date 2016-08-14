@@ -214,15 +214,16 @@ var ironrockcloudservice = (function () {
 
 	ironrockcloudservice.prototype.signin = function (username, password, callback) {
 		var $this = this;
+		var trimmedUsername = username.trim();
 		console.log(_creds);
 		var authenticationData = {
-			Username: username,
+			Username: trimmedUsername,
 			Password: password
 		};
 		var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
 
 		var userData = {
-			Username: username,
+			Username: trimmedUsername,
 			Pool: _userPool
 		};
 		_cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
@@ -977,7 +978,43 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
+	//notification
+	ironrockcloudservice.prototype.getNotification = function (callback) {
+		var params = {
+			TableName: 'ironrockNotificationAddresses'
+		};
+		var dynamodb = new AWS.DynamoDB({
+			apiVersion: '2012-08-10'
+		});
+		dynamodb.scan(params, function (err, data) {
+			if (err) {
+				console.log(err);
+				callback(err);
+			} else {
+				console.log('data:');
+				console.log(data);
+				var addresses = [];
+				for (var i = 0; i < data.Items.length; i++) {
+					addresses.push(data.Items[i].emailAddress.S);
+				}
+				callback(null, addresses);
+			}
+		});
+	};
 
+	ironrockcloudservice.prototype.addNotification = function (emailAddresses, callback) {
+		var payload = {};
+		payload.emailAddresses = emailAddresses;
+		var params = {
+			FunctionName: 'ironrockNotificationAddressesUpdate',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
 
+	//
 	return ironrockcloudservice;
 }());
