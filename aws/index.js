@@ -740,18 +740,24 @@ function doPrimaryFunctions(callback) {
 
 			sideBarMenu.append(UserMenuOption);
 
-			//admin
-			var profile = localStorage.getItem("ironrockUserProfile");
+			//admin and set broker logo			
+			$this.getProfile(function (err, profile) {
+				if (!err) {
+					if (profile.role == 'Admin' || profile.role == 'Staff') {
+						adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
+						adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
+						sideBarMenu.append(adminMenuOption);
+					}
+					var logo = $('#logo');
+					if (profile.brokerDetails && profile.brokerDetails.logo) {
+						logo.attr('src', profile.brokerDetails.logo);
+						logo.attr("style", "margin-top:-20px");
+						logo.height(65);
+					}
+					logo.parent().after('<div class="pull-right">Powered By<img src="/assets/img/logo.png" alt="" class="img-responsive" /></div>');
 
-			if (profile) {
-				var item = JSON.parse(profile);
-				if (item.role == 'Admin' || item.role == 'Staff') {
-					adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
-					adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
-					sideBarMenu.append(adminMenuOption);
 				}
-			}
-
+			});
 		} else if (location.pathname == '/index.html' ||
 			location.pathname == '/login.html' ||
 			location.pathname == '/forgotPassword.html' ||
@@ -804,15 +810,7 @@ function doPrimaryFunctions(callback) {
 					if (err) {
 						display(err.message, true);
 					} else {
-						var username = obj.getUsername();
-						obj.getUser(username, function (err, data) {
-							if (err) {
-								display(err.message, true);
-							} else {
-								localStorage.setItem("ironrockUserProfile", data.Payload);
-								location.assign('/dashboard.html');
-							}
-						});
+						location.href = "/dashboard.html";
 					}
 				});
 			}
