@@ -110,7 +110,7 @@ $.fn.serializeObject = function () {
 
 
 //init Page
-function initPage() {
+function initPageWizard() {
 	if (!g_quote_wizard_html) {
 		g_quote_wizard_html = $('#quote-section').html();
 	}
@@ -120,7 +120,7 @@ function initPage() {
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
-	initPage();
+	//initPageWizard();
 
 	/////////////////////////////
 	setLoadingState(true);
@@ -726,7 +726,7 @@ function doPrimaryFunctions(callback) {
 			//Insurance Option
 			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
 			InsuranceMenuOption.append(InsuranceMenoOptionLink);
-			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html#createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a></li></ul>');
+			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html?section=createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a></li></ul>');
 
 			sideBarMenu.append(InsuranceMenuOption);
 

@@ -32,7 +32,7 @@
 			<a class="navbar-brand" href="/index.html">
 				<img id="logo" alt="" class="img-responsive" />
 			</a>
-			
+
 
 			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<img src="/assets/img/menu-toggler.png" alt="" />
@@ -2336,8 +2336,6 @@
 		    </span>
 		</div>
 	</div>
-
-
 	<!--Upload Modal -->
 	<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
 		<div class="modal-dialog" role="document">
@@ -2506,45 +2504,38 @@
 				}
 				$('#quote-section').html(g_quote_wizard_html);*/
 				//
-				initPage();
+				//initPageWizard();
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
 				$('#searchDateFr').val(lastYear + '-01-01');
 				$('#searchDateTo').val(yyyy + '-12-31');
 				//var urlParts = location.hash.split("#");
-				if (location.hash == "#createQuote")
+				var section = getQueryStringParams("section");
+				if (section == "createQuote")
 					createQuote();
 				else {
 					queryQuotes();
-					$("#doSearch").trigger("click");
+					doSearch();
+					//$("#doSearch").trigger("click");
 				}
 			});
 
-			$('#sidebar').on('click', 'a', function (e) {
-				e.preventDefault();
-				var urlParts = $(this).attr('href').split("#");
-				if (urlParts[1] == "createQuote") {
-					createQuote();
-				} else if (urlParts[0] == '/Insurance/quotes.html') {
-					queryQuotes();
-				} else {
-					location.href = $(this).attr('href');
-				}
-			});
+			/*$('#sidebar').on('click', 'a', function (e) { e.preventDefault(); var urlParts = $(this).attr('href').split("#"); var section = getQueryStringParams("section"); if (section == "createQuote") { location.reload(); } else if (urlParts[0] == '/Insurance/quotes.html') { location.reload(); } else { location.href = $(this).attr('href'); } });*/
 
 
 			//create quote selection
 			$('#createQuote').click(function () {
-				createQuote();
+				//createQuote();
+				location.assign("quotes.html?section=createQuote");
 			});
 
 			function queryQuotes() {
 				$('#quotes').show();
 				$('#quoteContainer').hide();
 				$('#newQuoteTypeSelection').hide();
-				//$('#quote-section').hide();
-				$('#quote-section').empty();
+				$('#quote-section').hide();
+				clearForm();
 				//last reset currentQuote
 				currentQuote = {};
 			}
@@ -2555,12 +2546,20 @@
 				$('#quoteContainer').show();
 				$('#newQuoteTypeSelection').show();
 				$('#quote-section').hide();
+				clearForm();
 			}
+
+
+			function clearForm() {
+				$.each($('#quote-section form'), function () {
+					this.reset();
+				})
+			}
+
 
 			$('#searchBtn').click(function () {
 				$('#searchColumn').toggle();
 			});
-
 
 			function getBaseUrl() {
 				var re = new RegExp(/^.*\//);
@@ -2568,6 +2567,11 @@
 			}
 
 			$('#doSearch').click(function () {
+				doSearch();
+			});
+
+
+			function doSearch() {
 				var searchData = {};
 
 				searchData.quoteNo = $('#searchQuoteNo').val();
@@ -2624,8 +2628,8 @@
 						});
 					});
 				});
+			}
 
-			});
 
 			$('#quote-section').on('click', '#convertToPolicy', function () {
 				$('#convertToPolicyModal').modal('show');
@@ -2725,8 +2729,8 @@
 
 			$('#quoteContainer').on('click', '.returntoQuotes', function () {
 				//location.reload();
-				queryQuotes();
-				//location.href = "/insurance/quotes.html"
+				//queryQuotes();
+				location.href = "/insurance/quotes.html"
 			});
 
 
