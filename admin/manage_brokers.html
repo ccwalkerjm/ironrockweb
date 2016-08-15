@@ -135,13 +135,13 @@
 										<div class="col-sm-9">
 											<input type="file" class="form-control" id="inpLogo" />
 											<br/>
-											<img id="imgLogo" src="#" alt="Logo" />
+											<img id="imgLogo" src="#" alt="Logo" width="400px" />
 										</div>
 									</div>
 									<hr/>
 									<div class="row">
 										<div class="col-sm-3">
-											Motor Vehicle Rates
+											Motor Vehicle Special Rates
 										</div>
 										<div class="col-sm-9">
 											<div class="table-responsive">
@@ -176,7 +176,7 @@
 									<hr/>
 									<div class="row">
 										<div class="col-sm-3">
-											Home Ownship Rates
+											Home Special Rates
 										</div>
 										<div class="col-sm-9">
 											<div class="table-responsive">
@@ -428,6 +428,8 @@
 					$('#trn').val('').prop('readonly', false);
 					$('#imgLogo').attr('src', '');
 					$("#inpLogo").val('');
+					$('#source_id').val('');
+					$('#globalName').val('');
 					populateManualRates([], $('#manual-rates-body'));
 					populateManualRates([], $('#hoc-manual-rates-body'));
 					$('#update-broker').hide();

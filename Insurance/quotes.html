@@ -2516,7 +2516,7 @@
 					createQuote();
 				else {
 					queryQuotes();
-					doSearch();
+					doSearch(obj);
 					//$("#doSearch").trigger("click");
 				}
 			});
@@ -2571,7 +2571,7 @@
 			});
 
 
-			function doSearch() {
+			function doSearch(obj) {
 				var searchData = {};
 
 				searchData.quoteNo = $('#searchQuoteNo').val();
@@ -2584,7 +2584,8 @@
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
-				g_ironrock_service.searchQuotes(payload, function (err, quoteList) {
+				obj = obj || g_ironrock_service; 
+				obj.searchQuotes(payload, function (err, quoteList) {
 					if (err) {
 						alert("error: " + err.statusText);
 						setLoadingState(false);

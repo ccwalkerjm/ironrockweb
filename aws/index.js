@@ -697,10 +697,13 @@ function doPrimaryFunctions(callback) {
 		var UserMenuTitle = $('<span/>').addClass('title');
 		var UserSubMenu = $('<ul/>').addClass('sub-menu');
 		//
-		var InsuranceMenuOption = $('<li/>');
-		var InsuranceMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-briefcase"></i>');
-		var InsuranceMenuTitle = $('<span/>').addClass('title').text('Policies/Quotes');
-		var InsuranceSubMenu = $('<ul/>').addClass('sub-menu');
+		var quoteMenuOption = $('<li/>');
+		var quoteMenuOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-briefcase"></i>');
+		var quoteMenuTitle = $('<span/>').addClass('title').text('Quotes');
+		//
+		var policyMenuOption = $('<li/>');
+		var policyMenuOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-briefcase"></i>');
+		var policyMenuTitle = $('<span/>').addClass('title').text('Policies');
 		//
 		var adminMenuOption = $('<li/>');
 		var adminMenoOptionLink = $('<a/>').attr('href', '#').html('<i class="fa fa-cogs"></i>');
@@ -723,12 +726,19 @@ function doPrimaryFunctions(callback) {
 			sideBarMenu.append(HomeMenuOption);
 
 
-			//Insurance Option
-			InsuranceMenoOptionLink.append(InsuranceMenuTitle).append('<span class="arrow "></span>');
-			InsuranceMenuOption.append(InsuranceMenoOptionLink);
-			InsuranceMenuOption.append('<ul class="sub-menu"><li><a href="/Insurance/quotes.html?section=createQuote">Create Proposal</a></li><li><a href="/Insurance/quotes.html">Query Quotes</a></li><li><a href="/Insurance/policies.html">Policies</a></li><li><a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Mobile App</a></li></ul>');
-
-			sideBarMenu.append(InsuranceMenuOption);
+			//Quotes Option
+			quoteMenuOptionLink.append(quoteMenuTitle).append('<span class="arrow "></span>');
+			quoteMenuOption.append(quoteMenuOptionLink);
+			quoteMenuOption.append('<ul class="sub-menu">' +
+				'<li><a href="/Insurance/quotes.html?section=createQuote">Prepare Quote</a></li>' +
+				'<li><a href="/Insurance/quotes.html">Find Quotes</a></li></ul>');
+			sideBarMenu.append(quoteMenuOption);
+			//Quotes Option
+			policyMenuOptionLink.append(policyMenuTitle).append('<span class="arrow "></span>');
+			policyMenuOption.append(policyMenuOptionLink);
+			policyMenuOption.append('<ul class="sub-menu">' +
+				'<li><a href="/Insurance/policies.html">Policies</a></li></ul>');
+			sideBarMenu.append(policyMenuOption);
 
 
 			//User 
