@@ -2401,17 +2401,28 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="policyPeriod">Periods</label>
-									<div class="col-md-4">
-										<input id="policyPeriod" name="policyPeriod" type="number" placeholder="Period in Months" class="form-control" value="12">
-									</div>
-								</div>
-								<div class="form-group">
 									<label class="col-md-4 control-label" for="signedDate">Date Signed</label>
 									<div class="col-md-4">
 										<input id="signedDate" name="signedDate" type="date" placeholder="Date Signed" class="form-control">
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="memo">Memo</label>
+									<div class="col-md-4">
+										<textarea id="memo" name="memo" placeholder="Memo" class="form-control"></textarea>
+									</div>
+								</div>
+								<input id="policyPeriod" name="policyPeriod" type="hidden" value="12" />
+								<input id="branch" name="branch" type="hidden" value="Head Office" />
+								<input id="premiumFinanceCompanyCode" name="premiumFinanceCompanyCode" type="hidden" />
+								<input id="usageCategory" name="usageCategory" type="hidden" />
+								<!--<div class="form-group">
+									<label class="col-md-4 control-label" for="policyPeriod">Periods</label>
+									<div class="col-md-4">
+										<input id="policyPeriod" name="policyPeriod" type="number" placeholder="Period in Months" class="form-control" value="12">
+									</div>
+								</div>							
+								
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="branch">Branch</label>
 									<div class="col-md-4">
@@ -2430,12 +2441,7 @@
 										<input id="premiumFinanceCompanyCode" name="premiumFinanceCompanyCode" type="text" placeholder="Premium Finance Company Code" class="form-control">
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="memo">Memo</label>
-									<div class="col-md-4">
-										<textarea id="memo" name="memo" placeholder="Memo" class="form-control"></textarea>
-									</div>
-								</div>
+								-->
 							</form>
 						</div>
 					</div>
@@ -2498,13 +2504,6 @@
 		$(document).ready(function () {
 			var currentQuote;
 			doPrimaryFunctions(function (err, obj) {
-				//				
-				/*if (!g_quote_wizard_html) {
-					g_quote_wizard_html = $('#quote-section').html();
-				}
-				$('#quote-section').html(g_quote_wizard_html);*/
-				//
-				//initPageWizard();
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
@@ -2512,16 +2511,25 @@
 				$('#searchDateTo').val(yyyy + '-12-31');
 				//var urlParts = location.hash.split("#");
 				var section = getQueryStringParams("section");
-				if (section == "createQuote")
-					createQuote();
-				else {
-					queryQuotes();
+				if (section == "createQuote") {
+					//createQuote();
+					currentQuote = null;
+					$('#quotes').hide();
+					$('#quoteContainer').show();
+					$('#newQuoteTypeSelection').show();
+					$('#quote-section').hide();
+				} else {
+					//queryQuotes();
+					currentQuote = {};
+					$('#quotes').show();
+					$('#quoteContainer').hide();
+					$('#newQuoteTypeSelection').hide();
+					$('#quote-section').hide();
+					//last reset currentQuote				
 					doSearch(obj);
 					//$("#doSearch").trigger("click");
 				}
 			});
-
-			/*$('#sidebar').on('click', 'a', function (e) { e.preventDefault(); var urlParts = $(this).attr('href').split("#"); var section = getQueryStringParams("section"); if (section == "createQuote") { location.reload(); } else if (urlParts[0] == '/Insurance/quotes.html') { location.reload(); } else { location.href = $(this).attr('href'); } });*/
 
 
 			//create quote selection
@@ -2529,32 +2537,6 @@
 				//createQuote();
 				location.assign("quotes.html?section=createQuote");
 			});
-
-			function queryQuotes() {
-				$('#quotes').show();
-				$('#quoteContainer').hide();
-				$('#newQuoteTypeSelection').hide();
-				$('#quote-section').hide();
-				clearForm();
-				//last reset currentQuote
-				currentQuote = {};
-			}
-
-			function createQuote() {
-				currentQuote = null;
-				$('#quotes').hide();
-				$('#quoteContainer').show();
-				$('#newQuoteTypeSelection').show();
-				$('#quote-section').hide();
-				clearForm();
-			}
-
-
-			function clearForm() {
-				$.each($('#quote-section form'), function () {
-					this.reset();
-				})
-			}
 
 
 			$('#searchBtn').click(function () {
@@ -2584,7 +2566,7 @@
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
-				obj = obj || g_ironrock_service; 
+				obj = obj || g_ironrock_service;
 				obj.searchQuotes(payload, function (err, quoteList) {
 					if (err) {
 						alert("error: " + err.statusText);
@@ -2633,6 +2615,8 @@
 
 
 			$('#quote-section').on('click', '#convertToPolicy', function () {
+				$('#policyStartDate').val(currentQuote.startDate);
+				$('#signedDate').val(currentQuote.startDate);
 				$('#convertToPolicyModal').modal('show');
 			});
 
@@ -2731,7 +2715,7 @@
 			$('#quoteContainer').on('click', '.returntoQuotes', function () {
 				//location.reload();
 				//queryQuotes();
-				location.href = "/insurance/quotes.html"
+				location.href = "/insurance/quotes.html";
 			});
 
 
@@ -2804,7 +2788,7 @@
 			});
 
 			$('#quoteContainer').on('click', '#viewPolicy', function () {
-				alert(currentQuote.policy_id);
+				location.href = "policies.html?policy="+currentQuote.policy_id;
 			});
 
 

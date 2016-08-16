@@ -137,10 +137,8 @@
 							</div>
 							<div id="Insured" class="tab-pane fade">
 								<h3>Insured</h3>
-								<table class="table">
-									<thead></thead>
-									<tbody></tbody>
-								</table>
+								<div id="InsuredDisplay">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -166,6 +164,7 @@
 
 
 	<script src="/Scripts/bootbox.js"></script>
+	<script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
 	<!--Required Libraries-->
 	<script src="/aws/jsbn.js"></script>
 	<script src="/aws/jsbn2.js"></script>
@@ -204,9 +203,14 @@
 					policyObj = JSON.parse(policyObj);
 					populatePolicy(policyObj);
 				} else {
-					doSearch(obj);
-					$('#queryPolicySection').show();
-					$('#viewPolicySection').hide();
+					var policy_id = getQueryStringParams("policy");
+					if (policy_id) {
+						displayPolicy(policy_id + "==", obj);
+					} else {
+						doSearch(obj);
+						$('#queryPolicySection').show();
+						$('#viewPolicySection').hide();
+					}
 				}
 			});
 
@@ -261,12 +265,39 @@
 
 
 			function populateInsureds(insureds, globalNames) {
-				var table = $('#Insured table');
-				table.find('thead').html('<tr><th>ID</th><th>Type</th><th>First Name</th><th>Last Name</th><th>Address</th><th>Town/City</th></tr>')
-				var tbody = table.find('tbody').empty();
+				var insuredPlaceHolder = $('#InsuredDisplay');
 				$.each(insureds, function (idx, insured) {
 					var insuredDetail = getDetails(insured, globalNames);
-					tbody.append('<tr><td>' + insuredDetail.national_id + '</td><td>' + insuredDetail.national_id_type + '</td><td>' + insuredDetail.first_name + '</td><td>' + insuredDetail.last_name + '</td><td></td><td></td></tr>');
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Nationa ID:<dt><dd>' + insuredDetail.national_id + '</dd>');
+					dl.append('<dt>Nationa ID Type:</dt><dd>' + insuredDetail.national_id_type + '</dd>');
+					dl.append('<dt>First Name:</dt><dd>' + insuredDetail.first_name + '</dd>');
+					dl.append('<dt>Last Name:</dt><dd>' + insuredDetail.last_name + '</dd>');
+					dl.append('<dt>Middle Name:</dt><dd>' + insuredDetail.middle_name + '</dd>');
+					dl.append('<dt>Maiden Name:</dt><dd>' + insuredDetail.maiden_name + '</dd>');
+					dl.append('<dt>Nationality:</dt><dd>' + insuredDetail.nationality + '</dd>');
+					dl.append('<dt>Occupation:</dt><dd>' + insuredDetail.occupation + '</dd>');
+					dl.append('<dt>Place Of Birth:</dt><dd>' + insuredDetail.place_of_birth + '</dd>');
+					dl.append('<dt>Gender:</dt><dd>' + insuredDetail.gender + '</dd>');
+					dl.append('<dt>Email Address:</dt><dd>' + insuredDetail.email_address + '</dd>');
+					dl.append('<dt>Title:</dt><dd>' + insuredDetail.title + '</dd>');
+					dl.append('<dt>Date of Birth:</dt><dd>' + insuredDetail.dob + '</dd>');
+					$.each(insuredDetail.phone_numbers, function (idx, phone) {
+						dl.append('<dt>' + phone.type + ':</dt><dd>' + phone.phone_number + '</dd>');
+					});
+					$.each(insuredDetail.locations, function (idx, address) {
+						dl.append('<dt>Main Location</dt><dd>' + address.is_main_location + '</dd>');
+						dl.append('<dt>Type</dt><dd>' + address.street_type + '</dd>');
+						dl.append('<dt>Street Number</dt><dd>' + address.street_number + '</dd>');
+						dl.append('<dt>Street Name</dt><dd>' + address.street_name + '</dd>');
+						dl.append('<dt>Town</dt><dd>' + address.town + '</dd>');
+						dl.append('<dt>Unit Number</dt><dd>' + address.unit_number + '</dd>');
+						dl.append('<dt>Parish</dt><dd>' + address.parish + '</dd>');
+						dl.append('<dt>Postal/Zip Code</dt><dd>' + address.postal_zip_code + '</dd>');
+						dl.append('<dt>Country</dt><dd>' + address.country + '</dd>');
+					})
+					insuredPlaceHolder.append(dl);
+					insuredPlaceHolder.append("<hr/>");
 				})
 			}
 
@@ -275,10 +306,7 @@
 				var details = {};
 				$.each(globalNames, function (idx, globalName) {
 					if (insured.national_id == globalName.national_id && insured.national_id_type == globalName.national_id_type) {
-						details.national_id = globalName.national_id;
-						details.national_id_type = globalName.national_id_type;
-						details.first_name = globalName.first_name;
-						details.last_name = globalName.last_name;
+						details = globalName;
 					}
 				});
 				return details;
@@ -287,19 +315,19 @@
 
 			function populateMVRisks(risks) {
 				var table = $('#risk table');
-				table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th>Sum&nbsp;Insured</th></tr>')
+				table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th align="right">Sum&nbsp;Insured</th></tr>')
 				var tbody = table.find('tbody').empty();
 				$.each(risks, function (idx, risk) {
-					tbody.append('<tr><td>' + risk.registration_number + '</td><td>' + risk.chassis_number + '</td><td>' + risk.make + '</td><td>' + risk.model + '</td><td>' + risk.year + '</td><td>' + risk.sum_insured + '</td></tr>');
+					tbody.append('<tr><td>' + risk.registration_number + '</td><td>' + risk.chassis_number + '</td><td>' + risk.make + '</td><td>' + risk.model + '</td><td>' + risk.year + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td></tr>');
 				})
 			}
 
 			function populateHOCRisks(risks) {
 				var table = $('#risk table');
-				table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th>Sum&nbsp;Insured</th></tr>')
+				table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th align="right">Sum&nbsp;Insured</th></tr>')
 				var tbody = table.find('tbody').empty();
 				$.each(risks, function (idx, risk) {
-					tbody.append('<tr><td>' + risk.usage_code + '</td><td>' + risk.risk_item_type + '</td><td>' + risk.building_year_built + '</td><td>' + risk.construction_of_roof + '</td><td>' + risk.construction_of_wall + '</td><td>' + risk.height_in_storeys + '</td><td>' + risk.sum_insured + '</td></tr>');
+					tbody.append('<tr><td>' + risk.usage_code + '</td><td>' + risk.risk_item_type + '</td><td>' + risk.building_year_built + '</td><td>' + risk.construction_of_roof + '</td><td>' + risk.construction_of_wall + '</td><td>' + risk.height_in_storeys + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td></tr>');
 				})
 			}
 

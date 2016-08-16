@@ -15,7 +15,7 @@
 //global object
 
 var g_ironrock_service; // = new ironrockcloudservice()
-var g_quote_wizard_html;
+
 //
 var $validator;
 var _apiBaseUrl = "https://api.courserv.com/ironrock"; //localhost:58633/api/";
@@ -108,20 +108,16 @@ $.fn.serializeObject = function () {
 };
 
 
-
-//init Page
-function initPageWizard() {
-	if (!g_quote_wizard_html) {
-		g_quote_wizard_html = $('#quote-section').html();
-	}
-	$('#quote-section').html(g_quote_wizard_html);
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
+
+
+
 
 ///quote
 /////////////////////////////////////////Quote Forms//////////////////////////
 function setQuoteWizard(insuranceType, callback) {
-	//initPageWizard();
-
 	/////////////////////////////
 	setLoadingState(true);
 	//$.get('quoteWizard.html', function (pageData) {
