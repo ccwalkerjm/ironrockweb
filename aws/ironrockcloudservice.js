@@ -1045,11 +1045,27 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
+	//add notifications
 	ironrockcloudservice.prototype.addNotification = function (emailAddresses, callback) {
 		var payload = {};
 		payload.emailAddresses = emailAddresses;
 		var params = {
 			FunctionName: 'ironrockNotificationAddressesUpdate',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+	
+	//get certificate
+	ironrockcloudservice.prototype.getCertification = function (policy_id,risk_id, callback) {
+		var payload = {};
+		payload.policy_id = policy_id;
+		payload.risk_id = risk_id;
+		var params = {
+			FunctionName: 'ironRockGetCertificate',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
