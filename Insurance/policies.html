@@ -246,6 +246,7 @@
 				$('#summary dl').empty();
 				$('#policy_id').val(policyObj.policy.policy_id);
 				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
+                $('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
 				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
 				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
 				$('#summary dl').append('<dt>Branch</dt><dd>' + policyObj.policy.branch + '</dd>');
@@ -255,7 +256,7 @@
 				$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + (policyObj.policy.auto_renewal ? "Yes" : "No") + '</dd>');
 				$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
 				$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
-                $('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
+                
                
                       
                               
