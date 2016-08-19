@@ -255,7 +255,11 @@
 				$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + (policyObj.policy.auto_renewal ? "Yes" : "No") + '</dd>');
 				$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
 				$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
-
+                $('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
+                $('#summary dl').append('<dt>Limit Group</dt><dd>' + policyObj.policy.limit_group + '</dd>');
+                $('#summary dl').append('<dt>Usage Category</dt><dd>' + policyObj.policy.usage_category + '</dd>');
+                      
+                              
 				populateInsureds(policyObj.policy.insureds, policyObj.global_names);
 				//populate risks
 				if (policyObj.risks[0].chassis_number)
