@@ -288,11 +288,16 @@ var ironrockcloudservice = (function () {
 
 		_cognitoUser.authenticateUser(authenticationDetails, {
 			onSuccess: function (result) {
-				_updateSession(result);
-				if (callback && typeof callback == "function") {
-					//callback();
-					callback(null, $this);
-				}
+				_updateSession(result, function (err, profile) {
+					if (err) {
+						if (callback && typeof callback == "function")
+							callback(err);
+					} else {
+						if (callback && typeof callback == "function")
+							callback(null, $this);
+					}
+				});
+
 			},
 			onFailure: function (err) {
 				//_cognitoUser = null;
