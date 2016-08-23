@@ -108,8 +108,8 @@ $.fn.serializeObject = function () {
 };
 
 
-String.prototype.capitalizeFirstLetter = function () {
-	return this.charAt(0).toUpperCase() + this.slice(1);
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 
@@ -746,24 +746,24 @@ function doPrimaryFunctions(callback) { //<< << << < HEAD
 
 			sideBarMenu.append(UserMenuOption);
 
-			var profile = $this.getProfile();
-			//admin and set broker logo		
+			//admin and set broker logo			
+			$this.getProfile(function (err, profile) {
+				if (!err) {
+					if (profile.role == 'Admin' || profile.role == 'Staff') {
+						adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
+						adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
+						sideBarMenu.append(adminMenuOption);
+					}
+					var logo = $('#logo');
+					if (profile.brokerDetails && profile.brokerDetails.logo) {
+						logo.attr('src', profile.brokerDetails.logo);
+						logo.attr("style", "margin-top:-20px");
+						logo.height(65);
+					}
+					logo.parent().after('<div class="pull-right">Powered By<img src="/assets/img/logo.png" alt="" class="img-responsive" /></div>');
 
-			if (profile) {
-				if (profile.role == 'Admin' || profile.role == 'Staff') {
-					adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
-					adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
-					sideBarMenu.append(adminMenuOption);
 				}
-				var logo = $('#logo');
-				if (profile.brokerDetails && profile.brokerDetails.logo) {
-					logo.attr('src', profile.brokerDetails.logo);
-					logo.attr("style", "margin-top:-20px");
-					logo.height(65);
-				}
-				logo.parent().after('<div class="pull-right">Powered By<img src="/assets/img/logo.png" alt="" class="img-responsive" /></div>');
-			}
-
+			});
 		} else if (location.pathname == '/index.html' ||
 			location.pathname == '/login.html' ||
 			location.pathname == '/forgotPassword.html' ||
@@ -771,7 +771,7 @@ function doPrimaryFunctions(callback) { //<< << << < HEAD
 
 			valid_page = true;
 			//Home Option
-			HomeMenoOptionLink.attr('href', '/index.html');
+			HomeMenoOptionLink.attr('href', '/home.html');
 			HomeMenuTitle.text('Home').appendTo(HomeMenoOptionLink);
 			HomeMenoOptionLink.appendTo(HomeMenuOption);
 
