@@ -93,7 +93,7 @@ function CreatePDF(resp) {
 	if (resp.mailingAddressSame == "yes") {
 		doc.text(20, 150, resp.applicantHomeStreetName);
 	} else {
-		doc.text(20, 150, resp.applicantMailStreetName);
+		doc.text(20, 150, resp.applicantMailStreetName || "");
 	}
 
 	if (resp.mailingAddressSame == "yes") {
