@@ -29,7 +29,12 @@ function CreatePDF(resp) {
 
 	doc.setFontSize(10);
 	doc.setFont("times");
-	doc.setFontType("normal");
+	doc.setFontType("bold");
+    
+    doc.text(100, 290, "1");
+    
+    doc.setFontType("normal");
+    
 	doc.text(150, 35, "Start date: " + resp.startDate);
 	doc.text(150, 40, 'Quote No: ' + resp.applicantQuoteNo);
 	//doc.text(startingXPoint, 30, 'Insurance for ' + resp.insuranceType);
@@ -51,24 +56,24 @@ function CreatePDF(resp) {
 	doc.text(20, 125, 'City/Town/Postal Zone: ');
 	doc.text(20, 135, 'Parish: ');
 	doc.text(100, 115, 'TRN: ');
-	doc.text(100, 120, 'Email Address: ');
-	doc.text(100, 125, 'Mobile Number: ');
-	doc.text(100, 130, 'Home Number: ');
-	doc.text(100, 135, 'Work Number: ');
+	doc.text(100, 125, 'Email Address: ');
+	doc.text(100, 130, 'Mobile Number: ');
+	doc.text(100, 135, 'Home Number: ');
+	doc.text(100, 140, 'Work Number: ');
 
-	doc.text(20, 145, 'Street Number and Name: ');
-	doc.text(20, 155, 'City/Town/Postal Zone: ');
+	doc.text(20, 150, 'Street Number and Name: ');
+	doc.text(20, 160, 'City/Town/Postal Zone: ');
 	doc.text(20, 165, 'Parish ');
-	doc.text(100, 145, 'Date of Birth: ');
-	doc.text(100, 150, 'Place of Birth: ');
-	doc.text(100, 155, 'Nationality: ');
+	doc.text(100, 150, 'Date of Birth: ');
+	doc.text(100, 160, 'Place of Birth: ');
+	doc.text(100, 165, 'Nationality: ');
 
 	doc.text(20, 175, 'Company Name:');
-	doc.text(100, 175, 'Street Number and Name:');
-	doc.text(100, 185, 'Town');
-	doc.text(100, 190, 'Parish');
+	doc.text(20, 180, 'Street Number and Name:');
+	doc.text(100, 175, 'Town');
+	doc.text(100, 180, 'Parish');
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 	doc.text(50, 80, resp.applicantSurname);
 	doc.text(50, 85, resp.applicantFirstName);
 	doc.text(50, 90, resp.applicantMiddleName);
@@ -85,21 +90,21 @@ function CreatePDF(resp) {
 	doc.text(20, 130, resp.applicantHomeTown);
 	doc.text(50, 135, resp.applicantHomeParish);
 	doc.text(150, 115, resp.applicantIDnumber);
-	doc.text(150, 120, resp.applicantEmailAddress);
-	doc.text(150, 125, resp.applicantMobileNumber);
+	doc.text(150, 125, resp.applicantEmailAddress);
+	doc.text(150, 130, resp.applicantMobileNumber);
 
-	doc.text(150, 130, resp.applicantHomeNumber);
-	doc.text(150, 135, resp.applicantWorkNumber);
+	doc.text(150, 135, resp.applicantHomeNumber);
+	doc.text(150, 140, resp.applicantWorkNumber);
 	if (resp.mailingAddressSame == "yes") {
-		doc.text(20, 150, resp.applicantHomeStreetName);
+		doc.text(20, 155, resp.applicantHomeStreetName);
 	} else {
-		doc.text(20, 150, resp.applicantMailStreetName || "");
+		doc.text(20, 155, resp.applicantMailStreetName || "");
 	}
 
 	if (resp.mailingAddressSame == "yes") {
-		doc.text(20, 160, resp.applicantHomeTown);
+		doc.text(60, 160, resp.applicantHomeTown);
 	} else {
-		doc.text(20, 160, resp.applicantMailTown);
+		doc.text(60, 160, resp.applicantMailTown);
 	}
 
 	if (resp.mailingAddressSame == "yes") {
@@ -108,37 +113,39 @@ function CreatePDF(resp) {
 		doc.text(50, 165, resp.applicantMailParish);
 	}
 
-	doc.text(20, 160, resp.applicantMailTown);
-	doc.text(50, 165, resp.applicantMailParish);
-	doc.text(150, 145, resp.applicantDateOfBirth);
-	doc.text(150, 150, resp.applicantPlaceOfBirth);
-	doc.text(150, 155, resp.applicantNationality);
+	
+	
+	doc.text(150, 150, resp.applicantDateOfBirth);
+	doc.text(150, 160, resp.applicantPlaceOfBirth);
+	doc.text(150, 165, resp.applicantNationality);
 	doc.text(50, 175, resp.employerName);
-	doc.text(100, 180, resp.employerStreetName);
-	doc.text(150, 185, resp.employerTown);
-	doc.text(150, 190, resp.employerParish);
+	doc.text(20, 185, resp.employerStreetName);
+	doc.text(150, 175, resp.employerTown);
+	doc.text(150, 180, resp.employerParish);
 
 	doc.setFontType("bold");
 	doc.setFontSize("10");
 	doc.text(20, 75, 'Name');
 	doc.text(20, 110, 'Home Address');
-	doc.text(20, 140, 'Mailing Address');
+	doc.text(20, 145, 'Mailing Address');
 	doc.text(20, 170, 'Employer Details');
 
-	doc.setFontSize("10");
+	doc.setFontSize("8");
 	doc.setFontType("bold");
 	doc.text(20, 195, "NB: Please submit the following:");
 
 	doc.setFontType("bold");
-	doc.text(20, 200, "** A power of attorney or a letter duly notarized");
-	doc.text(20, 205, "Proof of Address");
-	doc.text(20, 210, "Picture Identification(Insured an agent, where applicable)");
-	doc.text(20, 215, "TRN(if a driver's license is not being used)");
+	doc.text(20, 198, "** A power of attorney or a letter duly notarized");
+	doc.text(20, 201, "Proof of Address");
+	doc.text(20, 204, "Picture Identification(Insured an agent, where applicable)");
+	doc.text(20, 207, "TRN(if a driver's license is not being used)");
 
 	doc.text(20, 245, "Relation");
 	doc.text(60, 245, "Name of Relative");
 	doc.text(110, 245, "Address");
-
+    
+    
+    doc.setFontSize("10");
 	doc.setFontType("normal");
 
 	doc.text(20, 220, "Have you or any relative or close associate been entrusted with prominent public functions (e.g. Member of Parliament, ");
@@ -174,7 +181,7 @@ function CreatePDF(resp) {
 
 	}
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	doc.text(20, 226, resp.applicantRelativeInPublicOffice ? resp.applicantRelativeInPublicOffice : "");
 
@@ -219,11 +226,13 @@ function CreatePDF(resp) {
 	//doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
 }
 
-
 function setMotorVehiclePages(resp) {
 	doc.setFontSize("10");
+    
+    
 
 	doc.setFontType("bold");
+    doc.text(100, 290, "2");
 
 	doc.text(20, 20, "Particulars Of Vehicles to Be Insured");
 	doc.setFontSize("7");
@@ -249,7 +258,7 @@ function setMotorVehiclePages(resp) {
 		doc.text(105, 30, "");
 		doc.text(122, 30, resp.vehicleBody0 ? resp.vehicleBody0 : "");
 		doc.text(142, 30, resp.vehicleType0 ? resp.vehicleType0 : "");
-		doc.text(162, 30, resp.QueryVehicleSumInsured ? resp.QueryVehicleSumInsured : "");
+		doc.text(162, 30, "$" + resp.vehicleValue0 ? resp.vehicleValue0 : "");
 
 	}
 	if (resp.vehicleRegistrationNo1) {
@@ -260,7 +269,7 @@ function setMotorVehiclePages(resp) {
 		doc.text(105, 35, " ");
 		doc.text(122, 35, resp.vehicleBody1 ? resp.vehicleBody1 : "");
 		doc.text(142, 35, resp.vehicleType1 ? resp.vehicleType1 : "");
-		doc.text(162, 35, resp.QueryVehicleSumInsured ? resp.QueryVehicleSumInsured : "");
+		doc.text(162, 35, "$" + resp.vehicleValue1 ? resp.vehicleValue1 : "");
 
 	}
 	if (resp.vehicleRegistrationNo2) {
@@ -273,17 +282,17 @@ function setMotorVehiclePages(resp) {
 		doc.text(105, 40, " ");
 		doc.text(122, 40, resp.vehicleBody2 ? resp.vehicleBody2 : "");
 		doc.text(142, 40, resp.vehicleType2 ? resp.vehicleType2 : "");
-		doc.text(162, 40, resp.QueryVehicleSumInsured ? resp.QueryVehicleSumInsured : "");
+		doc.text(162, 40, "$" + resp.vehicleValue2 ? resp.vehicleValue2 : "");
 
 	}
 
 	doc.setFontSize("8");
 	doc.setFontType("bold");
-	doc.text(20, 75, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value.  ");
+	doc.text(20, 75, "NOTE: You are required to ensure that the Sum Insured is revised annually to reflect the current market value. Claims will be settled based ");
 
-	doc.text(20, 78, "Claims will be settled based on the market value at the time of the loss. For total losses you will be paid based in");
+	doc.text(20, 78, "on the market value at the time of the loss. For total losses you will be paid based in time of the loss. For total losses you will be paid");
 
-	doc.text(20, 81, "time of the loss. For total losses you will be paid based on the market value or Policy Sum Insured whichever is lesser.");
+	doc.text(20, 81, " based on the market value or Policy Sum Insured whichever is lesser.");
 
 	doc.setFontSize("10");
 	doc.setFontType("bold");
@@ -324,7 +333,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 190, "Is the vehicle kept in?");
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	doc.text(20, 50, resp.isOwnerOfVehicle);
 
@@ -357,10 +366,16 @@ function setMotorVehiclePages(resp) {
 	doc.text(20, 185, resp.vehicleGaragedAtProposersHomeDetails ? resp.vehicleGaragedAtProposersHomeDetails : "");
 
 	doc.text(20, 195, resp.vehicleKeptIn ? resp.vehicleKeptIn : "");
+    
 	doc.addPage();
 
 
 	doc.setFontSize("10");
+    doc.setFontType("bold");
+    
+    doc.text(100, 290, "3");
+    
+    
 	doc.setFontType("normal");
 
 	doc.text(20, 20, "Is the proposer now insured or was previously insured in respect of any vehicle(s)");
@@ -383,7 +398,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 100, "Type of Authorized Driver Clause:");
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	doc.text(20, 25, resp.proposerInsured ? resp.proposerInsured : "");
 
@@ -437,7 +452,7 @@ function setMotorVehiclePages(resp) {
 		doc.text(80, 155, resp.regularDriversDateOfBirth0 ? resp.regularDriversDateOfBirth0 : "");
 		doc.text(100, 155, resp.regularDriversDL0 ? resp.regularDriversDL0 : "");
 		doc.text(130, 155, resp.regularDriversDLOriginalDateOfIssue0 ? resp.regularDriversDLOriginalDateOfIssue0 : "");
-		doc.text(160, 155, resp.regularDriversDLExpirationDate0 ? resp.regularDriversDLExpirationDate0 : "");
+		doc.text(160, 155, resp.regularDriversRelationshipToProposer0 ? resp.regularDriversRelationshipToProposer0 : "");
 
 	}
 	if (resp.vehicleRegistrationNo1) {
@@ -447,7 +462,7 @@ function setMotorVehiclePages(resp) {
 		doc.text(80, 160, resp.regularDriversDateOfBirth1 ? resp.regularDriversDateOfBirth1 : "");
 		doc.text(100, 160, resp.regularDriversDL1 ? resp.regularDriversDL1 : "");
 		doc.text(130, 160, resp.regularDriversDLOriginalDateOfIssue1 ? resp.regularDriversDLOriginalDateOfIssue1 : "");
-		doc.text(160, 160, resp.regularDriversDLExpirationDate1 ? resp.regularDriversDLExpirationDate1 : "");
+		doc.text(160, 160, resp.regularDriversRelationshipToProposer1 ? resp.regularDriversRelationshipToProposer1 : "");
 
 	}
 
@@ -460,7 +475,7 @@ function setMotorVehiclePages(resp) {
 		doc.text(80, 165, resp.regularDriversDateOfBirth2 ? resp.regularDriversDateOfBirth2 : "");
 		doc.text(100, 165, resp.regularDriversDL2 ? resp.regularDriversDL2 : "");
 		doc.text(130, 165, resp.regularDriversDLOriginalDateOfIssue2 ? resp.regularDriversDLOriginalDateOfIssue2 : "");
-		doc.text(160, 165, resp.regularDriversDLExpirationDate2 ? resp.regularDriversDLExpirationDate2 : "");
+		doc.text(160, 165, resp.regularDriversRelationshipToProposer2 ? resp.regularDriversRelationshipToProposer2 : "");
 	}
 
 
@@ -474,7 +489,13 @@ function setMotorVehiclePages(resp) {
 	doc.addPage();
 
 	doc.setFontSize("10");
-	doc.setFontType("normal");
+    
+	doc.setFontType("bold");
+    
+    doc.text(100, 290, "4");
+    
+    doc.setFontType("normal");
+    
 	doc.text(20, 20, "Have you or any regular drivers had any accidents or losses during the past three(3) years (whether insured ");
 
 	doc.text(20, 23, "or not in respect of all vehicles)");
@@ -578,7 +599,7 @@ function setMotorVehiclePages(resp) {
 
 
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	doc.text(20, 32, resp.involvedInAccident);
 
@@ -594,12 +615,12 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 120, resp.vehicleModifiedDetails ? resp.vehicleModifiedDetails : "");
 
-	doc.text(20, 140, resp.increasedLimits ? resp.increasedLimits : "");
-	doc.text(110, 150, resp.wreckerFee ? resp.wreckerFee : "");
+	doc.text(20, 140,  resp.increasedLimits ? resp.increasedLimits : "");
+	doc.text(110, 150, "$" + resp.wreckerFee ? resp.wreckerFee : "");
 
-	doc.text(110, 155, resp.medicalExpenses ? resp.medicalExpenses : "");
+	doc.text(110, 155, "$" + resp.medicalExpenses ? resp.medicalExpenses : "");
 
-	doc.text(110, 160, resp.manslaughterDefenceCosts ? resp.manslaughterDefenceCosts : "");
+	doc.text(110, 160, "$" + resp.manslaughterDefenceCosts ? resp.manslaughterDefenceCosts : "");
 
 	//doc.text(110, 165, resp.thirdPartyLimit ? resp.thirdPartyLimit : "");
 	switch (resp.thirdPartyLimit) {
@@ -632,28 +653,34 @@ function setMotorVehiclePages(resp) {
 function lastPage(resp) {
 
 	doc.addPage();
-	doc.setFontSize("8");
+	doc.setFontSize("10");
+    
+    
 	doc.setFontType("bold");
+    
+    doc.text(100, 290, "5");
 	doc.text(20, 20, "Disclaimer");
 
 	doc.setFontType("normal");
-	doc.text(20, 23, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company")
+	doc.text(20, 23, "The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged ")
 
-	doc.text(20, 26, " premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
+	doc.text(20, 26, "by the Company premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.");
 
-	doc.text(20, 31, "I declare that the information given above has been verified by original documents to ensure the veracity of the information given.");
+	doc.text(20, 31, "I declare that the information given above has been verified by original documents to ensure the veracity of the information ");
+    
+    doc.text(20, 34, "given.");
 
 
 
 	doc.setFontType("bold");
 	doc.text(20, 60, "Customer service Representative");
 
-	doc.text(20, 130, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT IS COMPLETING THE FORM ON BEHALF OF THE CLIENT.");
-
+	doc.text(20, 130, "**THE SECTION BELOW IS ONLY APPLICABLE IF AN AGENT IS COMPLETING THE FORM ON ");
+    doc.text(20, 133, "BEHALF OF THE CLIENT.");
 
 	doc.setFontType("normal");
 
-	doc.text(20, 63, "I/We declare that the above answers are true and that all particulars affecting the assessment of the risk have been disclosed.");
+	doc.text(20, 64, "I/We declare that the above answers are true and that all particulars affecting the assessment of the risk have been disclosed.");
 
 
 	doc.text(20, 142, "Surname:");
@@ -699,7 +726,7 @@ function lastPage(resp) {
 		doc.addImage(imgSignatureData, 'JPG', 20, 75, 100, 20);
 	}
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 }
 
@@ -708,10 +735,14 @@ function lastPage(resp) {
 
 function setHomePropertyPages(resp) {
 
-
-	doc.setFontType("bold");
+    
+	
 	doc.setFontSize(10);
 	doc.setFont("times");
+    
+    doc.text(100, 290, "2");
+   
+    doc.setFontType("bold");
 
 	doc.text(20, 20, "Particulars Of Home To Be Insured");
 
@@ -795,7 +826,7 @@ function setHomePropertyPages(resp) {
 
 
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	doc.text(20, 30, resp.homeRiskAddressStreetNo + " " + resp.homeRiskAddressStreetName + ", " + resp.homeRiskAddressTown + ", " + resp.homeRiskAddressParish);
 
@@ -830,22 +861,27 @@ function setHomePropertyPages(resp) {
 	doc.text(20, 198, resp.homeHasWatersideStructureDetails);
 
 	doc.addPage();
+    
+    doc.text(100, 290, "3");
 
 	doc.setFontType("bold");
-	doc.setFontSize("12");
+	doc.setFontSize("10");
+    doc.text(100, 290, "3");
 	doc.text(20, 20, "DETAILS OF PROPERTY TO BE INSURED");
 	doc.setFontSize("10");
-	doc.text(20, 30, "BUILDINGS AND OTHER STRUCTURES");
+	doc.text(20, 25, "BUILDINGS AND OTHER STRUCTURES");
 	doc.text(20, 90, "CONTENTS");
 	doc.setFontType("normal");
-	doc.setFontSize("8");
-	doc.text(20, 35, "IMPORTANT NOTE: The SUMS TO BE INSURED must represent the FULL NEW REPLACEMENT COST of the property and should include");
+	doc.setFontSize("10");
+	doc.text(20, 30, "IMPORTANT NOTE: The SUMS TO BE INSURED must represent the FULL NEW REPLACEMENT COST of the");
 
-	doc.text(20, 38, " adequate provision for demolition and debris removal costs in the event of major damage as well as professional  fees that would be incurred in");
+	doc.text(20, 33, "property and should include adequate provision for demolition and debris removal costs in the event of major damage as well");
 
-	doc.text(20, 41, " reinstatement. As the Company will pay up to 10% of the Sum Insured in respect of Rent lost or reasonable costs of alternative accomodation");
+	doc.text(20, 36, "as professional  fees that would be incurred in reinstatement. As the Company will pay up to 10% of the Sum Insured in");
 
-	doc.text(20, 44, " if damage by an Insured Peril renders the home uninhabitable, provision for this should also be included in your Sums Insured.");
+	doc.text(20, 39, "respect of Rent lost or reasonable costs of alternative accomodation if damage by an Insured Peril renders the home");
+    
+    doc.text(20, 42, "uninhabitable, provision for this should also be included in your Sums Insured.")
 
 	doc.setFontType("bold");
 	doc.text(130, 50, " Specified Items");
@@ -853,15 +889,17 @@ function setHomePropertyPages(resp) {
 	doc.text(160, 50, "Sums to be Insured");
 	doc.text(160, 140, "Sums to be Insured");
 	doc.setFontType("normal");
-	doc.text(20, 53, "The Buildings of the private dwelling together with its garages and outbuildings, including ");
+	doc.text(20, 53, "The Buildings of the private dwelling together with its garages and");
 
-	doc.text(20, 56, "landlord's fixtures and fittings together with patios, driveways and other paved areas, walls");
+	doc.text(20, 56, "outbuildings, including landlord's fixtures and fittings together with patios,");
 
-	doc.text(20, 59, " gates and fences, underground water pipes and cables providing services to and from the home");
+	doc.text(20, 59, "driveways and other paved areas, walls gates and fences, underground water");
 
-	doc.text(20, 62, " fixed water storage tanks and sewage disposal systems.(NB. Swimming Pools and Waterside");
+	doc.text(20, 62, "pipes and cables providing services to and from the home fixed water storage");
 
-	doc.text(20, 65, " structures are not included in the above item)");
+	doc.text(20, 65, "tanks and sewage disposal systems.(NB. Swimming Pools and Waterside");
+    
+    doc.text(20, 68, "structures are not included in the above item)");
 
 	if (resp.homeInsurancePropertyItem0) {
 		doc.text(130, 53, "a." + resp.homeInsurancePropertyItem0 ? resp.homeInsurancePropertyItem0 : "");
@@ -882,67 +920,73 @@ function setHomePropertyPages(resp) {
 
 	}
 
-	doc.text(20, 70, "Swimming Pools: permanent pool structures together with pump-houses and permanently");
+	doc.text(20, 71, "Swimming Pools: permanent pool structures together with pump-houses and");
 
-	doc.text(20, 73, " installed pool equipment and accessories including all related pipes and cables.");
+	doc.text(20, 74, "permanently installed pool equipment and accessories including all ");
+    
+    doc.text(20, 77, "related pipes and cables.");
 
-	doc.text(160, 73, "$" + resp.homeInsurancePropertySwimmingPoolValue);
+	doc.text(160, 77, "$" + resp.homeInsurancePropertySwimmingPoolValue);
 
 	doc.setFontType("bold");
-	doc.text(20, 78, "The Total Sum Insured under the Buildings and Other Structures Section of the Policy");
+	doc.text(20, 80, "The Total Sum Insured under the Buildings and Other Structures");
+    
+    doc.text(20, 83, "Section of the Policy");
 
-	doc.text(130, 78, "TOTAL SI:");
+	doc.text(130, 83, "TOTAL SI:");
 
 	doc.text(20, 183, "The Total Sum Insured under the Contents Section of the policy");
 
 	doc.text(130, 183, "TOTAL SI:");
 
 	doc.setFontType("normal");
-	doc.text(160, 78, resp.homeInsurancePropertySum);
+	doc.text(160, 83, resp.homeInsurancePropertySum);
 
 	doc.text(20, 95, "IMPORTANT NOTES");
 
-	doc.text(20, 100, "The SUMS TO BE INSURED must represent the FULL COST of replacing all the contents insured with NEW articles of similar size, style");
+	doc.text(20, 100, "The SUMS TO BE INSURED must represent the FULL COST of replacing all the contents insured with NEW articles of");
 
-	doc.text(20, 103, " and specification. As the Company will pay up to 10% of the Sum Insured in respect of reasonable costs of alternative accomodation ");
+	doc.text(20, 103, "similar size, style and specification. As the Company will pay up to 10% of the Sum Insured in respect of reasonable costs of ");
 
-	doc.text(20, 106, "if damage by an Insured Peril renders the home uninhabitable, provision for this should be included in your Sum Insured.");
+	doc.text(20, 106, "alternative accomodation if damage by an Insured Peril renders the home uninhabitable, provision for this should be included ");
+    
+    doc.text(20, 109, "in your Sum Insured.");
 
-	doc.text(20, 111, "Do not include in your Contents Sum Insured any Article which is to be insured under the All Risks Section");
+	doc.text(20, 112, "Do not include in your Contents Sum Insured any Article which is to be insured under the All Risks Section");
 
-	doc.text(20, 116, "Unspecified Valuables:");
+	doc.text(20, 117, "Unspecified Valuables:");
 
-	doc.text(50, 116, "Coverage is limited to one-third of the Total Sum Insured on Contents with coverage on individual articles limited to 5%");
+	doc.text(55, 117, "Coverage is limited to one-third of the Total Sum Insured on Contents with coverage on individual");
 
-	doc.text(50, 119, " of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured to be insured be insured");
+	doc.text(20, 120, "articles limited to 5% of such Total Sum Insured. Individual articles worth more than 5% of the Total Sum Insured");
 
-	doc.text(50, 122, " separately specified below.");
+	doc.text(20, 123, "to be insured be separately specified below.");
 
-	doc.text(20, 130, "Valuables include jewellery and other articles of gold, silver and or other precious metal, clocks, watches, cameras, camcorders, and other photographic");
+	doc.text(20, 130, "Valuables include jewellery and other articles of gold, silver and or other precious metal, clocks, watches, cameras, camcorders");
 
-	doc.text(20, 133, " equipment, electronic equipment(other than domestic appliances), furs, pictures, and other works of art, curios, licensed fire-arms, collections of stamps");
+	doc.text(20, 133, "and other photographic equipment, electronic equipment(other than domestic appliances), furs, pictures, and other works of art");
 
-	doc.text(20, 136, " coins or other valuable objects.");
+	doc.text(20, 136, "curios, licensed fire-arms, collections of stamps coins or other valuable objects.");
 
 
 
-	doc.text(20, 145, "Contents: Household Goods, Personal Effects and Fixtures and Fittings which belong to or are the legal ");
+	doc.text(20, 145, "Contents: Household Goods, Personal Effects and Fixtures and Fittings which belong to or are the");
 
-	doc.text(20, 148, "responsibility of any member of your household, including personal effects of non-paying guests temporarily ");
+	doc.text(20, 148, "legal responsibility of any member of your household, including personal effects of non-paying");
 
-	doc.text(20, 151, "staying with you but excluding Variables which are to be individually specified.");
+	doc.text(20, 151, "guests temporarily staying with you but excluding Variables which are to be individually specified");
 
 	doc.text(160, 151, "$" + resp.amountHouseholdGoods);
 
-	doc.text(20, 156, "Valuables to be individually specified(Please attach a list of these articles giving detailes descriptions");
+	doc.text(20, 156, "Valuables to be individually specified(Please attach a list of these articles giving detailes");
 
-	doc.text(20, 159, " including model and serial numbers where appropriate and individual values)");
+	doc.text(20, 159, "descriptions including model and serial numbers where appropriate and individual values)");
 
 	doc.text(160, 159, "$" + resp.amountValuables);
 
-	doc.text(20, 165, "Does the total value of your Valuables excluding those listed above and those which you will be insuring under the All Risk Section exceed one-third");
+	doc.text(20, 165, "Does the total value of your Valuables excluding those listed above and those which you will be insuring under the All Risk");
 
-	doc.text(20, 168, " of the Total Sum to be insured?");
+	doc.text(20, 168, "Section exceed one-third of the Total Sum to be insured?");
 
 	doc.text(20, 173, "");
 
@@ -952,15 +996,17 @@ function setHomePropertyPages(resp) {
 
 
 
-	doc.text(160, 183, "$" + resp.HomeInsuranceContentTotalAmount);
+	doc.text(160, 183, resp.HomeInsuranceContentTotalAmount);
 
 	doc.addPage();
 
 	doc.setFontType("bold");
 	doc.setFontSize("10");
+    
+    doc.text(100, 290, "4");
 	doc.text(20, 20, "ALL RISKS INSURANCE IN RESPECT OF PERSONAL POSSESSIONS");
 	doc.setFontType("normal");
-	doc.setFontSize("8");
+	
 	doc.text(20, 25, "IMPORTANT NOTE: Valuation Reports or Receipts in respect of all Articles to be insured should be attached to this Form.");
 
 	doc.text(20, 30, "Full Description of Article(s) to be insured");
@@ -972,7 +1018,7 @@ function setHomePropertyPages(resp) {
 
 	doc.text(20, 50, "The Total Sum Insured under the All Risks Section of the Policy");
 
-	doc.setFontType("italic");
+//	doc.setFontType("italic");
 
 	if (resp.HomeAllRiskArticleDescription0) {
 		doc.text(20, 38, resp.HomeAllRiskArticleDescription0 ? resp.HomeAllRiskArticleDescription0 : "");
@@ -1009,58 +1055,58 @@ function setHomePropertyPages(resp) {
 
 	doc.text(160, 65, "Details");
 
-	doc.text(20, 70, "Do you currently have in force any policy whether with us or with any other company or Insurer  ");
+	doc.text(20, 70, "Do you currently have in force any policy whether with us or with any other");
 
-	doc.text(20, 73, "covering any of the Property to be Insured");
+	doc.text(20, 73, "company or Insurer  covering any of the Property to be Insured");
 
 
 
 	doc.text(20, 78, "Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:");
 
-	doc.text(20, 81, "Declined to insure you?");
+	doc.text(20, 83, "Declined to insure you?");
 
 
 
-	doc.text(20, 84, "Required special terms to insure you?");
+	doc.text(20, 88, "Required special terms to insure you?");
 
 
 
-	doc.text(20, 87, "Cancelled or refused to renew your policy?");
+	doc.text(20, 93, "Cancelled or refused to renew your policy?");
 
 
 
-	doc.text(20, 90, "Increased your premium on renewal");
+	doc.text(20, 98, "Increased your premium on renewal");
 
 
 
 
-	doc.text(20, 95, "Have the Building and/or Contents of the Home to which this Proposal relates ever suffered");
+	doc.text(20, 103, "Have the Building and/or Contents of the Home to which this Proposal relates ever suffered");
 
-	doc.text(20, 98, " damage by Hurricane, Earthquake or Flood");
-
-
-
-	doc.text(20, 103, "Have you ever sustained loss from any Perils to which this Proposal would apply?");
+	doc.text(20, 106, " damage by Hurricane, Earthquake or Flood");
 
 
-	doc.setFontType("italic");
+
+	doc.text(20, 111, "Have you ever sustained loss from any Perils to which this Proposal would apply?");
+
+
+//	doc.setFontType("italic");
 
 	doc.text(160, 50, "$" + resp.HomeAllRiskTotalAmount);
 	doc.text(20, 60, resp.territorialLimit)
 	doc.text(140, 70, resp.currentPolicyWithCompanyOrInsurer);
 	doc.text(180, 70, resp.currentPolicyWithCompanyOrInsurerDetails);
-	doc.text(140, 81, resp.HomeInsuranceDeclined);
-	doc.text(150, 81, resp.HomeInsuranceDeclinedDetails);
-	doc.text(140, 84, resp.HomeInsuranceRequiredSpecialTerm);
-	doc.text(150, 84, resp.HomeInsuranceRequiredSpecialTermDetails);
-	doc.text(140, 87, resp.HomeInsuranceCancelled);
-	doc.text(150, 87, resp.HomeInsuranceCancelledDetails);
-	doc.text(140, 90, resp.HomeInsuranceIncreasedPremium);
-	doc.text(150, 90, resp.HomeInsuranceIncreasedPremiumDetails);
-	doc.text(140, 95, resp.HomeInsurancePerilsSuffer);
-	doc.text(150, 95, resp.HomeInsurancePerilsSufferDetails);
-	doc.text(140, 103, resp.HomeInsuranceSufferLoss);
-	doc.text(150, 103, resp.HomeInsuranceSufferLossDetails);
+	doc.text(140, 83, resp.HomeInsuranceDeclined);
+	doc.text(150, 83, resp.HomeInsuranceDeclinedDetails);
+	doc.text(140, 88, resp.HomeInsuranceRequiredSpecialTerm);
+	doc.text(150, 88, resp.HomeInsuranceRequiredSpecialTermDetails);
+	doc.text(140, 93, resp.HomeInsuranceCancelled);
+	doc.text(150, 93, resp.HomeInsuranceCancelledDetails);
+	doc.text(140, 98, resp.HomeInsuranceIncreasedPremium);
+	doc.text(150, 98, resp.HomeInsuranceIncreasedPremiumDetails);
+	doc.text(140, 106, resp.HomeInsurancePerilsSuffer);
+	doc.text(150, 106, resp.HomeInsurancePerilsSufferDetails);
+	doc.text(140, 111, resp.HomeInsuranceSufferLoss);
+	doc.text(150, 111, resp.HomeInsuranceSufferLossDetails);
 
 
 }
