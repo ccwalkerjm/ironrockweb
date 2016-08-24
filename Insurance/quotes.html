@@ -2812,7 +2812,8 @@
                 if (currentQuote.egovDriversLicenseDetails) {
                     var driverLicenseJson = ConvertToJson(currentQuote.egovDriversLicenseDetails);
                     populateApplicant(driverLicenseJson);
-                    populateOtherItems();
+                    populatePersonalDetails();
+                    populateVehicles();
                     callback();
                 } else {
                     GetDriverLicense(null, licenseNo, function (err, data) {
@@ -2821,7 +2822,8 @@
                         } else {
                             data.id = licenseNo;
                             populateApplicant(data);
-                            populateOtherItems();
+                            populatePersonalDetails();
+                            populateVehicles();
                             callback();
                         }
 
@@ -2870,7 +2872,9 @@
 
 
 
-            var populateOtherItems = function () {
+            var populatePersonalDetails = function () {
+                //insuranceType
+                $('#insuranceType').val(currentQuote.insuranceType);
                 //applicant details
                 $('#applicantPlaceOfBirth').val(currentQuote.applicantPlaceOfBirth);
                 $('#applicantMothersMaidenName').val(currentQuote.applicantMothersMaidenName);
@@ -2911,7 +2915,11 @@
                 $('#employerPostalCode').val(currentQuote.employerPostalCode);
                 $('#employerState').val(currentQuote.employerState);
                 $('#employerNationality').val(currentQuote.employerNationality);
-
+                //start date
+                $('.startDate').val(currentQuote.startDate);
+            };
+            
+            var populateVehicles = function () {                
                 //insert vehicle0
                 if (currentQuote.vehicleRegistrationNo0) {
                     var vehicle0 = {};
@@ -2959,9 +2967,6 @@
                     vehicle2.sumInsured = currentQuote.vehicleValue2;
                     insertVehicle(vehicle2);
                 }
-
-
-                $('.startDate').val(currentQuote.startDate);
 
                 //add first driver
                 if (currentQuote.regularDriversDL0) {
