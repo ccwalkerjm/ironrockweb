@@ -15,14 +15,8 @@ var ironrockcloudservice = (function () {
 	const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
 	const AWS_REGION = 'us-east-1';
 	//private properties and methods
-	var _profileKey = "ironrockUserProfile"; // 
+	var _profiileKey = "ironrockUserProfile"; // 
 
-	var _profile = function () {
-		var profile = localStorage.getItem(_profileKey);
-		if (profile)
-			profile = JSON.parse(profile);
-		return profile;
-	}
 
 	var _creds = new AWS.CognitoIdentityCredentials({
 		IdentityPoolId: IDENTITY_POOL
@@ -65,18 +59,23 @@ var ironrockcloudservice = (function () {
 				_cognitoUser.client.config.credentials.params) {
 				auth.credentials = _cognitoUser.client.config.credentials.params;
 			}
-			auth.profile = _profile();
-			//			var profile = localStorage.getItem("ironrockUserProfile");
-			//			if (profile)
-			//				auth.profile = JSON.parse(profile);
+			auth.profile = getStoredProfile();
 		}
 		return auth;
 	};
 
 
+	//get profile of current user
+	var getStoredProfile = function () {
+		var profile = localStorage.getItem(_profiileKey);
+		if (profile)
+			profile = JSON.parse(profile);
+		return profile;
+	}
+
 
 	//get user
-	var getUserProfile = function (username, callback) {
+	var getUserData = function (username, callback) {
 		var jsonRequest = {};
 		jsonRequest.request = {
 			'cmd': 'getUser',
@@ -100,7 +99,6 @@ var ironrockcloudservice = (function () {
 
 	//get session details	
 	var _updateSession = function (session, callback) {
-
 		if (session && session.isValid()) {
 			_creds.params.Logins = {};
 			_creds.params.Logins[PROVIDER_NAME] = session.getIdToken().getJwtToken();
@@ -110,30 +108,30 @@ var ironrockcloudservice = (function () {
 			var username = _cognitoUser.getUsername();
 			var currenttime = new Date().getTime();
 			//check if profile is stored
-			var profile = _profile();
+			var profile = getStoredProfile();
 			if (profile) {
 				if (profile.username && profile.username == username && profile.timestamp && currenttime < profile.timestamp + 600 * 1000) {
 					callback(null, profile);
 				} else {
 					profile = null;
-					localStorage.removeItem(_profileKey);
+					localStorage.removeItem(_profiileKey);
 				}
 			}
 			if (!profile) {
 				//get new profile and store
-				getUserProfile(username, function (err, data) {
+				getUserData(username, function (err, data) {
 					if (err) {
-						localStorage.removeItem(_profileKey);
+						localStorage.removeItem(_profiileKey);
 						callback(err);
 					} else {
 						profile = JSON.parse(data.Payload);
 						if (profile.errorMessage) {
-							localStorage.removeItem(_profileKey);
+							localStorage.removeItem(_profiileKey);
 							callback(new Error(profile.errorMessage));
 						} else {
 							//store profile and return							
 							profile.timestamp = currenttime;
-							localStorage.setItem(_profileKey, JSON.stringify(profile));
+							localStorage.setItem(_profiileKey, JSON.stringify(profile));
 							callback(null, profile);
 						}
 					}
@@ -177,7 +175,7 @@ var ironrockcloudservice = (function () {
 
 	//get profile
 	ironrockcloudservice.prototype.getProfile = function () {
-		return _profile();
+		return getStoredProfile();
 	}
 
 	//public methods
@@ -205,7 +203,7 @@ var ironrockcloudservice = (function () {
 
 
 	ironrockcloudservice.prototype.getUser = function (username, callback) {
-		getUserProfile(username, function (err, data) {
+		getUserData(username, function (err, data) {
 			callback(err, data);
 		})
 
@@ -349,7 +347,7 @@ var ironrockcloudservice = (function () {
 				_cognitoUser = null;
 				callback(err);
 			},
-			inputVerificationCode() {
+			inputVerificationCode: function () {
 				callback(null, true, this);
 				/*var verificationCode = prompt('Please input verification code ', '');
 				var newPassword = prompt('Enter new password ', '');
@@ -727,30 +725,27 @@ var ironrockcloudservice = (function () {
 		}
 		var newFilename = this.generateRandomCode(8, 4);
 		newFilename = newFilename.replace(/[^A-Z0-9]/ig, "_");
-		this.getProfile(function (err, profile) {
-			if (!err) {
-				var params = {
-					Key: 'quotes/' + newFilename + ".pdf",
-					ContentType: file.type,
-					Body: file,
-					ACL: 'private',
-					Metadata: {
-						"quoteNo": quoteNo,
-						"broker": profile.broker,
-						"agent": profile.username,
-						"document_name": name,
-						"original_filename": file.name,
-					},
-				};
-				var _s3 = new AWS.S3({
-					params: {
-						Bucket: 'ironrockdocuments.courserv.com'
-					}
-				});
-				_s3.putObject(params, function (err, results) {
-					callback(err);
-				});
+		var profile = getStoredProfile();
+		var params = {
+			Key: 'quotes/' + newFilename + ".pdf",
+			ContentType: file.type,
+			Body: file,
+			ACL: 'private',
+			Metadata: {
+				"quoteNo": quoteNo,
+				"broker": profile.broker,
+				"agent": profile.username,
+				"document_name": name,
+				"original_filename": file.name,
+			},
+		};
+		var _s3 = new AWS.S3({
+			params: {
+				Bucket: 'ironrockdocuments.courserv.com'
 			}
+		});
+		_s3.putObject(params, function (err, results) {
+			callback(err);
 		});
 	};
 
