@@ -77,11 +77,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="searchDateFr">Date From:</label>
-                                    <input type="date" class="form-control" id="searchDateFr">
+                                    <input type="text" class="form-control datepicker" id="searchDateFr">
                                 </div>
                                 <div class="form-group">
                                     <label for="searchDateTo">Date To:</label>
-                                    <input type="date" class="form-control" id="searchDateTo">
+                                    <input type="text" class="form-control datepicker" id="searchDateTo">
                                 </div>
                                 <div class="form-group">
                                     <label for="searchPolicy">Policy:</label>
@@ -252,7 +252,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-2" for="applicantDateOfBirth">Date Of Birth:</label>
                                                         <div class="col-sm-10">
-                                                            <input required class="form-control" type="date" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
+                                                            <input required class="form-control datepicker" type="text" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -264,7 +264,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-2" for="applicationIDExpirationDate">Expiration Date:</label>
                                                         <div class="col-sm-10">
-                                                            <input required class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="" readonly>
+                                                            <input required class="form-control datepicker" type="text" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -303,29 +303,9 @@
                                                     <select class="form-control countries" name="applicantNationality" id="applicantNationality"></select>
                                                 </div>
                                             </div>
-                                            <!--<div class="form-group">
-												<label class="control-label col-sm-2 select" for="applicantIDType">ID Type:</label>
-												<div class="col-sm-10">
-													<select class="form-control" id="applicantIDType" name="applicantIDType">
-														<option value="national">National ID</option>
-														<option value="passport">Passport</option>
-														<option value="driverLicense" selected>Driver's Licence</option>
-													</select>
-												</div>
-											</div>-->
+
                                         </div>
-                                        <!--<div class="form-group">
-											<label class="control-label col-sm-2" for="applicantIDnumber">ID Number:</label>
-											<div class="col-sm-10">
-												<input required class="form-control" type="number" id="applicantIDnumber" name="applicantIDnumber" placeholder="Enter ID Number">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="control-label col-sm-2" for="applicationIDExpirationDate">Expiration Date:</label>
-											<div class="col-sm-10">
-												<input required class="form-control" type="date" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="">
-											</div>
-										</div>-->
+
                                     </form>
                                     <br/>
                                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
@@ -703,7 +683,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-2" for="startDate">Insurance Start Date:</label>
                                             <div class="col-md-10">
-                                                <input required class="form-control startDate" name="startDate" type="date" placeholder="Start Date" />
+                                                <input required class="form-control startDate datepicker" name="startDate" type="text" placeholder="Start Date" />
                                             </div>
                                         </div>
 
@@ -1112,7 +1092,7 @@
                                                 </div>
                                                 <div class="form-group DateOfBirth">
                                                     <label class="control-label" for="regularDriversDateOfBirth0">Date of Birth:</label>
-                                                    <input required class="form-control" type="date" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
+                                                    <input required class="form-control datepicker" type="text" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDL">
                                                     <label class="control-label" for="regularDriversDL0">Driver's Licence:</label>
@@ -1120,11 +1100,11 @@
                                                 </div>
                                                 <div class="form-group DriversDLExpirationDate">
                                                     <label class="control-label" for="regularDriversDLExpirationDate0">Expiration Date:</label>
-                                                    <input required class="form-control" type="date" name="regularDriversDLExpirationDate0" id="regularDriversDLExpirationDate0" value="" readonly>
+                                                    <input required class="form-control datepicker" type="text" name="regularDriversDLExpirationDate0" id="regularDriversDLExpirationDate0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDLOriginalDateOfIssue">
                                                     <label class="control-label" for="regularDriversDLOriginalDateOfIssue0">Original Date of Issue:</label>
-                                                    <input required class="form-control" type="date" name="regularDriversDLOriginalDateOfIssue0" id="regularDriversDLOriginalDateOfIssue0" value="" readonly>
+                                                    <input required class="form-control datepicker" type="text" name="regularDriversDLOriginalDateOfIssue0" id="regularDriversDLOriginalDateOfIssue0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversRelationshipToProposer">
                                                     <label class="control-label" for="regularDriversRelationshipToProposer0">Relationship to Proposer:</label>
@@ -1396,7 +1376,7 @@
                                                 <div id="driverTrafficTicketDetailGroup">
                                                     <div class="form-group">
                                                         <label class="control-label" for="driverTrafficTicketDate">Date:</label>
-                                                        <input class="form-control" type="date" name="driverTrafficTicketDate" id="driverTrafficTicketDate">
+                                                        <input class="form-control datepicker" type="text" name="driverTrafficTicketDate" id="driverTrafficTicketDate">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label" for="driverTrafficTicketDetails">Nature of Event:</label>
@@ -1773,7 +1753,7 @@
 
                                         <div class="form-group">
                                             <label for="startDate">Insurance Start Date:</label>
-                                            <input class="form-control startDate" name="startDate" type="date" placeholder="Start Date" />
+                                            <input class="form-control startDate datepicker" name="startDate" type="text" placeholder="Start Date" />
                                             <label for="currency">Currency:</label>
                                             <select class="form-control currency" name="currency">
                                                 <option value="JA">Jamaican Dollar</option>
@@ -2401,13 +2381,13 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="policyStartDate">Start Date</label>
                                     <div class="col-md-4">
-                                        <input id="policyStartDate" name="policyStartDate" type="date" placeholder="Start Date" class="form-control">
+                                        <input id="policyStartDate" name="policyStartDate" type="text" placeholder="Start Date" class="form-control datepicker">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="signedDate">Date Signed</label>
                                     <div class="col-md-4">
-                                        <input id="signedDate" name="signedDate" type="date" placeholder="Date Signed" class="form-control">
+                                        <input id="signedDate" name="signedDate" type="text" placeholder="Date Signed" class="form-control datepicker">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -2473,6 +2453,7 @@
     <!--end jquery-->
     <script src="/Scripts/bootbox.js"></script>
     <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/accounting.js"></script>
     <script src="/Scripts/jquery.bootstrap.wizard.js"></script>
     <script src="/Scripts/prettify.js"></script>
     <!--Required Libraries-->
@@ -2502,10 +2483,14 @@
     <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
     <!--Custom PDF File -->
     <script src="/aws/pdfconvertor.js"></script>
-
+    <!--date picker-->
+    <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
+          $('.datepicker').datepicker({
+              format: 'yyyy-mm-dd'
+          });
             var currentQuote;
             doPrimaryFunctions(function (err, obj) {
                 var today = new Date();

@@ -775,12 +775,44 @@ function resetVehiclesToBeInsured() {
 }
 
 
+
+
+  //
+	//$('input[type=radio]').change(function () {
+	//	setRadioDisplay($(this).attr('name'),this.value);
+	//});
+
+
+  /*set display of text based on Radio Button selection
+	function setRadioDisplay(RadioName,RadioValue) {
+		var displayElement = getDisplayElement(RadioName);
+		if (!displayElement) return;
+		if (RadioValue == displayElement.defaultValue)
+			$('#'+ displayElement.id).hide();
+		else
+			$('#'+ displayElement.id).show();
+	}
+
+
+
+  //get display element
+	function getDisplayElement(RadioName){
+		switch (RadioName) {
+			case 'mailingAddressSame':
+				return { "id":"mailingAddress", "defaultValue":"no" };
+			default:
+				return;
+		}
+	}
+*/
+
 //set radio button
 function setRadioButton(buttonName,value){
-	//'input[type=radio][name=homeHasWatersideStructure]'
-	//	$('input[type=radio][name=homeOccupiedByApplicantFamily]')
-	var radioButton = $('input[type=radio][name='+buttonName+ '][value='+value+ ']');
-  radioButton.prop('checked',true).trigger('click');
+  //var previous_value = value == "yes"?"no":"yes";
+	var radioButton = $('#quote-section').find('input[type=radio][name='+buttonName+ '][value=' + value + ']');
+  radioButton.prop('checked',true);
+	radioButton.trigger('change');
+	//setRadioDisplay(buttonName,value);
 }
 
 
