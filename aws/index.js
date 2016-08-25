@@ -463,7 +463,7 @@ function loadQuotation($container, limitData) {
 	table.append('<tr><th style="text-align: right;">Tax:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.tax) + '</td></tr>');
 	table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.total_premium) + '</td></tr>');
 	table.appendTo($container);
-	if (limitData.limits.length > 0) {
+	if (limitData.limits && limitData.limits.length > 0) {
 		var limitHeader = $('<h4/>').text('Limits');
 		limitHeader.appendTo($container);
 		var limittable = $('<table/>').addClass('table table-striped').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');

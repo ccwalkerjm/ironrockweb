@@ -450,7 +450,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="applicantMailStreetName">Street Number and Name:</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" type="text" id="applicantMailStreetName" name="appplicantMailStreetName" placeholder="Enter Street Number and Name">
+                                                    <input class="form-control" type="text" id="applicantMailStreetName" name="applicantMailStreetName" placeholder="Enter Street Number and Name">
                                                 </div>
                                             </div>
 
@@ -1944,7 +1944,7 @@
                                             </div>
                                             <div class="col-md-6" style="width: 40%">
                                                 <fieldset>
-                                                    <select class="form-control" name="territorialLimit" id="territorialLimitJMD">
+                                                    <select class="form-control" name="territorialLimit" id="territorialLimit">
                                                         <option value="Jamaica">Jamaica</option>
                                                         <option value="world">Worldwide</option>
                                                     </select>
@@ -2769,7 +2769,7 @@
                             var driverLicenseJson = ConvertToJson(currentQuote.egovDriversLicenseDetails);
                             populateQuote(driverLicenseJson);
                         } else {
-                            GetDriverLicense(null, licenseNo, function (err, data) {
+                            GetDriverLicense(null, currentQuote.applicantIDnumber, function (err, data) {
                                 if (err) {
                                     bootbox.alert(err.message);
                                     return;
@@ -2893,7 +2893,7 @@
                 $('#applicationIDExpirationDate').val(currentQuote.applicationIDExpirationDate);
 
                 //contact
-                $('#SourceOfFunds').val(currentQuote.SourceOfFunds ? currentQuote.SourceOfFunds : "");
+                $('#SourceOfFunds').val(currentQuote.SourceOfFunds || "");
                 $('#applicantMobileNumber').val(currentQuote.applicantMobileNumber);
                 $('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
                 $('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
@@ -2905,10 +2905,10 @@
                 $('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
 
                 //mailing address
-                setRadioButton('mailingAddressSame',currentQuote.mailingAddressSame);
+                setRadioButton('mailingAddressSame', currentQuote.mailingAddressSame);
                 $('#mailingAddressSame').val(currentQuote.mailingAddressSame);
                 $('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
-                $('#appplicantMailStreetName').val(currentQuote.appplicantMailStreetName);
+                $('#applicantMailStreetName').val(currentQuote.applicantMailStreetName);
                 $('#applicantMailTown').val(currentQuote.applicantMailTown);
                 $('#applicantMailParish').val(currentQuote.applicantMailParish);
                 $('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
@@ -2926,34 +2926,69 @@
                 $('#employerNationality').val(currentQuote.employerNationality);
                 //start date
                 $('.startDate').val(currentQuote.startDate);
+                
+                //currency
+                $('#currency').val(currentQuote.currency);
                 //applicantRelativeInPublicOffice
-                setRadioButton('applicantRelativeInPublicOffice',currentQuote.applicantRelativeInPublicOffice);
+                setRadioButton('applicantRelativeInPublicOffice', currentQuote.applicantRelativeInPublicOffice);
             };
 
             var populateMotorVehicle = function () {
-              populateVehicles();
-              populateDrivers();
+                populateVehicles();
+                populateDrivers();
+                populateMVMiscellaneous();
             };
 
 
             //motor vehicle miscellaneous
             var populateMVMiscellaneous = function () {
-              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
-              //$('#branch').val(currentQuote.branch);
-              $('#currency').val(currentQuote.currency);
-              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
-              $('#driverSufferFromDetails').val(currentQuote.driverSufferFromDetails);
-              $('#driverTrafficTicketDate').val(currentQuote.driverTrafficTicketDate);
-              $('#driverTrafficTicketDetails').val(currentQuote.driverTrafficTicketDetails);
-              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
-
-              //radio buttons
-              setRadioButton('driverSufferFromDefectiveHearingOrVision',currentQuote.driverSufferFromDefectiveHearingOrVision);
-              setRadioButton('driverSufferFromDiabetesEpilepsyHeartDisease',currentQuote.driverSufferFromDiabetesEpilepsyHeartDisease);
-              setRadioButton('driverSufferFromPhysicalMentalInfirmity',currentQuote.driverSufferFromPhysicalMentalInfirmity);
-              setRadioButton('driverTrafficTicket',currentQuote.driverTrafficTicket);
-              setRadioButton('driverSufferFromDefectiveHearingOrVision',currentQuote.driverSufferFromDefectiveHearingOrVision);
-
+                $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
+                //$('#branch').val(currentQuote.branch);
+                $('#driverSufferFromDetails').val(currentQuote.driverSufferFromDetails);
+                $('#driverTrafficTicketDate').val(currentQuote.driverTrafficTicketDate);
+                $('#driverTrafficTicketDetails').val(currentQuote.driverTrafficTicketDetails);
+                $('#insuranceCoverage').val(currentQuote.insuranceCoverage);
+                $('#lienHolderNameInFull').val(currentQuote.lienHolderNameInFull);
+                $('#lienHolderParish').val(currentQuote.lienHolderParish);
+                $('#lienHolderStreetName').val(currentQuote.lienHolderStreetName);
+                $('#lienHolderTown').val(currentQuote.lienHolderTown);
+                $('#manslaughterDefenceCosts').val(currentQuote.manslaughterDefenceCosts);
+                $('#medicalExpenses').val(currentQuote.medicalExpenses);
+                $('#memo').val(currentQuote.memo);
+                $('#nameAddressOfOwner').val(currentQuote.nameAddressOfOwner);
+                $('#proposerInsuranceDetails').val(currentQuote.proposerInsuranceDetails);
+                $('#vehicleAntiTheftDeviceName').val(currentQuote.vehicleAntiTheftDeviceName);
+                $('#vehicleAntiTheftDeviceNameOfProvider').val(currentQuote.vehicleAntiTheftDeviceNameOfProvider);
+                $('#vehicleAntiTheftDeviceType').val(currentQuote.vehicleAntiTheftDeviceType);
+                $('#vehicleGaragedAtProposersHomeDetails').val(currentQuote.vehicleGaragedAtProposersHomeDetails);
+                $('#vehicleKeptIn').val(currentQuote.vehicleKeptIn);
+                $('#vehicleKeptInOtherDetails').val(currentQuote.vehicleKeptInOtherDetails);
+                $('#vehicleModifiedDetails').val(currentQuote.vehicleModifiedDetails);
+                $('#vehicleRegularCustodyDetails').val(currentQuote.vehicleRegularCustodyDetails);
+                $('#vehicleUsedAs').val(currentQuote.vehicleUsedAs);
+                $('#wreckerFee').val(currentQuote.wreckerFee);
+                $('#applicantOtherInsurerType').val(currentQuote.applicantOtherInsurerType);
+                $('#ApplicantPreviouslyInsuredDetails').val(currentQuote.ApplicantPreviouslyInsuredDetails);
+             
+                
+                //radio buttons
+                setRadioButton('driverSufferFromDefectiveHearingOrVision', currentQuote.driverSufferFromDefectiveHearingOrVision);
+                setRadioButton('driverSufferFromDiabetesEpilepsyHeartDisease', currentQuote.driverSufferFromDiabetesEpilepsyHeartDisease);
+                setRadioButton('driverSufferFromPhysicalMentalInfirmity', currentQuote.driverSufferFromPhysicalMentalInfirmity);
+                setRadioButton('driverTrafficTicket', currentQuote.driverTrafficTicket);
+                setRadioButton('involvedInAccident', currentQuote.involvedInAccident);
+                setRadioButton('isOwnerOfVehicle', currentQuote.isOwnerOfVehicle);
+                setRadioButton('lienHolder', currentQuote.lienHolder);
+                setRadioButton('proposerEntitledToNOClaimDiscount', currentQuote.proposerEntitledToNOClaimDiscount);
+                setRadioButton('proposerInsured', currentQuote.proposerInsured);
+                setRadioButton('trailerUsed', currentQuote.trailerUsed);
+                setRadioButton('vehicleAntiTheftDevice', currentQuote.vehicleAntiTheftDevice);
+                setRadioButton('vehicleGaragedAtProposersHome', currentQuote.vehicleGaragedAtProposersHome);
+                setRadioButton('vehicleModified', currentQuote.vehicleModified);
+                setRadioButton('vehicleRegularCustody', currentQuote.vehicleRegularCustody);
+                setRadioButton('applicantOtherInsurer', currentQuote.applicantOtherInsurer);
+                setRadioButton('applicantPreviouslyInsured', currentQuote.applicantPreviouslyInsured);
+               
 
             };
 
@@ -3007,9 +3042,9 @@
                     insertVehicle(vehicle2);
                 }
 
-              };
+            };
 
-              var populateDrivers = function () {
+            var populateDrivers = function () {
                 //add first driver
                 if (currentQuote.regularDriversDL0) {
                     $('#regularDriversId').show();
@@ -3074,7 +3109,7 @@
                 $('#HomeAllRiskArticleDescription0').val(currentQuote.HomeAllRiskArticleDescription0);
                 $('#HomeAllRiskArticleValue0').val(currentQuote.HomeAllRiskArticleValue0);
                 $('#HomeAllRiskTotalAmount').val(currentQuote.HomeAllRiskTotalAmount);
-                $('#territorialLimitJMD').val(currentQuote.territorialLimitJMD);
+                $('#territorialLimit').val(currentQuote.territorialLimit);
                 //property insured
                 $('#currentPolicyWithCompanyOrInsurerDetails').val(currentQuote.currentPolicyWithCompanyOrInsurerDetails);
                 //insurance declined
@@ -3090,19 +3125,19 @@
                 //sustained loss
                 $('#HomeInsuranceSufferLossDetails').val(currentQuote.HomeInsuranceSufferLossDetails);
                 //set radio buttons
-                setRadioButton('currentPolicyWithCompanyOrInsurer',currentQuote.currentPolicyWithCompanyOrInsurer);
-                setRadioButton('garageOutBuildingExists',currentQuote.garageOutBuildingExists);
-                setRadioButton('homeHasWatersideStructure',currentQuote.homeHasWatersideStructure);
-                setRadioButton('homeHaveInterestFromIndividual',currentQuote.homeHaveInterestFromIndividual);
-                setRadioButton('homeInGoodState',currentQuote.homeInGoodState);
-                setRadioButton('HomeInsuranceCancelled',currentQuote.HomeInsuranceCancelled);
-                setRadioButton('HomeInsuranceDeclined',currentQuote.HomeInsuranceDeclined);
-                setRadioButton('HomeInsuranceIncreasedPremium',currentQuote.HomeInsuranceIncreasedPremium);
-                setRadioButton('HomeInsurancePerilsSuffer',currentQuote.HomeInsurancePerilsSuffer);
-                setRadioButton('HomeInsuranceRequiredSpecialTerm',currentQuote.HomeInsuranceRequiredSpecialTerm);
-                setRadioButton('HomeInsuranceSufferLoss',currentQuote.HomeInsuranceSufferLoss);
-                setRadioButton('homeOccupiedByApplicantFamily',currentQuote.homeOccupiedByApplicantFamily);
-                setRadioButton('homeUsedForIncomeActivity',currentQuote.homeUsedForIncomeActivity);
+                setRadioButton('currentPolicyWithCompanyOrInsurer', currentQuote.currentPolicyWithCompanyOrInsurer);
+                setRadioButton('garageOutBuildingExists', currentQuote.garageOutBuildingExists);
+                setRadioButton('homeHasWatersideStructure', currentQuote.homeHasWatersideStructure);
+                setRadioButton('homeHaveInterestFromIndividual', currentQuote.homeHaveInterestFromIndividual);
+                setRadioButton('homeInGoodState', currentQuote.homeInGoodState);
+                setRadioButton('HomeInsuranceCancelled', currentQuote.HomeInsuranceCancelled);
+                setRadioButton('HomeInsuranceDeclined', currentQuote.HomeInsuranceDeclined);
+                setRadioButton('HomeInsuranceIncreasedPremium', currentQuote.HomeInsuranceIncreasedPremium);
+                setRadioButton('HomeInsurancePerilsSuffer', currentQuote.HomeInsurancePerilsSuffer);
+                setRadioButton('HomeInsuranceRequiredSpecialTerm', currentQuote.HomeInsuranceRequiredSpecialTerm);
+                setRadioButton('HomeInsuranceSufferLoss', currentQuote.HomeInsuranceSufferLoss);
+                setRadioButton('homeOccupiedByApplicantFamily', currentQuote.homeOccupiedByApplicantFamily);
+                setRadioButton('homeUsedForIncomeActivity', currentQuote.homeUsedForIncomeActivity);
 
             };
 
