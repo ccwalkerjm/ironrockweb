@@ -2425,8 +2425,8 @@
 									<div class="col-md-4">
 										<input id="policyPeriod" name="policyPeriod" type="number" placeholder="Period in Months" class="form-control" value="12">
 									</div>
-								</div>							
-								
+								</div>
+
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="branch">Branch</label>
 									<div class="col-md-4">
@@ -2529,7 +2529,7 @@
                     $('#quoteContainer').hide();
                     $('#newQuoteTypeSelection').hide();
                     $('#quote-section').hide();
-                    //last reset currentQuote				
+                    //last reset currentQuote
                     doSearch(obj);
                     //$("#doSearch").trigger("click");
                 }
@@ -2789,7 +2789,7 @@
                 populatePersonalDetails();
                 //
                 if (currentQuote.insuranceType == 'motor') {
-                    populateVehicles();
+                    populateMotorVehicle();
                 } else {
                     populateHomeProperty();
                 }
@@ -2804,7 +2804,7 @@
                 //populate images and canvases
                 fillLogoCanvas();
                 fillSignatureCanvas();
-                //show links 
+                //show links
                 $('#getPDF').prop('disabled', false);
                 $('#convert').prop('disabled', false);
                 $('#getUploadModal').prop('disabled', false);
@@ -2858,7 +2858,7 @@
                 if (currentQuote.signatureBytes) {
                     try {
                         var svgContainer = document.getElementById('svg-signature');
-                        //$('#svg-signature').append(atob(currentQuote.signatureBytes));									
+                        //$('#svg-signature').append(atob(currentQuote.signatureBytes));
                         svgContainer.innerHTML = atob(currentQuote.signatureBytes);
                         var svg = svgContainer.getElementsByTagName('svg')[0];
                         var width = svg.getAttribute("width");
@@ -2876,58 +2876,6 @@
                     }
                 }
             }
-
-
-            var populateHomeProperty = function () {
-                $('#homeRiskAddressStreetNo').val(currentQuote.homeRiskAddressStreetNo);
-                $('#homeRiskAddressStreetName').val(currentQuote.homeRiskAddressStreetName);
-                $('#homeRiskAddressTown').val(currentQuote.homeRiskAddressTown);
-                $('#homeRiskAddressParish').val(currentQuote.homeRiskAddressParish);
-                $('#homeType').val(currentQuote.homeType);
-                $('#homeRiskAddressStoreys').val(currentQuote.homeRiskAddressStoreys);
-                $('#homeRiskAddressYearBuilt').val(currentQuote.homeRiskAddressYearBuilt);
-                $('#constructionExternalWalls').val(currentQuote.constructionExternalWalls);
-                $('#constructionRoof').val(currentQuote.constructionRoof);
-                //garage or out buildings
-                $('#garageExternalWalls').val(currentQuote.garageExternalWalls);
-                $('#garageRoof').val(currentQuote.garageRoof);
-                //homeingoodstate
-                $('#homeInGoodStateDetails').val(currentQuote.homeInGoodStateDetails);
-                //dwelling occupied soley by you
-                $('#homeOccupiedByApplicantFamilyIfNo').val(currentQuote.homeOccupiedByApplicantFamilyIfNo);
-                //home used for income activity
-                $('#homeUsedForIncomeActivityDetails').val(currentQuote.homeUsedForIncomeActivityDetails);
-                //home have interest from individual
-                $('#homeHaveInterestFromIndividualDetails').val(currentQuote.homeHaveInterestFromIndividualDetails);
-                //waterside structures
-                $('#homeHasWatersideStructureDetails').val(currentQuote.homeHasWatersideStructureDetails);
-                $('#homeInsurancePropertyItem0').val(currentQuote.homeInsurancePropertyItem0);
-                $('#homeInsurancePropertyItemValue0').val(currentQuote.homeInsurancePropertyItemValue0);
-                $('#homeInsurancePropertySwimmingPoolValue').val(currentQuote.homeInsurancePropertySwimmingPoolValue);
-                $('#homeInsurancePropertySum').val(currentQuote.homeInsurancePropertySum);
-                $('#amountHouseholdGoods').val(currentQuote.amountHouseholdGoods);
-                $('#amountValuables').val(currentQuote.amountValuables);
-                $('#HomeInsuranceOtherValuableAmount').val(currentQuote.HomeInsuranceOtherValuableAmount);
-                $('#HomeInsuranceContentTotalAmount').val(currentQuote.HomeInsuranceContentTotalAmount);
-                $('#HomeAllRiskArticleDescription0').val(currentQuote.HomeAllRiskArticleDescription0);
-                $('#HomeAllRiskArticleValue0').val(currentQuote.HomeAllRiskArticleValue0);
-                $('#HomeAllRiskTotalAmount').val(currentQuote.HomeAllRiskTotalAmount);
-                $('#territorialLimitJMD').val(currentQuote.territorialLimitJMD);
-                //property insured
-                $('#currentPolicyWithCompanyOrInsurerDetails').val(currentQuote.currentPolicyWithCompanyOrInsurerDetails);
-                //insurance declined
-                $('#HomeInsuranceDeclinedDetails').val(currentQuote.HomeInsuranceDeclinedDetails);
-                //special terms
-                $('#HomeInsuranceRequiredSpecialTermDetails').val(currentQuote.HomeInsuranceRequiredSpecialTermDetails);
-                //cancelled
-                $('#HomeInsuranceCancelledDetails').val(currentQuote.HomeInsuranceCancelledDetails);
-                //Premium increased
-                $('#HomeInsuranceIncreasedPremiumDetails').val(currentQuote.HomeInsuranceIncreasedPremiumDetails);
-                //Hurricae 
-                $('#HomeInsurancePerilsSufferDetails').val(currentQuote.HomeInsurancePerilsSufferDetails);
-                //sustained loss
-                $('#HomeInsuranceSufferLossDetails').val(currentQuote.HomeInsuranceSufferLossDetails);
-            };
 
 
 
@@ -2957,6 +2905,7 @@
                 $('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
 
                 //mailing address
+                setRadioButton('mailingAddressSame',currentQuote.mailingAddressSame);
                 $('#mailingAddressSame').val(currentQuote.mailingAddressSame);
                 $('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
                 $('#appplicantMailStreetName').val(currentQuote.appplicantMailStreetName);
@@ -2977,7 +2926,37 @@
                 $('#employerNationality').val(currentQuote.employerNationality);
                 //start date
                 $('.startDate').val(currentQuote.startDate);
+                //applicantRelativeInPublicOffice
+                setRadioButton('applicantRelativeInPublicOffice',currentQuote.applicantRelativeInPublicOffice);
             };
+
+            var populateMotorVehicle = function () {
+              populateVehicles();
+              populateDrivers();
+            };
+
+
+            //motor vehicle miscellaneous
+            var populateMVMiscellaneous = function () {
+              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
+              //$('#branch').val(currentQuote.branch);
+              $('#currency').val(currentQuote.currency);
+              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
+              $('#driverSufferFromDetails').val(currentQuote.driverSufferFromDetails);
+              $('#driverTrafficTicketDate').val(currentQuote.driverTrafficTicketDate);
+              $('#driverTrafficTicketDetails').val(currentQuote.driverTrafficTicketDetails);
+              $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
+
+              //radio buttons
+              setRadioButton('driverSufferFromDefectiveHearingOrVision',currentQuote.driverSufferFromDefectiveHearingOrVision);
+              setRadioButton('driverSufferFromDiabetesEpilepsyHeartDisease',currentQuote.driverSufferFromDiabetesEpilepsyHeartDisease);
+              setRadioButton('driverSufferFromPhysicalMentalInfirmity',currentQuote.driverSufferFromPhysicalMentalInfirmity);
+              setRadioButton('driverTrafficTicket',currentQuote.driverTrafficTicket);
+              setRadioButton('driverSufferFromDefectiveHearingOrVision',currentQuote.driverSufferFromDefectiveHearingOrVision);
+
+
+            };
+
 
             var populateVehicles = function () {
                 //insert vehicle0
@@ -3028,6 +3007,9 @@
                     insertVehicle(vehicle2);
                 }
 
+              };
+
+              var populateDrivers = function () {
                 //add first driver
                 if (currentQuote.regularDriversDL0) {
                     $('#regularDriversId').show();
@@ -3040,7 +3022,6 @@
                     $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(currentQuote.regularDriversDLOriginalDateOfIssue0);
                     $('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer0);
                 }
-
                 //add second
                 if (currentQuote.regularDriversDL0 && currentQuote.regularDriversDL1) {
                     var elementGroup = $('.regularDriversCls:last');
@@ -3057,6 +3038,75 @@
                     $('.regularDriversCls:last .DriversRelationshipToProposer input').val(currentQuote.regularDriversRelationshipToProposer1);
                 }
             };
+
+
+            var populateHomeProperty = function () {
+                $('#homeRiskAddressStreetNo').val(currentQuote.homeRiskAddressStreetNo);
+                $('#homeRiskAddressStreetName').val(currentQuote.homeRiskAddressStreetName);
+                $('#homeRiskAddressTown').val(currentQuote.homeRiskAddressTown);
+                $('#homeRiskAddressParish').val(currentQuote.homeRiskAddressParish);
+                $('#homeType').val(currentQuote.homeType);
+                $('#homeRiskAddressStoreys').val(currentQuote.homeRiskAddressStoreys);
+                $('#homeRiskAddressYearBuilt').val(currentQuote.homeRiskAddressYearBuilt);
+                $('#constructionExternalWalls').val(currentQuote.constructionExternalWalls);
+                $('#constructionRoof').val(currentQuote.constructionRoof);
+                //garage or out buildings
+                $('#garageExternalWalls').val(currentQuote.garageExternalWalls);
+                $('#garageRoof').val(currentQuote.garageRoof);
+                //homeingoodstate
+                $('#homeInGoodStateDetails').val(currentQuote.homeInGoodStateDetails);
+                //dwelling occupied soley by you
+                $('#homeOccupiedByApplicantFamilyIfNo').val(currentQuote.homeOccupiedByApplicantFamilyIfNo);
+                //home used for income activity
+                $('#homeUsedForIncomeActivityDetails').val(currentQuote.homeUsedForIncomeActivityDetails);
+                //home have interest from individual
+                $('#homeHaveInterestFromIndividualDetails').val(currentQuote.homeHaveInterestFromIndividualDetails);
+                //waterside structures
+                $('#homeHasWatersideStructureDetails').val(currentQuote.homeHasWatersideStructureDetails);
+                $('#homeInsurancePropertyItem0').val(currentQuote.homeInsurancePropertyItem0);
+                $('#homeInsurancePropertyItemValue0').val(currentQuote.homeInsurancePropertyItemValue0);
+                $('#homeInsurancePropertySwimmingPoolValue').val(currentQuote.homeInsurancePropertySwimmingPoolValue);
+                $('#homeInsurancePropertySum').val(currentQuote.homeInsurancePropertySum);
+                $('#amountHouseholdGoods').val(currentQuote.amountHouseholdGoods);
+                $('#amountValuables').val(currentQuote.amountValuables);
+                $('#HomeInsuranceOtherValuableAmount').val(currentQuote.HomeInsuranceOtherValuableAmount);
+                $('#HomeInsuranceContentTotalAmount').val(currentQuote.HomeInsuranceContentTotalAmount);
+                $('#HomeAllRiskArticleDescription0').val(currentQuote.HomeAllRiskArticleDescription0);
+                $('#HomeAllRiskArticleValue0').val(currentQuote.HomeAllRiskArticleValue0);
+                $('#HomeAllRiskTotalAmount').val(currentQuote.HomeAllRiskTotalAmount);
+                $('#territorialLimitJMD').val(currentQuote.territorialLimitJMD);
+                //property insured
+                $('#currentPolicyWithCompanyOrInsurerDetails').val(currentQuote.currentPolicyWithCompanyOrInsurerDetails);
+                //insurance declined
+                $('#HomeInsuranceDeclinedDetails').val(currentQuote.HomeInsuranceDeclinedDetails);
+                //special terms
+                $('#HomeInsuranceRequiredSpecialTermDetails').val(currentQuote.HomeInsuranceRequiredSpecialTermDetails);
+                //cancelled
+                $('#HomeInsuranceCancelledDetails').val(currentQuote.HomeInsuranceCancelledDetails);
+                //Premium increased
+                $('#HomeInsuranceIncreasedPremiumDetails').val(currentQuote.HomeInsuranceIncreasedPremiumDetails);
+                //Hurricae
+                $('#HomeInsurancePerilsSufferDetails').val(currentQuote.HomeInsurancePerilsSufferDetails);
+                //sustained loss
+                $('#HomeInsuranceSufferLossDetails').val(currentQuote.HomeInsuranceSufferLossDetails);
+                //set radio buttons
+                setRadioButton('currentPolicyWithCompanyOrInsurer',currentQuote.currentPolicyWithCompanyOrInsurer);
+                setRadioButton('garageOutBuildingExists',currentQuote.garageOutBuildingExists);
+                setRadioButton('homeHasWatersideStructure',currentQuote.homeHasWatersideStructure);
+                setRadioButton('homeHaveInterestFromIndividual',currentQuote.homeHaveInterestFromIndividual);
+                setRadioButton('homeInGoodState',currentQuote.homeInGoodState);
+                setRadioButton('HomeInsuranceCancelled',currentQuote.HomeInsuranceCancelled);
+                setRadioButton('HomeInsuranceDeclined',currentQuote.HomeInsuranceDeclined);
+                setRadioButton('HomeInsuranceIncreasedPremium',currentQuote.HomeInsuranceIncreasedPremium);
+                setRadioButton('HomeInsurancePerilsSuffer',currentQuote.HomeInsurancePerilsSuffer);
+                setRadioButton('HomeInsuranceRequiredSpecialTerm',currentQuote.HomeInsuranceRequiredSpecialTerm);
+                setRadioButton('HomeInsuranceSufferLoss',currentQuote.HomeInsuranceSufferLoss);
+                setRadioButton('homeOccupiedByApplicantFamily',currentQuote.homeOccupiedByApplicantFamily);
+                setRadioButton('homeUsedForIncomeActivity',currentQuote.homeUsedForIncomeActivity);
+
+            };
+
+
 
 
 

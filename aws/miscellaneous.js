@@ -17,7 +17,7 @@ function doMiscellaneous() {
 			var applicantOccupation = $("#applicantOccupation option:selected");
 			var occupationIndex = applicantOccupation.index();
 			var occupationValue = applicantOccupation.val();
-			//$('.selDiv option:eq(1)').prop('selected', true)			
+			//$('.selDiv option:eq(1)').prop('selected', true)
 			var driverOccupation = $('#quote-section').find('.regularDriversCls:last .occupation');
 			driverOccupation.find('option').eq(occupationIndex).prop('selected', true);
 
@@ -39,7 +39,7 @@ function doMiscellaneous() {
 	$('.medicalCondition').change(function () {
 		var isCheckedYes = false;
 		$('.medicalCondition').each(function (index, element) {
-			if ($(element).is(':checked') && $(element).val() == "yes") {
+			if ($(element).is(':checked') && $(element).val() == 'yes') {
 				isCheckedYes = true;
 				return true;
 			}
@@ -406,7 +406,7 @@ function doMiscellaneous() {
 	});
 
 
-	//validate  
+	//validate
 	//$('#mailingAddressSame').change(function () {
 	$('input[type=radio][name=mailingAddressSame]').change(function () {
 		if (this.value == 'no') {
@@ -522,7 +522,7 @@ function setVehicleUsedAs(select_value) {
 	//$('label[for=a], input#a').hide();
 	//show relevant inputs
 	switch (select_value) {
-	case "CarriageOwnGoods": //private commercial               
+	case "CarriageOwnGoods": //private commercial
 	case "CarriagePassengersNotHire": //private commercial
 	case "CarriagePassengersHire": //private commercial
 	case "CommercialTravelling": //private commercial
@@ -533,7 +533,7 @@ function setVehicleUsedAs(select_value) {
 		$('#21YearsPrivateCars').hide();
 		$('#24MonthsPrivateLicense').hide();
 		break;
-	case "GeneralCartage": //General Cartage  
+	case "GeneralCartage": //General Cartage
 		$('#25yearsOldGeneral').show();
 		$('#5YearsGeneralPublicCommercial').show();
 		$('#23YearsOldPrivateCommercial').hide();
@@ -722,6 +722,7 @@ function resetApplicantRelativeInPublicOffice() {
 	resetObjects(objectList, elementClass, "Add", "Delete", "Relative");
 }
 
+
 function resetVehiclesToBeInsured() {
 	var objectList = [
 		{
@@ -772,6 +773,94 @@ function resetVehiclesToBeInsured() {
 	var elementClass = $('.vehicleToBeInsured');
 	resetObjects(objectList, elementClass, "Add", "Delete", "Vehicle");
 }
+
+
+//set radio button
+function setRadioButton(buttonName,value){
+	//'input[type=radio][name=homeHasWatersideStructure]'
+	//	$('input[type=radio][name=homeOccupiedByApplicantFamily]')
+	var radioButton = $('input[type=radio][name='+buttonName+ '][value='+value+ ']');
+  radioButton.prop('checked',true).trigger('click');
+}
+
+
+
+
+//load countries in select options
+function loadCountriesOptions() {
+	var countryElements = $('#quote-section .countries');
+	countryElements.each(function (index, item) {
+		var selectObj = $(this);
+		selectObj.html('');
+		$.each(_countries, function (i, json) {
+			if (json.code == 'JM') {
+				selectObj.append('<option value="' + json.code + '" selected="selected">' + json.name + '</option>');
+			} else {
+				selectObj.append('<option value="' + json.code + '">' + json.name + '</option>');
+			}
+		});
+	});
+}
+
+
+
+
+//reset objects
+function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle) {
+	var firstElement = elementClass.first();
+	var lastElement = elementClass.last();
+	//var i = 0;
+
+	elementClass.each(function (i, e) {
+		var element = $(this);
+		//change ids and names
+		$.each(objectList, function (j, item) {
+			element.find('.' + item.class + ' :input').attr('id', item.name + i).attr('name', item.name + i);
+			element.find('.' + item.class + ' label').attr('for', item.name + i);
+		})
+
+		//set controls
+		if (element.is(firstElement) && element.is(lastElement)) {
+			firstElement.find('.' + delBtnName).hide();
+			lastElement.find('.' + addBtnName).show();
+		} else if (element.is(firstElement)) {
+			element.find('.' + delBtnName).hide();
+			element.find('.' + addBtnName).hide();
+		} else if (element.is(lastElement)) {
+			element.find('.' + delBtnName).show();
+			element.find('.' + addBtnName).show();
+		} else {
+			element.find('.' + delBtnName).hide();
+			element.find('.' + addBtnName).hide();
+		}
+		//change title
+		element.find('h4').text(elementTitle + ' ' + (i + 1).toString());
+	});
+}
+
+
+function setLastThreeYearsOwnership() {
+	var currentYear = new Date().getFullYear();
+	for (i = 1; i < 4; i++) {
+		var previousYear = currentYear - i;
+		var YearName = 'numberOfVehiclesOwned' + previousYear;
+		var YearHtml = $('<div/>');
+		YearHtml.addClass('ui-field-contain');
+		var YearLabel = $('<label/>');
+		YearLabel.attr('for', YearName);
+		YearLabel.text(previousYear + ':Number of vehicles owned:')
+		YearLabel.appendTo(YearHtml);
+		var yearText = $('<input/>');
+		yearText.attr('type', 'number');
+		yearText.attr('name', YearName);
+		yearText.attr('id', YearName);
+		yearText.appendTo(YearHtml);
+		YearHtml.appendTo($('#numberOfVehiclesOwned'));
+	}
+}
+
+
+
 
 //country functions
 var _countries = [
@@ -1749,75 +1838,6 @@ var _countries = [
 		"code": 'ZW'
     }
 ];
-
-function loadCountriesOptions() {
-	var countryElements = $('#quote-section .countries');
-	countryElements.each(function (index, item) {
-		var selectObj = $(this);
-		selectObj.html('');
-		$.each(_countries, function (i, json) {
-			if (json.code == 'JM') {
-				selectObj.append('<option value="' + json.code + '" selected="selected">' + json.name + '</option>');
-			} else {
-				selectObj.append('<option value="' + json.code + '">' + json.name + '</option>');
-			}
-		});
-	});
-}
-
-function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle) {
-	var firstElement = elementClass.first();
-	var lastElement = elementClass.last();
-	//var i = 0;
-
-	elementClass.each(function (i, e) {
-		var element = $(this);
-		//change ids and names
-		$.each(objectList, function (j, item) {
-			element.find('.' + item.class + ' :input').attr('id', item.name + i).attr('name', item.name + i);
-			element.find('.' + item.class + ' label').attr('for', item.name + i);
-		})
-
-		//set controls
-		if (element.is(firstElement) && element.is(lastElement)) {
-			firstElement.find('.' + delBtnName).hide();
-			lastElement.find('.' + addBtnName).show();
-		} else if (element.is(firstElement)) {
-			element.find('.' + delBtnName).hide();
-			element.find('.' + addBtnName).hide();
-		} else if (element.is(lastElement)) {
-			element.find('.' + delBtnName).show();
-			element.find('.' + addBtnName).show();
-		} else {
-			element.find('.' + delBtnName).hide();
-			element.find('.' + addBtnName).hide();
-		}
-		//change title
-		element.find('h4').text(elementTitle + ' ' + (i + 1).toString());
-	});
-}
-
-
-function setLastThreeYearsOwnership() {
-	var currentYear = new Date().getFullYear();
-	for (i = 1; i < 4; i++) {
-		var previousYear = currentYear - i;
-		var YearName = 'numberOfVehiclesOwned' + previousYear;
-		var YearHtml = $('<div/>');
-		YearHtml.addClass('ui-field-contain');
-		var YearLabel = $('<label/>');
-		YearLabel.attr('for', YearName);
-		YearLabel.text(previousYear + ':Number of vehicles owned:')
-		YearLabel.appendTo(YearHtml);
-		var yearText = $('<input/>');
-		yearText.attr('type', 'number');
-		yearText.attr('name', YearName);
-		yearText.attr('id', YearName);
-		yearText.appendTo(YearHtml);
-		YearHtml.appendTo($('#numberOfVehiclesOwned'));
-	}
-}
-
 
 
 var _colours = [
