@@ -1,36 +1,134 @@
-﻿mailingAddressSame			Yes	 	id="mailingAddress"
-applicantRelativeInPublicOffice		No		id="publicofficerelation"
-	
-MV
-isOwnerOfVehicle			yes		class="vehicleNameAddressOfOwner"
-lienHolder				no		class="lienHolderClass"
-vehicleAntiTheftDevice			no		class="VehicleAntiTheftDeviceProviderClass"
-vehicleRegularCustody			yes		class="vehicleRegularCustodyDetailsClass"
-vehicleGaragedAtProposersHome		yes		class="vehicleGaragedAtProposersHomeDetailsClass"
-proposerInsured				no		class="proposerInsuranceDetailsClass"
-proposerEntitledToNOClaimDiscount	no		id="proposerEntitledToNOClaimDiscountProof"
-applicantOtherInsurer			no		class="applicantOtherInsurerTypeClass"
-applicantPreviouslyInsured		no		class="ApplicantPreviouslyInsuredClass"
-involvedInAccident			no		class="involvedInAccidentClass"
-driverSufferFromDefectiveHearingOrVision  no		id="medicalConditionDetails"
-driverSufferFromDiabetesEpilepsyHeartDisease  no	id="medicalConditionDetails"
-driverSufferFromPhysicalMentalInfirmity	no		id="medicalConditionDetails"
-vehicleModified				no		class="vehicleModifiedDetailsClass"
-driverTrafficTicket			no		id="driverTrafficTicketDetailGroup"
-vehicleModified				no		class="vehicleModifiedDetailsClass"
+
+var returnValue = {};
+
+switch (RadioName) {
+case 'mailingAddressSame':
+		returnValue.defaultValue=	"yes";
+		returnValue.id="mailingAddress";
+		break;
+case 'applicantRelativeInPublicOffice':
+		returnValue.defaultValue="no";
+		returnValue.id="publicofficerelation";
+		break;
+		//MV
+case 'isOwnerOfVehicle':
+		returnValue.defaultValue=	"yes";
+		returnValue.class="vehicleNameAddressOfOwner";
+		break;
+case 'lienHolder':
+		returnValue.defaultValue="no";
+		returnValue.class="lienHolderClass";
+		break;
+case 'vehicleAntiTheftDevice:
+		returnValue.defaultValue="no";
+		returnValue.class="VehicleAntiTheftDeviceProviderClass";
+		break;
+case 'vehicleRegularCustody':
+		returnValue.defaultValue=	"yes";
+		returnValue.class="vehicleRegularCustodyDetailsClass";
+		break;
+
+case 'vehicleGaragedAtProposersHome:
+		returnValue.defaultValue=	"yes";
+		returnValue.class="vehicleGaragedAtProposersHomeDetailsClass";
+		break;
+case 'proposerInsured:
+		returnValue.defaultValue="no";
+		returnValue.class="proposerInsuranceDetailsClass";
+		break;
+case 'proposerEntitledToNOClaimDiscount:
+		returnValue.defaultValue="no";
+		returnValue.id="proposerEntitledToNOClaimDiscountProof";
+		break;
+case 'applicantOtherInsurer:
+		returnValue.defaultValue="no";
+		returnValue.class="applicantOtherInsurerTypeClass";
+		break;
+case 'applicantPreviouslyInsured:
+		returnValue.defaultValue="no";
+		returnValue.class="ApplicantPreviouslyInsuredClass";
+		break;
+case 'involvedInAccident:
+		returnValue.defaultValue="no";
+		returnValue.class="involvedInAccidentClass";
+		break;
+case 'driverSufferFromDefectiveHearingOrVision:
+		returnValue.defaultValue="no";
+		returnValue.id="medicalConditionDetails";
+		break;
+case 'driverSufferFromDiabetesEpilepsyHeartDisease:
+		returnValue.defaultValue="no";
+		returnValue.id="medicalConditionDetails";
+		break;
+case 'driverSufferFromPhysicalMentalInfirmity:
+		returnValue.defaultValue="no";
+		returnValue.id="medicalConditionDetails";
+		break;
+case 'vehicleModified:
+		returnValue.defaultValue="no";
+		returnValue.class="vehicleModifiedDetailsClass";
+		break;
+case 'driverTrafficTicket:
+		returnValue.defaultValue="no";
+		returnValue.id="driverTrafficTicketDetailGroup";
+		break;
+case 'vehicleModified:
+		returnValue.defaultValue="no";
+		returnValue.class="vehicleModifiedDetailsClass";
+		break;
 
 
-Home
-garageOutBuildingExists			no		class="garageOutBuildingClass"
-homeInGoodState				yes		id="divhomeInGoodStateDetails"
-homeOccupiedByApplicantFamily		yes		id="divhomeOccupiedByApplicantFamily"
-homeUsedForIncomeActivity		no		id="divhomeUsedForIncomeActivity"
-homeHaveInterestFromIndividual		no		id="divhomeHaveInterestFromIndividual"
-homeHasWatersideStructure		no		id="divhomeHasWatersideStructure"
-currentPolicyWithCompanyOrInsurer	no		id="divcurrentPolicyWithCompanyOrInsurerDetails"
-HomeInsuranceDeclined			no		id="divHomeInsuranceDeclined"
-HomeInsuranceRequiredSpecialTerm	no		id="divHomeInsuranceRequiredSpecialTermDetails"
-HomeInsuranceCancelled			no		id="divHomeInsuranceCancelledDetails"
-HomeInsuranceIncreasedPremium		no		id="divHomeInsuranceIncreasedPremiumDetails"
-HomeInsurancePerilsSuffer		no		id="divHomeInsurancePerilsSufferDetails"
-HomeInsuranceSufferLoss			no		id="divHomeInsuranceSufferLossDetails"			
+//Home
+case 'garageOutBuildingExists:
+		returnValue.defaultValue="no";
+		returnValue.class="garageOutBuildingClass";
+		break;
+case 'homeInGoodState':
+		returnValue.defaultValue=	"yes";
+		returnValue.id="divhomeInGoodStateDetails";
+		break;
+case 'homeOccupiedByApplicantFamily':
+		returnValue.defaultValue=	"yes";
+		returnValue.id="divhomeOccupiedByApplicantFamily";
+		break;
+case 'homeUsedForIncomeActivity:
+		returnValue.defaultValue="no";
+		returnValue.id="divhomeUsedForIncomeActivity";
+		break;
+case 'homeHaveInterestFromIndividual:
+		returnValue.defaultValue="no";
+		returnValue.id="divhomeHaveInterestFromIndividual";
+		break;
+case 'homeHasWatersideStructure:
+		returnValue.defaultValue="no";
+		returnValue.id="divhomeHasWatersideStructure";
+		break;
+case 'currentPolicyWithCompanyOrInsurer:
+		returnValue.defaultValue="no";
+		returnValue.id="divcurrentPolicyWithCompanyOrInsurerDetails";
+		break;
+case 'HomeInsuranceDeclined:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsuranceDeclined";
+		break;
+case 'HomeInsuranceRequiredSpecialTerm:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsuranceRequiredSpecialTermDetails";
+		break;
+case 'HomeInsuranceCancelled:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsuranceCancelledDetails";
+		break;
+case 'HomeInsuranceIncreasedPremium:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsuranceIncreasedPremiumDetails";
+		break;
+case 'HomeInsurancePerilsSuffer:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsurancePerilsSufferDetails";
+		break;
+case 'HomeInsuranceSufferLoss:
+		returnValue.defaultValue="no";
+		returnValue.id="divHomeInsuranceSufferLossDetails";
+		break;
+}
