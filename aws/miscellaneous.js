@@ -22,7 +22,7 @@ function doMiscellaneous() {
             driverOccupation.find('option').eq(occupationIndex).prop('selected', true);
 
         }
-    })
+    });
 
 
 
@@ -32,23 +32,6 @@ function doMiscellaneous() {
     $('#vehicleUsedAs').change(function() {
         var select_value = $(this).val();
         setVehicleUsedAs(select_value);
-    });
-
-
-    //medical history
-    $('.medicalCondition').change(function() {
-        var isCheckedYes = false;
-        $('.medicalCondition').each(function(index, element) {
-            if ($(element).is(':checked') && $(element).val() == 'yes') {
-                isCheckedYes = true;
-                return true;
-            }
-        })
-        if (isCheckedYes) {
-            $('#medicalConditionDetails').show();
-        } else {
-            $('#medicalConditionDetails').hide();
-        }
     });
 
 
@@ -322,7 +305,7 @@ function GetTotal(InputArray) {
     var sum = 0;
     $.each(InputArray, function(index, val) {
         sum = sum + Number(val ? val : 0);
-    })
+    });
     return '$' + sum.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
 
@@ -475,20 +458,41 @@ function resetVehiclesToBeInsured() {
 //
 //set display of text based on Radio Button selection
 function setRadioDisplay(RadioName, RadioValue) {
-    var displayElement = getDisplayElement(RadioName);
-    if (!displayElement.defaultValue) return;
-    if (RadioValue == displayElement.defaultValue) {
-        if (displayElement.id) {
-            $('#' + displayElement.id).hide();
+    var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
+    if (radioBtn.attr('class') == 'medicalCondition')
+        setMedicalDisplay();
+    else {
+        var displayElement = getDisplayElement(RadioName);
+        if (!displayElement.defaultValue) return;
+        if (RadioValue == displayElement.defaultValue) {
+            if (displayElement.id) {
+                $('#' + displayElement.id).hide();
+            } else {
+                $('.' + displayElement.class).hide();
+            }
         } else {
-            $('.' + displayElement.class).hide();
+            if (displayElement.id) {
+                $('#' + displayElement.id).show();
+            } else {
+                $('.' + displayElement.class).show();
+            }
         }
+    }
+}
+
+//set medical display
+function setMedicalDisplay() {
+    var isCheckedYes = false;
+    $('.medicalCondition').each(function(index, element) {
+        if ($(element).is(':checked') && $(element).val() == 'yes') {
+            isCheckedYes = true;
+            return true;
+        }
+    });
+    if (isCheckedYes) {
+        $('#medicalConditionDetails').show();
     } else {
-        if (displayElement.id) {
-            $('#' + displayElement.id).show();
-        } else {
-            $('.' + displayElement.class).show();
-        }
+        $('#medicalConditionDetails').hide();
     }
 }
 
@@ -499,7 +503,6 @@ function setRadioButton(buttonName, xvalue) {
     $(buttonElement).prop('checked', true).trigger('click');
     setRadioDisplay(buttonName, xvalue);
 }
-
 
 //get display element
 function getDisplayElement(RadioName) {
@@ -666,7 +669,7 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
         $.each(objectList, function(j, item) {
             element.find('.' + item.class + ' :input').attr('id', item.name + i).attr('name', item.name + i);
             element.find('.' + item.class + ' label').attr('for', item.name + i);
-        })
+        });
 
         //set controls
         if (element.is(firstElement) && element.is(lastElement)) {
