@@ -22,8 +22,6 @@
     <link href="/assets/css/themes/default.css" rel="stylesheet">
     <link href="/assets/css/custom.css" rel="stylesheet">
     <link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
-
-
 </head>
 
 <body class="page-header-fixed">
@@ -751,8 +749,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="lienHolderClass" style="display:none">
-                                                <div class="row">
+                                            <div class="row lienHolderClass" style="display:none">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="control-label col-md-2" for="lienHolderNameInFull">&nbsp;&nbsp;Name:</label>
@@ -789,7 +786,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </div>
 
                                     </form>
@@ -851,9 +847,6 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
                                             <div class="col-md-6 VehicleAntiTheftDeviceProviderClass" style="display:none">
                                                 <div class="form-group">
@@ -2467,18 +2460,15 @@
     <script src="/Scripts/jquery.bootstrap.wizard.js"></script>
     <script src="/Scripts/prettify.js"></script>
     <!--Required Libraries-->
-    <script src="/aws/jsbn.js"></script>
-    <script src="/aws/jsbn2.js"></script>
-    <script src="/aws/sjcl.js"></script>
-    <script src="/aws/moment.min.js"></script>
-    <script src="/aws/aws-cognito-sdk.min.js"></script>
-    <script src="/aws/amazon-cognito-identity.min.js"></script>
-    <script src="/aws/aws-sdk-2.3.19.min.js"></script>
+    <script src="/Scripts/aws/jsbn.js"></script>
+    <script src="/Scripts/aws/jsbn2.js"></script>
+    <script src="/Scripts/aws/sjcl.js"></script>
+    <script src="/Scripts/aws/moment.min.js"></script>
+    <script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+    <script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+    <script src="/Scripts/aws/aws-sdk-2.3.19.min.js"></script>
     <script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
-    <!--Iron Rock Custom Library-->
-    <script src="/aws/ironrockcloudservice.js"></script>
-    <script src="/aws/miscellaneous.js"></script>
-    <script src="/aws/index.js"></script>
+
     <!--PDF Libraries-->
     <!--	<script type="text/javascript" src="/jsPDF/dist/jspdf.debug.js"></script>-->
     <script src="/jsPDF/libs/png_support/zlib.js"></script>
@@ -2486,13 +2476,15 @@
     <script src="/jsPDF/jspdf.js"></script>
     <script src="/jsPDF/plugins/addimage.js"></script>
     <script src="/jsPDF/plugins/png_support.js"></script>
-
     <!-- canvg-->
     <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
     <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
     <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
-    <!--Custom PDF File -->
-    <script src="/aws/pdfconvertor.js"></script>
+    <!--Iron Rock Custom Library-->
+    <script src="/Scripts/ironrockcloudservice.js"></script>
+    <script src="/Scripts/pdfconvertor.js"></script>
+    <script src="/Scripts/quotes.js"></script>
+    <script src="/Scripts/index.js"></script>
     <!--date picker-->
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
@@ -2502,7 +2494,8 @@
                 format: 'yyyy-mm-dd'
             });
             var currentQuote;
-            doPrimaryFunctions(function(err, obj) {
+            initPage(function(err, obj) {
+                runQuoteEvents();
                 var today = new Date();
                 var yyyy = today.getFullYear();
                 var lastYear = yyyy - 1;
@@ -2579,7 +2572,7 @@
                     }
                     g_ironrock_service.listBrokers(function(err, data) {
                         setLoadingState(false);
-                        var brokers = JSON.parse(data.Payload);
+                        var brokers = ConvertToJson(data.Payload);
                         quoteList = ConvertToJson(quoteList);
                         var quotes = quoteList.sort(function(a, b) {
                             return b.id - a.id;
@@ -2629,7 +2622,7 @@
                         display(err.message, err);
                         return;
                     }
-                    result = JSON.parse(result.Payload);
+                    result = ConvertToJson(result.Payload);
                     if (result && result.errorMessage) {
                         //lambda error
                         display(result.errorMessage, true);

@@ -1,6 +1,6 @@
 // For an introduction to the Blank template, see the following documentation:
 // http://go.microsoft.com/fwlink/?LinkID=397704
-// To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints, 
+// To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints,
 // and then run "window.location.reload()" in the JavaScript Console.
 ////////////outside functions
 
@@ -110,7 +110,7 @@ $.fn.serializeObject = function () {
 
 String.prototype.capitalizeFirstLetter = function () {
 	return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
 
 
 
@@ -288,7 +288,7 @@ function runWizard() {
 				$(curInputs[i]).closest(".form-group").addClass("has-error");
 			}
 		}
-		//custom 
+		//custom
 		isValid = getSpecificValidation(curStep, isValid);
 		if (isValid)
 			nextStepWizard.removeAttr('disabled').trigger('click');
@@ -324,7 +324,7 @@ function getSpecificValidation($curStep, $valid) {
 		}
 		break;
 	case 'vehicle-particulars-page':
-		if ($valid && $('#vehiclesToBeInsured tbody tr').length == 0)
+		if ($valid && $('#vehiclesToBeInsured tbody tr').length === 0)
 			$valid = false;
 		break;
 	case 'vehicle-insurance-coverage-page':
@@ -384,7 +384,7 @@ function insertVehicle(r) {
 	var detailsCell = $('<td/>');
 	detailsCell.html(r.year + ' ' + r.vehicleBodyType + ' ' + r.colour);
 	detailsCell.appendTo(tableRow);
-	//            
+	//
 	var chassisCell = $('<td/>');
 	chassisCell.html(r.chassisNo + '/' + r.engineNo);
 	chassisCell.appendTo(tableRow);
@@ -476,7 +476,7 @@ function loadQuotation($container, limitData) {
 }
 
 function populateApplicant(r) {
-	//id        
+	//id
 	var egovDrivers = JSON.stringify(r);
 	$('#egovDriversLicenseDetails').val(egovDrivers);
 	$('#applicantIDnumber').val(r.driversLicenceNo);
@@ -555,7 +555,7 @@ function loadBodyTypes() {
 	$('#QueryVehicleBodyType').empty();
 	$.each(options.makeModels.data, function (key, value) {
 		$.each(value.models, function (key, value) {
-			if ($('#QueryVehicleBodyType option[value="' + value.body_type + '"]').length == 0) {
+			if ($('#QueryVehicleBodyType option[value="' + value.body_type + '"]').length === 0) {
 				$('#QueryVehicleBodyType').append('<option value="' + value.body_type + '">' + value.body_type + '</option>');
 			}
 		});
@@ -571,7 +571,7 @@ function loadVehicleModels() {
 	$.each(options.makeModels.data, function (key, value) {
 		if (make == value.make) {
 			$.each(value.models, function (key, value) {
-				if ($('#QueryVehicleModel option[value="' + value.model + '"]').length == 0) {
+				if ($('#QueryVehicleModel option[value="' + value.model + '"]').length === 0) {
 					$('#QueryVehicleModel').append('<option value="' + value.model + '">' + value.model + '</option>');
 				}
 			});
@@ -585,7 +585,7 @@ function loadVehicleModels() {
 function createFirstDriver() {
 	if (!$('#regularDriversId').is(":visible") && $('#applicantIDType').val().toLowerCase() == 'trn') {
 		//var occupation = $('#applicantOccupation').val();
-		var occupationIndex = $("#applicantOccupation option:selected").index()
+		var occupationIndex = $("#applicantOccupation option:selected").index();
 		var elel = $('.regularDriversCls:last .occupation select');
 		elel.eq(occupationIndex).prop('selected', true);
 
@@ -610,7 +610,7 @@ function GetDriverLicense($this, id, callback) {
 			callback(err);
 		} else {
 			//var json = JSON.parse(r);
-			var r = ConvertToJson(r);
+			r = ConvertToJson(r);
 			if (r.error_message) {
 				err = new Error('Invalid ID!');
 				callback(err);
@@ -657,7 +657,7 @@ function doPrimaryFunctions(callback) {
 
 	///////////////////admin functions///////////////////////////////////////
 
-	//set message 
+	//set message
 	_$message = $(document).find('.message');
 
 	//spinning loader
@@ -737,9 +737,9 @@ function doPrimaryFunctions(callback) {
 			sideBarMenu.append(policyMenuOption);
 
 
-			//User 
+			//User
 			UserMenuTitle.text($this.getUsername());
-			UserSubMenu.html('<li><a href="/profile.html">View Profile</a></li><li><a href="/changePassword.html">Change Password</a></li><li><a href="#"id="logout">Logout</a></li>')
+			UserSubMenu.html('<li><a href="/profile.html">View Profile</a></li><li><a href="/changePassword.html">Change Password</a></li><li><a href="#"id="logout">Logout</a></li>');
 
 			UserMenoOptionLink.append(UserMenuTitle).append('<span class="arrow "></span>');
 			UserMenuOption.append(UserMenoOptionLink).append(UserSubMenu);
@@ -748,7 +748,7 @@ function doPrimaryFunctions(callback) {
 
 			var profile = $this.getProfile();
 
-			//admin and set broker logo		
+			//admin and set broker logo
 			if (profile.role == 'Admin' || profile.role == 'Staff') {
 				adminMenoOptionLink.append(adminMenuTitle).append('<span class="arrow "></span>');
 				adminMenuOption.append(adminMenoOptionLink).append(adminSubMenu);
@@ -772,20 +772,20 @@ function doPrimaryFunctions(callback) {
 
 			valid_page = true;
 			//Home Option
-			HomeMenoOptionLink.attr('href', '/home.html');
+			HomeMenoOptionLink.attr('href', '/index.html');
 			HomeMenuTitle.text('Home').appendTo(HomeMenoOptionLink);
 			HomeMenoOptionLink.appendTo(HomeMenuOption);
 
 			sideBarMenu.append(HomeMenuOption);
-			//User		
-			UserSubMenu.html('<li><a href="/login.html">Login</a><li><a href="/forgotPassword.html">Forgot Password</a>')
+			//User
+			UserSubMenu.html('<li><a href="/login.html">Login</a><li><a href="/forgotPassword.html">Forgot Password</a>');
 
 			UserMenoOptionLink.append(UserMenuTitle.text('User Login')).append('<span class="arrow "></span>');
 			UserMenuOption.append(UserMenoOptionLink).append(UserSubMenu);
 
 			sideBarMenu.append(UserMenuOption);
 		}
-		if (valid_page == true) {
+		if (valid_page === true) {
 			$('#sidebar').append(sideBarAnchor.append(sideBarMenu));
 			App.init();
 			if (callback && typeof callback == "function") {
@@ -800,99 +800,12 @@ function doPrimaryFunctions(callback) {
 	$('#sidebar').on('click', '#logout', function () {
 		g_ironrock_service.signoff();
 		location.assign('/index.html');
-	})
-
-
-	///login
-	$("#login_submit").click(function (e) {
-		setLoadingState(true);
-		g_ironrock_service = new ironrockcloudservice(function (err, obj) {
-			if (err) {
-				setLoadingState(false);
-				display(err.message, true);
-			} else {
-				obj.signoff();
-				obj.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
-					setLoadingState(false);
-					if (err) {
-						display(err.message, true);
-					} else {
-						location.href = "/dashboard.html";
-					}
-				});
-			}
-
-		});
 	});
 
-	//confirm account
-	$("#confirm_account_submit").click(function (e) {
-		var email_code = $('#email_code').val();
-		var username = $('#username').val();
-		g_ironrock_service.confirmSignup(username, email_code, function (err, data) {
-			if (err) {
-				display(err.message, true);
-			} else {
-				display(data, false);
-			}
-		});
-	});
 
-	//change password
-	$("#change_password_submit").click(function (e) {
-		var oldPassword = $('#oldPassword').val(),
-			newPassword = $("#newPassword").val(),
-			confirmPassword = $("#confirmPassword").val();
-		if (oldPassword && newPassword && newPassword == confirmPassword && newPassword != oldPassword) {
-			setLoadingState(true);
-			g_ironrock_service.changePassword($('#oldPassword').val(), $('#newPassword').val(), function (err) {
-				setLoadingState(false);
-				if (err) {
-					display(err.message, true);
-				} else {
-					location.assign('/dashboard.html');
-					//location.reload();
-				}
-			});
-		} else {
-			display("Invalid Entries", true);
-		}
-	});
 
-	///forgot password
-	$("#forgot_submit").click(function (e) {
-		setLoadingState(true);
-		g_ironrock_service.forgotPassword($('#login_username').val(), function (err, doVerification, obj) {
-			setLoadingState(false);
-			if (err) {
-				display(err.message, true);
-			} else {
-				if (doVerification) {
-					bootbox.dialog({
-						title: "Confirm Password",
-						message: verificationFormText,
-						buttons: {
-							success: {
-								label: "Confirm",
-								className: "btn-success",
-								callback: function () {
-									var verificationCode = $('#verificationCode').val();
-									var newPassword = $('#password').val();
-									var confirmPassword = $('#confirmPassword').val();
-									if (!verificationCode || !newPassword || newPassword != confirmPassword)
-										return false;
-									else
-										g_ironrock_service.confirmPassword(verificationCode, newPassword, obj);
-								}
-							}
-						}
-					});
-				} else {
-					display("Your password has been set. You can now login.", false);
-				}
-			}
-		});
-	});
+
+
 
 	///////////////////////quote create and update
 	$('#quote-section').on('change', '#acceptDisclaimer', function () {
@@ -905,11 +818,11 @@ function doPrimaryFunctions(callback) {
 
 	////submit
 	$('#quote-section').on('click', '#submit-btn', function () {
-		//get signature data       
+		//get signature data
 		//var formData = $('form').serialize();
 		var jsonForm = $('form').serializeObject();
 		if (!parseInt(jsonForm.quotation_number))
-			delete jsonForm["quotation_number"];
+			delete jsonForm.quotation_number;
 		var formData = JSON.stringify(jsonForm);
 		setLoadingState(true);
 		g_ironrock_service.submitQuote(formData, function (err, r) {
@@ -918,7 +831,7 @@ function doPrimaryFunctions(callback) {
 				alert("error: " + err.message);
 				return;
 			}
-			var r = ConvertToJson(r);
+			r = ConvertToJson(r);
 			if (r.errorMessage) {
 				alert("error: " + r.errorMessage);
 				return;
@@ -971,7 +884,7 @@ function doPrimaryFunctions(callback) {
 	$('#quote-section').on('click', '#regularDriversBtns .Reset', function () {
 		$('.regularDriversCls').not('.regularDriversCls:first').remove();
 		$('.regularDriversCls').find('input:text').val('');
-		$('#regularDriversId').hide()
+		$('#regularDriversId').hide();
 		resetRegularDriver();
 	});
 
