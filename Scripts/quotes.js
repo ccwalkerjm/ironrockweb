@@ -1278,6 +1278,10 @@ function setRadioButton(buttonName, xvalue) {
 function getDisplayElement(RadioName) {
     var returnValue = {};
     switch (RadioName) {
+      case 'vehicleKeptInSecureArea':
+          returnValue.defaultValue = "yes";
+          returnValue.id = "vehicleLocationDetailsClass";
+          break;
         case 'mailingAddressSame':
             returnValue.defaultValue = "yes";
             returnValue.id = "mailingAddress";
