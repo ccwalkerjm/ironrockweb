@@ -809,7 +809,7 @@
                                         <hr/>
 
 
-                                        <div class="row controls-row">
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Is the vehicle fitted with an anti-theft device?</label>
                                             </div>
@@ -2929,10 +2929,10 @@
                 $('#driverTrafficTicketDate').val(currentQuote.driverTrafficTicketDate);
                 $('#driverTrafficTicketDetails').val(currentQuote.driverTrafficTicketDetails);
                 $('#insuranceCoverage').val(currentQuote.insuranceCoverage);
-                $('#lienHolderNameInFull').val(currentQuote.lienHolderNameInFull);
-                $('#lienHolderParish').val(currentQuote.lienHolderParish);
-                $('#lienHolderStreetName').val(currentQuote.lienHolderStreetName);
-                $('#lienHolderTown').val(currentQuote.lienHolderTown);
+                // $('#lienHolderNameInFull').val(currentQuote.lienHolderNameInFull);
+                // $('#lienHolderParish').val(currentQuote.lienHolderParish);
+                // $('#lienHolderStreetName').val(currentQuote.lienHolderStreetName);
+                $('#lienHolder').val(currentQuote.lienHolder);
                 $('#manslaughterDefenceCosts').val(currentQuote.manslaughterDefenceCosts);
                 $('#medicalExpenses').val(currentQuote.medicalExpenses);
                 $('#memo').val(currentQuote.memo);
@@ -2960,7 +2960,7 @@
                 setRadioButton('driverTrafficTicket', currentQuote.driverTrafficTicket);
                 setRadioButton('involvedInAccident', currentQuote.involvedInAccident);
                 setRadioButton('isOwnerOfVehicle', currentQuote.isOwnerOfVehicle);
-                setRadioButton('lienHolder', currentQuote.lienHolder);
+                //setRadioButton('lienHolder', currentQuote.lienHolder);
                 setRadioButton('proposerEntitledToNOClaimDiscount', currentQuote.proposerEntitledToNOClaimDiscount);
                 setRadioButton('proposerInsured', currentQuote.proposerInsured);
                 setRadioButton('trailerUsed', currentQuote.trailerUsed);
