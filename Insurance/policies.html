@@ -188,12 +188,12 @@
 	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/utils.js"></script>
 	<script type="text/javascript" src="/Scripts/aws/apigClient.js"></script>
 	<!--Iron Rock Custom Library-->
-	<script src="/Scripts/aws/ironrockcloudservice.js"></script>
-	<script src="/Scripts/aws/index.js"></script>
+	<script src="/Scripts/ironrockcloudservice.js"></script>
+	<script src="/Scripts/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			doPrimaryFunctions(function (err, obj) {
+			initPage(function (err, obj) {
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;

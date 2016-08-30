@@ -103,7 +103,7 @@
                         <div class="col-md-8">
                             <h2>Selected Quotes</h2>
                             <p>
-                                <button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button>
+                                <!--button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button-->
                             </p>
                             <table class="table" id="quotesTable">
                                 <thead>
@@ -136,10 +136,10 @@
                         <p>Click the appropriate button to prepare the proposal</p>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <button type="button" class="btn btn-primary btn-lg btn-block insuranceSelection" id="motor">Create Motor Vehicle Insurance Proposal</button>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <button type="button" class="btn btn-info btn-lg btn-block insuranceSelection" id="property">Create Home Property Insurance Proposal</button>
                             </div>
                         </div>
@@ -156,20 +156,26 @@
                             </button>
 
                             <button type="button" id="getPDF" class="btn btn-default" aria-label="Left Align" title="Generate PDF Document">
-                                <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;PDF
+                                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;PDF
+                            </button>
+
+                            <button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
+                                <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Documents
                             </button>
 
                             <button type="button" id="convertToPolicy" class="btn btn-default" aria-label="Left Align" title="Convert to Policy">
                                 <span class="glyphicon glyphicon-save" aria-hidden="true"></span>&nbsp;Convert
                             </button>
 
-                            <button type="button" id="getUploadModal" class="btn btn-default" aria-label="Left Align" title="Upload Document">
-                                <span class="glyphicon glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp; Documents
+                            <button type="button" id="viewLimits" class="btn btn-default" aria-label="Left Align" title="View Limits">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Limits
                             </button>
 
                             <button type="button" id="viewPolicy" class="btn btn-default" aria-label="Left Align" title="View Policy">
-                                <span class="glyphicon glyphicon glyphicon-saved" aria-hidden="true"></span>&nbsp;Policy
+                                <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;Policy
                             </button>
+
+
                         </div>
                         <hr/>
                         <div class="stepwizard">
@@ -194,7 +200,6 @@
 
                         <!--	<div id="pages">-->
                         <!--Personal Sections -->
-
                         <div class="row setup-content" id="personal-main-page">
                             <div class="col-xs-12">
                                 <div class="col-md-12">
@@ -250,7 +255,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-2" for="applicantDateOfBirth">Date Of Birth:</label>
                                                         <div class="col-sm-10">
-                                                            <input required class="form-control datepicker" type="text" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
+                                                            <input required class="form-control" type="text" id="applicantDateOfBirth" name="applicantDateOfBirth" placeholder="Enter Date of Birth" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -262,7 +267,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-2" for="applicationIDExpirationDate">Expiration Date:</label>
                                                         <div class="col-sm-10">
-                                                            <input required class="form-control datepicker" type="text" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="" readonly>
+                                                            <input required class="form-control" type="text" id="applicationIDExpirationDate" name="applicationIDExpirationDate" placeholder="Enter Expiration Date" value="" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -569,16 +574,13 @@
                                             <hr />
 
 
-
-
-
-
-                                            <div class="form-inline">
-                                                <div class="controls-row">
-                                                    <label class="control-label"> Have you or any relative or close associate been entrusted with prominent pubic functions (e.g. Member of Parliament,
-                                                        <br/>
-                                                        <p align="left"> Senator or Mayor, Senior Government Official, Judiciary, Security forces)?</p>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="control-label  pull-right" for="applicantRelativeInPublicOffice" title="e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces">
+                                                        Have you or any relative or close associate been entrusted with prominent pubic functions?
                                                     </label>
+                                                </div>
+                                                <div class="col-md-6">
                                                     <label class="radio inline">
                                                         <input type="radio" value="yes" name="applicantRelativeInPublicOffice">Yes
                                                     </label>
@@ -587,9 +589,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-
-
-
 
                                             <div id="publicofficerelation" style="display:none">
                                                 <div class="publicofficerelations">
@@ -624,9 +623,13 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div data-role="controlgroup" data-type="horizontal">
-                                                        <a href="#" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-left Add">Add Relative</a>
-                                                        <a href="#" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-right Delete" style="display:none">Delete</a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary Add" aria-label="Left Align" title="Add Relative">
+                                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning Delete" aria-label="Left Align" title="Delete Relative">
+                                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Delete
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -653,7 +656,6 @@
 
                                         <button type="button" class="btn btn-info" id="GetTaxOfficeVehicleDialog">Add Vehicle</button>
                                         <button type="button" id="taxOfficeVehicleRefresh" class="btn btn-warning" style="display:none">Refresh</button>
-                                        <input type="hidden" id="vehicleCnt" value="0" />
                                         <table id="vehiclesToBeInsured" class="table">
                                             <thead>
                                                 <tr data-id="0">
@@ -679,116 +681,71 @@
                                         </table>
                                         <hr />
                                         <input type="hidden" name="currency" id="currency" value="JA" />
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2" for="startDate">Insurance Start Date:</label>
-                                            <div class="col-md-10">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="startDate">Insurance Start Date:</label>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <input required class="form-control startDate datepicker" name="startDate" type="text" placeholder="Start Date" />
                                             </div>
                                         </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Are you the owner of the vehicle?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="radio inline">
+                                                    <input type="radio" value="yes" name="isOwnerOfVehicle" checked>Yes
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="no" name="isOwnerOfVehicle">No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row vehicleNameAddressOfOwner" style="display:none">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="nameAddressOfOwner">Owner Details:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <textarea class="form-control" name="nameAddressOfOwner" id="nameAddressOfOwner" placeholder="Owner's Name/Address"></textarea>
+                                            </div>
+                                        </div>
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Are you the owner of the vehicle?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="isOwnerOfVehicle" checked>Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="isOwnerOfVehicle">No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
+                                                <label class="control-label pull-right">Will a trailer be used?</label>
                                             </div>
-
-                                            <div class="col-md-6 vehicleNameAddressOfOwner" style="display:none">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="nameAddressOfOwner">Owner Details:</label>
-                                                    <div class="col-md-10">
-                                                        <textarea class="form-control" name="nameAddressOfOwner" id="nameAddressOfOwner" placeholder="Owner's Name/Address"></textarea>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label class="radio inline">
+                                                    <input type="radio" value="yes" name="trailerUsed">Yes
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="no" name="trailerUsed" checked>No
+                                                </label>
                                             </div>
                                         </div>
-
+                                        <hr/>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Will a trailer be used?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="trailerUsed">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="trailerUsed" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
+                                                <label class="control-label pull-right" for="lienHolder">Lien Holder:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="lienHolder" id="lienHolder">
+                                                    <option value="">None</option>
+                                                    <option value="BNS">BNS</option>
+                                                    <option value="FCIB">FCIB</option>
+                                                    <option value="JNBS">JNBS</option>
+                                                    <option value="NCB">NCB</option>
+                                                    <option value="VMBS">VMBS</option>
+                                                </select>
                                             </div>
                                         </div>
-
-
-                                        <div id="lien-holder">
-                                            <h4>Lien Holder</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-inline">
-                                                        <div class="controls-row">
-                                                            <label class="control-label">Is there a Lien Holder?</label>
-                                                            <label class="radio inline">
-                                                                <input type="radio" value="yes" name="lienHolder">Yes
-                                                            </label>
-                                                            <label class="radio inline">
-                                                                <input type="radio" value="no" name="lienHolder" checked>No
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row lienHolderClass" style="display:none">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-2" for="lienHolderNameInFull">&nbsp;&nbsp;Name:</label>
-                                                        <input class="form-control" type="text" name="lienHolderNameInFull" id="lienHolderNameInFull" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-2" for="lienHolderTown">&nbsp;&nbsp;Town:</label>
-                                                        <input class="form-control" type="text" name="lienHolderTown" id="lienHolderTown" value="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-2" for="lienHolderStreetName">&nbsp;&nbsp;Address:</label>
-                                                        <input class="form-control" type="text" name="lienHolderStreetName" id="lienHolderStreetName" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-2" for="lienHolderParish">&nbsp;&nbsp;Parish:</label>
-                                                        <select name="lienHolderParish" id="lienHolderParish" class="form-control">
-                                                            <option value="Kingston">Kingston</option>
-                                                            <option value="St. Andrew">St. Andrew</option>
-                                                            <option value="St. Catherine">St. Catherine</option>
-                                                            <option value="Clarendon">Clarendon</option>
-                                                            <option value="Manchester">Manchester</option>
-                                                            <option value="St. Elizabeth">St. Elizabeth</option>
-                                                            <option value="Westmoreland">Westmoreland</option>
-                                                            <option value="Hanover">Hanover</option>
-                                                            <option value="St. James">St. James</option>
-                                                            <option value="Trelawny">Trelawny</option>
-                                                            <option value="St. Ann">St. Ann</option>
-                                                            <option value="St. Mary">St. Mary</option>
-                                                            <option value="Portland">Portland</option>
-                                                            <option value="St. Thomas">St. Thomas</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </form>
+                                    <br/>
+                                    <br/>
                                     <br/>
                                     <br/>
                                     <button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
@@ -829,6 +786,23 @@
                                                     <!--option value="CarriagePassengersNotHire">Carriage of passengers not for hire or reward</option-->
                                                     <!--option value="CarriagePassengersHire">Carriage of Passengers for hire or reward</option-->
                                                     <!--option value="GeneralCartage">General Cartage</option-->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="authorized_driver_wording">Type of Authorized Driver Clause:</label>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="authorized_driver_wording" id="authorized_driver_wording">
+                                                    <option value="Any Authorized Driver">Any Authorized Driver</option>
+                                                    <option value="Named Drivers Only">Named Drivers Only</option>
+                                                    <option value="Insured only">Insured only</option>
+                                                    <option value="Insured Plus One">Insured Plus One</option>
+                                                    <option value="Insured Plus Two">Insured Plus Two</option>
+                                                    <option value="The Insured(s) and Any Authorized Driver">The Insured(s) and Any Authorized Driver</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1063,25 +1037,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr/>
 
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="control-label pull-right" for="authorized_driver_wording">Type of Authorized Driver Clause:</label>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <select class="form-control" name="authorized_driver_wording" id="authorized_driver_wording">
-                                                    <option value="Any Authorized Driver">Any Authorized Driver</option>
-                                                    <option value="Named Drivers Only">Named Drivers Only</option>
-                                                    <option value="Insured only">Insured only</option>
-                                                    <option value="Insured Plus One">Insured Plus One</option>
-                                                    <option value="Insured Plus Two">Insured Plus Two</option>
-                                                    <option value="The Insured(s) and Any Authorized Driver">The Insured(s) and Any Authorized Driver</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </form>
                                     <br/>
                                     <br/>
@@ -1096,13 +1052,15 @@
                                 <div class="col-md-12">
                                     <h3>Drivers</h3>
                                     <form class="ProposalForm">
-                                        <div class="form-inline" role="form" id="regularDriversBtns">
-                                            <div class="form-group">
-                                                <label class="control-label" for="regularDriverQueryID">Driver Licence:</label>
-                                                <input class="form-control" type="text" id="regularDriverQueryID" placeholder="Enter Driver Licence No">
+                                        <div id="regularDriversBtns" class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="regularDriverQueryID" placeholder="Enter Driver Licence No">
+                                                    <span class="input-group-btn">
+                                                    <button class="btn btn-primary Add" type="button">Add Driver</button>
+                                                  </span>
+                                                </div>
                                             </div>
-                                            <a href="#" class="btn btn-default Add" style="margin-top:25px">Add Driver</a>
-                                            <a href="#" class="btn btn-default Reset" style="margin-top:25px">Reset</a>
                                         </div>
                                         <div id="regularDriversId" style="display:none">
                                             <div class="regularDriversCls">
@@ -1118,7 +1076,7 @@
                                                 </div>
                                                 <div class="form-group DateOfBirth">
                                                     <label class="control-label" for="regularDriversDateOfBirth0">Date of Birth:</label>
-                                                    <input required class="form-control datepicker" type="text" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
+                                                    <input required class="form-control" type="text" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDL">
                                                     <label class="control-label" for="regularDriversDL0">Driver's Licence:</label>
@@ -1126,15 +1084,20 @@
                                                 </div>
                                                 <div class="form-group DriversDLExpirationDate">
                                                     <label class="control-label" for="regularDriversDLExpirationDate0">Expiration Date:</label>
-                                                    <input required class="form-control datepicker" type="text" name="regularDriversDLExpirationDate0" id="regularDriversDLExpirationDate0" value="" readonly>
+                                                    <input required class="form-control" type="text" name="regularDriversDLExpirationDate0" id="regularDriversDLExpirationDate0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDLOriginalDateOfIssue">
                                                     <label class="control-label" for="regularDriversDLOriginalDateOfIssue0">Original Date of Issue:</label>
-                                                    <input required class="form-control datepicker" type="text" name="regularDriversDLOriginalDateOfIssue0" id="regularDriversDLOriginalDateOfIssue0" value="" readonly>
+                                                    <input required class="form-control" type="text" name="regularDriversDLOriginalDateOfIssue0" id="regularDriversDLOriginalDateOfIssue0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversRelationshipToProposer">
                                                     <label class="control-label" for="regularDriversRelationshipToProposer0">Relationship to Proposer:</label>
                                                     <input class="form-control" type="text" name="regularDriversRelationshipToProposer0" id="regularDriversRelationshipToProposer0" value="">
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-warning Delete" aria-label="Left Align" title="Delete Driver">
+                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Delete
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1307,8 +1270,14 @@
                                                         <label class="control-label" for="accidentBrief0">Brief Details:</label>
                                                         <textarea class="form-control" name="accidentBrief0" id="accidentBrief0" placeholder="Brief Details of Accident/Incident/Losses"></textarea>
                                                     </div>
-                                                    <a href="#" class="btn btn-primary Add">Add Accident</a>
-                                                    <a href="#" class="btn btn-warning Delete" style="display:none">Delete Accident</a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary Add" aria-label="Left Align" title="Add Accident">
+                                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning Delete" aria-label="Left Align" title="Delete Accident">
+                                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1811,9 +1780,13 @@
                                                     <input class="form-control" type="number" name="homeInsurancePropertyItemValue0" id="homeInsurancePropertyItemValue0" value="">
                                                 </div>
 
-                                                <div>
-                                                    <a href="#" class="btn btn-default Add">Add Building</a>
-                                                    <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary Add" aria-label="Left Align" title="Add Building">
+                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning Delete" aria-label="Left Align" title="Delete Building">
+                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Delete
+                                                    </button>
                                                 </div>
                                             </div>
 
@@ -1936,9 +1909,13 @@
                                                     <input class="form-control" type="number" name="HomeAllRiskArticleValue0" id="HomeAllRiskArticleValue0" value="">
                                                 </div>
 
-                                                <div>
-                                                    <a href="#" class="btn btn-default Add">Add Article</a>
-                                                    <a href="#" class="btn btn-default Delete" style="display:none">Delete</a>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary Add" aria-label="Left Align" title="Add Article">
+                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning Delete" aria-label="Left Align" title="Delete Article">
+                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Delete
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -2116,9 +2093,6 @@
                                         <div class="row">
 
                                             <div class="col-md-6">
-
-
-
                                                 <div class="form-inline">
                                                     <div class="controls-row">
                                                         <label class="control-label">Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?</label>
@@ -2130,9 +2104,6 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
 
 
@@ -2147,9 +2118,6 @@
                                         <div class="row">
 
                                             <div class="col-md-6">
-
-
-
                                                 <div class="form-inline">
                                                     <div class="controls-row">
                                                         <label class="control-label">Have you ever sustained loss from any Perils to which this Proposal would apply?</label>
@@ -2161,9 +2129,6 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
 
 
@@ -2201,7 +2166,6 @@
                                         <p>
                                             The liability of the Company does not commence until the acceptance of the proposal has been formally acknowledged by the Company and a premium or deposit has been paid, except as provided by an Official Cover Note issued by the Company.
                                         </p>
-
                                         <div class="form-inline">
                                             <div class="checkbox">
                                                 <label>
@@ -2215,19 +2179,14 @@
                                         <button type="button" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
                                         <!--button type="button" id="reset-btn" class="btn btn-warning">Reset</button-->
                                     </div>
-
-                                    <div id="quotation"></div>
-
                                     <br/>
                                     <br/>
                                     <button class="btn btn-default prevBtn btn-lg pull-left" type="button">Prev</button>
-                                    <!--									<button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>-->
-
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Modal -->
+                        <!-- Modal taxOfficeVehicleDialog -->
                         <div id="taxOfficeVehicleDialog" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
@@ -2247,6 +2206,15 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text" name="QueryVehicleRegistrationNo" id="QueryVehicleRegistrationNo" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <!--style="display:none">-->
+                                                <div class="col-md-4">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span>OR</span>
                                                 </div>
                                             </div>
 
@@ -2315,7 +2283,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <hr/>
                                             <div class="row sum-insured">
                                                 <div class="col-md-4">
                                                     <label class="control-label" for="QueryVehicleSumInsured">Sum Being Insured:</label>
@@ -2336,7 +2304,9 @@
 
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -2355,6 +2325,24 @@
 		    </span>
         </div>
     </div>
+
+    <!--quoteLimits Modal -->
+    <div class="modal fade" id="quoteLimitsModal" tabindex="-1" role="dialog" aria-labelledby="quoteLimitsModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="quoteLimitsModalLabel">Limits</h4>
+                </div>
+                <div class="modal-body" id="quotation">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Upload Modal -->
     <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
         <div class="modal-dialog" role="document">
@@ -2435,32 +2423,6 @@
                                 <input id="branch" name="branch" type="hidden" value="Head Office" />
                                 <input id="premiumFinanceCompanyCode" name="premiumFinanceCompanyCode" type="hidden" />
                                 <input id="usageCategory" name="usageCategory" type="hidden" />
-                                <!--<div class="form-group">
-									<label class="col-md-4 control-label" for="policyPeriod">Periods</label>
-									<div class="col-md-4">
-										<input id="policyPeriod" name="policyPeriod" type="number" placeholder="Period in Months" class="form-control" value="12">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="branch">Branch</label>
-									<div class="col-md-4">
-										<input id="branch" name="branch" type="text" placeholder="Branch" class="form-control" value="Head Office">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="usageCategory">Usage Category</label>
-									<div class="col-md-4">
-										<input id="usageCategory" name="usageCategory" type="text" placeholder="Usage Category" class="form-control">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="premiumFinanceCompanyCode">Company Code</label>
-									<div class="col-md-4">
-										<input id="premiumFinanceCompanyCode" name="premiumFinanceCompanyCode" type="text" placeholder="Premium Finance Company Code" class="form-control">
-									</div>
-								</div>
-								-->
                             </form>
                         </div>
                     </div>
@@ -2526,7 +2488,7 @@
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd'
             });
-            var currentQuote;
+
             initPage(function(err, obj) {
                 runQuoteEvents();
                 var today = new Date();
@@ -2760,6 +2722,8 @@
                     $('#convert').prop('disabled', true);
                     $('#getUploadModal').prop('disabled', true);
                     $('#viewPolicy').prop('disabled', true);
+                    $('#viewLimits').prop('disabled', true);
+                    $('#convertToPolicy').prop('disabled', true);
                 });
             });
 
@@ -2835,10 +2799,22 @@
                 fillSignatureCanvas();
                 //show links
                 $('#getPDF').prop('disabled', false);
-                $('#convert').prop('disabled', false);
                 $('#getUploadModal').prop('disabled', false);
+                $('#viewLimits').prop('disabled', false);
                 //policy
-                $('#viewPolicy').prop('disabled', currentQuote.policy_status != "policy_created");
+                if (currentQuote.policy_status == "policy_created") {
+                    $('#viewPolicy').prop('disabled', false);
+                    $('#convertToPolicy').prop('disabled', true);
+                    //disable submit quote
+                    $('#disclaimerContainer').hide();
+                    $('#submit-btn').hide();
+                    //$('.button-previous').prop('disabled', true);
+                    //$('.button-next').prop('disabled', true);
+                } else {
+                    $('#viewPolicy').prop('disabled', true);
+                    $('#convertToPolicy').prop('disabled', false);
+                }
+
             }
 
 
@@ -2846,7 +2822,11 @@
                 location.href = "policies.html?policy=" + currentQuote.policy_id;
             });
 
-
+            $('#quoteContainer').on('click', '#viewLimits', function() {
+                var $container = $('#quotation');
+                loadQuotationLimits($container, currentQuote.quoteLimits);
+                $('#quoteLimitsModal').modal('show');
+            });
 
 
             $('#quoteContainer').on('click', '#getPDF', function() {

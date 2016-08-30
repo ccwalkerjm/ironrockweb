@@ -1,15 +1,5 @@
+var currentQuote;
 var _IronRockPreliminaryData = "IronRockPreliminaryData";
-var CaptionBaseVehicleRegistrationNo = 'vehicleRegistrationNo';
-var CaptionBaseVehicleChassisNo = 'vehicleChassisNo';
-var CaptionBaseVehicleMake = 'vehicleMake';
-var CaptionBaseVehicleModel = 'vehicleModel';
-var CaptionBaseVehicleYear = 'vehicleYear';
-var CaptionBaseVehicleEngineNo = 'vehicleEngineType';
-var CaptionBaseVehicleBody = 'vehicleBody';
-var CaptionBaseVehicleType = 'vehicleType';
-var CaptionBaseVehicleColour = 'vehicleColour';
-var CaptionBaseVehicleStatus = 'vehicleStatus';
-var CaptionBaseVehicleValue = 'vehicleValue';
 
 
 //formerly doPrimaryFunctions(callback)
@@ -19,6 +9,7 @@ function runQuoteEvents() {
         $('#submit-btn').prop("disabled", !$(this).is(':checked'));
     });
 
+
     $('#quote-section').on('click', '#reset-btn', function() {
         location.reload();
     });
@@ -26,10 +17,10 @@ function runQuoteEvents() {
     ////submit
     $('#quote-section').on('click', '#submit-btn', function() {
         //get signature data
-        var jsonForm = $('form').serializeObject();
-        if (!parseInt(jsonForm.quotation_number))
-            delete jsonForm.quotation_number;
-        var formData = JSON.stringify(jsonForm);
+        currentQuote = $('form').serializeObject();
+        if (!parseInt(currentQuote.quotation_number))
+            delete currentQuote.quotation_number;
+        var formData = JSON.stringify(currentQuote);
         setLoadingState(true);
         g_ironrock_service.submitQuote(formData, function(err, r) {
             setLoadingState(false);
@@ -46,16 +37,28 @@ function runQuoteEvents() {
                 console.log(r);
                 alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
             } else {
-                $('#disclaimerContainer').hide();
-                $('#submit-btn').hide();
+                currentQuote.quoteLimits = r;
+                currentQuote.quotation_number = r.quotation_number;
+                currentQuote.applicantQuoteNo = r.quotation_number;
                 $('#quotation_number').val(r.quotation_number);
+
                 var $container = $('#quotation');
-                loadQuotation($container, r);
-                $('.button-previous').prop('disabled', true);
-                $('.button-next').prop('disabled', true);
+                loadQuotationLimits($container, r);
+                $container.addClass("returntoQuotes");
+                $('#quoteLimitsModal').modal('show');
+
+                //$('#disclaimerContainer').hide();
+                //$('#submit-btn').hide();
+                //$('.button-previous').prop('disabled', true);
+                //$('.button-next').prop('disabled', true);
             }
         });
+    });
 
+    //trigger returntoQuotes if modal has class returntoQuotes
+    $('#quoteLimitsModal').on('hide.bs.modal', function() {
+        var $container = $('#quotation');
+        if ($container.hasClass("returntoQuotes")) $(".returntoQuotes").trigger('click');
     });
     ///////
 
@@ -87,11 +90,16 @@ function runQuoteEvents() {
         });
     });
 
-    $('#quote-section').on('click', '#regularDriversBtns .Reset', function() {
-        $('.regularDriversCls').not('.regularDriversCls:first').remove();
-        $('.regularDriversCls').find('input:text').val('');
-        $('#regularDriversId').hide();
-        resetRegularDriver();
+    $('#regularDriversId').on('click', '.Delete', function() {
+        var elementGroup = $(this).closest('.regularDriversCls');
+        var allElements = $('#regularDriversId').find('.regularDriversCls');
+        if (allElements.length == 1) {
+            elementGroup.find('input:text').val('');
+            $('#regularDriversId').hide();
+        } else {
+            elementGroup.remove();
+            resetRegularDriver();
+        }
     });
 
 
@@ -128,12 +136,6 @@ function runQuoteEvents() {
         $('#signature').jSignature('clear');
     });
 
-
-    //////////////////////////////////Insert vehicle
-    $('#quote-section').on("click", '#taxOfficeVehicleRefresh', function() {
-        $('#vehiclesToBeInsured .vehicle').remove();
-        $('#taxOfficeVehicleRefresh').hide();
-    });
 
     //check whether new
     $('#quote-section').on("change", 'input[type=radio][name=isNewVehicle]', function() {
@@ -185,10 +187,10 @@ function runQuoteEvents() {
         r.vehicleStatus = "";
         r.sumInsured = $('#QueryVehicleSumInsured').val();
 
-        if (r.sumInsured < 1000) {
-            alert('Invalid Sum Insured!');
-            return;
-        }
+        // if (r.sumInsured < 1000) {
+        //     alert('Invalid Sum Insured!');
+        //     return;
+        // }
 
         if (!r.chassisNo || !r.engineNo) {
             alert('Invalid Entries!');
@@ -215,10 +217,10 @@ function runQuoteEvents() {
             return;
         }
 
-        if ($('#QueryVehicleSumInsured').val() < 1000) {
-            alert('Invalid Sum Insured!');
-            return;
-        }
+        // if ($('#QueryVehicleSumInsured').val() < 1000) {
+        //     alert('Invalid Sum Insured!');
+        //     return;
+        // }
 
         setLoadingState(true);
         g_ironrock_service.getVehicleDetails(plateno, chassisno, function(err, r) {
@@ -253,8 +255,12 @@ function runQuoteEvents() {
     //delete vehicle
     $('#quote-section').on('click', '#vehiclesToBeInsured .deleteVehicleRow', function() {
         var tr = $(this).closest('tr');
-        tr.remove();
-        reIndexVehicles();
+        bootbox.confirm("Are you sure?", function(ans) {
+            if (ans) {
+                tr.remove();
+                reIndexVehicles();
+            }
+        });
     });
 
 
@@ -280,13 +286,13 @@ function runQuoteEvents() {
 
 
     $('#vehicle-all-accidents').on('click', '.Add', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.vehicle-accident-block');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetAllAccident();
     });
 
     $('#vehicle-all-accidents').on('click', '.Delete', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.vehicle-accident-block');
         elementGroup.remove();
         resetAllAccident();
     });
@@ -300,14 +306,14 @@ function runQuoteEvents() {
 
     //resetHomeAllRiskArticles
     $('#HomeAllRiskInsured').on('click', '.Add', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.HomeAllRiskArticles');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetHomeAllRiskArticles();
         SetHomeAllRiskInsuredValue();
     });
 
     $('#HomeAllRiskInsured').on('click', '.Delete', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.HomeAllRiskArticles');
         elementGroup.remove();
         resetHomeAllRiskArticles();
         SetHomeAllRiskInsuredValue();
@@ -320,14 +326,14 @@ function runQuoteEvents() {
 
     //HomeInsurance
     $('#homeInsuranceProperty').on('click', '.Add', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.homeInsurancePropertyItems');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetHomeInsuranceProperty();
         SetHomeInsuranceValue();
     });
 
     $('#homeInsuranceProperty').on('click', '.Delete', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.homeInsurancePropertyItems');
         elementGroup.remove();
         resetHomeInsuranceProperty();
         SetHomeInsuranceValue();
@@ -352,33 +358,16 @@ function runQuoteEvents() {
 
 
     $('#publicofficerelation').on('click', '.Add', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.publicofficerelations');
         elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
         resetApplicantRelativeInPublicOffice();
     });
 
     $('#publicofficerelation').on('click', '.Delete', function() {
-        var elementGroup = $(this).parent().parent().parent();
+        var elementGroup = $(this).closest('.publicofficerelations');
         elementGroup.remove();
         resetApplicantRelativeInPublicOffice();
     });
-
-
-
-
-
-    $('#vehicleToBeInsuredCtrl').on('click', '.Add', function() {
-        var elementGroup = $(this).parent().parent().parent();
-        elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
-        resetVehiclesToBeInsured();
-    });
-
-    $('#vehicleToBeInsuredCtrl').on('click', '.Delete', function() {
-        var elementGroup = $(this).parent().parent().parent();
-        elementGroup.remove();
-        resetVehiclesToBeInsured();
-    });
-
 
 
 
@@ -520,11 +509,11 @@ function LoadSettings(insuranceType, callback) {
     //     $('#quote-wizard').bootstrapWizard();
     var prelimData = localStorage.getItem(_IronRockPreliminaryData);
     if (prelimData && prelimData != "null") {
-				setVehicleUsedAs("SocialDomesticPleasure");
-				//vehicle-all-accidents
-				setAllAccidentsYears();
-				//set Last Three Years of Ownership()
-				setLastThreeYearsOwnership();
+        setVehicleUsedAs("SocialDomesticPleasure");
+        //vehicle-all-accidents
+        setAllAccidentsYears();
+        //set Last Three Years of Ownership()
+        setLastThreeYearsOwnership();
         //load countries
         loadCountriesOptions();
         loadOccupations(insuranceType == "motor");
@@ -543,13 +532,13 @@ function LoadSettings(insuranceType, callback) {
                 if (!jsondata.success) jsondata.success = true;
                 if (jsondata.success) {
                     localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
-        						setVehicleUsedAs("SocialDomesticPleasure");
-										//vehicle-all-accidents
-										setAllAccidentsYears();
-										//set Last Three Years of Ownership()
-										setLastThreeYearsOwnership();
+                    setVehicleUsedAs("SocialDomesticPleasure");
+                    //vehicle-all-accidents
+                    setAllAccidentsYears();
+                    //set Last Three Years of Ownership()
+                    setLastThreeYearsOwnership();
                     //doPrimaryFunctions();
-										//load countries
+                    //load countries
                     loadCountriesOptions();
                     loadOccupations(insuranceType == "motor");
                     if (insuranceType != "motor")
@@ -661,68 +650,98 @@ function getSpecificValidation($curStep, $valid) {
 
 
 //insert vehicle
+function insertVehicle(r, rowIndex) {
+    var tbl = $('#vehiclesToBeInsured tbody');
+    var rows = $('tr', tbl);
 
-function insertVehicle(r) {
-    var cnt = parseInt($('#vehicleCnt').val()) + 1;
-    $('#vehicleCnt').val(cnt);
-    //  $('#vehiclesToBeInsured .vehicle').length;
+    if (typeof rowIndex === "undefined") {
+        rowIndex = rows.length;
+    }
+
+    if (IsDuplicateVehicle(r.chassisNo, rowIndex)) {
+        bootbox.alert('Duplicate Vehicle!');
+        return;
+    }
+
+    var xRow;
+    if (rowIndex == rows.length) {
+        xRow = $('<tr/>').appendTo(tbl);
+    } else {
+        xRow = rows.eq(rowIndex).html('');
+    }
+
+
 
     var htmlValues = '<span>' + r.plateNo + '</span>' +
-        '<input type="hidden" class="ValueVehicleRegistrationNo" id="' + CaptionBaseVehicleRegistrationNo + cnt + '" name="' + CaptionBaseVehicleRegistrationNo + cnt + '" value="' + $.trim(r.plateNo) + '" />' +
-        '<input type="hidden" class="ValueVehicleChassisNo" id="' + CaptionBaseVehicleChassisNo + cnt + '" name="' + CaptionBaseVehicleChassisNo + cnt + '" value="' + $.trim(r.chassisNo) + '" />' +
-        '<input type="hidden" class="ValueVehicleMake" id="' + CaptionBaseVehicleMake + cnt + '" name="' + CaptionBaseVehicleMake + cnt + '" value="' + $.trim(r.make) + '" />' +
-        '<input type="hidden" class="ValueVehicleModel" id="' + CaptionBaseVehicleModel + cnt + '" name="' + CaptionBaseVehicleModel + cnt + '" value="' + $.trim(r.model) + '" />' +
-        '<input type="hidden" class="ValueVehicleYear" id="' + CaptionBaseVehicleYear + cnt + '" name="' + CaptionBaseVehicleYear + cnt + '" value="' + $.trim(r.year) + '" />' +
-        '<input type="hidden" class="ValueVehicleBody" id="' + CaptionBaseVehicleBody + cnt + '" name="' + CaptionBaseVehicleBody + cnt + '" value="' + $.trim(r.vehicleBodyType) + '" />' +
-        '<input type="hidden" class="ValueVehicleType" id="' + CaptionBaseVehicleType + cnt + '" name="' + CaptionBaseVehicleType + cnt + '" value="' + $.trim(r.vehicleType) + '" />' +
-        '<input type="hidden" class="ValueVehicleEngineNo" id="' + CaptionBaseVehicleEngineNo + cnt + '" name="' + CaptionBaseVehicleEngineNo + cnt + '" value="' + $.trim(r.engineNo) + '" />' +
-        '<input type="hidden" class="ValueVehicleColour" id="' + CaptionBaseVehicleColour + cnt + '" name="' + CaptionBaseVehicleColour + cnt + '" value="' + $.trim(r.colour) + '" />' +
-        '<input type="hidden" class="ValueVehicleValue" id="' + CaptionBaseVehicleValue + cnt + '" name="' + CaptionBaseVehicleValue + cnt + '" value="' + $.trim(r.sumInsured) + '" />' +
-        '<input type="hidden" class="ValueVehicleStatus" id="' + CaptionBaseVehicleStatus + cnt + '" name="' + CaptionBaseVehicleStatus + cnt + '" value="' + $.trim(r.vehicleStatus) + '" />';
+        '<input type="hidden" class="ValueVehicleRegistrationNo" value="' + $.trim(r.plateNo) + '" />' +
+        '<input type="hidden" class="ValueVehicleChassisNo" value="' + $.trim(r.chassisNo) + '" />' +
+        '<input type="hidden" class="ValueVehicleMake" value="' + $.trim(r.make) + '" />' +
+        '<input type="hidden" class="ValueVehicleModel" value="' + $.trim(r.model) + '" />' +
+        '<input type="hidden" class="ValueVehicleYear" value="' + $.trim(r.year) + '" />' +
+        '<input type="hidden" class="ValueVehicleBody" value="' + $.trim(r.vehicleBodyType) + '" />' +
+        '<input type="hidden" class="ValueVehicleType" value="' + $.trim(r.vehicleType) + '" />' +
+        '<input type="hidden" class="ValueVehicleEngineNo" value="' + $.trim(r.engineNo) + '" />' +
+        '<input type="hidden" class="ValueVehicleColour" value="' + $.trim(r.colour) + '" />' +
+        '<input type="hidden" class="ValueVehicleValue" value="' + $.trim(r.sumInsured) + '" />' +
+        '<input type="hidden" class="ValueVehicleStatus" value="' + $.trim(r.vehicleStatus) + '" />';
 
-
-    var tableRow = $('<tr/>');
-    tableRow.addClass('vehicle').attr('data-id', r.chassisNo);
+    xRow.addClass('vehicle').attr('data-id', r.chassisNo);
     var registrationCell = $('<td/>');
     registrationCell.html(htmlValues);
-    registrationCell.appendTo(tableRow);
+    registrationCell.appendTo(xRow);
     //
     var makeModelCell = $('<td/>');
     makeModelCell.html(r.make + ' ' + r.model);
-    makeModelCell.appendTo(tableRow);
+    makeModelCell.appendTo(xRow);
     //
     var detailsCell = $('<td/>');
     detailsCell.html(r.year + ' ' + r.vehicleBodyType + ' ' + r.colour);
-    detailsCell.appendTo(tableRow);
+    detailsCell.appendTo(xRow);
     //
     var chassisCell = $('<td/>');
     chassisCell.html(r.chassisNo + '/' + r.engineNo);
-    chassisCell.appendTo(tableRow);
+    chassisCell.appendTo(xRow);
     //
     var sumInsuredCell = $('<td/>');
-    sumInsuredCell.html('<input type="text" style="margin-left:auto; margin-right:0;" value="' + accounting.formatMoney(r.sumInsured) + '" disabled/>');
-    sumInsuredCell.appendTo(tableRow);
+    var sumInsuredHtml = '<div class="input-group"><input type="text" class="form-control" value="' + accounting.formatMoney(r.sumInsured) + '" disabled><span class="input-group-btn"><button class="btn btn-default adjust" type="button">Chg</button></span></div>';
+    sumInsuredCell.html(sumInsuredHtml);
+    sumInsuredCell.appendTo(xRow);
     //
     var deleteCell = $('<td/>');
-    deleteCell.html('<button type="button" class="btn btn-link deleteVehicleRow">Delete Vehicle</button>');
-    deleteCell.appendTo(tableRow);
+    deleteCell.html('<button type="button" class="btn btn-link deleteVehicleRow">Delete</button>');
+    deleteCell.appendTo(xRow);
 
     //
-    if (IsDuplicateVehicle(r.chassisNo)) {
-        bootbox.alert('Duplicate!');
-    } else {
-        tableRow.appendTo($('#vehiclesToBeInsured'));
-        $('#taxOfficeVehicleRefresh tbody').show();
-    }
     reIndexVehicles();
 }
 
+
+$('#vehiclesToBeInsured tbody').on("click", "button.adjust", function() {
+    var selectedRow = $(this).closest("tr");
+    var rowIndex = $("#vehiclesToBeInsured tbody tr").index(selectedRow);
+    var r = {};
+    r.plateNo = selectedRow.find('.ValueVehicleRegistrationNo').val();
+    r.chassisNo = selectedRow.find('.ValueVehicleChassisNo').val();
+    r.make = selectedRow.find('.ValueVehicleMake').val();
+    r.model = selectedRow.find('.ValueVehicleModel').val();
+    r.year = selectedRow.find('.ValueVehicleYear').val();
+    r.vehicleBodyType = selectedRow.find('.ValueVehicleBody').val();
+    r.engineNo = selectedRow.find('.ValueVehicleEngineNo').val();
+    r.colour = selectedRow.find('.ValueVehicleColour').val();
+    bootbox.prompt("New Value of Vehicle?", function(result) {
+        if (result) {
+            r.sumInsured = accounting.unformat(result);
+            insertVehicle(r, rowIndex);
+        }
+    });
+});
+
 //check duplicate
-function IsDuplicateVehicle(val) {
+function IsDuplicateVehicle(chassisNo, idx) {
     var returnVal = false;
-    $('#vehiclesToBeInsured tr').each(function(index, element) {
-        var rowVal = $(this).attr('data-id');
-        if (rowVal == val) {
+    $('#vehiclesToBeInsured tbody tr').each(function(xIndex, element) {
+        var xChassisNo = $(this).attr('data-id');
+        if (xChassisNo && chassisNo.trim() == xChassisNo.trim() && idx != xIndex) {
             returnVal = true;
             return false;
         }
@@ -732,21 +751,32 @@ function IsDuplicateVehicle(val) {
 
 //need to index vehicles
 function reIndexVehicles() {
+    var CaptionBaseVehicleRegistrationNo = 'vehicleRegistrationNo';
+    var CaptionBaseVehicleChassisNo = 'vehicleChassisNo';
+    var CaptionBaseVehicleMake = 'vehicleMake';
+    var CaptionBaseVehicleModel = 'vehicleModel';
+    var CaptionBaseVehicleYear = 'vehicleYear';
+    var CaptionBaseVehicleEngineNo = 'vehicleEngineType';
+    var CaptionBaseVehicleBody = 'vehicleBody';
+    var CaptionBaseVehicleType = 'vehicleType';
+    var CaptionBaseVehicleColour = 'vehicleColour';
+    var CaptionBaseVehicleStatus = 'vehicleStatus';
+    var CaptionBaseVehicleValue = 'vehicleValue';
     var sumInsured = 0;
     $('#vehiclesToBeInsured tbody tr').each(function(index, element) {
-        var TableRow = $(element);
-        TableRow.find('.ValueVehicleRegistrationNo').attr("id", CaptionBaseVehicleRegistrationNo + index).attr("name", CaptionBaseVehicleRegistrationNo + index);
-        TableRow.find('.ValueVehicleChassisNo').attr("id", CaptionBaseVehicleChassisNo + index).attr("name", CaptionBaseVehicleChassisNo + index);
-        TableRow.find('.ValueVehicleMake').attr("id", CaptionBaseVehicleMake + index).attr("name", CaptionBaseVehicleMake + index);
-        TableRow.find('.ValueVehicleModel').attr("id", CaptionBaseVehicleModel + index).attr("name", CaptionBaseVehicleModel + index);
-        TableRow.find('.ValueVehicleYear').attr("id", CaptionBaseVehicleYear + index).attr("name", CaptionBaseVehicleYear + index);
-        TableRow.find('.ValueVehicleBody').attr("id", CaptionBaseVehicleBody + index).attr("name", CaptionBaseVehicleBody + index);
-        TableRow.find('.ValueVehicleType').attr("id", CaptionBaseVehicleType + index).attr("name", CaptionBaseVehicleType + index);
-        TableRow.find('.ValueVehicleEngineNo').attr("id", CaptionBaseVehicleEngineNo + index).attr("name", CaptionBaseVehicleEngineNo + index);
-        TableRow.find('.ValueVehicleColour').attr("id", CaptionBaseVehicleColour + index).attr("name", CaptionBaseVehicleColour + index);
-        TableRow.find('.ValueVehicleValue').attr("id", CaptionBaseVehicleValue + index).attr("name", CaptionBaseVehicleValue + index);
-        TableRow.find('.ValueVehicleStatus').attr("id", CaptionBaseVehicleStatus + index).attr("name", CaptionBaseVehicleStatus + index);
-        sumInsured = sumInsured + parseFloat(TableRow.find('.ValueVehicleValue').val());
+        var xRow = $(element);
+        xRow.find('.ValueVehicleRegistrationNo').attr("id", CaptionBaseVehicleRegistrationNo + index).attr("name", CaptionBaseVehicleRegistrationNo + index);
+        xRow.find('.ValueVehicleChassisNo').attr("id", CaptionBaseVehicleChassisNo + index).attr("name", CaptionBaseVehicleChassisNo + index);
+        xRow.find('.ValueVehicleMake').attr("id", CaptionBaseVehicleMake + index).attr("name", CaptionBaseVehicleMake + index);
+        xRow.find('.ValueVehicleModel').attr("id", CaptionBaseVehicleModel + index).attr("name", CaptionBaseVehicleModel + index);
+        xRow.find('.ValueVehicleYear').attr("id", CaptionBaseVehicleYear + index).attr("name", CaptionBaseVehicleYear + index);
+        xRow.find('.ValueVehicleBody').attr("id", CaptionBaseVehicleBody + index).attr("name", CaptionBaseVehicleBody + index);
+        xRow.find('.ValueVehicleType').attr("id", CaptionBaseVehicleType + index).attr("name", CaptionBaseVehicleType + index);
+        xRow.find('.ValueVehicleEngineNo').attr("id", CaptionBaseVehicleEngineNo + index).attr("name", CaptionBaseVehicleEngineNo + index);
+        xRow.find('.ValueVehicleColour').attr("id", CaptionBaseVehicleColour + index).attr("name", CaptionBaseVehicleColour + index);
+        xRow.find('.ValueVehicleValue').attr("id", CaptionBaseVehicleValue + index).attr("name", CaptionBaseVehicleValue + index);
+        xRow.find('.ValueVehicleStatus').attr("id", CaptionBaseVehicleStatus + index).attr("name", CaptionBaseVehicleStatus + index);
+        sumInsured = sumInsured + parseFloat(xRow.find('.ValueVehicleValue').val());
     });
     var thirdPartyLimit = $('#thirdPartyLimit').empty();
     if (sumInsured < 2000000) {
@@ -758,12 +788,11 @@ function reIndexVehicles() {
         thirdPartyLimit.append('<option value="standard2">Standard Limits-$5M/$10M/$5M</option>');
         thirdPartyLimit.append('<option value="increased2Option1">Increased Limits-$10M/$10M/$10M</option>');
     }
-    $('#vehicleCnt').val($('#vehiclesToBeInsured tbody tr').length);
 }
 
 
-function loadQuotation($container, limitData) {
-    $container.append('<h4>Note the Policy Limits</h4>');
+function loadQuotationLimits($container, limitData) {
+    $container.html('<h4>Note the Policy Limits</h4>');
     var table = $('<table/>'); //data-role="table" class="ui-responsive"
     // table.attr('data-role', "table");
     table.addClass('table');
@@ -1158,7 +1187,7 @@ function resetRegularDriver() {
     }];
     var elementClass = $('.regularDriversCls');
 
-    resetObjects(objectList, elementClass, "Add", "Delete", "Driver");
+    resetObjects(objectList, elementClass, "Add", "Delete", "Driver", true);
 }
 
 
@@ -1181,49 +1210,6 @@ function resetApplicantRelativeInPublicOffice() {
 
     resetObjects(objectList, elementClass, "Add", "Delete", "Relative");
 }
-
-
-function resetVehiclesToBeInsured() {
-    var objectList = [{
-        "class": "registration",
-        "name": "vehicleRegistrationNo"
-    }, {
-        "class": "make",
-        "name": "vehicleMake"
-    }, {
-        "class": "model",
-        "name": "vehicleModel"
-    }, {
-        "class": "engine",
-        "name": "vehicleEngineNo"
-    }, {
-        "class": "chassis",
-        "name": "vehicleChassisNo"
-    }, {
-        "class": "year",
-        "name": "vehicleYearOfMake"
-    }, {
-        "class": "rating",
-        "name": "vehicleCcRating"
-    }, {
-        "class": "seating",
-        "name": "vehicleSeating"
-    }, {
-        "class": "body",
-        "name": "vehicleTypeOfBody"
-    }, {
-        "class": "insured",
-        "name": "vehicleSumInsured"
-    }, {
-        "class": "trailer",
-        "name": "vehicleTrailerUsed"
-    }];
-    var elementClass = $('.vehicleToBeInsured');
-    resetObjects(objectList, elementClass, "Add", "Delete", "Vehicle");
-}
-
-
-
 
 //
 //set display of text based on Radio Button selection
@@ -1278,10 +1264,10 @@ function setRadioButton(buttonName, xvalue) {
 function getDisplayElement(RadioName) {
     var returnValue = {};
     switch (RadioName) {
-      case 'vehicleKeptInSecureArea':
-          returnValue.defaultValue = "yes";
-          returnValue.id = "vehicleLocationDetailsClass";
-          break;
+        case 'vehicleKeptInSecureArea':
+            returnValue.defaultValue = "yes";
+            returnValue.id = "vehicleLocationDetailsClass";
+            break;
         case 'mailingAddressSame':
             returnValue.defaultValue = "yes";
             returnValue.id = "mailingAddress";
@@ -1432,10 +1418,9 @@ function loadCountriesOptions() {
 
 
 //reset objects
-function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle) {
+function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle, showDeleteButtonOnFirstPage) {
     var firstElement = elementClass.first();
     var lastElement = elementClass.last();
-    //var i = 0;
 
     elementClass.each(function(i, e) {
         var element = $(this);
@@ -1446,19 +1431,29 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
         });
 
         //set controls
-        if (element.is(firstElement) && element.is(lastElement)) {
-            firstElement.find('.' + delBtnName).hide();
-            lastElement.find('.' + addBtnName).show();
-        } else if (element.is(firstElement)) {
-            element.find('.' + delBtnName).hide();
-            element.find('.' + addBtnName).hide();
-        } else if (element.is(lastElement)) {
-            element.find('.' + delBtnName).show();
-            element.find('.' + addBtnName).show();
-        } else {
-            element.find('.' + delBtnName).hide();
-            element.find('.' + addBtnName).hide();
+        //delete button
+        if (delBtnName) {
+            var xDelBtnElement = element.find('.' + delBtnName);
+            if (showDeleteButtonOnFirstPage) {
+                xDelBtnElement.show();
+            } else {
+                if (element.is(firstElement)) {
+                    xDelBtnElement.hide();
+                } else {
+                    xDelBtnElement.show();
+                }
+            }
         }
+        //add button
+        if (addBtnName) {
+            var xAddBtnElement = element.find('.' + addBtnName);
+            if (element.is(lastElement)) {
+                xAddBtnElement.show();
+            } else {
+                xAddBtnElement.hide();
+            }
+        }
+
         //change title
         element.find('h4').text(elementTitle + ' ' + (i + 1).toString());
     });
