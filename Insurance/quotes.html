@@ -848,7 +848,7 @@
                                         </div>
                                         <hr/>
 
-                                        <div class="row controls-row">
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Will you have regular custody of the vehicle?</label>
                                             </div>
@@ -1297,62 +1297,92 @@
                                     <form class="ProposalForm">
                                         <h4>Conditions and Limits:</h4>
                                         <p>To the best of your knowledge and belief have you, or any person who to your knowledge will drive, have suffered or now suffer from?:</p>
+
                                         <div class="row">
                                             <div class="col-md-6">
-
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Defective vision or hearing?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" class="medicalCondition" name="driverSufferFromDefectiveHearingOrVision" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <br/>
-
-
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Diabetes, Epilepsy, complaints of the heart or any other disease</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" class="medicalCondition" name="driverSufferFromDiabetesEpilepsyHeartDisease">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="driverSufferFromDiabetesEpilepsyHeartDisease" class="medicalCondition" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <br/>
-
-
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Any other physical or mental infirmity</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" class="medicalCondition" name="driverSufferFromPhysicalMentalInfirmity" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
+                                                <label class="control-label pull-right">Defective vision or hearing?</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <div id="medicalConditionDetails" style="display:none">
-                                                    <div class="form-group">
-                                                        <label class="control-label" for="driverSufferFromDetails">Details:</label>
-                                                        <textarea class="form-control" name="driverSufferFromDetails" id="driverSufferFromDetails" placeholder="Medical Condition Details"></textarea>
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="driverSufferFromDefectiveHearingOrVision">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="driverSufferFromDefectiveHearingOrVision" checked>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divDriverSufferFromDefectiveHearingOrVisionDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="driverSufferFromDefectiveHearingOrVisionDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="driverSufferFromDefectiveHearingOrVisionDetails" id="driverSufferFromDefectiveHearingOrVisionDetails"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Diabetes, Epilepsy, complaints of the heart or any other disease?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="driverSufferFromDiabetesEpilepsyHeartDisease">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="driverSufferFromDiabetesEpilepsyHeartDisease" checked>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divDriverSufferFromDiabetesEpilepsyHeartDiseaseDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="driverSufferFromDiabetesEpilepsyHeartDiseaseDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="driverSufferFromDiabetesEpilepsyHeartDiseaseDetails" id="driverSufferFromDiabetesEpilepsyHeartDiseaseDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Any other physical or mental infirmity?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="driverSufferFromPhysicalMentalInfirmity">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="driverSufferFromPhysicalMentalInfirmity" checked>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divDriverSufferFromPhysicalMentalInfirmityDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="driverSufferFromPhysicalMentalInfirmityDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="driverSufferFromPhysicalMentalInfirmityDetails" id="driverSufferFromPhysicalMentalInfirmityDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-inline">
@@ -2925,7 +2955,10 @@
             var populateMiscellaneousMotorVehicle = function() {
                 $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
                 //$('#branch').val(currentQuote.branch);
-                $('#driverSufferFromDetails').val(currentQuote.driverSufferFromDetails);
+                $('#driverSufferFromDefectiveHearingOrVisionDetails').val(currentQuote.driverSufferFromDefectiveHearingOrVisionDetails || "");
+                $('#driverSufferFromDiabetesEpilepsyHeartDiseaseDetails').val(currentQuote.driverSufferFromDiabetesEpilepsyHeartDiseaseDetails || "");
+                $('#driverSufferFromPhysicalMentalInfirmityDetails').val(currentQuote.driverSufferFromPhysicalMentalInfirmityDetails || "");
+
                 $('#driverTrafficTicketDate').val(currentQuote.driverTrafficTicketDate);
                 $('#driverTrafficTicketDetails').val(currentQuote.driverTrafficTicketDetails);
                 $('#insuranceCoverage').val(currentQuote.insuranceCoverage);

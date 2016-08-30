@@ -1215,9 +1215,6 @@ function resetApplicantRelativeInPublicOffice() {
 //set display of text based on Radio Button selection
 function setRadioDisplay(RadioName, RadioValue) {
     var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
-    if (radioBtn.attr('class') == 'medicalCondition')
-        setMedicalDisplay();
-    else {
         var displayElement = getDisplayElement(RadioName);
         if (!displayElement.defaultValue) return;
         if (RadioValue == displayElement.defaultValue) {
@@ -1233,23 +1230,7 @@ function setRadioDisplay(RadioName, RadioValue) {
                 $('.' + displayElement.class).show();
             }
         }
-    }
-}
 
-//set medical display
-function setMedicalDisplay() {
-    var isCheckedYes = false;
-    $('.medicalCondition').each(function(index, element) {
-        if ($(element).is(':checked') && $(element).val() == 'yes') {
-            isCheckedYes = true;
-            return true;
-        }
-    });
-    if (isCheckedYes) {
-        $('#medicalConditionDetails').show();
-    } else {
-        $('#medicalConditionDetails').hide();
-    }
 }
 
 
@@ -1318,15 +1299,15 @@ function getDisplayElement(RadioName) {
             break;
         case 'driverSufferFromDefectiveHearingOrVision':
             returnValue.defaultValue = "no";
-            returnValue.id = "medicalConditionDetails";
+            returnValue.id = "divDriverSufferFromDefectiveHearingOrVisionDetails";
             break;
         case 'driverSufferFromDiabetesEpilepsyHeartDisease':
             returnValue.defaultValue = "no";
-            returnValue.id = "medicalConditionDetails";
+            returnValue.id = "divDriverSufferFromDiabetesEpilepsyHeartDiseaseDetails";
             break;
         case 'driverSufferFromPhysicalMentalInfirmity':
             returnValue.defaultValue = "no";
-            returnValue.id = "medicalConditionDetails";
+            returnValue.id = "divDriverSufferFromPhysicalMentalInfirmityDetails";
             break;
         case 'vehicleModified':
             returnValue.defaultValue = "no";
