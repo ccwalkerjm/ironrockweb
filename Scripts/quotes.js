@@ -2,19 +2,11 @@ var currentQuote;
 var _IronRockPreliminaryData = "IronRockPreliminaryData";
 
 
+
+
+
 //formerly doPrimaryFunctions(callback)
 function runQuoteEvents() {
-    $('#insuranceCoverage').change(function(){
-      var optionSelected = $("option:selected", this);
-        var valueSelected = this.value;
-        switch(this.value)
-        {
-          case "Comprehensive":
-          break;
-        }
-
-    });
-
 
     ///////////////////////quote create and update
     $('#quote-section').on('change', '#acceptDisclaimer', function() {
@@ -1227,21 +1219,21 @@ function resetApplicantRelativeInPublicOffice() {
 //set display of text based on Radio Button selection
 function setRadioDisplay(RadioName, RadioValue) {
     var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
-        var displayElement = getDisplayElement(RadioName);
-        if (!displayElement.defaultValue) return;
-        if (RadioValue == displayElement.defaultValue) {
-            if (displayElement.id) {
-                $('#' + displayElement.id).hide();
-            } else {
-                $('.' + displayElement.class).hide();
-            }
+    var displayElement = getDisplayElement(RadioName);
+    if (!displayElement.defaultValue) return;
+    if (RadioValue == displayElement.defaultValue) {
+        if (displayElement.id) {
+            $('#' + displayElement.id).hide();
         } else {
-            if (displayElement.id) {
-                $('#' + displayElement.id).show();
-            } else {
-                $('.' + displayElement.class).show();
-            }
+            $('.' + displayElement.class).hide();
         }
+    } else {
+        if (displayElement.id) {
+            $('#' + displayElement.id).show();
+        } else {
+            $('.' + displayElement.class).show();
+        }
+    }
 
 }
 
