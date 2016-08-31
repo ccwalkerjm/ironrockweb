@@ -22,7 +22,7 @@ function runQuoteEvents() {
             delete currentQuote.quotation_number;
         var formData = JSON.stringify(currentQuote);
         setLoadingState(true);
-        g_ironrock_service.submitQuote(formData, function(err, r) {
+        g_ironrock_service.submitQuote2(formData, function(err, r) {
             setLoadingState(false);
             if (err) {
                 alert("error: " + err.message);

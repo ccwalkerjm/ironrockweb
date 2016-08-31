@@ -1,7 +1,7 @@
 //'use strict';
 /*jshint esversion: 6 */
 /*jslint nomen: true */
-// Class definition 
+// Class definition
 
 var ironrockcloudservice = (function () {
 	//edited July 18, 2016 4:27pm
@@ -15,7 +15,7 @@ var ironrockcloudservice = (function () {
 	const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
 	const AWS_REGION = 'us-east-1';
 	//private properties and methods
-	var _profiileKey = "ironrockUserProfile"; // 
+	var _profiileKey = "ironrockUserProfile"; //
 
 
 	var _creds = new AWS.CognitoIdentityCredentials({
@@ -28,7 +28,7 @@ var ironrockcloudservice = (function () {
 	};
 
 	// Initialize the Amazon Cognito credentials provider
-	AWS.config.region = AWS_REGION; // Region 
+	AWS.config.region = AWS_REGION; // Region
 	AWS.config.credentials = _creds;
 
 	AWSCognito.config.region = AWS_REGION;
@@ -97,7 +97,7 @@ var ironrockcloudservice = (function () {
 
 
 
-	//get session details	
+	//get session details
 	var _updateSession = function (session, callback) {
 		if (session && session.isValid()) {
 			_creds.params.Logins = {};
@@ -129,7 +129,7 @@ var ironrockcloudservice = (function () {
 							localStorage.removeItem(_profiileKey);
 							callback(new Error(profile.errorMessage));
 						} else {
-							//store profile and return							
+							//store profile and return
 							profile.timestamp = currenttime;
 							localStorage.setItem(_profiileKey, JSON.stringify(profile));
 							callback(null, profile);
@@ -332,7 +332,7 @@ var ironrockcloudservice = (function () {
 	};
 
 
-	//forgot password 
+	//forgot password
 	ironrockcloudservice.prototype.forgotPassword = function (username, callback) {
 		var userData = {
 			Username: username,
@@ -356,7 +356,7 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
-	//confirm-- forgot password 
+	//confirm-- forgot password
 	ironrockcloudservice.prototype.confirmPassword = function (verificationCode, newPassword, $this) {
 		_cognitoUser.confirmPassword(verificationCode, newPassword, $this);
 	};
@@ -530,7 +530,7 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
-	//all registered users	
+	//all registered users
 	//submit quote
 	ironrockcloudservice.prototype.submitQuote = function (data, callback) {
 		var payload = {
@@ -539,6 +539,35 @@ var ironrockcloudservice = (function () {
 		};
 		var params = {
 			FunctionName: 'ironrockquote', //'ironrockSubmitQuote',
+			Payload: JSON.stringify(payload)
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			if (err)
+				callback(err);
+			else {
+				var payload = JSON.parse(results.Payload);
+				if (!payload) {
+					callback();
+				} else if (payload.errorMessage) {
+					callback(new Error(payload.errorMessage));
+				} else {
+					callback(null, payload);
+				}
+			}
+		});
+	};
+
+
+	//all registered users
+	//submit quote
+	ironrockcloudservice.prototype.submitQuote2 = function (data, callback) {
+		var payload = {
+			"formData": JSON.parse(data),
+			"auth": _getAuth()
+		};
+		var params = {
+			FunctionName: 'ironrockSubmitQuote',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
