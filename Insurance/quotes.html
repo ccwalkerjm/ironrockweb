@@ -805,15 +805,22 @@
                                                 </label>
                                             </div>
                                         </div> -->
+                                        <!-- id="proposerEntitledToNOClaimDiscountProof"> -->
 
-                                        <div class="row" id="proposerEntitledToNOClaimDiscountProof"> 
-                                          <div class="col-md-6">
-                                              <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Details</label>
-                                          </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Details</label>
+                                            </div>
 
-                                          <div class="col-md-6">
-                                            <select class="form-control" name="noClaimDiscountProof" id="noClaimDiscountProof"></select>
-                                          </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="noClaimDiscountProof" id="noClaimDiscountProof">
+                                                    <option value="">None</option>
+                                                    <option value="oneyear">One Year</option>
+                                                    <option value="twoyears">Two Years</option>
+                                                    <option value="threeyears">Three Years</option>
+                                                    <option value="fouryears">Four Years and Over</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <hr/>
 
@@ -1653,147 +1660,147 @@
                                 <div class="col-md-12">
                                     <h3>Home Particulars-2</h3>
                                     <form class="ProposalForm">
+
+
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <label class="control-label pull-right">Are the buildings in a good state of repairs and will they be so maintained?</label>
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Are the buildings in a good state of repairs and will they be
-                                                            <br/> so maintained?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="homeInGoodState" checked>Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="homeInGoodState">No
-                                                        </label>
-                                                    </div>
+                                                    <label class="radio inline">
+              <input type="radio" value="yes" name="homeInGoodState" checked>Yes
+          </label>
+                                                    <label class="radio inline">
+              <input type="radio" value="no" name="homeInGoodState">No
+          </label>
                                                 </div>
                                             </div>
+                                        </div>
 
-
-                                            <div id="divhomeInGoodStateDetails" class="col-md-6" style="display:none">
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divhomeInGoodStateDetails" style="display:none">
                                                 <div class="form-group">
-                                                    <label for="homeInGoodStateDetails">Details:</label>
-                                                    <textarea class="form-control" name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr />
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Is the Dwelling occupied solely by you, your family
-                                                            <br/> and domestic employees?
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked>Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="homeOccupiedByApplicantFamily">No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-
-
-                                            </div>
-                                            <div class="col-md-6" style="">
-                                                <div id="divhomeOccupiedByApplicantFamily" class="form-group" style="display:none">
-                                                    <label for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
-                                                    <textarea class="form-control" name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr />
-
-
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="homeUsedForIncomeActivity">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="homeUsedForIncomeActivity" checked>No
-                                                        </label>
+                                                    <label class="control-label col-sm-6" for="homeInGoodStateDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="homeInGoodStateDetails" id="homeInGoodStateDetails"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-                                            <div class="col-md-6" style="">
-                                                <div id="divhomeUsedForIncomeActivity" class="form-group" style="display:none">
-                                                    <label for="homeUsedForIncomeActivityDetails">Details:</label>
-                                                    <textarea class="form-control" name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
-                                                </div>
-                                            </div>
-
                                         </div>
-                                        <hr />
-
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Does any institution or individual have a financial interest in the property?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="homeHaveInterestFromIndividual">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="homeHaveInterestFromIndividual" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-
+                                                <label class="control-label pull-right">Is the Dwelling occupied solely by you, your family and domestic employees?</label>
                                             </div>
-
-                                            <div class="col-md-6" style="">
-                                                <div id="divhomeHaveInterestFromIndividual" class="form-group" style="display:none">
-                                                    <label for="homeHaveInterestFromIndividualDetails">Details:</label>
-                                                    <textarea class="form-control" name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                        <input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked>Yes
+                                        </label>
+                                                    <label class="radio inline">
+                                        <input type="radio" value="no" name="homeOccupiedByApplicantFamily">No
+                                        </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr />
 
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divhomeOccupiedByApplicantFamily" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="homeOccupiedByApplicantFamilyIfNo">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="homeOccupiedByApplicantFamilyIfNo" id="homeOccupiedByApplicantFamilyIfNo"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Are there any Waterside Structures?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="homeHasWatersideStructure">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="homeHasWatersideStructure" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-
-
+                                                <label class="control-label pull-right">Is the Dwelling or Outbuilding used for any income-earning activity?</label>
                                             </div>
-                                            <div class="col-md-6" style="">
-                                                <div id="divhomeHasWatersideStructure" class="form-group" style="display:none">
-                                                    <label for="homeHasWatersideStructureDetails">Details:</label>
-                                                    <textarea class="form-control" name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                        <input type="radio" value="yes" name="homeUsedForIncomeActivity">Yes
+                                        </label>
+                                                    <label class="radio inline">
+                                        <input type="radio" value="no" name="homeUsedForIncomeActivity" checked>No
+                                        </label>
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divhomeUsedForIncomeActivity" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="homeUsedForIncomeActivityDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Does any institution or individual have a financial interest in the property?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                        <input type="radio" value="yes" name="homeHaveInterestFromIndividual">Yes
+                                        </label>
+                                                    <label class="radio inline">
+                                        <input type="radio" value="no" name="homeHaveInterestFromIndividual" checked>No
+                                        </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divhomeHaveInterestFromIndividual" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="homeHaveInterestFromIndividualDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Are there any Waterside Structures?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                        <input type="radio" value="yes" name="homeHasWatersideStructure">Yes
+                                        </label>
+                                                    <label class="radio inline">
+                                        <input type="radio" value="no" name="homeHasWatersideStructure" checked>No
+                                        </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divhomeHasWatersideStructure" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="homeHasWatersideStructureDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="homeHasWatersideStructureDetails" id="homeHasWatersideStructureDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
                                     </form>
                                     <br/>
                                     <br/>
@@ -1842,7 +1849,7 @@
                                                 <h4>Building 1</h4>
                                                 <div class="form-group article-name">
                                                     <label for="homeInsurancePropertyItem0">
-                                                        Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                        Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                     </label>
                                                     <input class="form-control" type="text" name="homeInsurancePropertyItem0" id="homeInsurancePropertyItem0" value="">
                                                 </div>
@@ -1863,7 +1870,7 @@
 
                                             <div class="form-group article-value">
                                                 <label for="homeInsurancePropertySwimmingPoolValue">
-                                                    Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="homeInsurancePropertySwimmingPoolValue" id="homeInsurancePropertySwimmingPoolValue" value="">
                                             </div>
@@ -1909,7 +1916,7 @@
 
                                             <div class="form-group article-value">
                                                 <label for="amountHouseholdGoods">
-                                                    Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="amountHouseholdGoods" id="amountHouseholdGoods" value="">
                                             </div>
@@ -1922,7 +1929,7 @@
 
                                             <div class="form-group article-value">
                                                 <label for="amountValuables">
-                                                    Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more">?</a>
+                                                    Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="amountValuables" id="amountValuables" value="">
                                             </div>
@@ -1937,7 +1944,7 @@
                                             <div class="form-group article-value">
                                                 <label for="HomeInsuranceOtherValuableAmount">
                                                     Other Valuables Estimate:<a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext"
-                                                        title="Learn more">?</a>
+                                                        title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
                                             </div>
@@ -1996,221 +2003,217 @@
                                             <hr />
                                         </div>
 
-
-
-
                                         <div class="row">
-                                            <div class="col-md-5">
-                                                <label for="currentPolicyWithCompanyOrInsurer">
-                                                    Territorial Limits:
-                                                </label>
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="currentPolicyWithCompanyOrInsurer">Territorial Limits:</label>
                                             </div>
-                                            <div class="col-md-6" style="width: 40%">
-                                                <fieldset>
-                                                    <select class="form-control" name="territorialLimit" id="territorialLimit">
-                                                        <option value="Jamaica">Jamaica</option>
-                                                        <option value="world">Worldwide</option>
-                                                    </select>
-                                                </fieldset>
+
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="territorialLimit" id="territorialLimit">
+                                                  <option value="Jamaica">Jamaica</option>
+                                                  <option value="world">Worldwide</option>
+                                              </select>
                                             </div>
                                         </div>
-
-
-
-
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="currentPolicyWithCompanyOrInsurer">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="currentPolicyWithCompanyOrInsurer" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
+                                                <label class="control-label pull-right">Do you currently have in force any policy whether with us or with any other Company or Insurer covering any of the Property to be insured?</label>
                                             </div>
-
-
-                                            <div id="divcurrentPolicyWithCompanyOrInsurerDetails" class="ui-block-c" style="width: 50%;display:none">
-                                                <div class="form-group">
-                                                    <label for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
-                                                    <input class="form-control" type="text" name="currentPolicyWithCompanyOrInsurerDetails" id="currentPolicyWithCompanyOrInsurerDetails" placeholder="Details" value="">
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="currentPolicyWithCompanyOrInsurer">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="currentPolicyWithCompanyOrInsurer" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divcurrentPolicyWithCompanyOrInsurerDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="currentPolicyWithCompanyOrInsurerDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="currentPolicyWithCompanyOrInsurerDetails" id="currentPolicyWithCompanyOrInsurerDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
 
                                         <h4>Has any Company or Insurer, in respect of any of the Perils to which this Proposal applies, ever:</h4>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Declined to insure you?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsuranceDeclined">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsuranceDeclined" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
+                                                <label class="control-label pull-right">Declined to insure you?</label>
                                             </div>
-
-
-                                            <div id="divHomeInsuranceDeclined" class="col-md-6" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="HomeInsuranceDeclinedDetails">Details:</label>
-                                                    <input class="form-control" type="text" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails" placeholder="Details" value="">
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsuranceDeclined">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsuranceDeclined" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Required special terms to insure you?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsuranceRequiredSpecialTerm">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsuranceRequiredSpecialTerm" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-                                            </div>
-
-
-                                            <div id="divHomeInsuranceRequiredSpecialTermDetails" class="col-md-6" style="display:none">
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsuranceDeclined" style="display:none">
                                                 <div class="form-group">
-                                                    <label for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
-                                                    <input class="form-control" type="text" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails" placeholder="Details" value="">
+                                                    <label class="control-label col-sm-6" for="HomeInsuranceDeclinedDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsuranceDeclinedDetails" id="HomeInsuranceDeclinedDetails"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Cancelled or refused to renew your policy?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsuranceCancelled">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsuranceCancelled" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-
+                                                <label class="control-label pull-right">Required special terms to insure you?</label>
                                             </div>
-
-
-                                            <div id="divHomeInsuranceCancelledDetails" class="col-md-6" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="HomeInsuranceCancelledDetails">Details:</label>
-                                                    <input class="form-control" type="text" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails" placeholder="Details" value="">
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsuranceRequiredSpecialTerm">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsuranceRequiredSpecialTerm" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-
-                                            <div class="col-md-6">
-
-
-
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Increased your premium on renewal?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsuranceIncreasedPremium">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsuranceIncreasedPremium" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-
-
-                                            </div>
-
-
-                                            <div id="divHomeInsuranceIncreasedPremiumDetails" class="col-md-6" style="display:none">
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsuranceRequiredSpecialTermDetails" style="display:none">
                                                 <div class="form-group">
-                                                    <label for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
-                                                    <input class="form-control" type="text" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails" placeholder="Details" value="">
+                                                    <label class="control-label col-sm-6" for="HomeInsuranceRequiredSpecialTermDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsuranceRequiredSpecialTermDetails" id="HomeInsuranceRequiredSpecialTermDetails"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <hr/>
 
                                         <div class="row">
-
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Cancelled or refused to renew your policy?</label>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsurancePerilsSuffer">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsurancePerilsSuffer" checked>No
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div id="divHomeInsurancePerilsSufferDetails" class="col-md-6" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="HomeInsurancePerilsSufferDetails">Details:</label>
-                                                    <textarea class="form-control" name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsuranceCancelled">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsuranceCancelled" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <div class="controls-row">
-                                                        <label class="control-label">Have you ever sustained loss from any Perils to which this Proposal would apply?</label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="yes" name="HomeInsuranceSufferLoss">Yes
-                                                        </label>
-                                                        <label class="radio inline">
-                                                            <input type="radio" value="no" name="HomeInsuranceSufferLoss" checked>No
-                                                        </label>
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsuranceCancelledDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="HomeInsuranceCancelledDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsuranceCancelledDetails" id="HomeInsuranceCancelledDetails"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <hr/>
 
-
-                                            <div id="divHomeInsuranceSufferLossDetails" class="col-md-6" style="display:none">
-                                                <div class="form-group">
-                                                    <label for="HomeInsuranceSufferLossDetails">Details:</label>
-                                                    <textarea class="form-control" name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Increased your premium on renewal?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsuranceIncreasedPremium">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsuranceIncreasedPremium" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsuranceIncreasedPremiumDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="HomeInsuranceIncreasedPremiumDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsuranceIncreasedPremiumDetails" id="HomeInsuranceIncreasedPremiumDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Have the Building and/or Contents of the Home to which this Proposal relates ever suffered damage by Hurricane, Earthquake or Flood?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsurancePerilsSuffer">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsurancePerilsSuffer" checked>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsurancePerilsSufferDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="HomeInsurancePerilsSufferDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsurancePerilsSufferDetails" id="HomeInsurancePerilsSufferDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right">Have you ever sustained loss from any Perils to which this Proposal would apply?</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-inline">
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="yes" name="HomeInsuranceSufferLoss">Yes
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" value="no" name="HomeInsuranceSufferLoss" checked>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 form-horizontal" id="divHomeInsuranceSufferLossDetails" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-6" for="HomeInsuranceSufferLossDetails">Details:</label>
+                                                    <div class="col-sm-6">
+                                                        <textarea class="form-control" name="HomeInsuranceSufferLossDetails" id="HomeInsuranceSufferLossDetails"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
 
                                     </form>
                                     <br/>
@@ -2644,7 +2647,9 @@
                             return b.id - a.id;
                         });
                         // ascending order
-                        $('#quotesTable thead').html('<tr><th class="col-md-1">Quote&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-1"></th></tr>');
+                        $('#quotesTable thead').html(
+                            '<tr><th class="col-md-1">Quote&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-1"></th></tr>'
+                        );
                         var dlTable = $('#quotesTable tbody').html('');
                         $.each(quotes, function(idx, quote) {
                             var brokerName = quote.broker;
