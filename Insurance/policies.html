@@ -67,7 +67,7 @@
 				<section id="queryPolicySection" style="display:none">
 					<h1>Policies</h1>
 					<div class="row">
-						<div class="col-md-4" id="searchColumn" style="display:none">
+						<div class="col-md-4" id="searchColumn">
 							<h2>Policy Search</h2>
 							<form role="form">
 								<div class="form-group">
@@ -103,9 +103,9 @@
 						</div>
 						<div class="col-md-8">
 							<h2>Selected Policies</h2>
-							<p>
+							<!-- <p>
 								<button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button>
-							</p>
+							</p> -->
 							<table class="table" id="policiesTable">
 								<thead></thead>
 								<tbody></tbody>
@@ -430,8 +430,8 @@
 						var quotes = quoteList.sort(function (a, b) {
 							return b.id - a.id;
 						});
-						// ascending order
-						$('#policiesTable thead').html('<tr><th>Policy&nbsp;No</th><th>Date</th><th>First&nbsp;Name</th><th>Last&nbsp;Name</th><th>Type</th><th>Broker</th></tr>');
+						// ascending ord
+						$('#policiesTable thead').html('<tr><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th></tr>');
 						var dlTable = $('#policiesTable tbody').html('');
 						$.each(quotes, function (idx, policy) {
 							var brokerName = policy.broker;
@@ -440,16 +440,17 @@
 									brokerName = b.name;
 								}
 							});
-							var date = new Date();
-							var day = date.getDate(policy.startDate);
+							var date = new Date(policy.startDate);
+							var day = date.getDate();
 							var monthIndex = date.getMonth() + 1;
 							var year = date.getFullYear();
-							var dateFormat = day + '/' + monthIndex + '/' + year;
+							//var dateFormat = day + '/' + monthIndex + '/' + year;
+							var dateFormat = year + '-' + formatDataPart(monthIndex) + '-' + formatDataPart(day);
 							dlTable.append('<tr><td>' + policy.policy_number + '</td><td>' +
 								dateFormat + '</td><td>' +
-								policy.firstName + '</td><td>' +
-								policy.lastName + '</td><td>' +
-								policy.type + '</td><td>' +
+								policy.firstName.capitalizeFirstLetter() + '</td><td>' +
+								policy.lastName.capitalizeFirstLetter() + '</td><td>' +
+								policy.type.capitalizeFirstLetter() + '</td><td>' +
 								brokerName + '</td><td><button class="btn btn-link select" id="' +
 								policy.policy_id + '">Select</button></td></tr>');
 						});

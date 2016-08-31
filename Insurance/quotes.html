@@ -790,6 +790,34 @@
                                             </div>
                                         </div>
                                         <hr/>
+
+                                        <!-- <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label">Is the proposer entitled to No Claim Discount from previous insurer(s)
+                                                  in respect of any vehicle(s) described in the proposal?</label>
+                                            </div>
+                                            <div class="col-md-6 form-inline">
+                                                <label class="radio inline">
+                                                    <input type="radio" value="yes" name="proposerEntitledToNOClaimDiscount">Yes
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input type="radio" value="no" name="proposerEntitledToNOClaimDiscount" checked>No
+                                                </label>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="row" id="proposerEntitledToNOClaimDiscountProof"> 
+                                          <div class="col-md-6">
+                                              <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Details</label>
+                                          </div>
+
+                                          <div class="col-md-6">
+                                            <select class="form-control" name="noClaimDiscountProof" id="noClaimDiscountProof"></select>
+                                          </div>
+                                        </div>
+                                        <hr/>
+
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right" for="authorized_driver_wording">Type of Authorized Driver Clause:</label>
@@ -807,6 +835,9 @@
                                             </div>
                                         </div>
                                         <hr/>
+
+
+
 
 
                                         <div class="row">
@@ -953,28 +984,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="control-label pull-right">Is the proposer entitled to No Claim Discount from previous insurer(s)
-                                                    <br/> in respect of any vehicle(s) described in the proposal?</label>
-                                            </div>
-                                            <div class="col-md-6 form-inline">
-                                                <label class="radio inline">
-                                                    <input type="radio" value="yes" name="proposerEntitledToNOClaimDiscount">Yes
-                                                </label>
-                                                <label class="radio inline">
-                                                    <input type="radio" value="no" name="proposerEntitledToNOClaimDiscount" checked>No
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-offset-6 col-md-6" id="proposerEntitledToNOClaimDiscountProof" style="display:none">
-                                                <p style="color:red">Please submit proof of No Claim Discount Letter or Renewal Notice</p>
-                                            </div>
-                                        </div>
-                                        <hr/>
-
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -1384,17 +1393,17 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label class="control-label pull-right">Have you or any person who to your knowledge will drive received any traffic ticket(s) and or have been convicted of any offence in connection with the driving of any motor vehicle within the last
-                                                    three (3) years?</label>
+                                                <label class="control-label pull-right">Have you or any person who to your knowledge will drive received any traffic ticket(s) and or have been convicted of any offence in connection with the driving of any motor vehicle within the last three
+                                                    (3) years?</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <label class="radio inline">
-                                                      <input type="radio" value="yes" name="driverTrafficTicket">Yes
-                                                      </label>
+                                                        <input type="radio" value="yes" name="driverTrafficTicket">Yes
+                                                    </label>
                                                     <label class="radio inline">
-                                                      <input type="radio" value="no" name="driverTrafficTicket" checked>No
-                                                      </label>
+                                                        <input type="radio" value="no" name="driverTrafficTicket" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1457,15 +1466,15 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select class="form-control" name="wreckerFee" id="wreckerFee">
-          <optgroup label="Standard Limit">
-              <option value="35000">$35,000</option>
-          </optgroup>
-          <optgroup label="Increased Limits">
-              <option value="50000">$50,000</option>
-              <option value="75000">$75,000</option>
-              <option value="100000">$100,000</option>
-          </optgroup>
-      </select>
+                                                    <optgroup label="Standard Limit">
+                                                        <option value="35000">$35,000</option>
+                                                    </optgroup>
+                                                    <optgroup label="Increased Limits">
+                                                        <option value="50000">$50,000</option>
+                                                        <option value="75000">$75,000</option>
+                                                        <option value="100000">$100,000</option>
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                         </div>
                                         <hr/>
@@ -1477,15 +1486,15 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select class="form-control" name="medicalExpenses" id="medicalExpenses">
-      <optgroup label="Standard Limit">
-          <option value="30000">$30,000</option>
-      </optgroup>
-      <optgroup label="Increased Limits">
-          <option value="45000">$45,000</option>
-          <option value="55000">$55,000</option>
-          <option value="75000">$75,000</option>
-      </optgroup>
-  </select>
+                                                    <optgroup label="Standard Limit">
+                                                        <option value="30000">$30,000</option>
+                                                    </optgroup>
+                                                    <optgroup label="Increased Limits">
+                                                        <option value="45000">$45,000</option>
+                                                        <option value="55000">$55,000</option>
+                                                        <option value="75000">$75,000</option>
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                         </div>
                                         <hr/>
@@ -1496,15 +1505,15 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select class="form-control" name="manslaughterDefenceCosts" id="manslaughterDefenceCosts">
-      <optgroup label="Standard Limit">
-          <option value="250000">$250,000</option>
-      </optgroup>
-      <optgroup label="Increased Limits">
-          <option value="300000">$300,000</option>
-          <option value="400000">$400,000</option>
-          <option value="500000">$500,000</option>
-      </optgroup>
-  </select>
+                                                    <optgroup label="Standard Limit">
+                                                        <option value="250000">$250,000</option>
+                                                    </optgroup>
+                                                    <optgroup label="Increased Limits">
+                                                        <option value="300000">$300,000</option>
+                                                        <option value="400000">$400,000</option>
+                                                        <option value="500000">$500,000</option>
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                         </div>
                                         <hr/>
@@ -2635,7 +2644,7 @@
                             return b.id - a.id;
                         });
                         // ascending order
-                        $('#quotesTable thead').html('<tr><th>Quote&nbsp;No</th><th>Date</th><th>First&nbsp;Name</th><th>Last&nbsp;Name</th><th>Type</th><th>Broker</th><th>Policy&nbsp;No</th><th></th></tr>');
+                        $('#quotesTable thead').html('<tr><th class="col-md-1">Quote&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-1"></th></tr>');
                         var dlTable = $('#quotesTable tbody').html('');
                         $.each(quotes, function(idx, quote) {
                             var brokerName = quote.broker;
@@ -2644,22 +2653,29 @@
                                     brokerName = b.name;
                                 }
                             });
-                            var date = new Date();
-                            var day = date.getDate(quote.startDate);
+                            var date = new Date(quote.startDate);
+                            var day = date.getDate();
                             var monthIndex = date.getMonth() + 1;
                             var year = date.getFullYear();
-                            var dateFormat = day + '/' + monthIndex + '/' + year;
+                            //var dateFormat = day + '/' + monthIndex + '/' + year;
+                            var dateFormat = year + '-' + formatDataPart(monthIndex) + '-' + formatDataPart(day);
                             dlTable.append('<tr><td>' + quote.id + '</td><td>' +
                                 dateFormat + '</td><td>' +
-                                quote.firstName + '</td><td>' +
-                                quote.lastName + '</td><td>' +
-                                quote.type + '</td><td>' +
+                                quote.firstName.capitalizeFirstLetter() + '</td><td>' +
+                                quote.lastName.capitalizeFirstLetter() + '</td><td>' +
+                                quote.type.capitalizeFirstLetter() + '</td><td>' +
                                 brokerName + '</td><td>' +
                                 quote.policy_number + '</td><td>' +
                                 '<button class="btn btn-link select" id="' + quote.id + '">Select</button></td></tr>');
                         });
                     });
                 });
+            }
+
+
+            function getStandardDate(unformattedDate) {
+                var dateParts = unformattedDate.split('/');
+                return dateParts[2] + '-' + formatDataPart(dateParts[1]) + '-' + formatDataPart(dateParts[0]);
             }
 
 

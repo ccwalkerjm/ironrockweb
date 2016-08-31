@@ -58,6 +58,14 @@ String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+function formatDataPart(dp) {
+    dp= dp.toString();
+    if (dp.length == 1) {
+        return '0' + dp;
+    } else {
+        return dp;
+    }
+}
 
 //display message
 function display(message, err) {

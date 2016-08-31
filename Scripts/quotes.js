@@ -4,6 +4,18 @@ var _IronRockPreliminaryData = "IronRockPreliminaryData";
 
 //formerly doPrimaryFunctions(callback)
 function runQuoteEvents() {
+    $('#insuranceCoverage').change(function(){
+      var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        switch(this.value)
+        {
+          case "Comprehensive":
+          break;
+        }
+
+    });
+
+
     ///////////////////////quote create and update
     $('#quote-section').on('change', '#acceptDisclaimer', function() {
         $('#submit-btn').prop("disabled", !$(this).is(':checked'));
