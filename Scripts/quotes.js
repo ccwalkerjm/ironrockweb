@@ -296,8 +296,14 @@ function runQuoteEvents() {
     });
 
     $('#vehicle-all-accidents').on('click', '.Delete', function() {
-        var elementGroup = $(this).closest('.vehicle-accident-block');
-        elementGroup.remove();
+        var count = $('#vehicle-all-accidents').find(".vehicle-accident-block").length;
+        if (count == 1) { //clear
+            $(".vehicle-accident-block").find("input[type=text],input[type=number],textarea").val("");
+        } else {
+            //delete
+            var elementGroup = $(this).closest('.vehicle-accident-block');
+            elementGroup.remove();
+        }
         resetAllAccident();
     });
 
@@ -317,8 +323,14 @@ function runQuoteEvents() {
     });
 
     $('#HomeAllRiskInsured').on('click', '.Delete', function() {
-        var elementGroup = $(this).closest('.HomeAllRiskArticles');
-        elementGroup.remove();
+        var count = $('#HomeAllRiskInsured').find(".HomeAllRiskArticles").length;
+        if (count == 1) { //clear
+            $(".HomeAllRiskArticles").find("input[type=text],input[type=number],textarea").val("");
+        } else {
+            //delete
+            var elementGroup = $(this).closest('.HomeAllRiskArticles');
+            elementGroup.remove();
+        }
         resetHomeAllRiskArticles();
         SetHomeAllRiskInsuredValue();
     });
@@ -339,6 +351,7 @@ function runQuoteEvents() {
     $('#homeInsuranceProperty').on('click', '.Delete', function() {
         var elementGroup = $(this).closest('.homeInsurancePropertyItems');
         elementGroup.remove();
+
         resetHomeInsuranceProperty();
         SetHomeInsuranceValue();
     });
@@ -524,7 +537,7 @@ function LoadSettings(insuranceType, callback) {
         if (insuranceType != "motor") {
             loadRoofWallsTypes();
         }
-        loadFinanceCodes(insuranceType,function(err) {
+        loadFinanceCodes(insuranceType, function(err) {
             callback(err);
         });
     } else {
@@ -1150,7 +1163,7 @@ function resetHomeAllRiskArticles() {
         "name": "HomeAllRiskArticleValue"
     }];
     var elementClass = $('.HomeAllRiskArticles');
-    resetObjects(objectList, elementClass, "Add", "Delete", "Article");
+    resetObjects(objectList, elementClass, "Add", "Delete", "Article", true);
 }
 
 function resetHomeInsuranceProperty() {
@@ -1314,10 +1327,10 @@ function getDisplayElement(RadioName) {
             returnValue.defaultValue = "no";
             returnValue.class = "proposerInsuranceDetailsClass";
             break;
-        // case 'proposerEntitledToNOClaimDiscount':
-        //     returnValue.defaultValue = "no";
-        //     returnValue.id = "proposerEntitledToNOClaimDiscountProof";
-        //     break;
+            // case 'proposerEntitledToNOClaimDiscount':
+            //     returnValue.defaultValue = "no";
+            //     returnValue.id = "proposerEntitledToNOClaimDiscountProof";
+            //     break;
         case 'applicantOtherInsurer':
             returnValue.defaultValue = "no";
             returnValue.class = "applicantOtherInsurerTypeClass";
@@ -1448,14 +1461,10 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
         //delete button
         if (delBtnName) {
             var xDelBtnElement = element.find('.' + delBtnName);
-            if (showDeleteButtonOnFirstPage) {
-                xDelBtnElement.show();
+            if (element.is(firstElement) && !showDeleteButtonOnFirstPage) {
+                xDelBtnElement.hide();
             } else {
-                if (element.is(firstElement)) {
-                    xDelBtnElement.hide();
-                } else {
-                    xDelBtnElement.show();
-                }
+                xDelBtnElement.show();
             }
         }
         //add button
