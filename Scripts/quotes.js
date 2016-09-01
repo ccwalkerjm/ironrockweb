@@ -531,12 +531,6 @@ function setQuoteWizard(insuranceType, callback) {
 
 }
 
-//set value for special radio value
-function setSpecialRadioButtonValue(name, value) {
-    $('input[name="' + name + '"][value="' + value + '"]').prop('checked', true);
-}
-
-
 function cleanUpPages(insuranceType) {
     if (insuranceType == 'motor') {
         $('#quote-section #home-particulars-page').remove();
@@ -1275,6 +1269,7 @@ function resetApplicantRelativeInPublicOffice() {
 function setRadioDisplay(RadioName, RadioValue) {
     var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
     var displayElement = getDisplayElement(RadioName);
+    
     if (!displayElement.defaultValue) return;
     if (RadioValue == displayElement.defaultValue) {
         if (displayElement.id) {
@@ -1462,7 +1457,7 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
     var firstElement = elementClass.first();
     var lastElement = elementClass.last();
 
-    var noOfItems = elementClass.count;
+    var noOfItems = elementClass.length;
     var maxItems = 5;
 
     elementClass.each(function(i, e) {
