@@ -293,19 +293,23 @@
 					$.each(insuredDetail.phone_numbers, function (idx, phone) {
 						dl.append('<dt>' + phone.type + ':</dt><dd>' + phone.phone_number + '</dd>');
 					});
-					$.each(insuredDetail.locations, function (idx, address) {
-						dl.append('<dt>Main Location</dt><dd>' + address.is_main_location + '</dd>');
-						dl.append('<dt>Type</dt><dd>' + address.street_type + '</dd>');
-						dl.append('<dt>Street Number</dt><dd>' + address.street_number + '</dd>');
-						dl.append('<dt>Street Name</dt><dd>' + address.street_name + '</dd>');
-						dl.append('<dt>Town</dt><dd>' + address.town + '</dd>');
-						dl.append('<dt>Unit Number</dt><dd>' + address.unit_number + '</dd>');
-						dl.append('<dt>Parish</dt><dd>' + address.parish + '</dd>');
-						dl.append('<dt>Postal/Zip Code</dt><dd>' + address.postal_zip_code + '</dd>');
-						dl.append('<dt>Country</dt><dd>' + address.country + '</dd>');
-					});
 					insuredPlaceHolder.append(dl);
 					insuredPlaceHolder.append("<hr/>");
+					insuredPlaceHolder.append("<h4>Locations</h4>");
+					var $locationTable = $('<table/>').addClass('table');
+					$locationTable.html('<thead><tr><th>Main</th><th>Type</th><th>Address</th><th>Town</th><th>Parish</th><th>Country</th></tr></thead>');
+					var $tbody = $('<tbody/>');
+
+					$.each(insuredDetail.locations, function (idx, address) {
+						$tbody.append('<tr><td>' + address.is_main_location + '</td>'+
+												 '<td>' + address.street_type + '</td>' +
+						             '<td>' + address.street_number + ' ' + address.street_name + '</td>' +
+												 '<td>' + address.town + '</td>' +
+						             '<td>' + address.parish + '</td>' +
+												 '<td>' + address.country + '</td></tr>');
+					});
+					$locationTable.append($tbody);
+					insuredPlaceHolder.append($locationTable);
 				});
 			}
 
@@ -336,8 +340,7 @@
 				table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
 				var tbody = table.find('tbody').empty();
 				$.each(risks, function (idx, risk) {
-					var certificateButton = '<button type="button" class="btn btn-link getCertificate" id="' + risk.risk_id + '">Certificate</button>';
-					tbody.append('<tr><td>' + risk.usage_code + '</td><td>' + risk.risk_item_type + '</td><td>' + risk.building_year_built + '</td><td>' + risk.construction_of_roof + '</td><td>' + risk.construction_of_wall + '</td><td>' + risk.height_in_storeys + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td><td>' + certificateButton + '</td></tr>');
+					tbody.append('<tr><td>' + risk.usage_code + '</td><td>' + risk.risk_item_type + '</td><td>' + risk.building_year_built + '</td><td>' + risk.construction_of_roof + '</td><td>' + risk.construction_of_wall + '</td><td>' + risk.height_in_storeys + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td><td></td></tr>');
 				});
 			}
 
