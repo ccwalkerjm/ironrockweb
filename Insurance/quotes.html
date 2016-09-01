@@ -595,27 +595,27 @@
                                                     <h4>Relative 1</h4>
                                                     <hr />
                                                     <div class="form-group office">
-                                                        <label class="control-label col-sm-2" for="applicantRelativeTypePublicOffice0">Type of Public Office</label>
+                                                        <label class="control-label col-sm-2" for="applicantRelativePublicOffice0">Type of Public Office</label>
                                                         <div class="col-sm-10">
-                                                            <input class="form-control" type="text" name="applicantRelativeTypePublicOffice0" id="applicantRelativeTypePublicOffice0" value="">
+                                                            <input class="form-control" type="text" name="applicantRelativePublicOffice0" id="applicantRelativePublicOffice0" value="">
                                                         </div>
                                                     </div>
                                                     <div class="form-group name">
-                                                        <label class="control-label col-sm-2" for="applicantRelativeInPublicOfficeName0">Name</label>
+                                                        <label class="control-label col-sm-2" for="applicantRelativePublicName0">Name</label>
                                                         <div class="col-sm-10">
-                                                            <input class="form-control" type="text" name="applicantRelativeInPublicOfficeName0" id="applicantRelativeInPublicOfficeName0" value="">
+                                                            <input class="form-control" type="text" name="applicantRelativePublicName0" id="applicantRelativePublicName0" value="">
                                                         </div>
                                                     </div>
                                                     <div class="form-group address">
-                                                        <label class="control-label col-sm-2" for="applicantRelativeInPublicOfficeAddress0">Address</label>
+                                                        <label class="control-label col-sm-2" for="applicantRelativePublicAddress0">Address</label>
                                                         <div class="col-sm-10">
-                                                            <input class="form-control" type="text" name="applicantRelativeInPublicOfficeAddress0" id="applicantRelativeInPublicOfficeAddress0" value="">
+                                                            <input class="form-control" type="text" name="applicantRelativePublicAddress0" id="applicantRelativePublicAddress0" value="">
                                                         </div>
                                                     </div>
                                                     <div class="form-group relation">
-                                                        <label class="control-label col-sm-2" for="applicantRelativeInPublicOfficeRelation0">Relation</label>
+                                                        <label class="control-label col-sm-2" for="applicantRelativePublicRelation0">Relation</label>
                                                         <div class="col-sm-10">
-                                                            <select class="form-control" name="applicantRelativeInPublicOfficeRelation0" id="applicantRelativeInPublicOfficeRelation0">
+                                                            <select class="form-control" name="applicantRelativePublicRelation0" id="applicantRelativePublicRelation0">
                                                                 <option value="spouse">Spouse</option>
                                                                 <option value="child">Child</option>
                                                                 <option value="father">Father</option>
@@ -730,17 +730,10 @@
                                         <hr/>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label class="control-label pull-right" for="lienHolder">Lien Holder:</label>
+                                                <label class="control-label pull-right" for="motorFinancialInstitutionCode">Institution with financial interest in Risks:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <select class="form-control" name="lienHolder" id="lienHolder">
-                                                    <option value="">None</option>
-                                                    <option value="BNS">BNS</option>
-                                                    <option value="FCIB">FCIB</option>
-                                                    <option value="JNBS">JNBS</option>
-                                                    <option value="NCB">NCB</option>
-                                                    <option value="VMBS">VMBS</option>
-                                                </select>
+                                                <select class="form-control" name="motorFinancialInstitutionCode" id="motorFinancialInstitutionCode"></select>
                                             </div>
                                         </div>
                                     </form>
@@ -809,7 +802,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Details</label>
+                                                <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Discount Earned</label>
                                             </div>
 
                                             <div class="col-md-6">
@@ -1662,6 +1655,16 @@
                                     <form class="ProposalForm">
 
 
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <label class="control-label pull-right" for="homeFinancialInstitutionCode">Institution with financial interest in the property:</label>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <select class="form-control" id="homeFinancialInstitutionCode" name="homeFinancialInstitutionCode"></select>
+                                          </div>
+                                      </div>
+                                      <hr/>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Are the buildings in a good state of repairs and will they be so maintained?</label>
@@ -1740,34 +1743,6 @@
                                                     <label class="control-label col-sm-6" for="homeUsedForIncomeActivityDetails">Details:</label>
                                                     <div class="col-sm-6">
                                                         <textarea class="form-control" name="homeUsedForIncomeActivityDetails" id="homeUsedForIncomeActivityDetails"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr/>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="control-label pull-right">Does any institution or individual have a financial interest in the property?</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-inline">
-                                                    <label class="radio inline">
-                                        <input type="radio" value="yes" name="homeHaveInterestFromIndividual">Yes
-                                        </label>
-                                                    <label class="radio inline">
-                                        <input type="radio" value="no" name="homeHaveInterestFromIndividual" checked>No
-                                        </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12 form-horizontal" id="divhomeHaveInterestFromIndividual" style="display:none">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-6" for="homeHaveInterestFromIndividualDetails">Details:</label>
-                                                    <div class="col-sm-6">
-                                                        <textarea class="form-control" name="homeHaveInterestFromIndividualDetails" id="homeHaveInterestFromIndividualDetails"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3019,7 +2994,7 @@
                 // $('#lienHolderNameInFull').val(currentQuote.lienHolderNameInFull);
                 // $('#lienHolderParish').val(currentQuote.lienHolderParish);
                 // $('#lienHolderStreetName').val(currentQuote.lienHolderStreetName);
-                $('#lienHolder').val(currentQuote.lienHolder);
+                $('#motorFinancialInstitutionCode').val(currentQuote.motorFinancialInstitutionCode);
                 $('#manslaughterDefenceCosts').val(currentQuote.manslaughterDefenceCosts);
                 $('#medicalExpenses').val(currentQuote.medicalExpenses);
                 $('#memo').val(currentQuote.memo);
@@ -3080,8 +3055,8 @@
                 $('#homeOccupiedByApplicantFamilyIfNo').val(currentQuote.homeOccupiedByApplicantFamilyIfNo);
                 //home used for income activity
                 $('#homeUsedForIncomeActivityDetails').val(currentQuote.homeUsedForIncomeActivityDetails);
-                //home have interest from individual
-                $('#homeHaveInterestFromIndividualDetails').val(currentQuote.homeHaveInterestFromIndividualDetails);
+                //financial interest
+                $('#homeFinancialInstitutionCode').val(currentQuote.homeFinancialInstitutionCode);
                 //waterside structures
                 $('#homeHasWatersideStructureDetails').val(currentQuote.homeHasWatersideStructureDetails);
 
@@ -3133,6 +3108,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost0);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver0);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth0);
+                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief0);
                 }
 
                 //add second accident
@@ -3144,6 +3120,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost1);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver1);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth1);
+                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief1);
                 }
 
                 //add third accident
@@ -3155,6 +3132,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost2);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver2);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth2);
+                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief2);
                 }
 
                 //add fourth accident
@@ -3166,6 +3144,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost3);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver3);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth3);
+                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief3);
                 }
 
                 //add fifth accident
@@ -3177,6 +3156,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost4);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver4);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth4);
+                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief4);
                 }
 
 
@@ -3287,55 +3267,55 @@
                 //$('#publicofficerelation').on('click', '.Add', function() {
 
 
-                if (currentQuote.applicantRelativeTypePublicOffice0) {
-                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativeTypePublicOffice0);
-                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativeInPublicOfficeName0);
-                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativeInPublicOfficeAddress0);
-                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativeInPublicOfficeRelation0);
+                if (currentQuote.applicantRelativePublicOffice0) {
+                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice0);
+                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName0);
+                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativePublicAddress0);
+                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativePublicRelation0);
                 }
 
                 //add second
-                if (currentQuote.applicantRelativeTypePublicOffice1) {
+                if (currentQuote.applicantRelativePublicOffice1) {
                     var elementGroup = $('.publicofficerelations:last');
                     elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
                     resetApplicantRelativeInPublicOffice();
-                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativeTypePublicOffice1);
-                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativeInPublicOfficeName1);
-                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativeInPublicOfficeAddress1);
-                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativeInPublicOfficeRelation1);
+                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice1);
+                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName1);
+                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativePublicAddress1);
+                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativePublicRelation1);
                 }
 
                 //add third
-                if (currentQuote.applicantRelativeTypePublicOffice2) {
+                if (currentQuote.applicantRelativePublicOffice2) {
                     var elementGroup = $('.publicofficerelations:last');
                     elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
                     resetApplicantRelativeInPublicOffice();
-                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativeTypePublicOffice2);
-                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativeInPublicOfficeName2);
-                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativeInPublicOfficeAddress2);
-                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativeInPublicOfficeRelation2);
+                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice2);
+                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName2);
+                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativePublicAddress2);
+                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativePublicRelation2);
                 }
 
                 //add fourth
-                if (currentQuote.applicantRelativeTypePublicOffice3) {
+                if (currentQuote.applicantRelativePublicOffice3) {
                     var elementGroup = $('.publicofficerelations:last');
                     elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
                     resetApplicantRelativeInPublicOffice();
-                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativeTypePublicOffice3);
-                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativeInPublicOfficeName3);
-                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativeInPublicOfficeAddress3);
-                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativeInPublicOfficeRelation3);
+                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice3);
+                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName3);
+                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativePublicAddress3);
+                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativePublicRelation3);
                 }
 
                 //add fifth
-                if (currentQuote.applicantRelativeTypePublicOffice4) {
+                if (currentQuote.applicantRelativePublicOffice4) {
                     var elementGroup = $('.publicofficerelations:last');
                     elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
                     resetApplicantRelativeInPublicOffice();
-                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativeTypePublicOffice4);
-                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativeInPublicOfficeName4);
-                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativeInPublicOfficeAddress4);
-                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativeInPublicOfficeRelation4);
+                    $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice4);
+                    $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName4);
+                    $('.publicofficerelations:last .address input').val(currentQuote.applicantRelativePublicAddress4);
+                    $('.publicofficerelations:last .relation select').val(currentQuote.applicantRelativePublicRelation4);
                 }
 
 

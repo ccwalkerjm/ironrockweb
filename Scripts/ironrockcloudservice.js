@@ -1117,6 +1117,17 @@ var ironrockcloudservice = (function () {
 		});
 	};
 
+	//get finance institution codes
+	ironrockcloudservice.prototype.getFinanceInstitutions = function (callback) {		
+		var params = {
+			FunctionName: 'IronRockGetFinanceCodes'
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
 	//
 	return ironrockcloudservice;
 }());

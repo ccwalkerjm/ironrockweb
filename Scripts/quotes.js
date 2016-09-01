@@ -524,7 +524,9 @@ function LoadSettings(insuranceType, callback) {
         if (insuranceType != "motor") {
             loadRoofWallsTypes();
         }
-        callback();
+        loadFinanceCodes(insuranceType,function(err) {
+            callback(err);
+        });
     } else {
         setLoadingState(true);
         g_ironrock_service.getMiscOptions(function(err, r) {
@@ -547,7 +549,9 @@ function LoadSettings(insuranceType, callback) {
                     loadOccupations(insuranceType == "motor");
                     if (insuranceType != "motor")
                         loadRoofWallsTypes();
-                    callback();
+                    loadFinanceCodes(insuranceType, function(err) {
+                        callback(err);
+                    });
                 } else {
                     callback(new Error(jsondata.error_message));
                 }
@@ -555,6 +559,31 @@ function LoadSettings(insuranceType, callback) {
         });
     }
 }
+
+function loadFinanceCodes(insuranceType, callback) {
+    g_ironrock_service.getFinanceInstitutions(function(err, r) {
+        if (err) {
+            callback(err);
+        } else {
+            var data = ConvertToJson(r.Payload);
+            console.log(data);
+            if (!data.success) {
+                callback(new Error(data.error_message));
+            } else {
+                var codes = data.company_codes;
+                console.log(codes);
+                var $selectIdString = insuranceType == "motor" ? "motorFinancialInstitutionCode" : "homeFinancialInstitutionCode";
+                var $select = $('#' + $selectIdString).html('<option value="">None</Option>');
+                $.each(codes, function(idx, code) {
+                    $select.append('<option value="' + code + '">' + code + '</option>');
+                });
+                callback();
+            }
+        }
+    });
+
+}
+
 
 function runWizard() {
     var navListItems = $('div.setup-panel div a'),
@@ -1199,16 +1228,16 @@ function resetApplicantRelativeInPublicOffice() {
 
     var objectList = [{
         "class": "office",
-        "name": "applicantRelativeTypePublicOffice"
+        "name": "applicantRelativePublicOffice"
     }, {
         "class": "address",
-        "name": "applicantRelativeTypePublicAddress"
+        "name": "applicantRelativePublicAddress"
     }, {
         "class": "relation",
-        "name": "applicantRelativeTypePublicRelation"
+        "name": "applicantRelativePublicRelation"
     }, {
         "class": "name",
-        "name": "applicantRelativeInPublicOfficeName"
+        "name": "applicantRelativePublicName"
     }];
     var elementClass = $('.publicofficerelations');
 
