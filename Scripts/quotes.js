@@ -68,6 +68,10 @@ function runQuoteEvents() {
 
     //regular driver
     $('#quote-section').on('click', '#regularDriversBtns .Add', function() {
+        var count = $('#regularDriversId').find(".regularDriversCls").length;
+        if (count >= 5) { //clear
+            return;
+        }
         var $this = $('#regularDriversBtns .Add');
         var id = $('#regularDriverQueryID').val();
         GetDriverLicense($this, id, function(err, r) {
@@ -290,6 +294,10 @@ function runQuoteEvents() {
 
 
     $('#vehicle-all-accidents').on('click', '.Add', function() {
+        var count = $('#vehicle-all-accidents').find(".vehicle-accident-block").length;
+        if (count >= 5) { //clear
+            return;
+        }
         var elementGroup = $(this).closest('.vehicle-accident-block');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetAllAccident();
@@ -316,6 +324,10 @@ function runQuoteEvents() {
 
     //resetHomeAllRiskArticles
     $('#HomeAllRiskInsured').on('click', '.Add', function() {
+        var count = $('#HomeAllRiskInsured').find(".HomeAllRiskArticles").length;
+        if (count >= 5) { //clear
+            return;
+        }
         var elementGroup = $(this).closest('.HomeAllRiskArticles');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetHomeAllRiskArticles();
@@ -342,6 +354,10 @@ function runQuoteEvents() {
 
     //HomeInsurance
     $('#homeInsuranceProperty').on('click', '.Add', function() {
+        var count = $('#homeInsuranceProperty').find(".homeInsurancePropertyItems").length;
+        if (count >= 5) { //clear
+            return;
+        }
         var elementGroup = $(this).closest('.homeInsurancePropertyItems');
         elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
         resetHomeInsuranceProperty();
@@ -349,9 +365,14 @@ function runQuoteEvents() {
     });
 
     $('#homeInsuranceProperty').on('click', '.Delete', function() {
-        var elementGroup = $(this).closest('.homeInsurancePropertyItems');
-        elementGroup.remove();
-
+        var count = $('#homeInsuranceProperty').find(".homeInsurancePropertyItems").length;
+        if (count == 1) { //clear
+            $(".homeInsurancePropertyItems").find("input[type=text],input[type=number],textarea").val("");
+        } else {
+            //delete
+            var elementGroup = $(this).closest('.homeInsurancePropertyItems');
+            elementGroup.remove();
+        }
         resetHomeInsuranceProperty();
         SetHomeInsuranceValue();
     });
@@ -363,11 +384,7 @@ function runQuoteEvents() {
 
 
     $('#HomeInsuranceContent .article-value').on('keyup', 'input', function() {
-        var valList = [];
-        $('#HomeInsuranceContent .article-value').find('input').each(function(index, element) {
-            valList.push($(element).val());
-        });
-        $('#HomeInsuranceContentTotalAmount').val(GetTotal(valList));
+        SetContentTotalAmount();
     });
 
 
@@ -375,14 +392,24 @@ function runQuoteEvents() {
 
 
     $('#publicofficerelation').on('click', '.Add', function() {
+        var count = $('#publicofficerelation').find(".publicofficerelations").length;
+        if (count >= 5) { //clear
+            return;
+        }
         var elementGroup = $(this).closest('.publicofficerelations');
         elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
         resetApplicantRelativeInPublicOffice();
     });
 
     $('#publicofficerelation').on('click', '.Delete', function() {
-        var elementGroup = $(this).closest('.publicofficerelations');
-        elementGroup.remove();
+        var count = $('#publicofficerelation').find(".publicofficerelations").length;
+        if (count == 1) { //clear
+            $(".publicofficerelations").find("input[type=text],input[type=number],textarea").val("");
+        } else {
+            //delete
+            var elementGroup = $(this).closest('.publicofficerelations');
+            elementGroup.remove();
+        }
         resetApplicantRelativeInPublicOffice();
     });
 
@@ -502,6 +529,11 @@ function setQuoteWizard(insuranceType, callback) {
         callback(err);
     });
 
+}
+
+//set value for special radio value
+function setSpecialRadioButtonValue(name, value) {
+    $('input[name="' + name + '"][value="' + value + '"]').prop('checked', true);
 }
 
 
@@ -1042,6 +1074,15 @@ function SetHomeInsuranceValue() {
     $('#homeInsurancePropertySum').val(GetTotal(valList));
 }
 
+//set home insurance values
+function SetContentTotalAmount() {
+  var valList = [];
+  $('#HomeInsuranceContent .article-value').find('input').each(function(index, element) {
+      valList.push($(element).val());
+  });
+  $('#HomeInsuranceContentTotalAmount').val(GetTotal(valList));
+}
+
 //set accident years
 function setAllAccidentsYears() {
     var currentYear = new Date().getFullYear();
@@ -1072,7 +1113,7 @@ function resetAllAccident() {
         "name": "accidentBrief"
     }];
     var elementClass = $('.vehicle-accident-block');
-    resetObjects(objectList, elementClass, "Add", "Delete", "Accident");
+    resetObjects(objectList, elementClass, "Add", "Delete", "Accident", true);
 }
 
 //Used As
@@ -1175,35 +1216,7 @@ function resetHomeInsuranceProperty() {
         "name": "homeInsurancePropertyItemValue"
     }];
     var elementClass = $('.homeInsurancePropertyItems');
-    resetObjects(objectList, elementClass, "Add", "Delete", "Building");
-}
-
-
-//
-function resetInexperiencedDriver() {
-
-    var objectList = [{
-        "class": "name",
-        "name": "inexperiencedDriversName"
-    }, {
-        "class": "occupation",
-        "name": "inexperiencedDriversOccupation"
-    }, {
-        "class": "DateOfBirth",
-        "name": "inexperiencedDriversDateOfBirth"
-    }, {
-        "class": "DriversDL",
-        "name": "inexperiencedDriversDL"
-    }, {
-        "class": "DriversDLOriginalDateOfIssue",
-        "name": "inexperiencedDriversDLOriginalDateOfIssue"
-    }, {
-        "class": "DriversRelationshipToProposer",
-        "name": "inexperiencedDriversRelationshipToProposer"
-    }];
-    var elementClass = $('.inexperiencedDriversCls');
-
-    resetObjects(objectList, elementClass, "Add", "Delete", "Driver");
+    resetObjects(objectList, elementClass, "Add", "Delete", "Building", true);
 }
 
 //regular drivers
@@ -1254,7 +1267,7 @@ function resetApplicantRelativeInPublicOffice() {
     }];
     var elementClass = $('.publicofficerelations');
 
-    resetObjects(objectList, elementClass, "Add", "Delete", "Relative");
+    resetObjects(objectList, elementClass, "Add", "Delete", "Relative", true);
 }
 
 //
@@ -1449,6 +1462,9 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
     var firstElement = elementClass.first();
     var lastElement = elementClass.last();
 
+    var noOfItems = elementClass.count;
+    var maxItems = 5;
+
     elementClass.each(function(i, e) {
         var element = $(this);
         //change ids and names
@@ -1470,7 +1486,7 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
         //add button
         if (addBtnName) {
             var xAddBtnElement = element.find('.' + addBtnName);
-            if (element.is(lastElement)) {
+            if (element.is(lastElement) && noOfItems < maxItems) {
                 xAddBtnElement.show();
             } else {
                 xAddBtnElement.hide();

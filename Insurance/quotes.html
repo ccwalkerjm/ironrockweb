@@ -168,7 +168,7 @@
                             </button>
 
                             <button type="button" id="viewLimits" class="btn btn-default" aria-label="Left Align" title="View Limits">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Limits
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Summary
                             </button>
 
                             <button type="button" id="viewPolicy" class="btn btn-default" aria-label="Left Align" title="View Policy">
@@ -289,9 +289,9 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="applicantMothersMaidenName">Mother's Maiden Name:</label>
+                                                <label class="control-label col-sm-2" for="applicantMothersMaidenName">Mother Maiden Name:</label>
                                                 <div class="col-sm-10">
-                                                    <input required class="form-control" type="text" id="applicantMothersMaidenName" name="applicantMothersMaidenName" placeholder="Enter your Mother's Maiden Name">
+                                                    <input required class="form-control" type="text" id="applicantMothersMaidenName" name="applicantMothersMaidenName" placeholder="Enter your Mother Maiden Name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -709,7 +709,7 @@
                                                 <label class="control-label pull-right" for="nameAddressOfOwner">Owner Details:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <textarea class="form-control" name="nameAddressOfOwner" id="nameAddressOfOwner" placeholder="Owner's Name/Address"></textarea>
+                                                <textarea class="form-control" name="nameAddressOfOwner" id="nameAddressOfOwner" placeholder="Owner Name/Address"></textarea>
                                             </div>
                                         </div>
                                         <hr/>
@@ -758,7 +758,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select name="insuranceCoverage" id="insuranceCoverage" class="form-control">
-                                                    <option value="Comprehensive" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured’s Motor Vehicle">Comprehensive</option>
+                                                    <option value="Comprehensive" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured Motor Vehicle">Comprehensive</option>
                                                     <option value="ThirdPartyFireTheft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
                                                     <option value="ThirdParty" title="Liability for Third Party Bodily Injury and Property Damage">Third Party</option>
                                                 </select>
@@ -910,7 +910,7 @@
 
                                         <div class="row controls-row">
                                             <div class="col-md-6">
-                                                <label class="control-label pull-right">Is the vehicle garaged at the Proposer's home address?</label>
+                                                <label class="control-label pull-right">Is the vehicle garaged at the Proposer home address?</label>
                                             </div>
                                             <div class="col-md-6 form-inline">
                                                 <label class="radio inline">
@@ -1088,7 +1088,7 @@
                                                     <input required class="form-control" type="text" name="regularDriversDateOfBirth0" id="regularDriversDateOfBirth0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDL">
-                                                    <label class="control-label" for="regularDriversDL0">Driver's Licence:</label>
+                                                    <label class="control-label" for="regularDriversDL0">Driver Licence:</label>
                                                     <input required class="form-control" type="text" name="regularDriversDL0" id="regularDriversDL0" value="" readonly>
                                                 </div>
                                                 <div class="form-group DriversDLExpirationDate">
@@ -1121,10 +1121,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">21 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="21YearsOldPrivateCars">Yes
+                                                            <input type="radio" value="yes" name="privateCars21Driver">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="21YearsOldPrivateCars">No
+                                                            <input type="radio" value="no" name="privateCars21Driver">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1133,10 +1133,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">23 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="23YearsOldPrivateCommercial">Yes
+                                                            <input type="radio" value="yes" name="privateCommercial23Driver">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="23YearsOldPrivateCommercial">No
+                                                            <input type="radio" value="no" name="privateCommercial23Driver">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1145,10 +1145,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">25 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="25YearsOldGeneralCartage">Yes
+                                                            <input type="radio" value="yes" name="general25Driver">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="25YearsOldGeneralCartage">No
+                                                            <input type="radio" value="no" name="general25Driver">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1816,8 +1816,8 @@
                                         <div id="homeInsuranceProperty">
                                             <div data-role="popup" id="homeInsurancePropertyDetails">
                                                 <p>
-                                                    The Buildings of the private dwelling together with its garages and outbuildings, including landlord’s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services
-                                                    to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools & Waterside Structures are not included.)
+                                                    The Buildings of the private dwelling together with its garages and outbuildings, including landlord&apos;s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services
+                                                    to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools &amp; Waterside Structures are not included.)
                                                 </p>
                                             </div>
                                             <div class="homeInsurancePropertyItems">
@@ -2887,6 +2887,10 @@
                     populateHomeProperty();
                     populateHomeAllRiskArticles();
                     populateHomeInsuranceProperty();
+                    //calculate values
+                    SetHomeAllRiskInsuredValue();
+                    SetHomeInsuranceValue();
+                    SetContentTotalAmount();
                 }
                 //
 
@@ -3057,6 +3061,10 @@
                 $('#applicantOtherInsurerType').val(currentQuote.applicantOtherInsurerType);
                 $('#ApplicantPreviouslyInsuredDetails').val(currentQuote.ApplicantPreviouslyInsuredDetails);
 
+                //special radio buttons
+                setSpecialRadioButtonValue('privateCars21Driver',currentQuote.privateCars21Driver);
+                setSpecialRadioButtonValue('privateCommercial23Driver',currentQuote.privateCommercial23Driver);
+                setSpecialRadioButtonValue('general25Driver',currentQuote.general25Driver);
 
                 //radio buttons
                 setRadioButton('vehicleKeptInSecureArea', currentQuote.vehicleKeptInSecureArea);
