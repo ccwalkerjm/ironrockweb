@@ -188,7 +188,7 @@ function runQuoteEvents() {
         //r.vehicleType = "Sedan";
         r.engineNo = $('#QueryVehicleEngineNo').val();
         r.colour = $('#QueryVehicleColour').val();
-        r.vehicleStatus = "";
+        r.motorVehicleID = "";
         r.sumInsured = $('#QueryVehicleSumInsured').val();
 
         // if (r.sumInsured < 1000) {
@@ -703,7 +703,7 @@ function insertVehicle(r, rowIndex) {
         xRow = rows.eq(rowIndex).html('');
     }
 
-
+    //motorVehicleID
 
     var htmlValues = '<span>' + r.plateNo + '</span>' +
         '<input type="hidden" class="ValueVehicleRegistrationNo" value="' + $.trim(r.plateNo) + '" />' +
@@ -716,7 +716,7 @@ function insertVehicle(r, rowIndex) {
         '<input type="hidden" class="ValueVehicleEngineNo" value="' + $.trim(r.engineNo) + '" />' +
         '<input type="hidden" class="ValueVehicleColour" value="' + $.trim(r.colour) + '" />' +
         '<input type="hidden" class="ValueVehicleValue" value="' + $.trim(r.sumInsured) + '" />' +
-        '<input type="hidden" class="ValueVehicleStatus" value="' + $.trim(r.vehicleStatus) + '" />';
+        '<input type="hidden" class="ValueVehicleID" value="' + $.trim(r.motorVehicleID) + '" />';
 
     xRow.addClass('vehicle').attr('data-id', r.chassisNo);
     var registrationCell = $('<td/>');
@@ -793,7 +793,7 @@ function reIndexVehicles() {
     var CaptionBaseVehicleBody = 'vehicleBody';
     var CaptionBaseVehicleType = 'vehicleType';
     var CaptionBaseVehicleColour = 'vehicleColour';
-    var CaptionBaseVehicleStatus = 'vehicleStatus';
+    var CaptionBaseVehicleID = 'motorVehicleID';
     var CaptionBaseVehicleValue = 'vehicleValue';
     var sumInsured = 0;
     $('#vehiclesToBeInsured tbody tr').each(function(index, element) {
@@ -808,7 +808,7 @@ function reIndexVehicles() {
         xRow.find('.ValueVehicleEngineNo').attr("id", CaptionBaseVehicleEngineNo + index).attr("name", CaptionBaseVehicleEngineNo + index);
         xRow.find('.ValueVehicleColour').attr("id", CaptionBaseVehicleColour + index).attr("name", CaptionBaseVehicleColour + index);
         xRow.find('.ValueVehicleValue').attr("id", CaptionBaseVehicleValue + index).attr("name", CaptionBaseVehicleValue + index);
-        xRow.find('.ValueVehicleStatus').attr("id", CaptionBaseVehicleStatus + index).attr("name", CaptionBaseVehicleStatus + index);
+        xRow.find('.ValueVehicleID').attr("id", CaptionBaseVehicleID + index).attr("name", CaptionBaseVehicleID + index);
         sumInsured = sumInsured + parseFloat(xRow.find('.ValueVehicleValue').val());
     });
     var thirdPartyLimit = $('#thirdPartyLimit').empty();
@@ -1314,10 +1314,10 @@ function getDisplayElement(RadioName) {
             returnValue.defaultValue = "no";
             returnValue.class = "proposerInsuranceDetailsClass";
             break;
-        case 'proposerEntitledToNOClaimDiscount':
-            returnValue.defaultValue = "no";
-            returnValue.id = "proposerEntitledToNOClaimDiscountProof";
-            break;
+        // case 'proposerEntitledToNOClaimDiscount':
+        //     returnValue.defaultValue = "no";
+        //     returnValue.id = "proposerEntitledToNOClaimDiscountProof";
+        //     break;
         case 'applicantOtherInsurer':
             returnValue.defaultValue = "no";
             returnValue.class = "applicantOtherInsurerTypeClass";

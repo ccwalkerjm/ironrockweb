@@ -687,7 +687,7 @@
                                                 <label class="control-label pull-right" for="startDate">Insurance Start Date:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <input required class="form-control startDate datepicker" name="startDate" type="text" placeholder="Start Date" />
+                                                <input required id="motorStartDate" class="form-control startDate" name="startDate" type="text" placeholder="Start Date" />
                                             </div>
                                         </div>
                                         <hr/>
@@ -760,7 +760,7 @@
                                                 <select name="insuranceCoverage" id="insuranceCoverage" class="form-control">
                                                     <option value="Comprehensive" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured’s Motor Vehicle">Comprehensive</option>
                                                     <option value="ThirdPartyFireTheft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
-                                                    <option value="ThirdParty" title="Liability for Third Party Bodily Injury and Property Damage">Third Party Liability</option>
+                                                    <option value="ThirdParty" title="Liability for Third Party Bodily Injury and Property Damage">Third Party</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -802,11 +802,11 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label class="control-label pull-right" for="noClaimDiscountProof">No Claim Discount Earned</label>
+                                                <label class="control-label pull-right" for="noClaimDiscountCode">No Claim Discount Earned</label>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <select class="form-control" name="noClaimDiscountProof" id="noClaimDiscountProof">
+                                                <select class="form-control" name="noClaimDiscountCode" id="noClaimDiscountCode">
                                                     <option value="">None</option>
                                                     <option value="oneyear">One Year</option>
                                                     <option value="twoyears">Two Years</option>
@@ -1655,15 +1655,15 @@
                                     <form class="ProposalForm">
 
 
-                                      <div class="row">
-                                          <div class="col-md-6">
-                                              <label class="control-label pull-right" for="homeFinancialInstitutionCode">Institution with financial interest in the property:</label>
-                                          </div>
-                                          <div class="col-md-6">
-                                              <select class="form-control" id="homeFinancialInstitutionCode" name="homeFinancialInstitutionCode"></select>
-                                          </div>
-                                      </div>
-                                      <hr/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label pull-right" for="homeFinancialInstitutionCode">Institution with financial interest in the property:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="homeFinancialInstitutionCode" name="homeFinancialInstitutionCode"></select>
+                                            </div>
+                                        </div>
+                                        <hr/>
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -1672,11 +1672,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <label class="radio inline">
-              <input type="radio" value="yes" name="homeInGoodState" checked>Yes
-          </label>
+                                                        <input type="radio" value="yes" name="homeInGoodState" checked>Yes
+                                                    </label>
                                                     <label class="radio inline">
-              <input type="radio" value="no" name="homeInGoodState">No
-          </label>
+                                                        <input type="radio" value="no" name="homeInGoodState">No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1700,11 +1700,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <label class="radio inline">
-                                        <input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked>Yes
-                                        </label>
+                                                        <input type="radio" value="yes" name="homeOccupiedByApplicantFamily" checked>Yes
+                                                    </label>
                                                     <label class="radio inline">
-                                        <input type="radio" value="no" name="homeOccupiedByApplicantFamily">No
-                                        </label>
+                                                        <input type="radio" value="no" name="homeOccupiedByApplicantFamily">No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1728,11 +1728,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <label class="radio inline">
-                                        <input type="radio" value="yes" name="homeUsedForIncomeActivity">Yes
-                                        </label>
+                                                        <input type="radio" value="yes" name="homeUsedForIncomeActivity">Yes
+                                                    </label>
                                                     <label class="radio inline">
-                                        <input type="radio" value="no" name="homeUsedForIncomeActivity" checked>No
-                                        </label>
+                                                        <input type="radio" value="no" name="homeUsedForIncomeActivity" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1756,11 +1756,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <label class="radio inline">
-                                        <input type="radio" value="yes" name="homeHasWatersideStructure">Yes
-                                        </label>
+                                                        <input type="radio" value="yes" name="homeHasWatersideStructure">Yes
+                                                    </label>
                                                     <label class="radio inline">
-                                        <input type="radio" value="no" name="homeHasWatersideStructure" checked>No
-                                        </label>
+                                                        <input type="radio" value="no" name="homeHasWatersideStructure" checked>No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1804,7 +1804,7 @@
 
                                         <div class="form-group">
                                             <label for="startDate">Insurance Start Date:</label>
-                                            <input class="form-control startDate datepicker" name="startDate" type="text" placeholder="Start Date" />
+                                            <input id="homeStartDate" class="form-control startDate" name="startDate" type="text" placeholder="Start Date" />
                                             <label for="currency">Currency:</label>
                                             <select class="form-control currency" name="currency">
                                                 <option value="JA">Jamaican Dollar</option>
@@ -1824,7 +1824,8 @@
                                                 <h4>Building 1</h4>
                                                 <div class="form-group article-name">
                                                     <label for="homeInsurancePropertyItem0">
-                                                        Description:<a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
+                                                        Description:
+                                                        <a href="#homeInsurancePropertyDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                     </label>
                                                     <input class="form-control" type="text" name="homeInsurancePropertyItem0" id="homeInsurancePropertyItem0" value="">
                                                 </div>
@@ -1845,7 +1846,8 @@
 
                                             <div class="form-group article-value">
                                                 <label for="homeInsurancePropertySwimmingPoolValue">
-                                                    Swimming Pools Value:<a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
+                                                    Swimming Pools Value:
+                                                    <a href="#swimmingpoolDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="homeInsurancePropertySwimmingPoolValue" id="homeInsurancePropertySwimmingPoolValue" value="">
                                             </div>
@@ -1891,7 +1893,8 @@
 
                                             <div class="form-group article-value">
                                                 <label for="amountHouseholdGoods">
-                                                    Household Goods Value:<a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
+                                                    Household Goods Value:
+                                                    <a href="#HouseholdGoodsDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="amountHouseholdGoods" id="amountHouseholdGoods" value="">
                                             </div>
@@ -1904,7 +1907,8 @@
 
                                             <div class="form-group article-value">
                                                 <label for="amountValuables">
-                                                    Valuables Estimate:<a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
+                                                    Valuables Estimate:
+                                                    <a href="#ValuablesDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="amountValuables" id="amountValuables" value="">
                                             </div>
@@ -1918,7 +1922,8 @@
 
                                             <div class="form-group article-value">
                                                 <label for="HomeInsuranceOtherValuableAmount">
-                                                    Other Valuables Estimate:<a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext"
+                                                    Other Valuables Estimate:
+                                                    <a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext"
                                                         title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
@@ -1985,9 +1990,9 @@
 
                                             <div class="col-md-6">
                                                 <select class="form-control" name="territorialLimit" id="territorialLimit">
-                                                  <option value="Jamaica">Jamaica</option>
-                                                  <option value="world">Worldwide</option>
-                                              </select>
+                                                    <option value="Jamaica">Jamaica</option>
+                                                    <option value="world">Worldwide</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <hr/>
@@ -2381,7 +2386,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="quoteLimitsModalLabel">Limits</h4>
+                    <h4 class="modal-title" id="quoteLimitsModalLabel">Quotation Summary</h4>
                 </div>
                 <div class="modal-body" id="quotation">
                 </div>
@@ -2453,13 +2458,13 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="policyStartDate">Start Date</label>
                                     <div class="col-md-4">
-                                        <input id="policyStartDate" name="policyStartDate" type="text" placeholder="Start Date" class="form-control datepicker">
+                                        <input id="policyStartDate" name="policyStartDate" type="text" placeholder="Start Date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="signedDate">Date Signed</label>
                                     <div class="col-md-4">
-                                        <input id="signedDate" name="signedDate" type="text" placeholder="Date Signed" class="form-control datepicker">
+                                        <input id="signedDate" name="signedDate" type="text" placeholder="Date Signed" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -2534,9 +2539,48 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd'
-            });
+
+            function setDates() {
+                //homeStartDate
+                //policyStartDate
+                //signedDate
+                //motorStartDate
+                var currentDate = new Date();
+                var endDate = new Date();
+                endDate.setMonth(endDate.getMonth() + 12);
+                var signedStartDate = new Date();
+                signedStartDate.setMonth(endDate.getMonth() - 12);
+
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    endDate: currentDate
+                });
+
+                $('#homeStartDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: currentDate,
+                    endDate: endDate
+                });
+                $('#motorStartDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: currentDate,
+                    endDate: endDate
+                });
+                $('#policyStartDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: currentDate,
+                    endDate: endDate
+                });
+                $('#signedDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: signedStartDate,
+                    endDate: currentDate
+                });
+            }
+            setDates();
+
+
+
 
             initPage(function(err, obj) {
                 runQuoteEvents();
@@ -2981,7 +3025,7 @@
 
             //motor vehicle miscellaneous
             var populateMiscellaneousMotorVehicle = function() {
-                $('#noClaimDiscountProof').val(currentQuote.noClaimDiscountProof);
+                $('#noClaimDiscountCode').val(currentQuote.noClaimDiscountCode);
                 $('#authorized_driver_wording').val(currentQuote.authorized_driver_wording);
                 //$('#branch').val(currentQuote.branch);
                 $('#driverSufferFromDefectiveHearingOrVisionDetails').val(currentQuote.driverSufferFromDefectiveHearingOrVisionDetails || "");
@@ -3405,7 +3449,7 @@
                     //vehicle0.vehicleType = "Sedan";
                     vehicle0.engineNo = currentQuote.vehicleEngineType0;
                     vehicle0.colour = currentQuote.vehicleColour0;
-                    vehicle0.vehicleStatus = currentQuote.vehicleStatus0;
+                    vehicle0.motorVehicleID = currentQuote.motorVehicleID0;
                     vehicle0.sumInsured = currentQuote.vehicleValue0;
                     insertVehicle(vehicle0);
                 }
@@ -3421,7 +3465,7 @@
                     //vehicle1.vehicleType = "Sedan";
                     vehicle1.engineNo = currentQuote.vehicleEngineType1;
                     vehicle1.colour = currentQuote.vehicleColour1;
-                    vehicle1.vehicleStatus = currentQuote.vehicleStatus1;
+                    vehicle1.motorVehicleID = currentQuote.motorVehicleID1;
                     vehicle1.sumInsured = currentQuote.vehicleValue1;
                     insertVehicle(vehicle1);
                 }
@@ -3437,7 +3481,7 @@
                     //vehicle2.vehicleType = "Sedan";
                     vehicle2.engineNo = currentQuote.vehicleEngineType2;
                     vehicle2.colour = currentQuote.vehicleColour2;
-                    vehicle2.vehicleStatus = currentQuote.vehicleStatus2;
+                    vehicle2.motorVehicleID = currentQuote.motorVehicleID2;
                     vehicle2.sumInsured = currentQuote.vehicleValue2;
                     insertVehicle(vehicle2);
                 }
@@ -3453,7 +3497,7 @@
                     //vehicle3.vehicleType = "Sedan";
                     vehicle3.engineNo = currentQuote.vehicleEngineType3;
                     vehicle3.colour = currentQuote.vehicleColour3;
-                    vehicle3.vehicleStatus = currentQuote.vehicleStatus3;
+                    vehicle3.motorVehicleID = currentQuote.motorVehicleID3;
                     vehicle3.sumInsured = currentQuote.vehicleValue3;
                     insertVehicle(vehicle3);
                 }
@@ -3469,7 +3513,7 @@
                     //vehicle4.vehicleType = "Sedan";
                     vehicle4.engineNo = currentQuote.vehicleEngineType4;
                     vehicle4.colour = currentQuote.vehicleColour4;
-                    vehicle4.vehicleStatus = currentQuote.vehicleStatus4;
+                    vehicle4.motorVehicleID = currentQuote.motorVehicleID4;
                     vehicle4.sumInsured = currentQuote.vehicleValue4;
                     insertVehicle(vehicle4);
                 }
