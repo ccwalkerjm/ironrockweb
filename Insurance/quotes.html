@@ -566,7 +566,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="employerNationality">Nationality:</label>
+                                                <label class="control-label col-sm-2" for="employerNationality">Country:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control countries" name="employerNationality" id="employerNationality"></select>
                                                 </div>
@@ -577,7 +577,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label class="control-label  pull-right" for="applicantRelativeInPublicOffice" title="e.g. Member of Parliament, Senator or Mayor, Senior Government Official, Judiciary, Security forces">
-                                                        Have you or any relative or close associate been entrusted with prominent pubic functions?
+                                                        Have you or any relative or close associate been entrusted with prominent public functions?
                                                     </label>
                                                 </div>
                                                 <div class="col-md-6">
@@ -1121,10 +1121,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">21 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="privateCars21Driver">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriverAge21PrivateCars">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="privateCars21Driver">No
+                                                            <input type="radio" value="no" name="InexperiencedDriverAge21PrivateCars">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1133,10 +1133,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">23 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="privateCommercial23Driver">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriverAge23PrivateCommercial">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="privateCommercial23Driver">No
+                                                            <input type="radio" value="no" name="InexperiencedDriverAge23PrivateCommercial">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1145,10 +1145,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">25 Years Old</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="general25Driver">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriverAge25General">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="general25Driver">No
+                                                            <input type="radio" value="no" name="InexperiencedDriverAge25General">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1163,10 +1163,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">24 Months Private Licence</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="24MonthsPrivateLicence">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriver24MonthsPrivate">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="24MonthsPrivateLicence">No
+                                                            <input type="radio" value="no" name="InexperiencedDriver24MonthsPrivate">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1176,10 +1176,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">36 Months General Licence-Private Commercial</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="36MonthsGeneralLicencePrivateCommercial">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriver36MonthsPrivateCommercial">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="36MonthsGeneralLicencePrivateCommercial">No
+                                                            <input type="radio" value="no" name="InexperiencedDriver36MonthsPrivateCommercial">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -1191,10 +1191,10 @@
                                                     <div class="controls-row">
                                                         <label class="control-label">5 Years General Licence-Public Commercial</label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="yes" name="5YearsGeneralLicencePublicCommercial">Yes
+                                                            <input type="radio" value="yes" name="InexperiencedDriver5YearsPublicCommercial">Yes
                                                         </label>
                                                         <label class="radio inline">
-                                                            <input type="radio" value="no" name="5YearsGeneralLicencePublicCommercial">No
+                                                            <input type="radio" value="no" name="InexperiencedDriver5YearsPublicCommercial">No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -3062,9 +3062,12 @@
                 $('#ApplicantPreviouslyInsuredDetails').val(currentQuote.ApplicantPreviouslyInsuredDetails);
 
                 //special radio buttons
-                setRadioButton('privateCars21Driver',currentQuote.privateCars21Driver);
-                setRadioButton('privateCommercial23Driver',currentQuote.privateCommercial23Driver);
-                setRadioButton('general25Driver',currentQuote.general25Driver);
+                setRadioButton('InexperiencedDriverAge21PrivateCars',currentQuote.InexperiencedDriverAge21PrivateCars);
+                setRadioButton('InexperiencedDriverAge23PrivateCommercial',currentQuote.InexperiencedDriverAge23PrivateCommercial);
+                setRadioButton('InexperiencedDriverAge25General',currentQuote.InexperiencedDriverAge25General);
+                setRadioButton('InexperiencedDriver24MonthsPrivate',currentQuote.InexperiencedDriver24MonthsPrivate);
+                setRadioButton('InexperiencedDriver36MonthsPrivateCommercial',currentQuote.InexperiencedDriver36MonthsPrivateCommercial);
+                setRadioButton('InexperiencedDriver5YearsPublicCommercial',currentQuote.InexperiencedDriver5YearsPublicCommercial);
 
                 //radio buttons
                 setRadioButton('vehicleKeptInSecureArea', currentQuote.vehicleKeptInSecureArea);

@@ -1269,20 +1269,21 @@ function resetApplicantRelativeInPublicOffice() {
 function setRadioDisplay(RadioName, RadioValue) {
     var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
     var displayElement = getDisplayElement(RadioName);
-    
+
     if (!displayElement.defaultValue) return;
-    if (RadioValue == displayElement.defaultValue) {
-        if (displayElement.id) {
-            $('#' + displayElement.id).hide();
-        } else {
-            $('.' + displayElement.class).hide();
-        }
+
+    var $element;
+    if (displayElement.id) {
+        $element = $('#' + displayElement.id);
     } else {
-        if (displayElement.id) {
-            $('#' + displayElement.id).show();
-        } else {
-            $('.' + displayElement.class).show();
-        }
+        $element =  $('.' + displayElement.class);
+    }
+
+    if (RadioValue == displayElement.defaultValue) {
+        $element.find('input[type=text],input[type=number],textarea').val('');
+        $element.hide();
+    } else {
+        $element.show();
     }
 
 }
