@@ -70,8 +70,8 @@ function CreatePDF(resp) {
 
 	doc.text(20, 175, 'Company Name:');
 	doc.text(20, 180, 'Street Number and Name:');
-	doc.text(100, 175, 'Town');
-	doc.text(100, 180, 'Parish');
+	doc.text(100, 175, 'Town:');
+	doc.text(100, 180, 'Parish:');
 
 //	doc.setFontType("italic");
 	doc.text(50, 80, resp.applicantSurname);
@@ -296,7 +296,7 @@ function setMotorVehiclePages(resp) {
 
 	doc.setFontSize("10");
 	doc.setFontType("bold");
-	doc.text(20, 85, "Lien Holder");
+//	doc.text(20, 85, "Lien Holder");
 
 	doc.text(20, 110, "Select cover required");
 
@@ -307,13 +307,13 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 65, "Will a trailer be used?");
 
-	doc.text(20, 90, "Name in Full:");
-
-	doc.text(100, 90, "Street Number and Name:");
-
-	doc.text(100, 100, "Town:");
-
-	doc.text(100, 105, "Parish:");
+//	doc.text(20, 90, "Name in Full:");
+//
+//	doc.text(100, 90, "Street Number and Name:");
+//
+//	doc.text(100, 100, "Town:");
+//
+//	doc.text(100, 105, "Parish:");
 
 
 
@@ -341,13 +341,13 @@ function setMotorVehiclePages(resp) {
 
 	doc.text(20, 70, resp.trailerUsed);
 
-	doc.text(50, 90, resp.lienHolderNameInFull);
-
-	doc.text(100, 95, resp.lienHolderStreetName);
-
-	doc.text(150, 100, resp.lienHolderTown);
-
-	doc.text(150, 105, resp.lienHolderParish);
+//	doc.text(50, 90, resp.lienHolderNameInFull);
+//
+//	doc.text(100, 95, resp.lienHolderStreetName);
+//
+//	doc.text(150, 100, resp.lienHolderTown);
+//
+//	doc.text(150, 105, resp.lienHolderParish);
 
 	doc.text(20, 115, resp.insuranceCoverage);
 
@@ -770,15 +770,20 @@ function setHomePropertyPages(resp) {
 	doc.text(100, 50, "Roof:");
 
 
-	doc.text(20, 60, "Internal Walls:");
+
 
 	doc.text(20, 70, "External walls:");
 
 
 
-	doc.text(20, 80, "Internal Walls:");
+
 
 	doc.text(100, 70, "Roof:");
+    
+    
+    doc.text(20, 80, "Institution with financial interest in the property:");
+    
+    doc.text(20, 85, resp.homeFinancialInstitutionCode ? resp.homeFinancialInstitutionCode:"");
 
 
 
@@ -807,6 +812,7 @@ function setHomePropertyPages(resp) {
 
 
 	doc.text(20, 150, "If no, describe the security arrangements in place:");
+    
 
 	doc.text(20, 160, "Does any institution or individual have a financial interest in the Property:");
 
@@ -852,9 +858,6 @@ function setHomePropertyPages(resp) {
 
 	doc.text(20, 135, resp.homeUsedForIncomeActivityDetails);
 
-	doc.text(20, 165, resp.homeHaveInterestFromIndividual);
-
-	doc.text(20, 175, resp.homeHaveInterestFromIndividualDetails);
 
 	doc.text(20, 188, resp.homeHasWatersideStructure);
 
@@ -1018,7 +1021,7 @@ function setHomePropertyPages(resp) {
 
 	doc.text(20, 50, "The Total Sum Insured under the All Risks Section of the Policy");
 
-//	doc.setFontType("italic");
+	doc.setFontType("normal");
 
 	if (resp.HomeAllRiskArticleDescription0) {
 		doc.text(20, 38, resp.HomeAllRiskArticleDescription0 ? resp.HomeAllRiskArticleDescription0 : "");
@@ -1082,7 +1085,7 @@ function setHomePropertyPages(resp) {
 
 	doc.text(20, 103, "Have the Building and/or Contents of the Home to which this Proposal relates ever suffered");
 
-	doc.text(20, 106, " damage by Hurricane, Earthquake or Flood");
+	doc.text(20, 106, "damage by Hurricane, Earthquake or Flood");
 
 
 
