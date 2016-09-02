@@ -376,6 +376,7 @@
                                                 <label class="control-label col-sm-2" for="applicantHomeParish">Select Parish:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="applicantHomeParish" id="applicantHomeParish">
+                                                        <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -448,6 +449,7 @@
                                                 <label class="control-label col-sm-2" for="applicantMailParish">Select Parish:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="applicantMailParish" id="applicantMailParish">
+                                                        <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -532,6 +534,7 @@
                                                 <label class="control-label col-sm-2" for="employerParish">Select Parish:</label>
                                                 <div class="col-sm-10">
                                                     <select class="form-control" name="employerParish" id="employerParish">
+                                                        <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -618,8 +621,8 @@
                                                             <select class="form-control" name="applicantRelativePublicRelation0" id="applicantRelativePublicRelation0">
                                                                 <option value="spouse">Spouse</option>
                                                                 <option value="child">Child</option>
-                                                                <option value="father">Father</option>
-                                                                <option value="mother">Mother</option>
+                                                                <!-- <option value="father">Father</option>
+                                                                <option value="mother">Mother</option> -->
                                                             </select>
                                                         </div>
                                                     </div>
@@ -784,21 +787,6 @@
                                         </div>
                                         <hr/>
 
-                                        <!-- <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="control-label">Is the proposer entitled to No Claim Discount from previous insurer(s)
-                                                  in respect of any vehicle(s) described in the proposal?</label>
-                                            </div>
-                                            <div class="col-md-6 form-inline">
-                                                <label class="radio inline">
-                                                    <input type="radio" value="yes" name="proposerEntitledToNOClaimDiscount">Yes
-                                                </label>
-                                                <label class="radio inline">
-                                                    <input type="radio" value="no" name="proposerEntitledToNOClaimDiscount" checked>No
-                                                </label>
-                                            </div>
-                                        </div> -->
-                                        <!-- id="proposerEntitledToNOClaimDiscountProof"> -->
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -1017,12 +1005,15 @@
                                             <div class="col-md-6">
                                                 <div class="form-inline">
                                                     <div class="controls-row">
-                                                        <label class="control-label pull-right" data-html="true" data-toggle="tooltip" title="<p>Has any Insurer(s) in respect of the Proposer or any other person who will regularly drive ever:</p><ul>
+                                                        <label class="control-label" for="applicantPreviouslyInsured">Has any Insurer(s) in respect of the Proposer or any other person who will regularly drive ever:</label>
+                                                        <!-- <button data-toggle="collapse" data-target="#applicantPreviouslyInsuredLabelMore">&gt;&gt;&gt;</button> -->
+                                                        <div id="applicantPreviouslyInsuredLabelMore">
+                                                            <ul>
                                                                 <li>Declined your proposal?</li>
                                                                 <li>Required and increased premium or imposed special conditions</li>
                                                                 <li>Cancelled or refused to renew an existing insurance?</li>
-                                                            </ul>">Declined/Cancelled/Problematic Previous Insurance?:</label>
-
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1565,6 +1556,7 @@
                                         <div class="form-group">
                                             <label for="homeRiskAddressParish">Select Parish:</label>
                                             <select class="form-control" name="homeRiskAddressParish" id="homeRiskAddressParish">
+                                                <option value=""></option>
                                                 <option value="Kingston">Kingston</option>
                                                 <option value="St. Andrew">St. Andrew</option>
                                                 <option value="St. Catherine">St. Catherine</option>
@@ -1816,8 +1808,8 @@
                                         <div id="homeInsuranceProperty">
                                             <div data-role="popup" id="homeInsurancePropertyDetails">
                                                 <p>
-                                                    The Buildings of the private dwelling together with its garages and outbuildings, including landlord&apos;s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing services
-                                                    to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools &amp; Waterside Structures are not included.)
+                                                    The Buildings of the private dwelling together with its garages and outbuildings, including landlord&apos;s fixtures and fittings together with patios, driveways and other paved areas, walls, gates and fences, underground water pipes and cables providing
+                                                    services to and from the home, fixed water storage tanks and sewage disposal systems. (NB. Swimming Pools &amp; Waterside Structures are not included.)
                                                 </p>
                                             </div>
                                             <div class="homeInsurancePropertyItems">
@@ -1923,8 +1915,7 @@
                                             <div class="form-group article-value">
                                                 <label for="HomeInsuranceOtherValuableAmount">
                                                     Other Valuables Estimate:
-                                                    <a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext"
-                                                        title="Learn more"></a>
+                                                    <a href="#totalValueExceedOneThirdTotalSumDetails" data-rel="popup" data-transition="pop" class="my-tooltip-btn ui-btn ui-alt-icon ui-nodisc-icon ui-btn-inline ui-icon-info ui-btn-icon-notext" title="Learn more"></a>
                                                 </label>
                                                 <input class="form-control" type="number" name="HomeInsuranceOtherValuableAmount" id="HomeInsuranceOtherValuableAmount" value="">
                                             </div>
@@ -3062,12 +3053,12 @@
                 $('#ApplicantPreviouslyInsuredDetails').val(currentQuote.ApplicantPreviouslyInsuredDetails);
 
                 //special radio buttons
-                setRadioButton('InexperiencedDriverAge21PrivateCars',currentQuote.InexperiencedDriverAge21PrivateCars);
-                setRadioButton('InexperiencedDriverAge23PrivateCommercial',currentQuote.InexperiencedDriverAge23PrivateCommercial);
-                setRadioButton('InexperiencedDriverAge25General',currentQuote.InexperiencedDriverAge25General);
-                setRadioButton('InexperiencedDriver24MonthsPrivate',currentQuote.InexperiencedDriver24MonthsPrivate);
-                setRadioButton('InexperiencedDriver36MonthsPrivateCommercial',currentQuote.InexperiencedDriver36MonthsPrivateCommercial);
-                setRadioButton('InexperiencedDriver5YearsPublicCommercial',currentQuote.InexperiencedDriver5YearsPublicCommercial);
+                setRadioButton('InexperiencedDriverAge21PrivateCars', currentQuote.InexperiencedDriverAge21PrivateCars);
+                setRadioButton('InexperiencedDriverAge23PrivateCommercial', currentQuote.InexperiencedDriverAge23PrivateCommercial);
+                setRadioButton('InexperiencedDriverAge25General', currentQuote.InexperiencedDriverAge25General);
+                setRadioButton('InexperiencedDriver24MonthsPrivate', currentQuote.InexperiencedDriver24MonthsPrivate);
+                setRadioButton('InexperiencedDriver36MonthsPrivateCommercial', currentQuote.InexperiencedDriver36MonthsPrivateCommercial);
+                setRadioButton('InexperiencedDriver5YearsPublicCommercial', currentQuote.InexperiencedDriver5YearsPublicCommercial);
 
                 //radio buttons
                 setRadioButton('vehicleKeptInSecureArea', currentQuote.vehicleKeptInSecureArea);
@@ -3163,7 +3154,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost0);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver0);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth0);
-                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief0);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief0);
                 }
 
                 //add second accident
@@ -3175,7 +3166,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost1);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver1);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth1);
-                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief1);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief1);
                 }
 
                 //add third accident
@@ -3187,7 +3178,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost2);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver2);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth2);
-                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief2);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief2);
                 }
 
                 //add fourth accident
@@ -3199,7 +3190,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost3);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver3);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth3);
-                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief3);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief3);
                 }
 
                 //add fifth accident
@@ -3211,7 +3202,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost4);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver4);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth4);
-                    $('.vehicle-accident-block:last .brief select').val(currentQuote.accidentBrief4);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief4);
                 }
 
 

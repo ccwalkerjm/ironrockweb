@@ -131,14 +131,12 @@
 							</div>
 							<div id="risk" class="tab-pane fade">
 								<h3>Risks</h3>
-								<table class="table">
-									<thead></thead>
-									<tbody></tbody>
-								</table>
+								<div class="panel-group" id="riskAccordion">
+								</div>
 							</div>
 							<div id="Insured" class="tab-pane fade">
-								<h3>Insured</h3>
-								<div id="InsuredDisplay">
+								<h3>Insured(s)</h3>
+								<div class="panel-group" id="InsuredAccordian">
 								</div>
 							</div>
 						</div>
@@ -192,8 +190,8 @@
 	<script src="/Scripts/index.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-			initPage(function (err, obj) {
+		$(document).ready(function() {
+			initPage(function(err, obj) {
 				var today = new Date();
 				var yyyy = today.getFullYear();
 				var lastYear = yyyy - 1;
@@ -221,7 +219,7 @@
 			function displayPolicy(policy_id, obj) {
 				setLoadingState(true);
 				obj = obj || g_ironrock_service;
-				obj.getPolicy(policy_id, function (err, data) {
+				obj.getPolicy(policy_id, function(err, data) {
 					if (err) {
 						display(err.message, err);
 						setLoadingState(false);
@@ -249,14 +247,17 @@
 				$('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
 				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
 				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
+				$('#summary dl').append('<dt>Status</dt><dd>' + policyObj.policy.status + '</dd>');
 				$('#summary dl').append('<dt>Branch</dt><dd>' + policyObj.policy.branch + '</dd>');
 				$('#summary dl').append('<dt>Date Signed</dt><dd>' + policyObj.policy.date_proposal_signed + '</dd>');
 				$('#summary dl').append('<dt>Currency</dt><dd>' + policyObj.policy.currency + '</dd>');
-				$('#summary dl').append('<dt>Agreed Value</dt><dd>' + (policyObj.policy.agreed_value ? "Yes" : "No") + '</dd>');
-				$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + (policyObj.policy.auto_renewal ? "Yes" : "No") + '</dd>');
-				$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
-				$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
-				$('#summary dl').append('<dt>Usage Category</dt><dd>' + policyObj.policy.usage_category + '</dd>');
+				$('#summary dl').append('<dt>Financial Institution</dt><dd>' + (policyObj.policy.premium_finance_company_code || "None") + '</dd>');
+				//$('#summary dl').append('<dt>Agreed Value</dt><dd>' + (policyObj.policy.agreed_value ? "Yes" : "No") + '</dd>');
+				//$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + (policyObj.policy.auto_renewal ? "Yes" : "No") + '</dd>');
+				if (policyObj.policy.memo)
+					$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
+				//$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
+				//$('#summary dl').append('<dt>Usage Category</dt><dd>' + policyObj.policy.usage_category + '</dd>');
 
 
 
@@ -273,9 +274,21 @@
 
 
 			function populateInsureds(insureds, globalNames) {
-				var insuredPlaceHolder = $('#InsuredDisplay');
-				$.each(insureds, function (idx, insured) {
+				var insuredAccordian = $('#InsuredAccordian').empty();
+				$.each(insureds, function(idx, insured) {
 					var insuredDetail = getDetails(insured, globalNames);
+					var insuredId = "insured" + idx.toString();
+
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + insuredAccordian.attr("id")).attr("href", "#" + insuredId);
+					panel_toggle.text((idx + 1).toString() + ": " + insuredDetail.first_name + " " + insuredDetail.last_name);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", insuredId).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+
+
 					var dl = $("<dl/>").attr("class", "dl-horizontal");
 					dl.append('<dt>Nationa ID:<dt><dd>' + insuredDetail.national_id + '</dd>');
 					dl.append('<dt>Nationa ID Type:</dt><dd>' + insuredDetail.national_id_type + '</dd>');
@@ -290,33 +303,48 @@
 					dl.append('<dt>Email Address:</dt><dd>' + insuredDetail.email_address + '</dd>');
 					dl.append('<dt>Title:</dt><dd>' + insuredDetail.title + '</dd>');
 					dl.append('<dt>Date of Birth:</dt><dd>' + insuredDetail.dob + '</dd>');
-					$.each(insuredDetail.phone_numbers, function (idx, phone) {
+					$.each(insuredDetail.phone_numbers, function(idx, phone) {
 						dl.append('<dt>' + phone.type + ':</dt><dd>' + phone.phone_number + '</dd>');
 					});
-					insuredPlaceHolder.append(dl);
-					insuredPlaceHolder.append("<hr/>");
-					insuredPlaceHolder.append("<h4>Locations</h4>");
+
 					var $locationTable = $('<table/>').addClass('table');
 					$locationTable.html('<thead><tr><th>Main</th><th>Type</th><th>Address</th><th>Town</th><th>Parish</th><th>Country</th></tr></thead>');
 					var $tbody = $('<tbody/>');
 
-					$.each(insuredDetail.locations, function (idx, address) {
-						$tbody.append('<tr><td>' + address.is_main_location + '</td>'+
-												 '<td>' + address.street_type + '</td>' +
-						             '<td>' + address.street_number + ' ' + address.street_name + '</td>' +
-												 '<td>' + address.town + '</td>' +
-						             '<td>' + address.parish + '</td>' +
-												 '<td>' + address.country + '</td></tr>');
+					$.each(insuredDetail.locations, function(jdx, address) {
+						$tbody.append('<tr><td>' + address.is_main_location + '</td>' +
+							'<td>' + address.street_type + '</td>' +
+							'<td>' + address.street_number + ' ' + address.street_name + '</td>' +
+							'<td>' + address.town + '</td>' +
+							'<td>' + address.parish + '</td>' +
+							'<td>' + address.country + '</td></tr>');
 					});
 					$locationTable.append($tbody);
-					insuredPlaceHolder.append($locationTable);
+
+					panel_body.append('<h4>Insured Details</h4>');
+					panel_body.append(dl);
+					panel_body.append("<hr/>");
+					panel_body.append("<h4>Address(es)</h4>");
+					panel_body.append($locationTable);
+
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					insuredAccordian.append(panel_default);
 				});
+				insuredAccordian.on('hidden.bs.collapse', toggleChevron);
+				insuredAccordian.on('shown.bs.collapse', toggleChevron);
 			}
 
 
 			function getDetails(insured, globalNames) {
 				var details = {};
-				$.each(globalNames, function (idx, globalName) {
+				$.each(globalNames, function(idx, globalName) {
 					if (insured.national_id == globalName.national_id && insured.national_id_type == globalName.national_id_type) {
 						details = globalName;
 					}
@@ -324,52 +352,131 @@
 				return details;
 			}
 
+			function toggleChevron(e) {
+				$(e.target)
+					.prev('.panel-heading')
+					.find("i.indicator")
+					.toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+			}
+			$('#riskAccordion').on('hidden.bs.collapse', toggleChevron);
+			$('#riskAccordion').on('shown.bs.collapse', toggleChevron);
+
 
 			function populateMVRisks(risks) {
-				var table = $('#risk table');
-				table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
-				var tbody = table.find('tbody').empty();
-				$.each(risks, function (idx, risk) {
-					var certificateButton = '<button type="button" class="btn btn-link getCertificate" id="' + risk.risk_id + '">Certificate</button>';
-					tbody.append('<tr><td>' + risk.registration_number + '</td><td>' + risk.chassis_number + '</td><td>' + risk.make + '</td><td>' + risk.model + '</td><td>' + risk.year + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td><td>' + certificateButton + '</td></tr>');
+				var riskAccordion = $('#riskAccordion').empty();
+				//table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
+				//var tbody = table.find('tbody').empty();
+				$.each(risks, function(idx, risk) {
+					var riskDetail = "riskDetail" + idx.toString();
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + riskAccordion.attr("id")).attr("href", "#" + riskDetail);
+					panel_toggle.text((idx + 1).toString() + ": Registration No: " + risk.registration_number);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", riskDetail).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+					var certificateButton = '<button type="button" class="btn btn-link getCertificate pull-right" id="' + risk.risk_id + '">Get Certificate</button>';
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Registration No:<dt><dd>' + risk.registration_number + '</dd>');
+					dl.append('<dt>Chassis No:<dt><dd>' + risk.chassis_number + '</dd>');
+					dl.append('<dt>Engine No:<dt><dd>' + risk.engine_number + '</dd>');
+					dl.append('<dt>Make:<dt><dd>' + risk.make + '</dd>');
+					dl.append('<dt>Model:<dt><dd>' + risk.model + '</dd>');
+					dl.append('<dt>Year:<dt><dd>' + risk.year + '</dd>');
+					dl.append('<dt>Colour:<dt><dd>' + risk.colour + '</dd>');
+					dl.append('<dt>Body Type:<dt><dd>' + risk.body_type + '</dd>');
+					dl.append('<dt>Driver Wording:<dt><dd>' + risk.authorized_driver_wording + '</dd>');
+					dl.append('<dt>Excess Description:<dt><dd>' + risk.excess_description + '</dd>');
+					dl.append('<dt>Sum Insured:<dt><dd>' + accounting.formatMoney(risk.sum_insured) + '</dd>');
+
+					panel_body.append(certificateButton);
+					panel_body.append('<h4>Motor Vehicle Details</h4>');
+					panel_body.append(dl);
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					riskAccordion.append(panel_default);
+
 				});
+				//riskAccordion.on('hidden.bs.collapse', toggleChevron);
+				//riskAccordion.on('shown.bs.collapse', toggleChevron);
 			}
 
 			function populateHOCRisks(risks) {
-				var table = $('#risk table');
-				table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
-				var tbody = table.find('tbody').empty();
-				$.each(risks, function (idx, risk) {
-					tbody.append('<tr><td>' + risk.usage_code + '</td><td>' + risk.risk_item_type + '</td><td>' + risk.building_year_built + '</td><td>' + risk.construction_of_roof + '</td><td>' + risk.construction_of_wall + '</td><td>' + risk.height_in_storeys + '</td><td>' + accounting.formatMoney(risk.sum_insured) + '</td><td></td></tr>');
+				var riskAccordion = $('#riskAccordion').empty();
+
+				//table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
+				//var tbody = table.find('tbody').empty();
+				$.each(risks, function(idx, risk) {
+					var riskDetail = "riskDetail" + idx.toString();
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + riskAccordion.attr("id")).attr("href", "#" + riskDetail);
+					panel_toggle.text((idx + 1).toString() + ": Risk: " + risk.risk_item_type);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", riskDetail).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Risk Item Type:<dt><dd>' + risk.risk_item_type + '</dd>');
+					dl.append('<dt>Usage Code:<dt><dd>' + risk.usage_code + '</dd>');
+					dl.append('<dt>Year Built:<dt><dd>' + risk.building_year_built + '</dd>');
+					dl.append('<dt>Construction of Roof:<dt><dd>' + risk.construction_of_roof + '</dd>');
+					dl.append('<dt>Construction of Wall:<dt><dd>' + risk.construction_of_wall + '</dd>');
+					dl.append('<dt>Storeys:<dt><dd>' + risk.height_in_storeys + '</dd>');
+					dl.append('<dt>Sum Insured:<dt><dd>' + accounting.formatMoney(risk.sum_insured) + '</dd>');
+
+
+					panel_body.append('<h4>Risk Details</h4>');
+					panel_body.append(dl);
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					riskAccordion.append(panel_default);
+
 				});
+				//riskAccordion.on('hidden.bs.collapse', toggleChevron);
+				//riskAccordion.on('shown.bs.collapse', toggleChevron);
 			}
 
 
-			$('#gotoPolicies').click(function () {
+			$('#gotoPolicies').click(function() {
 				$('#queryPolicySection').show();
 				$('#viewPolicySection').hide();
 			});
 
 
 
-			$('#policiesTable').on('click', '.select', function (e) {
+			$('#policiesTable').on('click', '.select', function(e) {
 				displayPolicy(e.target.id);
 			});
 
-			$('#searchBtn').click(function () {
+			$('#searchBtn').click(function() {
 				$('#searchColumn').toggle();
 			});
 			//search policies
-			$('#doSearch').click(function () {
+			$('#doSearch').click(function() {
 				doSearch();
 			});
 
 
-			$('#risk table').on('click', '.getCertificate', function (e) {
+			$('#riskAccordion').on('click', '.getCertificate', function(e) {
 				var risk_id = e.target.id;
 				var policy_id = $('#policy_id').val();
 				setLoadingState(true);
-				g_ironrock_service.getCertification(policy_id, risk_id, function (err, data) {
+				g_ironrock_service.getCertification(policy_id, risk_id, function(err, data) {
 					setLoadingState(false);
 					if (err) {
 						bootbox.alert(err);
@@ -415,7 +522,7 @@
 				setLoadingState(true);
 
 				obj = obj || g_ironrock_service;
-				obj.searchQuotes(payload, function (err, quoteList) {
+				obj.searchQuotes(payload, function(err, quoteList) {
 					if (err) {
 						setLoadingState(false);
 						display(err.message, true);
@@ -426,19 +533,20 @@
 						display('No quotes returned!');
 						return;
 					}
-					g_ironrock_service.listBrokers(function (err, data) {
+					g_ironrock_service.listBrokers(function(err, data) {
 						setLoadingState(false);
 						var brokers = JSON.parse(data.Payload);
 						quoteList = ConvertToJson(quoteList);
-						var quotes = quoteList.sort(function (a, b) {
+						var quotes = quoteList.sort(function(a, b) {
 							return b.id - a.id;
 						});
 						// ascending ord
-						$('#policiesTable thead').html('<tr><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th></tr>');
+						$('#policiesTable thead').html(
+							'<tr><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th></tr>');
 						var dlTable = $('#policiesTable tbody').html('');
-						$.each(quotes, function (idx, policy) {
+						$.each(quotes, function(idx, policy) {
 							var brokerName = policy.broker;
-							$.each(brokers, function (i, b) {
+							$.each(brokers, function(i, b) {
 								if (b.code == policy.broker) {
 									brokerName = b.name;
 								}

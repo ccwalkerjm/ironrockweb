@@ -25,6 +25,7 @@ function runQuoteEvents() {
         if (!parseInt(currentQuote.quotation_number))
             delete currentQuote.quotation_number;
         var formData = JSON.stringify(currentQuote);
+        console.log(formData);
         setLoadingState(true);
         g_ironrock_service.submitQuote2(formData, function(err, r) {
             setLoadingState(false);
@@ -69,9 +70,6 @@ function runQuoteEvents() {
     //regular driver
     $('#quote-section').on('click', '#regularDriversBtns .Add', function() {
         var count = $('#regularDriversId').find(".regularDriversCls").length;
-        if (count >= 5) { //clear
-            return;
-        }
         var $this = $('#regularDriversBtns .Add');
         var id = $('#regularDriverQueryID').val();
         GetDriverLicense($this, id, function(err, r) {
@@ -82,7 +80,7 @@ function runQuoteEvents() {
                 $('#regularDriverQueryID').val('');
                 var elementGroup = $('.regularDriversCls:last');
                 if ($('#regularDriversId').is(':visible')) {
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
+                    cloneElement(elementGroup);
                     resetRegularDriver();
                 } else {
                     $('#regularDriversId').show();
@@ -294,12 +292,8 @@ function runQuoteEvents() {
 
 
     $('#vehicle-all-accidents').on('click', '.Add', function() {
-        var count = $('#vehicle-all-accidents').find(".vehicle-accident-block").length;
-        if (count >= 5) { //clear
-            return;
-        }
         var elementGroup = $(this).closest('.vehicle-accident-block');
-        elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+        cloneElement(elementGroup);
         resetAllAccident();
     });
 
@@ -324,12 +318,8 @@ function runQuoteEvents() {
 
     //resetHomeAllRiskArticles
     $('#HomeAllRiskInsured').on('click', '.Add', function() {
-        var count = $('#HomeAllRiskInsured').find(".HomeAllRiskArticles").length;
-        if (count >= 5) { //clear
-            return;
-        }
         var elementGroup = $(this).closest('.HomeAllRiskArticles');
-        elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+        cloneElement(elementGroup);
         resetHomeAllRiskArticles();
         SetHomeAllRiskInsuredValue();
     });
@@ -354,12 +344,8 @@ function runQuoteEvents() {
 
     //HomeInsurance
     $('#homeInsuranceProperty').on('click', '.Add', function() {
-        var count = $('#homeInsuranceProperty').find(".homeInsurancePropertyItems").length;
-        if (count >= 5) { //clear
-            return;
-        }
         var elementGroup = $(this).closest('.homeInsurancePropertyItems');
-        elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+        cloneElement(elementGroup);
         resetHomeInsuranceProperty();
         SetHomeInsuranceValue();
     });
@@ -392,12 +378,8 @@ function runQuoteEvents() {
 
 
     $('#publicofficerelation').on('click', '.Add', function() {
-        var count = $('#publicofficerelation').find(".publicofficerelations").length;
-        if (count >= 5) { //clear
-            return;
-        }
         var elementGroup = $(this).closest('.publicofficerelations');
-        elementGroup.clone().insertAfter(elementGroup).show().find('input:text').val('');
+        cloneElement(elementGroup);
         resetApplicantRelativeInPublicOffice();
     });
 
@@ -864,7 +846,7 @@ function reIndexVehicles() {
 
 
 function loadQuotationLimits($container, limitData) {
-    $container.html('<h4>Note the Policy Limits</h4>');
+    $container.html('');
     var table = $('<table/>'); //data-role="table" class="ui-responsive"
     // table.attr('data-role', "table");
     table.addClass('table');
@@ -875,12 +857,12 @@ function loadQuotationLimits($container, limitData) {
     table.append('<tr><th style="text-align: right;">Total Premium:</th><td style="text-align: right;">' + accounting.formatMoney(limitData.premium_calculation.total_premium) + '</td></tr>');
     table.appendTo($container);
     if (limitData.limits && limitData.limits.length > 0) {
-        var limitHeader = $('<h4/>').text('Limits');
+        var limitHeader = $('<h4/>').text('Your Coverage');
         limitHeader.appendTo($container);
-        var limittable = $('<table/>').addClass('table table-striped').html('<tr><th>Code</th><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
+        var limittable = $('<table/>').addClass('table table-striped').html('<tr><th>Heading</th><th  style="text-align:right">Limit</th><th>Description</th></tr>');
 
         $.each(limitData.limits, function(i, item) {
-            limittable.append('<tr><td>' + item.code + '</td><td>' + item.heading + '</td><td style="text-align:right">' + accounting.formatMoney(item.limit) + '</td><td>' + item.description + '</td></tr>');
+            limittable.append('<tr><td>' + item.heading + '</td><td style="text-align:right">' + accounting.formatMoney(item.limit) + '</td><td>' + item.description + '</td></tr>');
         });
         limittable.appendTo($container);
     }
@@ -1070,11 +1052,11 @@ function SetHomeInsuranceValue() {
 
 //set home insurance values
 function SetContentTotalAmount() {
-  var valList = [];
-  $('#HomeInsuranceContent .article-value').find('input').each(function(index, element) {
-      valList.push($(element).val());
-  });
-  $('#HomeInsuranceContentTotalAmount').val(GetTotal(valList));
+    var valList = [];
+    $('#HomeInsuranceContent .article-value').find('input').each(function(index, element) {
+        valList.push($(element).val());
+    });
+    $('#HomeInsuranceContentTotalAmount').val(GetTotal(valList));
 }
 
 //set accident years
@@ -1155,6 +1137,10 @@ function setVehicleUsedAs(select_value) {
 //load occupations
 function loadOccupations(isMotor) {
     var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+    $('#applicantOccupation').html('<option value=""></option>');
+    if (isMotor) {
+        $('#regularDriversOccupation0').html('<option value=""></option>');
+    }
     $.each(options.occupations.data, function(key, value) {
         $('#applicantOccupation').append('<option value="' + value.occupation.trim() + '">' + value.occupation + '</option>');
         if (isMotor) {
@@ -1276,7 +1262,7 @@ function setRadioDisplay(RadioName, RadioValue) {
     if (displayElement.id) {
         $element = $('#' + displayElement.id);
     } else {
-        $element =  $('.' + displayElement.class);
+        $element = $('.' + displayElement.class);
     }
 
     if (RadioValue == displayElement.defaultValue) {
@@ -1450,8 +1436,12 @@ function loadCountriesOptions() {
     });
 }
 
-
-
+//clone element
+function cloneElement(elementGroup) {
+    var clone = elementGroup.clone().insertAfter(elementGroup);
+    clone.find("input[type=text],input[type=number],textarea").val("");
+    clone.show();
+}
 
 //reset objects
 function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementTitle, showDeleteButtonOnFirstPage) {
@@ -1466,6 +1456,7 @@ function resetObjects(objectList, elementClass, addBtnName, delBtnName, elementT
         //change ids and names
         $.each(objectList, function(j, item) {
             element.find('.' + item.class + ' :input').attr('id', item.name + i).attr('name', item.name + i);
+            element.find('.' + item.class + ' textarea').attr('id', item.name + i).attr('name', item.name + i);
             element.find('.' + item.class + ' label').attr('for', item.name + i);
         });
 
