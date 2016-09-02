@@ -678,11 +678,44 @@ function getSpecificValidation($curStep, $valid) {
                 $('#applicantTRN').closest(".form-group").addClass("has-error");
             }
             break;
+        case 'personal-contact-page':
+            if (!$('#applicantHomeParish').val()) {
+                $valid = false;
+            }
+            if ($('#mailingAddress').is(":visible")) {
+                if (!$('#applicantMailParish').val()) {
+                    $valid = false;
+                }
+                if (!$('#applicantMailTown').val()) {
+                    $valid = false;
+                }
+                if (!$('#applicantMailStreetName').val()) {
+                    $valid = false;
+                }
+            }
+            break;
+        case 'personal-employer-details-page':
+            if (!$('#applicantOccupation').val()) {
+                $valid = false;
+            }
+            break;
         case 'vehicle-particulars-page':
             if ($valid && $('#vehiclesToBeInsured tbody tr').length === 0)
                 $valid = false;
             break;
         case 'vehicle-insurance-coverage-page':
+            switch ($('#insuranceCoverage').val()) {
+                case "ThirdParty":
+                    break;
+                default:
+                    $('#vehiclesToBeInsured .ValueVehicleValue').each(function(i, obj) {
+                        var vehValue = parseFloat($(this).val());
+                        if (!vehValue || vehValue <= 0) {
+                            $valid = false;
+                        }
+                    });
+                    break;
+            }
             break;
         case 'vehicle-driver-details-page':
             break;
@@ -691,6 +724,9 @@ function getSpecificValidation($curStep, $valid) {
         case 'vehicle-medical-history-page':
             break;
         case 'home-particulars-page':
+            if (!$('#homeRiskAddressParish').val()) {
+                $valid = false;
+            }
             break;
         case 'home-particulars-continued-page':
             break;
@@ -1267,6 +1303,7 @@ function setRadioDisplay(RadioName, RadioValue) {
 
     if (RadioValue == displayElement.defaultValue) {
         $element.find('input[type=text],input[type=number],textarea').val('');
+        removeElementsExceptFirst(RadioName);
         $element.hide();
     } else {
         $element.show();
@@ -1441,6 +1478,22 @@ function cloneElement(elementGroup) {
     var clone = elementGroup.clone().insertAfter(elementGroup);
     clone.find("input[type=text],input[type=number],textarea").val("");
     clone.show();
+}
+
+//default Elements
+function removeElementsExceptFirst(RadioName) {
+    switch (RadioName) {
+        case 'applicantRelativeInPublicOffice':
+            $('.publicofficerelations').not(':first').remove();
+            resetApplicantRelativeInPublicOffice();
+            break;
+        case 'involvedInAccident':
+            $('.vehicle-accident-block').not(':first').remove();
+            resetAllAccident();
+            break;
+        default:
+            break;
+    }
 }
 
 //reset objects

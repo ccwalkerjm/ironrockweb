@@ -1547,11 +1547,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressStreetName">Street Name:</label>
-                                            <input class="form-control" type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
+                                            <input required class="form-control" type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressTown">City/Town/Postal Zone:</label>
-                                            <input class="form-control" type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
+                                            <input required class="form-control" type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressParish">Select Parish:</label>
@@ -1589,7 +1589,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressYearBuilt">Year Built:</label>
-                                            <input class="form-control" type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
+                                            <input required class="form-control" type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
                                         </div>
 
 
@@ -3160,7 +3160,7 @@
                 //add second accident
                 if (currentQuote.accidentYear1) {
                     var elementGroup = $('.vehicle-accident-block:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetAllAccident();
                     $('.vehicle-accident-block:last .year input').val(currentQuote.accidentYear1);
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost1);
@@ -3172,7 +3172,7 @@
                 //add third accident
                 if (currentQuote.accidentYear2) {
                     var elementGroup = $('.vehicle-accident-block:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetAllAccident();
                     $('.vehicle-accident-block:last .year input').val(currentQuote.accidentYear2);
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost2);
@@ -3184,7 +3184,7 @@
                 //add fourth accident
                 if (currentQuote.accidentYear3) {
                     var elementGroup = $('.vehicle-accident-block:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetAllAccident();
                     $('.vehicle-accident-block:last .year input').val(currentQuote.accidentYear3);
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost3);
@@ -3196,7 +3196,7 @@
                 //add fifth accident
                 if (currentQuote.accidentYear4) {
                     var elementGroup = $('.vehicle-accident-block:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetAllAccident();
                     $('.vehicle-accident-block:last .year input').val(currentQuote.accidentYear4);
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost4);
@@ -3220,7 +3220,7 @@
                 //add second
                 if (currentQuote.HomeAllRiskArticleDescription1) {
                     var elementGroup = $('.HomeAllRiskArticles:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription1);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue1);
@@ -3230,7 +3230,7 @@
                 //add third
                 if (currentQuote.HomeAllRiskArticleDescription2) {
                     var elementGroup = $('.HomeAllRiskArticles:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription2);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue2);
@@ -3240,7 +3240,7 @@
                 //add fourth
                 if (currentQuote.HomeAllRiskArticleDescription3) {
                     var elementGroup = $('.HomeAllRiskArticles:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription3);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue3);
@@ -3250,7 +3250,7 @@
                 //add fifth
                 if (currentQuote.HomeAllRiskArticleDescription4) {
                     var elementGroup = $('.HomeAllRiskArticles:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription4);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue4);
@@ -3270,7 +3270,7 @@
                 //add second
                 if (currentQuote.homeInsurancePropertyItem1) {
                     var elementGroup = $('.homeInsurancePropertyItems:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem1);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue1);
@@ -3280,7 +3280,7 @@
                 //add third
                 if (currentQuote.homeInsurancePropertyItem2) {
                     var elementGroup = $('.homeInsurancePropertyItems:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem2);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue2);
@@ -3290,7 +3290,7 @@
                 //add fourth
                 if (currentQuote.HomeAllRiskArticleDescription3) {
                     var elementGroup = $('.homeInsurancePropertyItems:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem3);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue3);
@@ -3300,7 +3300,7 @@
                 //add fifth
                 if (currentQuote.HomeAllRiskArticleDescription4) {
                     var elementGroup = $('.homeInsurancePropertyItems:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem4);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue4);
@@ -3323,7 +3323,7 @@
                 //add second
                 if (currentQuote.applicantRelativePublicOffice1) {
                     var elementGroup = $('.publicofficerelations:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetApplicantRelativeInPublicOffice();
                     $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice1);
                     $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName1);
@@ -3334,7 +3334,7 @@
                 //add third
                 if (currentQuote.applicantRelativePublicOffice2) {
                     var elementGroup = $('.publicofficerelations:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetApplicantRelativeInPublicOffice();
                     $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice2);
                     $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName2);
@@ -3345,7 +3345,7 @@
                 //add fourth
                 if (currentQuote.applicantRelativePublicOffice3) {
                     var elementGroup = $('.publicofficerelations:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetApplicantRelativeInPublicOffice();
                     $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice3);
                     $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName3);
@@ -3356,7 +3356,7 @@
                 //add fifth
                 if (currentQuote.applicantRelativePublicOffice4) {
                     var elementGroup = $('.publicofficerelations:last');
-                    elementGroup.clone().insertAfter(elementGroup).show().find('input').val('');
+                    cloneElement(elementGroup);
                     resetApplicantRelativeInPublicOffice();
                     $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice4);
                     $('.publicofficerelations:last .name input').val(currentQuote.applicantRelativePublicName4);
