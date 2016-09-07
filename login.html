@@ -123,28 +123,20 @@
 	<script src="/Scripts/index.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
+		$(document).ready(function() {
 			initPage();
 
 			///login
-			$("#login_submit").click(function (e) {
+			$("#login_submit").click(function(e) {
 				setLoadingState(true);
-				g_ironrock_service = new ironrockcloudservice(function (err, obj) {
+				g_ironrock_service.signoff();
+				g_ironrock_service.signin($('#login_username').val(), $('#login_password').val(), function(err, obj) {
+					setLoadingState(false);
 					if (err) {
-						setLoadingState(false);
 						display(err.message, true);
 					} else {
-						obj.signoff();
-						obj.signin($('#login_username').val(), $('#login_password').val(), function (err, obj) {
-							setLoadingState(false);
-							if (err) {
-								display(err.message, true);
-							} else {
-								location.href = "/dashboard.html";
-							}
-						});
+						location.href = "/dashboard.html";
 					}
-
 				});
 			});
 
