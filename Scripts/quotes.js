@@ -159,6 +159,7 @@ function runQuoteEvents() {
     $('#quote-section').on("click", '#GetTaxOfficeVehicleDialog', function() {
         $('#queryVehicleAdd').hide();
         $('#queryVehicleSearch').show();
+        $('#add-vehicle-seperator').show();
         $('#taxOfficeQueryManualEntry').hide();
         $('#QueryVehicleRegistrationNo').val('');
         $('#QueryVehicleChassisNo').val('');
@@ -210,6 +211,7 @@ function runQuoteEvents() {
         }
 
         insertVehicle(r);
+        $('#taxOfficeVehicleDialog').modal('hide');
     });
 
 
@@ -242,6 +244,7 @@ function runQuoteEvents() {
                         $('#queryVehicleAdd').show();
                         $('#queryVehicleSearch').hide();
                         $('#taxOfficeQueryManualEntry').show();
+                        $('#add-vehicle-seperator').hide();
                         loadVehicleMakes();
                         loadVehicleModels();
                         loadBodyTypes();
@@ -1139,7 +1142,6 @@ function setVehicleUsedAs(select_value) {
         case "CarriageOwnGoods": //private commercial
         case "CarriagePassengersNotHire": //private commercial
         case "CarriagePassengersHire": //private commercial
-        case "CommercialTravelling": //private commercial
             $('#23YearsOldPrivateCommercial').show();
             $('#36MonthGeneralLicense').show();
             $('#25yearsOldGeneral').hide();
@@ -1155,6 +1157,7 @@ function setVehicleUsedAs(select_value) {
             $('#21YearsPrivateCars').hide();
             $('#24MonthsPrivateLicense').hide();
             break;
+        case "CommercialTravelling": //private commercial
         case "SocialDomesticPleasure": //private car
         case "SocialDomesticPleasureBusiness": //private car
             $('#21YearsPrivateCars').show();
