@@ -1118,9 +1118,20 @@ var ironrockcloudservice = (function () {
 	};
 
 	//get finance institution codes
-	ironrockcloudservice.prototype.getFinanceInstitutions = function (callback) {		
+	ironrockcloudservice.prototype.getFinanceInstitutions = function (callback) {
 		var params = {
 			FunctionName: 'IronRockGetFinanceCodes'
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+	//get Mortgagees
+	ironrockcloudservice.prototype.getMortgagees = function (callback) {		
+		var params = {
+			FunctionName: 'ironrockGetMortgagees'
 		};
 		var _lambda = new AWS.Lambda();
 		_lambda.invoke(params, function (err, results) {

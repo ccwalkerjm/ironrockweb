@@ -585,7 +585,7 @@ function LoadSettings(insuranceType, callback) {
 }
 
 function loadFinanceCodes(insuranceType, callback) {
-    g_ironrock_service.getFinanceInstitutions(function(err, r) {
+    g_ironrock_service.getMortgagees(function(err, r) {
         if (err) {
             callback(err);
         } else {
@@ -594,12 +594,11 @@ function loadFinanceCodes(insuranceType, callback) {
             if (!data.success) {
                 callback(new Error(data.error_message));
             } else {
-                var codes = data.company_codes;
-                console.log(codes);
+                //var codes = data.company_codes;                
                 var $selectIdString = insuranceType == "motor" ? "motorFinancialInstitutionCode" : "homeFinancialInstitutionCode";
                 var $select = $('#' + $selectIdString).html('<option value="">None</Option>');
-                $.each(codes, function(idx, code) {
-                    $select.append('<option value="' + code + '">' + code + '</option>');
+                $.each(data.mortgagees, function(idx, company) {
+                    $select.append('<option value="' + company.global_name_id + '">' + company.name + '</option>');
                 });
                 callback();
             }
