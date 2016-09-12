@@ -73,6 +73,7 @@
 								<tr>
 									<th>Code</th>
 									<th>Name</th>
+									<th>Broker One</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -124,6 +125,16 @@
 										<label class="control-label col-sm-3" for="source_id">Source Id:</label>
 										<div class="col-sm-9">
 											<input type="text" class="form-control" id="source_id" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-3" for="brokerOne">Broker One:</label>
+										<div class="col-sm-9">
+											<select class="form-control" id="brokerOne">
+												<option value="false">False</option>
+												<option value="true">True</option>
+											</select>
 										</div>
 									</div>
 
@@ -240,267 +251,304 @@
 			</div>
 		</div>
 
+	</div>
+
+	<script src="/Scripts/bootbox.js"></script>
+	<!--Required Libraries-->
+	<script src="/Scripts/aws/jsbn.js"></script>
+	<script src="/Scripts/aws/jsbn2.js"></script>
+	<script src="/Scripts/aws/sjcl.js"></script>
+	<script src="/Scripts/aws/moment.min.js"></script>
+	<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+	<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+	<script src="/Scripts/aws/aws-sdk-2.3.19.min.js"></script>
+	<!--Iron Rock Custom Library-->
+	<script src="/Scripts/ironrockcloudservice.js"></script>
+	<script src="/Scripts/index.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			initPage(function(err, obj) {
+				listBrokers(obj);
+			});
 
 
-		<script src="/Scripts/bootbox.js"></script>
-		<!--Required Libraries-->
-		<script src="/Scripts/aws/jsbn.js"></script>
-		<script src="/Scripts/aws/jsbn2.js"></script>
-		<script src="/Scripts/aws/sjcl.js"></script>
-		<script src="/Scripts/aws/moment.min.js"></script>
-		<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
-		<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
-		<script src="/Scripts/aws/aws-sdk-2.3.19.min.js"></script>
-		<!--Iron Rock Custom Library-->
-		<script src="/Scripts/ironrockcloudservice.js"></script>
-		<script src="/Scripts/index.js"></script>
+			//motor vehicle manual rates
+			$('#manual-add').click(function() {
+				var manual_name = $('#manual-name').val();
+				var manual_value = $('#manual-value').val();
 
-		<script type="text/javascript">
-			$(document).ready(function () {
-				initPage(function (err, obj) {
-					listBrokers(obj);
-				});
+				var validEntry = true;
 
-
-				//motor vehicle manual rates
-				$('#manual-add').click(function () {
-					var manual_name = $('#manual-name').val();
-					var manual_value = $('#manual-value').val();
-
-					var validEntry = true;
-
-					if (!manual_name || !manual_value) {
-						alert('Blank Entry!');
+				if (!manual_name || !manual_value) {
+					alert('Blank Entry!');
+					validEntry = false;
+				}
+				//check if name already exist
+				$.each($('#manual-rates-body').find('tr'), function(idx, tr) {
+					var x_name = $(tr).find('td').eq(0).text();
+					if (manual_name == x_name) {
+						alert('Duplicate Entry!');
 						validEntry = false;
-					}
-					//check if name already exist
-					$.each($('#manual-rates-body').find('tr'), function (idx, tr) {
-						var x_name = $(tr).find('td').eq(0).text();
-						if (manual_name == x_name) {
-							alert('Duplicate Entry!');
-							validEntry = false;
-							return;
-						}
-					});
-					if (validEntry) {
-						var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
-						$('#manual-rates-body').prepend(newEntry);
-						$('#manual-name').val('');
-						$('#manual-value').val('');
+						return;
 					}
 				});
+				if (validEntry) {
+					var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+					$('#manual-rates-body').prepend(newEntry);
+					$('#manual-name').val('');
+					$('#manual-value').val('');
+				}
+			});
 
-				$('#manual-rates-body').on('click', '.manual-delete', function (e) {
-					$(this).parent().parent().remove();
-				});
+			$('#manual-rates-body').on('click', '.manual-delete', function(e) {
+				$(this).parent().parent().remove();
+			});
 
-				//Home Ownership manual rates
-				$('#hoc-manual-add').click(function () {
-					var manual_name = $('#hoc-manual-name').val();
-					var manual_value = $('#hoc-manual-value').val();
+			//Home Ownership manual rates
+			$('#hoc-manual-add').click(function() {
+				var manual_name = $('#hoc-manual-name').val();
+				var manual_value = $('#hoc-manual-value').val();
 
-					var validEntry = true;
+				var validEntry = true;
 
-					if (!manual_name || !manual_value) {
-						alert('Blank Entry!');
+				if (!manual_name || !manual_value) {
+					alert('Blank Entry!');
+					validEntry = false;
+				}
+				//check if name already exist
+				$.each($('#hoc-manual-rates-body').find('tr'), function(idx, tr) {
+					var x_name = $(tr).find('td').eq(0).text();
+					if (manual_name == x_name) {
+						alert('Duplicate Entry!');
 						validEntry = false;
-					}
-					//check if name already exist
-					$.each($('#hoc-manual-rates-body').find('tr'), function (idx, tr) {
-						var x_name = $(tr).find('td').eq(0).text();
-						if (manual_name == x_name) {
-							alert('Duplicate Entry!');
-							validEntry = false;
-							return;
-						}
-					});
-					if (validEntry) {
-						var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
-						$('#hoc-manual-rates-body').prepend(newEntry);
-						$('#hoc-manual-name').val('');
-						$('#hoc-manual-value').val('');
+						return;
 					}
 				});
+				if (validEntry) {
+					var newEntry = '<tr><td>' + manual_name + '</td><td>' + manual_value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+					$('#hoc-manual-rates-body').prepend(newEntry);
+					$('#hoc-manual-name').val('');
+					$('#hoc-manual-value').val('');
+				}
+			});
 
-				$('#hoc-manual-rates-body').on('click', '.manual-delete', function (e) {
-					$(this).parent().parent().remove();
+			$('#hoc-manual-rates-body').on('click', '.manual-delete', function(e) {
+				$(this).parent().parent().remove();
+			});
+
+			//common functions for manual rates
+			function getManualRates(tbody) {
+				var manual_rates = [];
+				var rows = tbody.children();
+				$.each(rows, function(idx, tr) {
+					if (idx == rows.length - 1) {
+						return false;
+					}
+					var manual_rate_entry = {};
+					manual_rate_entry.name = $(tr).find('td').eq(0).text();
+					manual_rate_entry.value = $(tr).find('td').eq(1).text();
+					manual_rates.push(manual_rate_entry);
 				});
+				return manual_rates;
+			}
 
-				//common functions for manual rates
-				function getManualRates(tbody) {
-					var manual_rates = [];
-					var rows = tbody.children();
-					$.each(rows, function (idx, tr) {
-						if (idx == rows.length - 1) {
-							return false;
-						}
-						var manual_rate_entry = {};
-						manual_rate_entry.name = $(tr).find('td').eq(0).text();
-						manual_rate_entry.value = $(tr).find('td').eq(1).text();
-						manual_rates.push(manual_rate_entry);
-					});
-					return manual_rates;
+			function populateManualRates(manualRates, tbody) {
+				tbody.children().not(":last").remove();
+				$.each(manualRates, function(idx, entry) {
+					var newEntry = '<tr><td>' + entry.name + '</td><td>' + entry.value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
+					tbody.prepend(newEntry);
+				});
+			}
+
+
+
+
+
+			$('#create-broker').click(function() {
+				var dataInput = {};
+				dataInput.code = $('#code').val().toUpperCase();
+				dataInput.name = $('#name').val();
+				dataInput.trn = $('#trn').val();
+				dataInput.source_id = $('#source_id').val();
+				dataInput.brokerOne = $('#brokerOne').val() === 'true';
+				dataInput.logo = $('#imgLogo').attr('src');
+				dataInput.manual_rates = getManualRates($('#manual-rates-body'));
+				dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
+				if (!(dataInput.code).match(/[a-z]/i)) {
+					alert('Code must contain letters only');
+					return;
 				}
 
-				function populateManualRates(manualRates, tbody) {
-					tbody.children().not(":last").remove();
-					$.each(manualRates, function (idx, entry) {
-						var newEntry = '<tr><td>' + entry.name + '</td><td>' + entry.value + '</td><td><button type="text" class="btn btn-link manual-delete">Del</button></td></tr>';
-						tbody.prepend(newEntry);
+				if (!dataInput.code || !dataInput.name || !dataInput.trn) {
+					alert('Code,Name or TRN cannot be null!');
+					return;
+				}
+				if (!dataInput.logo) {
+					dataInput.logo = '#';
+				}
+				setLoadingState(true);
+				g_ironrock_service.createBroker(dataInput, function(err, data) {
+					setLoadingState(false);
+					if (!err) data = JSON.parse(data.Payload);
+					if (err || data.errorMessage || data.error_message) {
+						if (err) display(err.message, true);
+						else if (data.errorMessage) display(data.errorMessage, true);
+						else if (data.error_message) display(data.error_message, true);
+						else display("Error Detected", true);
+						return;
+					}
+					$('#brokerModal').modal('hide');
+					listBrokers();
+				});
+			});
+
+
+			$('#update-broker').click(function() {
+				var dataInput = {};
+				dataInput.code = $('#code').val();
+				dataInput.name = $('#name').val();
+				dataInput.trn = $('#trn').val();
+				dataInput.source_id = $('#source_id').val();
+				dataInput.brokerOne = $('#brokerOne').val() === 'true';
+				dataInput.logo = $('#imgLogo').attr('src');
+				dataInput.manual_rates = getManualRates($('#manual-rates-body'));
+				dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
+				if (!dataInput.code || !dataInput.name || !dataInput.trn) {
+					alert('Code,Name or TRN cannot be null!');
+					return;
+				}
+				if (!dataInput.logo) {
+					dataInput.logo = '#';
+				}
+				setLoadingState(true);
+				g_ironrock_service.modifyBroker(dataInput, function(err, data) {
+					setLoadingState(false);
+					if (!err) data = JSON.parse(data.Payload);
+					if (err || data.errorMessage || data.error_message) {
+						if (err) display(err.message, true);
+						else if (data.errorMessage) display(data.errorMessage, true);
+						else if (data.error_message) display(data.error_message, true);
+						else display("Error Detected", true);
+						return;
+					}
+					$('#brokerModal').modal('hide');
+					listBrokers();
+				});
+			});
+
+
+			$('#delete-broker').click(function() {
+				if (confirm('Are you sure?')) {
+					var code = $('#code').val();
+					setLoadingState(true);
+					g_ironrock_service.deleteBroker(code, function(err, data) {
+						setLoadingState(false);
+						if (!err) data = JSON.parse(data.Payload);
+						if (err || data.errorMessage || data.error_message) {
+							if (err) display(err.message, true);
+							else if (data.errorMessage) display(data.errorMessage, true);
+							else if (data.error_message) display(data.error_message, true);
+							else display("Error Detected", true);
+							return;
+						}
+						listBrokers();
+						$('#brokerModal').modal('hide');
 					});
 				}
+			});
 
 
+			$('#btnCreateBroker').click(function() {
+				$('#code').val('').prop('readonly', false);
+				$('#name').val('').prop('readonly', false);
+				$('#trn').val('').prop('readonly', false);
+				$('#imgLogo').attr('src', '');
+				$("#inpLogo").val('');
+				$('#source_id').val('');
+				$('#brokerOne').val('false');
+				$('#globalName').val('');
+				populateManualRates([], $('#manual-rates-body'));
+				populateManualRates([], $('#hoc-manual-rates-body'));
+				$('#update-broker').hide();
+				$('#delete-broker').hide();
+				$('#create-broker').show();
+				$('#brokerModal .modal-title').text('Create Broker');
+				$('#brokerModal').modal('show');
+			});
 
-
-
-				$('#create-broker').click(function () {
-					var dataInput = {};
-					dataInput.code = $('#code').val().toUpperCase();
-					dataInput.name = $('#name').val();
-					dataInput.trn = $('#trn').val();
-					dataInput.source_id = $('#source_id').val();
-					dataInput.logo = $('#imgLogo').attr('src');
-					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
-					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
-					if (!(dataInput.code).match(/[a-z]/i)) {
-						alert('Code must contain letters only');
+			$('#brokerTable tbody').on('click', '.select', function(e) {
+				var id = e.target.id;
+				setLoadingState(true);
+				g_ironrock_service.getBroker(id, function(err, data) {
+					setLoadingState(false);
+					if (!err) data = JSON.parse(data.Payload);
+					if (err || data.errorMessage || data.error_message) {
+						if (err) display(err.message, true);
+						else if (data.errorMessage) display(data.errorMessage, true);
+						else if (data.error_message) display(data.error_message, true);
+						else display("Error Detected", true);
 						return;
 					}
-
-					if (!dataInput.code || !dataInput.name || !dataInput.trn) {
-						alert('Code,Name or TRN cannot be null!');
-						return;
-					}
-					if (!dataInput.logo) {
-						dataInput.logo = '#';
-					}
-					setLoadingState(true);
-					g_ironrock_service.createBroker(dataInput, function (err, data) {
-						setLoadingState(false);
-						$('#brokerModal').modal('hide');
-						listBrokers();
-					});
-				});
-
-
-				$('#update-broker').click(function () {
-					var dataInput = {};
-					dataInput.code = $('#code').val();
-					dataInput.name = $('#name').val();
-					dataInput.trn = $('#trn').val();
-					dataInput.source_id = $('#source_id').val();
-					dataInput.logo = $('#imgLogo').attr('src');
-					dataInput.manual_rates = getManualRates($('#manual-rates-body'));
-					dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
-					if (!dataInput.code || !dataInput.name || !dataInput.trn) {
-						alert('Code,Name or TRN cannot be null!');
-						return;
-					}
-					if (!dataInput.logo) {
-						dataInput.logo = '#';
-					}
-					setLoadingState(true);
-					g_ironrock_service.modifyBroker(dataInput, function (err, data) {
-						setLoadingState(false);
-						$('#brokerModal').modal('hide');
-						listBrokers();
-					});
-				});
-
-
-				$('#delete-broker').click(function () {
-					if (confirm('Are you sure?')) {
-						var code = $('#code').val();
-						setLoadingState(true);
-						g_ironrock_service.deleteBroker(code, function (err, data) {
-							setLoadingState(false);
-							listBrokers();
-							$('#brokerModal').modal('hide');
-						});
-					}
-				});
-
-
-				$('#btnCreateBroker').click(function () {
-					$('#code').val('').prop('readonly', false);
-					$('#name').val('').prop('readonly', false);
-					$('#trn').val('').prop('readonly', false);
-					$('#imgLogo').attr('src', '');
+					var item = data;
+					$('#code').val(item.code).prop('readonly', true);
+					$('#name').val(item.name);
+					$('#trn').val(item.trn);
+					$('#source_id').val(item.source_id);
+					$('#brokerOne').val(item.brokerOne.toString());
+					$('#globalName').val(item.globalName);
+					$('#imgLogo').attr('src', item.logo);
 					$("#inpLogo").val('');
-					$('#source_id').val('');
-					$('#globalName').val('');
-					populateManualRates([], $('#manual-rates-body'));
-					populateManualRates([], $('#hoc-manual-rates-body'));
-					$('#update-broker').hide();
-					$('#delete-broker').hide();
-					$('#create-broker').show();
-					$('#brokerModal .modal-title').text('Create Broker');
+					populateManualRates(item.manual_rates, $('#manual-rates-body'));
+					populateManualRates(item.hoc_manual_rates, $('#hoc-manual-rates-body'));
+					$('#update-broker').show();
+					$('#create-broker').hide();
+					$('#delete-broker').show();
+					$('#brokerModal .modal-title').text('Manage Broker');
 					$('#brokerModal').modal('show');
 				});
-
-				$('#brokerTable tbody').on('click', '.select', function (e) {
-					var id = e.target.id;
-					setLoadingState(true);
-					g_ironrock_service.getBroker(id, function (err, data) {
-						setLoadingState(false);
-						var item = JSON.parse(data.Payload);
-						$('#code').val(item.code).prop('readonly', true);
-						$('#name').val(item.name);
-						$('#trn').val(item.trn);
-						$('#source_id').val(item.source_id);
-						$('#globalName').val(item.globalName);
-						$('#imgLogo').attr('src', item.logo);
-						$("#inpLogo").val('');
-						populateManualRates(item.manual_rates, $('#manual-rates-body'));
-						populateManualRates(item.hoc_manual_rates, $('#hoc-manual-rates-body'));
-						$('#update-broker').show();
-						$('#create-broker').hide();
-						$('#delete-broker').show();
-						$('#brokerModal .modal-title').text('Manage Broker');
-						$('#brokerModal').modal('show');
-					});
-				});
-
-				$("#inpLogo").change(function () {
-					readImgLogoURL(this);
-				});
-
-				function readImgLogoURL(input) {
-
-					if (input.files && input.files[0]) {
-						var reader = new FileReader();
-
-						reader.onload = function (e) {
-							$('#imgLogo').attr('src', e.target.result);
-						};
-						reader.readAsDataURL(input.files[0]);
-					}
-				}
-
-				function listBrokers(obj) {
-					setLoadingState(true);
-					obj = obj ? obj : g_ironrock_service;
-					obj.listBrokers(function (err, data) {
-						setLoadingState(false);
-						if (err) {
-							display(err.message, err);
-							return;
-						}
-						var tcontent = $('#brokerTable tbody').html('');
-						var items = JSON.parse(data.Payload);
-						$.each(items, function (idx, val) {
-							tcontent.append('<tr><td>' + val.code +
-								'</td><td>' + val.name +
-								'</td><td><button type="button" id="' + val.code +
-								'" class="btn btn-link select">Select</button></td></tr>');
-						});
-					});
-				}
-
-
 			});
-		</script>
+
+			$("#inpLogo").change(function() {
+				readImgLogoURL(this);
+			});
+
+			function readImgLogoURL(input) {
+
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function(e) {
+						$('#imgLogo').attr('src', e.target.result);
+					};
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+
+			function listBrokers(obj) {
+				setLoadingState(true);
+				obj = obj ? obj : g_ironrock_service;
+				obj.listBrokers(function(err, data) {
+					setLoadingState(false);
+					if (err) {
+						display(err.message, err);
+						return;
+					}
+					var tcontent = $('#brokerTable tbody').html('');
+					var items = JSON.parse(data.Payload);
+					$.each(items, function(idx, val) {
+						tcontent.append('<tr><td>' + val.code +
+							'</td><td>' + val.name +
+							'</td><td>' + val.brokerOne.toString() +
+							'</td><td><button type="button" id="' + val.code +
+							'" class="btn btn-link select">Select</button></td></tr>');
+					});
+				});
+			}
+
+
+		});
+	</script>
 
 
 

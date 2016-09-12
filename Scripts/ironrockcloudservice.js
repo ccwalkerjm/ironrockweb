@@ -71,7 +71,7 @@ var ironrockcloudservice = (function () {
 		if (profile)
 			profile = JSON.parse(profile);
 		return profile;
-	}
+	};
 
 
 	//get user
@@ -1129,7 +1129,7 @@ var ironrockcloudservice = (function () {
 	};
 
 	//get Mortgagees
-	ironrockcloudservice.prototype.getMortgagees = function (callback) {		
+	ironrockcloudservice.prototype.getMortgagees = function (callback) {
 		var params = {
 			FunctionName: 'ironrockGetMortgagees'
 		};
