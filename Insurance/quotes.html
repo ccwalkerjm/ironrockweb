@@ -2927,8 +2927,9 @@
                 $('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
                 $('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
                 $('#applicantHomeStreetName').val(currentQuote.applicantHomeStreetName);
-                $('#applicantHomeTown').val(currentQuote.applicantHomeTown);
                 $('#applicantHomeParish').val(currentQuote.applicantHomeParish);
+                setTown('applicantHomeParish', $('#applicantHomeParish').val());
+                $('#applicantHomeTown').val(currentQuote.applicantHomeTown);
                 $('#applicantHomePostalCode').val(currentQuote.applicantHomePostalCode);
                 $('#applicantHomeState').val(currentQuote.applicantHomeState);
                 $('#applicantHomeCountry').val(currentQuote.applicantHomeCountry);
@@ -2938,8 +2939,9 @@
                 $('#mailingAddressSame').val(currentQuote.mailingAddressSame);
                 $('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
                 $('#applicantMailStreetName').val(currentQuote.applicantMailStreetName);
-                $('#applicantMailTown').val(currentQuote.applicantMailTown);
                 $('#applicantMailParish').val(currentQuote.applicantMailParish);
+                setTown('applicantMailParish', $('#applicantMailParish').val());
+                $('#applicantMailTown').val(currentQuote.applicantMailTown);
                 $('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
                 $('#applicantMailState').val(currentQuote.applicantMailState);
                 $('#applicantMailCountry').val(currentQuote.applicantMailCountry);
@@ -2948,8 +2950,10 @@
                 $('#applicantOccupation').val(currentQuote.applicantOccupation);
                 $('#employerName').val(currentQuote.employerName);
                 $('#employerStreetName').val(currentQuote.employerStreetName);
-                $('#employerTown').val(currentQuote.employerTown);
+
                 $('#employerParish').val(currentQuote.employerParish);
+                setTown('employerParish', $('#employerParish').val());
+                $('#employerTown').val(currentQuote.employerTown);
                 $('#employerPostalCode').val(currentQuote.employerPostalCode);
                 $('#employerState').val(currentQuote.employerState);
                 $('#employerNationality').val(currentQuote.employerNationality);
@@ -3030,8 +3034,9 @@
             var populateHomeProperty = function() {
                 $('#homeRiskAddressStreetNo').val(currentQuote.homeRiskAddressStreetNo);
                 $('#homeRiskAddressStreetName').val(currentQuote.homeRiskAddressStreetName);
-                $('#homeRiskAddressTown').val(currentQuote.homeRiskAddressTown);
                 $('#homeRiskAddressParish').val(currentQuote.homeRiskAddressParish);
+                setTown('homeRiskAddressParish', $('#homeRiskAddressParish').val());
+                $('#homeRiskAddressTown').val(currentQuote.homeRiskAddressTown);
                 $('#homeType').val(currentQuote.homeType);
                 $('#homeRiskAddressStoreys').val(currentQuote.homeRiskAddressStoreys);
                 $('#homeRiskAddressYearBuilt').val(currentQuote.homeRiskAddressYearBuilt);
