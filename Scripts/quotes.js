@@ -288,73 +288,12 @@ function runQuoteEvents() {
     });
 
 
-    $('#employerParish').change(function() {
-        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
-        var towns;
-        var parish = $(this).val();
-        $.each(options.ParishTowns.data, function(i, json) {
-            if (parish == json.parish) {
-                towns = json.towns;
-            }
-        });
-        if (towns) {
-            var $select = $('#employerTown').empty();
-            $.each(towns, function(idx, value) {
-                $select.append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
+    $('.parish').change(function() {
+        var parishValue = $(this).val();
+        var parishId = $(this).attr("id");
+        setTown(parishId, parishValue);
     });
 
-    $('#homeRiskAddressParish').change(function() {
-        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
-        var towns;
-        var parish = $(this).val();
-        $.each(options.ParishTowns.data, function(i, json) {
-            if (parish == json.parish) {
-                towns = json.towns;
-            }
-        });
-        if (towns) {
-            var $select = $('#homeRiskAddressTown').empty();
-            $.each(towns, function(idx, value) {
-                $select.append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
-    });
-
-    $('#applicantHomeParish').change(function() {
-        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
-        var towns;
-        var parish = $(this).val();
-        $.each(options.ParishTowns.data, function(i, json) {
-            if (parish == json.parish) {
-                towns = json.towns;
-            }
-        });
-        if (towns) {
-            var $select = $('#applicantHomeTown').empty();
-            $.each(towns, function(idx, value) {
-                $select.append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
-    });
-
-    $('#applicantMailParish').change(function() {
-        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
-        var towns;
-        var parish = $(this).val();
-        $.each(options.ParishTowns.data, function(i, json) {
-            if (parish == json.parish) {
-                towns = json.towns;
-            }
-        });
-        if (towns) {
-            var $select = $('#applicantMailParish').empty();
-            $.each(towns, function(idx, value) {
-                $select.append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
-    });
 
 
     $('#insuranceCoverage').change(function() {
@@ -664,11 +603,12 @@ function setSettings(insuranceType) {
     //load countries
     loadCountriesOptions();
     loadParishes();
-    $('#employerParish').trigger("select");
-    $('#applicantHomeParish').trigger("select");
-    $('#applicantMailParish').trigger("select");
+
+    setTown('employerParish', $('#employerParish').val());
+    setTown('applicantHomeParish', $('#applicantHomeParish').val());
+    setTown('applicantMailParish', $('#applicantMailParish').val());
     if (insuranceType != "motor")
-        $('#homeRiskAddressParish').trigger("select");
+        setTown('homeRiskAddressParish', $('#homeRiskAddressParish').val());
     loadOccupations(insuranceType == "motor");
 
     if (insuranceType != "motor") {
@@ -1147,6 +1087,37 @@ function display(message, err) {
     _$message.html(message).fadeIn().delay(10000).fadeOut();
 }
 
+//set towns
+function setTown(parishId, parishValue) {
+    var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+    var towns;
+    var townId;
+    switch (parishId) {
+        case 'applicantMailParish':
+            townId = 'applicantMailTown';
+            break;
+        case 'employerParish':
+            townId = 'employerTown';
+            break;
+        case 'homeRiskAddressParish':
+            townId = 'homeRiskAddressTown';
+            break;
+        case 'applicantHomeParish':
+            townId = 'applicantHomeTown';
+            break;
+    }
+    $.each(options.ParishTowns.data, function(i, json) {
+        if (parishValue == json.parish) {
+            towns = json.towns;
+        }
+    });
+    if (towns) {
+        var $select = $('#' + townId).empty();
+        $.each(towns, function(idx, value) {
+            $select.append('<option value="' + value + '">' + value + '</option>');
+        });
+    }
+}
 
 
 ////miscellaneous functions
