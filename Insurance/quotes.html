@@ -2640,10 +2640,34 @@
 
 
             $('#quote-section').on('click', '#convertToPolicy', function() {
-                $('#policyStartDate').val(currentQuote.startDate);
-                $('#signedDate').val(currentQuote.startDate);
+                var signedDate = new Date(currentQuote.startDate);
+                var policyDate = new Date(currentQuote.startDate);
+                var currentDate = new Date();
+
+                if(signedDate > currentDate){
+                  signedDate = currentDate;
+                }
+
+                if(policyDate < currentDate){
+                  policyDate = currentDate;
+                }
+
+                $('#policyStartDate').val(formatDate(policyDate));
+                $('#signedDate').val(formatDate(signedDate));
                 $('#convertToPolicyModal').modal('show');
             });
+
+            function formatDate(date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
 
             $('#convertToPolicyModal').on('click', '#createPolicy', function() {
                 setLoadingState(true);
