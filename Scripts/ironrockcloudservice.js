@@ -695,7 +695,7 @@ var ironrockcloudservice = (function () {
 	//get misc
 	ironrockcloudservice.prototype.getMiscOptions = function (callback) {
 		var params = {
-			FunctionName: 'ironrock-misc:2',
+			FunctionName: 'ironrockGetMiscData',
 			Payload: null
 		};
 		var _lambda = new AWS.Lambda();
@@ -1132,6 +1132,19 @@ var ironrockcloudservice = (function () {
 	ironrockcloudservice.prototype.getMortgagees = function (callback) {
 		var params = {
 			FunctionName: 'ironrockGetMortgagees'
+		};
+		var _lambda = new AWS.Lambda();
+		_lambda.invoke(params, function (err, results) {
+			callback(err, results);
+		});
+	};
+
+	//get
+	//get Mortgagees
+	ironrockcloudservice.prototype.pushTransaction = function (payload, callback) {
+		var params = {
+			FunctionName: 'ironRockPushTransaction',
+			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
 		_lambda.invoke(params, function (err, results) {

@@ -287,6 +287,96 @@ function runQuoteEvents() {
         }
     });
 
+
+    $('#employerParish').change(function() {
+        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+        var towns;
+        var parish = $(this).val();
+        $.each(options.ParishTowns.data, function(i, json) {
+            if (parish == json.parish) {
+                towns = json.towns;
+            }
+        });
+        if (towns) {
+            var $select = $('#employerTown').empty();
+            $.each(towns, function(idx, value) {
+                $select.append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+    });
+
+    $('#homeRiskAddressParish').change(function() {
+        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+        var towns;
+        var parish = $(this).val();
+        $.each(options.ParishTowns.data, function(i, json) {
+            if (parish == json.parish) {
+                towns = json.towns;
+            }
+        });
+        if (towns) {
+            var $select = $('#homeRiskAddressTown').empty();
+            $.each(towns, function(idx, value) {
+                $select.append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+    });
+
+    $('#applicantHomeParish').change(function() {
+        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+        var towns;
+        var parish = $(this).val();
+        $.each(options.ParishTowns.data, function(i, json) {
+            if (parish == json.parish) {
+                towns = json.towns;
+            }
+        });
+        if (towns) {
+            var $select = $('#applicantHomeTown').empty();
+            $.each(towns, function(idx, value) {
+                $select.append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+    });
+
+    $('#applicantMailParish').change(function() {
+        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+        var towns;
+        var parish = $(this).val();
+        $.each(options.ParishTowns.data, function(i, json) {
+            if (parish == json.parish) {
+                towns = json.towns;
+            }
+        });
+        if (towns) {
+            var $select = $('#applicantMailParish').empty();
+            $.each(towns, function(idx, value) {
+                $select.append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+    });
+
+
+    $('#insuranceCoverage').change(function() {
+        var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+        var usages;
+        switch ($(this).val()) {
+            case "mpc":
+                usages = options.usagelist_mpc;
+                break;
+            case "mptft":
+                usages = options.usagelist_mptft;
+                break;
+            case "mpt":
+                usages = options.usagelist_mpt;
+                break;
+        }
+        var $select = $('#vehicleUsedAs').empty();
+        $.each(usages.data, function(idx, value) {
+            $select.append('<option value="' + value.code + '">' + value.description + '</option>');
+        });
+    });
+
     //vehicle Used As
     $('#vehicleUsedAs').change(function() {
         var select_value = $(this).val();
@@ -402,7 +492,7 @@ function runQuoteEvents() {
 
     $('#applicantHomeCountry').change(function() {
         var select_value = $(this).val();
-        if (select_value == "JM") {
+        if (select_value == "Jamaica") {
             $('#homeAddress .jamaica').show();
             $('#homeAddress .international').hide();
         } else {
@@ -414,7 +504,7 @@ function runQuoteEvents() {
 
     $('#applicantMailCountry').change(function() {
         var select_value = $(this).val();
-        if (select_value == "JM") {
+        if (select_value == "Jamaica") {
             $('#mailingAddress').find('.jamaica').show();
             $('#mailingAddress').find('.international').hide();
         } else {
@@ -426,7 +516,7 @@ function runQuoteEvents() {
 
     $('#employerNationality').change(function() {
         var select_value = $(this).val();
-        if (select_value == "JM") {
+        if (select_value == "Jamaica") {
             $('#employer').find('.jamaica').show();
             $('#employer').find('.international').hide();
         } else {
@@ -532,79 +622,68 @@ function cleanUpPages(insuranceType) {
 }
 
 
-//do wizard and load settings
 function LoadSettings(insuranceType, callback) {
+    var timeInDay = 1000 * 60 * 60 * 24;
+    var d = new Date();
+    var currentTimeStamp = d.getTime();
+
     //     $('#quote-wizard').bootstrapWizard();
     var prelimData = localStorage.getItem(_IronRockPreliminaryData);
-    if (prelimData && prelimData != "null") {
-        setVehicleUsedAs("SocialDomesticPleasure");
-        //vehicle-all-accidents
-        setAllAccidentsYears();
-        //set Last Three Years of Ownership()
-        setLastThreeYearsOwnership();
-        //load countries
-        loadCountriesOptions();
-        loadOccupations(insuranceType == "motor");
-        if (insuranceType != "motor") {
-            loadRoofWallsTypes();
+
+    if (prelimData) {
+        prelimData = ConvertToJson(prelimData);
+        var lastStored = parseInt(prelimData.timeUpdated) || 0;
+        if (lastStored + timeInDay > currentTimeStamp) {
+            setSettings(insuranceType);
+            return callback();
         }
-        loadFinanceCodes(insuranceType, function(err) {
-            callback(err);
-        });
-    } else {
-        setLoadingState(true);
-        g_ironrock_service.getMiscOptions(function(err, r) {
-            setLoadingState(false);
-            if (err) {
-                callback(err);
-            } else {
-                var jsondata = ConvertToJson(r);
-                if (!jsondata.success) jsondata.success = true;
-                if (jsondata.success) {
-                    localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
-                    setVehicleUsedAs("SocialDomesticPleasure");
-                    //vehicle-all-accidents
-                    setAllAccidentsYears();
-                    //set Last Three Years of Ownership()
-                    setLastThreeYearsOwnership();
-                    //doPrimaryFunctions();
-                    //load countries
-                    loadCountriesOptions();
-                    loadOccupations(insuranceType == "motor");
-                    if (insuranceType != "motor")
-                        loadRoofWallsTypes();
-                    loadFinanceCodes(insuranceType, function(err) {
-                        callback(err);
-                    });
-                } else {
-                    callback(new Error(jsondata.error_message));
-                }
-            }
-        });
     }
+    setLoadingState(true);
+    g_ironrock_service.getMiscOptions(function(err, r) {
+        setLoadingState(false);
+        if (err) {
+            return callback(err);
+        }
+        var jsondata = ConvertToJson(r);
+        if (jsondata.errorMessage) return callback(new Error(jsondata.errorMessage));
+        jsondata.timeUpdated = currentTimeStamp;
+        localStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
+        setSettings(insuranceType);
+        return callback();
+    });
 }
 
-function loadFinanceCodes(insuranceType, callback) {
-    g_ironrock_service.getMortgagees(function(err, r) {
-        if (err) {
-            callback(err);
-        } else {
-            var data = ConvertToJson(r.Payload);
-            console.log(data);
-            if (!data.success) {
-                callback(new Error(data.error_message));
-            } else {
-                //var codes = data.company_codes;
-                var $selectIdString = insuranceType == "motor" ? "motorFinancialInstitutionCode" : "homeFinancialInstitutionCode";
-                var $select = $('#' + $selectIdString).html('<option value="">None</Option>');
-                $.each(data.mortgagees, function(idx, company) {
-                    $select.append('<option value="' + company.global_name_id + '">' + company.name + '</option>');
-                });
-                callback();
-            }
-        }
-    });
+//do wizard and load settings
+function setSettings(insuranceType) {
+    setVehicleUsedAs("SocialDomesticPleasure");
+    $('#insuranceCoverage').trigger("select");
+    //vehicle-all-accidents
+    setAllAccidentsYears();
+    //set Last Three Years of Ownership()
+    setLastThreeYearsOwnership();
+    //load countries
+    loadCountriesOptions();
+    loadParishes();
+    $('#employerParish').trigger("select");
+    $('#applicantHomeParish').trigger("select");
+    $('#applicantMailParish').trigger("select");
+    if (insuranceType != "motor")
+        $('#homeRiskAddressParish').trigger("select");
+    loadOccupations(insuranceType == "motor");
 
+    if (insuranceType != "motor") {
+        loadRoofWallsTypes();
+    }
+    loadFinanceCodes(insuranceType);
+}
+
+function loadFinanceCodes(insuranceType) {
+    var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+    var $selectIdString = insuranceType == "motor" ? "motorFinancialInstitutionCode" : "homeFinancialInstitutionCode";
+    var $select = $('#' + $selectIdString).html('<option value="">None</Option>');
+    $.each(options.mortgagees.mortgagees, function(idx, company) {
+        $select.append('<option value="' + company.global_name_id + '">' + company.name + '</option>');
+    });
 }
 
 
@@ -707,7 +786,7 @@ function getSpecificValidation($curStep, $valid) {
             break;
         case 'vehicle-insurance-coverage-page':
             switch ($('#insuranceCoverage').val()) {
-                case "ThirdParty":
+                case "mpt":
                     break;
                 default:
                     $('#vehiclesToBeInsured .ValueVehicleValue').each(function(i, obj) {
@@ -920,7 +999,7 @@ function populateApplicant(r) {
     $('#applicantMiddleName').val(r.middleName);
     $('#applicantDateOfBirth').val(r.dateOfBirth.substring(0, 10));
     $('#applicantTitle').val(r.gender == 'M' ? 'Mr.' : 'Ms.');
-    //$('#applicantHomeCountry').val(r.CountryCode.toLowerCase()=='jamaica'?'JM':).trigger("change");
+    //$('#applicantHomeCountry').val(r.CountryCode.toLowerCase()=='jamaica'?'Jamaica':).trigger("change");
     //        $('#applicantHomeCountry option[value=' + r.CountryCode + ']').prop('selected', 'selected');
     //        $('#applicantHomeParish option[value=' + r.ParishCode + ']').prop('selected', 'selected');
     $('#applicantHomeStreetName').val(r.AddressMark + ', ' + r.AddressStreetNumber + ' ' + r.AddressStreetName);
@@ -1130,6 +1209,7 @@ function resetAllAccident() {
     resetObjects(objectList, elementClass, "Add", "Delete", "Accident", true);
 }
 
+
 //Used As
 function setVehicleUsedAs(select_value) {
     //hide and uncheck all inexperinecd driver elements
@@ -1137,36 +1217,42 @@ function setVehicleUsedAs(select_value) {
     //$('#InexperiencedDriverBlock label, #InexperiencedDriverBlock input').hide();
     //$('label[for=a], input#a').hide();
     //show relevant inputs
-    switch (select_value) {
-        case "CarriageOwnGoods": //private commercial
-        case "CarriagePassengersNotHire": //private commercial
-        case "CarriagePassengersHire": //private commercial
-            $('#23YearsOldPrivateCommercial').show();
-            $('#36MonthGeneralLicense').show();
-            $('#25yearsOldGeneral').hide();
-            $('#5YearsGeneralPublicCommercial').hide();
-            $('#21YearsPrivateCars').hide();
-            $('#24MonthsPrivateLicense').hide();
-            break;
-        case "GeneralCartage": //General Cartage
-            $('#25yearsOldGeneral').show();
-            $('#5YearsGeneralPublicCommercial').show();
-            $('#23YearsOldPrivateCommercial').hide();
-            $('#36MonthGeneralLicense').hide();
-            $('#21YearsPrivateCars').hide();
-            $('#24MonthsPrivateLicense').hide();
-            break;
-        case "CommercialTravelling": //private commercial
-        case "SocialDomesticPleasure": //private car
-        case "SocialDomesticPleasureBusiness": //private car
-            $('#21YearsPrivateCars').show();
-            $('#24MonthsPrivateLicense').show();
-            $('#25yearsOldGeneral').hide();
-            $('#5YearsGeneralPublicCommercial').hide();
-            $('#23YearsOldPrivateCommercial').hide();
-            $('#36MonthGeneralLicense').hide();
-            break;
-    }
+    $('#21YearsPrivateCars').show();
+    $('#24MonthsPrivateLicense').show();
+    $('#25yearsOldGeneral').hide();
+    $('#5YearsGeneralPublicCommercial').hide();
+    $('#23YearsOldPrivateCommercial').hide();
+    $('#36MonthGeneralLicense').hide();
+    // switch (select_value) {
+    //     case "CarriageOwnGoods": //private commercial
+    //     case "CarriagePassengersNotHire": //private commercial
+    //     case "CarriagePassengersHire": //private commercial
+    //         $('#23YearsOldPrivateCommercial').show();
+    //         $('#36MonthGeneralLicense').show();
+    //         $('#25yearsOldGeneral').hide();
+    //         $('#5YearsGeneralPublicCommercial').hide();
+    //         $('#21YearsPrivateCars').hide();
+    //         $('#24MonthsPrivateLicense').hide();
+    //         break;
+    //     case "GeneralCartage": //General Cartage
+    //         $('#25yearsOldGeneral').show();
+    //         $('#5YearsGeneralPublicCommercial').show();
+    //         $('#23YearsOldPrivateCommercial').hide();
+    //         $('#36MonthGeneralLicense').hide();
+    //         $('#21YearsPrivateCars').hide();
+    //         $('#24MonthsPrivateLicense').hide();
+    //         break;
+    //     case "CommercialTravelling": //private commercial
+    //     case "SocialDomesticPleasure": //private car
+    //     case "SocialDomesticPleasureBusiness": //private car
+    //         $('#21YearsPrivateCars').show();
+    //         $('#24MonthsPrivateLicense').show();
+    //         $('#25yearsOldGeneral').hide();
+    //         $('#5YearsGeneralPublicCommercial').hide();
+    //         $('#23YearsOldPrivateCommercial').hide();
+    //         $('#36MonthGeneralLicense').hide();
+    //         break;
+    // }
 }
 
 
@@ -1466,7 +1552,7 @@ function loadCountriesOptions() {
         var selectObj = $(this);
         selectObj.html('');
         $.each(_countries, function(i, json) {
-            if (json.code == 'JM') {
+            if (json.code == 'Jamaica') {
                 selectObj.append('<option value="' + json.code + '" selected="selected">' + json.name + '</option>');
             } else {
                 selectObj.append('<option value="' + json.code + '">' + json.name + '</option>');
@@ -1474,6 +1560,20 @@ function loadCountriesOptions() {
         });
     });
 }
+
+//load parishes in select options
+function loadParishes() {
+    var options = ConvertToJson(localStorage.getItem(_IronRockPreliminaryData));
+    var parishElements = $('.parish');
+    parishElements.each(function(index, item) {
+        var selectObj = $(this);
+        selectObj.html('');
+        $.each(options.ParishTowns.data, function(i, json) {
+            selectObj.append('<option value="' + json.parish + '">' + json.parish + '</option>');
+        });
+    });
+}
+
 
 //clone element
 function cloneElement(elementGroup) {
@@ -1893,7 +1993,7 @@ var _countries = [
         "code": 'IT'
     }, {
         "name": 'Jamaica',
-        "code": 'JM'
+        "code": 'Jamaica'
     }, {
         "name": 'Japan',
         "code": 'JP'

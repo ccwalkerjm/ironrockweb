@@ -123,9 +123,13 @@
 							<li><a data-toggle="tab" href="#Insured">Insured</a></li>
 						</ul>
 						<div class="tab-content">
+
 							<div id="summary" class="tab-pane fade in active">
 								<h3>Policy</h3>
+								<button type="button" class="btn btn-link pull-right" id="pushTransaction">Broker One Push</button>
 								<input type="hidden" id="policy_id" />
+								<input type="hidden" id="transaction_id" value="" />
+								<input type="hidden" id="source_id" value="" />
 								<dl class="dl-horizontal">
 								</dl>
 							</div>
@@ -197,23 +201,42 @@
 				var lastYear = yyyy - 1;
 				$('#searchDateFr').val(lastYear + '-01-01');
 				$('#searchDateTo').val(yyyy + '-12-31');
-				var policyObj = localStorage.getItem('_ironrockPolicyObject');
-				if (policyObj) {
-					localStorage.removeItem('_ironrockPolicyObject');
-					policyObj = JSON.parse(policyObj);
-					populatePolicy(policyObj);
+				// var policyObj = localStorage.getItem('_ironrockPolicyObject');
+				// if (policyObj) {
+				// 	localStorage.removeItem('_ironrockPolicyObject');
+				// 	policyObj = JSON.parse(policyObj);
+				// 	populatePolicy(policyObj);
+				// } else {
+				var policy_id = getQueryStringParams("policy");
+				if (policy_id) {
+					displayPolicy(policy_id + "==", obj);
 				} else {
-					var policy_id = getQueryStringParams("policy");
-					if (policy_id) {
-						displayPolicy(policy_id + "==", obj);
-					} else {
-						doSearch(obj);
-						$('#queryPolicySection').show();
-						$('#viewPolicySection').hide();
-					}
+					doSearch(obj);
+					$('#queryPolicySection').show();
+					$('#viewPolicySection').hide();
 				}
+				//}
 			});
 
+
+			$('#pushTransaction').click(function(){
+				bootbox.confirm("Are you sure you want to push Transaction to the Broker",function(ans){
+					if(ans){
+						setLoadingState(true);
+						var payload = {};
+						payload.source_id = $('#source_id').val();
+						payload.transaction_id = $('#transaction_id').val();
+						g_ironrock_service.pushTransaction(payload,function(err,resp){
+							setLoadingState(false);
+							if(err){
+								display(err.message, err);
+							}else{
+								alert(JSON.stringify(resp));
+							}
+						});
+					}
+				});
+			});
 
 			//test api
 			function displayPolicy(policy_id, obj) {
@@ -231,6 +254,8 @@
 						} else if (!policyObj.success) {
 							display(policyObj.error_message, true);
 						} else {
+							$("#source_id").val(policyObj.policy.source_global_name_id);
+							$("#transaction_id").val(policyObj.meta.transaction_id);
 							populatePolicy(policyObj);
 						}
 					}

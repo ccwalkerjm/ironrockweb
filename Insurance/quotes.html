@@ -368,15 +368,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="applicantHomeTown">City/Town/Postal Zone:</label>
                                                 <div class="col-sm-10">
-                                                    <input required class="form-control" type="text" id="applicantHomeTown" name="applicantHomeTown" placeholder="Enter City, Town or Postal Zone">
+                                                    <select class="form-control" id="applicantHomeTown" name="applicantHomeTown"></select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group jamaica">
                                                 <label class="control-label col-sm-2" for="applicantHomeParish">Select Parish:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" name="applicantHomeParish" id="applicantHomeParish">
-                                                        <option value=""></option>
+                                                    <select class="form-control parish" name="applicantHomeParish" id="applicantHomeParish">
+                                                        <!-- <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -390,7 +390,7 @@
                                                         <option value="St. Ann">St. Ann</option>
                                                         <option value="St. Mary">St. Mary</option>
                                                         <option value="Portland">Portland</option>
-                                                        <option value="St. Thomas">St. Thomas</option>
+                                                        <option value="St. Thomas">St. Thomas</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -441,15 +441,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="applicantMailTown">City/Town/Postal Zone:</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" type="text" id="applicantMailTown" name="applicantMailTown" placeholder="Enter City, Town or Postal Zone">
+                                                    <select class="form-control" id="applicantMailTown" name="applicantMailTown"></select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group jamaica">
                                                 <label class="control-label col-sm-2" for="applicantMailParish">Select Parish:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" name="applicantMailParish" id="applicantMailParish">
-                                                        <option value=""></option>
+                                                    <select class="form-control parish" name="applicantMailParish" id="applicantMailParish">
+                                                        <!-- <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -463,7 +463,7 @@
                                                         <option value="St. Ann">St. Ann</option>
                                                         <option value="St. Mary">St. Mary</option>
                                                         <option value="Portland">Portland</option>
-                                                        <option value="St. Thomas">St. Thomas</option>
+                                                        <option value="St. Thomas">St. Thomas</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -526,15 +526,15 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="employerTown">City/Town/Postal Zone:</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" type="text" name="employerTown" id="employerTown" placeholder="Enter City, Town or Postal Zone">
+                                                    <select class="form-control" name="employerTown" id="employerTown"></select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group jamaica">
                                                 <label class="control-label col-sm-2" for="employerParish">Select Parish:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" name="employerParish" id="employerParish">
-                                                        <option value=""></option>
+                                                    <select class="form-control parish" name="employerParish" id="employerParish">
+                                                        <!-- <option value=""></option>
                                                         <option value="Kingston">Kingston</option>
                                                         <option value="St. Andrew">St. Andrew</option>
                                                         <option value="St. Catherine">St. Catherine</option>
@@ -548,7 +548,7 @@
                                                         <option value="St. Ann">St. Ann</option>
                                                         <option value="St. Mary">St. Mary</option>
                                                         <option value="Portland">Portland</option>
-                                                        <option value="St. Thomas">St. Thomas</option>
+                                                        <option value="St. Thomas">St. Thomas</option> -->
                                                     </select>
                                                 </div>
 
@@ -761,9 +761,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select name="insuranceCoverage" id="insuranceCoverage" class="form-control">
-                                                    <option value="Comprehensive" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured Motor Vehicle">Comprehensive</option>
-                                                    <option value="ThirdPartyFireTheft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
-                                                    <option value="ThirdParty" title="Liability for Third Party Bodily Injury and Property Damage">Third Party</option>
+                                                    <option value="mpc" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured Motor Vehicle">Comprehensive</option>
+                                                    <option value="mptft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
+                                                    <option value="mpt" title="Liability for Third Party Bodily Injury and Property Damage">Third Party</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -775,9 +775,9 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select name="vehicleUsedAs" id="vehicleUsedAs" class="form-control">
-                                                    <option value="SocialDomesticPleasure" selected>Social domestic and pleasure purposes only</option>
+                                                    <!-- <option value="SocialDomesticPleasure" selected>Social domestic and pleasure purposes only</option>
                                                     <option value="SocialDomesticPleasureBusiness">Social domestic, pleasure purposes and Proposer’s business use</option>
-                                                    <option value="CommercialTravelling">Commercial travelling</option>
+                                                    <option value="CommercialTravelling">Commercial travelling</option> -->
                                                     <!--option value="CarriageOwnGoods">Carriage of own goods only (Private Commercial)</option-->
                                                     <!--option value="CarriagePassengersNotHire">Carriage of passengers not for hire or reward</option-->
                                                     <!--option value="CarriagePassengersHire">Carriage of Passengers for hire or reward</option-->
@@ -1551,12 +1551,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressTown">City/Town/Postal Zone:</label>
-                                            <input required class="form-control" type="text" id="homeRiskAddressTown" name="homeRiskAddressTown" placeholder="Enter City, Town or Postal Zone">
+                                            <select class="form-control" id="homeRiskAddressTown" name="homeRiskAddressTown"></select>
                                         </div>
                                         <div class="form-group">
                                             <label for="homeRiskAddressParish">Select Parish:</label>
-                                            <select class="form-control" name="homeRiskAddressParish" id="homeRiskAddressParish">
-                                                <option value=""></option>
+                                            <select class="form-control parish" name="homeRiskAddressParish" id="homeRiskAddressParish">
+                                                <!-- <option value=""></option>
                                                 <option value="Kingston">Kingston</option>
                                                 <option value="St. Andrew">St. Andrew</option>
                                                 <option value="St. Catherine">St. Catherine</option>
@@ -1570,7 +1570,7 @@
                                                 <option value="St. Ann">St. Ann</option>
                                                 <option value="St. Mary">St. Mary</option>
                                                 <option value="Portland">Portland</option>
-                                                <option value="St. Thomas">St. Thomas</option>
+                                                <option value="St. Thomas">St. Thomas</option> -->
                                             </select>
                                         </div>
 
@@ -2722,8 +2722,8 @@
                         return;
                     }
                     console.log(result);
-                    localStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
-                    location.assign('policies.html');
+                    //localStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
+                    location.assign('policies.html?policy=' + result.policy.policy_id);
                 });
             });
 
