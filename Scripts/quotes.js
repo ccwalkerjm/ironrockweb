@@ -1538,8 +1538,7 @@ function loadParishes() {
     var options = ConvertToJson(sessionStorage.getItem(_IronRockPreliminaryData));
     var parishElements = $('.parish');
     parishElements.each(function(index, item) {
-        var selectObj = $(this);
-        selectObj.html('');
+        var selectObj = $(this).empty();
         $.each(options.ParishTowns.data, function(i, json) {
             selectObj.append('<option value="' + json.parish + '">' + json.parish + '</option>');
         });

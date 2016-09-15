@@ -82,11 +82,12 @@
                                     <input type="text" class="form-control datepicker" id="searchDateTo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="searchPolicy">Policy:</label>
+                                    <label for="searchPolicy">Status:</label>
                                     <select class="form-control" id="searchPolicy">
-                                        <option value="all">Any</option>
-                                        <option value="policy">Policies Only</option>
-                                        <option value="quote">Quotes Only</option>
+                                        <!-- <option value="all">Any</option> -->
+                                        <option value="Created"  title="No Changes Made  to Quote">New Quotes</option>
+                                        <option value="Updated" title="Changes Made  to Quote">Revised Quotes</option>
+                                        <option value="policy" title="Converted to Policy">Converted</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -2467,9 +2468,9 @@
     <script src="/jsPDF/plugins/addimage.js"></script>
     <script src="/jsPDF/plugins/png_support.js"></script>
     <!-- canvg-->
-    <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
-    <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
-    <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
+    <script type="text/javascript" src="/Scripts/rgbcolor.js"></script>
+    <script type="text/javascript" src="/Scripts/StackBlur.js"></script>
+    <script type="text/javascript" src="/Scripts/canvg.js"></script>
     <!--Iron Rock Custom Library-->
     <script src="/Scripts/ironrockcloudservice.js"></script>
     <script src="/Scripts/pdfconvertor.js"></script>
@@ -2526,11 +2527,14 @@
 
             initPage(function(err, obj) {
                 runQuoteEvents();
-                var today = new Date();
-                var yyyy = today.getFullYear();
-                var lastYear = yyyy - 1;
-                $('#searchDateFr').val(lastYear + '-01-01');
-                $('#searchDateTo').val(yyyy + '-12-31');
+                var toDate = new Date();
+                toDate.setDate(toDate.getDate() + 30);
+
+                var fromDate = new Date();
+                fromDate.setDate(fromDate.getDate() - 5);
+
+                $('#searchDateFr').val(formatDate(fromDate));
+                $('#searchDateTo').val(formatDate(toDate));
                 //var urlParts = location.hash.split("#");
                 var section = getQueryStringParams("section");
                 if (section == "createQuote") {
@@ -2619,12 +2623,8 @@
                                     brokerName = b.name;
                                 }
                             });
-                            var date = new Date(quote.startDate);
-                            var day = date.getDate();
-                            var monthIndex = date.getMonth() + 1;
-                            var year = date.getFullYear();
-                            //var dateFormat = day + '/' + monthIndex + '/' + year;
-                            var dateFormat = year + '-' + formatDataPart(monthIndex) + '-' + formatDataPart(day);
+                            var startDate = new Date(quote.startDate);
+                            var dateFormat = formatDate(startDate);
                             dlTable.append('<tr><td>' + quote.id + '</td><td>' +
                                 dateFormat + '</td><td>' +
                                 quote.firstName.capitalizeFirstLetter() + '</td><td>' +
@@ -2663,17 +2663,7 @@
                 $('#convertToPolicyModal').modal('show');
             });
 
-            function formatDate(date) {
-                var d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
 
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-
-                return [year, month, day].join('-');
-            }
 
             $('#convertToPolicyModal').on('click', '#createPolicy', function() {
                 setLoadingState(true);
