@@ -196,11 +196,15 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			initPage(function(err, obj) {
-				var today = new Date();
-				var yyyy = today.getFullYear();
-				var lastYear = yyyy - 1;
-				$('#searchDateFr').val(lastYear + '-01-01');
-				$('#searchDateTo').val(yyyy + '-12-31');
+				var toDate = new Date();
+				toDate.setDate(toDate.getDate() + 30);
+
+				var fromDate = new Date();
+				fromDate.setDate(fromDate.getDate() - 5);
+
+				$('#searchDateFr').val(formatDate(fromDate));
+				$('#searchDateTo').val(formatDate(toDate));
+								
 				// var policyObj = localStorage.getItem('_ironrockPolicyObject');
 				// if (policyObj) {
 				// 	localStorage.removeItem('_ironrockPolicyObject');
@@ -541,7 +545,7 @@
 				searchData.dateFr = $('#searchDateFr').val();
 				searchData.dateTo = $('#searchDateTo').val();
 				searchData.type = $('#searchInsuranceType').val();
-				searchData.policy = "policy";
+				searchData.policy = "policy_created";
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
