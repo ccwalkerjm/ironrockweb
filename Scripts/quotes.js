@@ -1112,9 +1112,14 @@ function setTown(parishId, parishValue) {
         }
     });
     if (towns) {
+        var justIn = true;
         var $select = $('#' + townId).empty();
         $.each(towns, function(idx, value) {
             $select.append('<option value="' + value + '">' + value + '</option>');
+            if(justIn){
+              $select.prop("selected",true);
+              justIn =false;
+            }
         });
     }
 }

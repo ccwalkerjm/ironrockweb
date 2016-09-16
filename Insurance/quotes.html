@@ -75,19 +75,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="searchDateFr">Date From:</label>
-                                    <input type="text" class="form-control datepicker" id="searchDateFr">
+                                    <input type="text" class="form-control" id="searchDateFr">
                                 </div>
                                 <div class="form-group">
                                     <label for="searchDateTo">Date To:</label>
-                                    <input type="text" class="form-control datepicker" id="searchDateTo">
+                                    <input type="text" class="form-control" id="searchDateTo">
                                 </div>
                                 <div class="form-group">
                                     <label for="searchPolicy">Status:</label>
                                     <select class="form-control" id="searchPolicy">
-                                        <!-- <option value="all">Any</option> -->
+                                        <option value="any">Any</option>
                                         <option value="Created"  title="No Changes Made  to Quote">New Quotes</option>
                                         <option value="Updated" title="Changes Made  to Quote">Revised Quotes</option>
-                                        <option value="policy" title="Converted to Policy">Converted</option>
+                                        <option value="policy_created" title="Converted to Policy">Converted</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -402,7 +402,7 @@
                                                     <input required class="form-control" type="text" id="applicantHomeStreetName" name="applicantHomeStreetName" placeholder="Enter Street Number and Name">
                                                 </div>
                                             </div>
-                                             </div>
+                                        </div>
 
                                         <div class="form-inline">
                                             <div class="controls-row">
@@ -2494,9 +2494,21 @@
                 var signedStartDate = new Date();
                 signedStartDate.setMonth(endDate.getMonth() - 12);
 
-                $('.datepicker').datepicker({
+                $('.datepicker').datepicker({ //searchDateFr
                     format: 'yyyy-mm-dd',
                     endDate: currentDate
+                });
+
+                $('#searchDateFr').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: signedStartDate,
+                    endDate: endDate
+                });
+
+                $('#searchDateTo').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: signedStartDate,
+                    endDate: endDate
                 });
 
                 $('#homeStartDate').datepicker({
@@ -2518,6 +2530,18 @@
                     format: 'yyyy-mm-dd',
                     startDate: signedStartDate,
                     endDate: currentDate
+                });
+
+                $('#homeStartDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: currentDate,
+                    endDate: endDate
+                });
+
+                $('#homeStartDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: currentDate,
+                    endDate: endDate
                 });
             }
             setDates();
@@ -2595,7 +2619,7 @@
                 obj = obj || g_ironrock_service;
                 obj.searchQuotes(payload, function(err, quoteList) {
                     if (err) {
-                        alert("error: " + err.statusText);
+                        bootbox.alert("Validation Error Detection: Narrow your Date Range and try Again!");
                         setLoadingState(false);
                         return;
                     }
