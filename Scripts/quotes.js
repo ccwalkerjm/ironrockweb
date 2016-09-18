@@ -90,8 +90,8 @@ function runQuoteEvents() {
                 $('.regularDriversCls:last .DateOfBirth input').val(r.dateOfBirth.substring(0, 10));
                 $('.regularDriversCls:last .DriversDL input').val(id);
 
-                $('.regularDriversCls:last .DriversDLExpirationDate input').val('2020-06-22');
-                $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val('2000-06-22');
+                $('.regularDriversCls:last .DriversDLExpirationDate input').val(r.expiryDate);
+                $('.regularDriversCls:last .DriversDLOriginalDateOfIssue input').val(r.dateFirstIssued);
             }
         });
     });
@@ -308,6 +308,9 @@ function runQuoteEvents() {
                 break;
             case "mpt":
                 usages = options.usagelist_mpt;
+                break;
+            default:
+                usages = [];
                 break;
         }
         var $select = $('#vehicleUsedAs').empty();
@@ -594,7 +597,7 @@ function LoadSettings(insuranceType, callback) {
 
 //do wizard and load settings
 function setSettings(insuranceType) {
-    setVehicleUsedAs("SocialDomesticPleasure");
+    setVehicleUsedAs();
     $('#insuranceCoverage').trigger("select");
     //vehicle-all-accidents
     setAllAccidentsYears();
@@ -760,7 +763,7 @@ function getSpecificValidation($curStep, $valid) {
 }
 
 
-//insert vehicle
+//vehicle functions
 function insertVehicle(r, rowIndex) {
     var tbl = $('#vehiclesToBeInsured tbody');
     var rows = $('tr', tbl);
@@ -1116,9 +1119,9 @@ function setTown(parishId, parishValue) {
         var $select = $('#' + townId).empty();
         $.each(towns, function(idx, value) {
             $select.append('<option value="' + value + '">' + value + '</option>');
-            if(justIn){
-              $select.prop("selected",true);
-              justIn =false;
+            if (justIn) {
+                $select.prop("selected", true);
+                justIn = false;
             }
         });
     }

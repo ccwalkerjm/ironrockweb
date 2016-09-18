@@ -22,6 +22,7 @@
     <link href="/assets/css/themes/default.css" rel="stylesheet">
     <link href="/assets/css/custom.css" rel="stylesheet">
     <link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
+    <!-- <link href="/css/simplePagination.css" rel="stylesheet"> -->
 </head>
 
 <body class="page-header-fixed">
@@ -82,8 +83,8 @@
                                     <input type="text" class="form-control" id="searchDateTo">
                                 </div>
                                 <div class="form-group">
-                                    <label for="searchPolicy">Status:</label>
-                                    <select class="form-control" id="searchPolicy">
+                                    <label for="searchStatus">Status:</label>
+                                    <select class="form-control" id="searchStatus">
                                         <option value="any">Any</option>
                                         <option value="Created"  title="No Changes Made  to Quote">New Quotes</option>
                                         <option value="Updated" title="Changes Made  to Quote">Revised Quotes</option>
@@ -719,7 +720,8 @@
                                                 <label class="control-label pull-right" for="insuranceCoverage">Insurance coverage:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <select name="insuranceCoverage" id="insuranceCoverage" class="form-control">
+                                                <select name="insuranceCoverage" id="insuranceCoverage" class="form-control" required>
+                                                    <option value=""></option>
                                                     <option value="mpc" title="Liability for Third Party Bodily Injury and Property Damage and loss of or damage to the Insured Motor Vehicle">Comprehensive</option>
                                                     <option value="mptft" title="Liability for Third Party Bodily Injury and Property Damage and Loss of or damage to the Insured’s Motor Vehicle by Fire or Theft">Third Party Fire and Theft</option>
                                                     <option value="mpt" title="Liability for Third Party Bodily Injury and Property Damage">Third Party</option>
@@ -734,13 +736,6 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select name="vehicleUsedAs" id="vehicleUsedAs" class="form-control">
-                                                    <!-- <option value="SocialDomesticPleasure" selected>Social domestic and pleasure purposes only</option>
-                                                    <option value="SocialDomesticPleasureBusiness">Social domestic, pleasure purposes and Proposer’s business use</option>
-                                                    <option value="CommercialTravelling">Commercial travelling</option> -->
-                                                    <!--option value="CarriageOwnGoods">Carriage of own goods only (Private Commercial)</option-->
-                                                    <!--option value="CarriagePassengersNotHire">Carriage of passengers not for hire or reward</option-->
-                                                    <!--option value="CarriagePassengersHire">Carriage of Passengers for hire or reward</option-->
-                                                    <!--option value="GeneralCartage">General Cartage</option-->
                                                 </select>
                                             </div>
                                         </div>
@@ -771,7 +766,8 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <select class="form-control" name="authorized_driver_wording" id="authorized_driver_wording">
+                                                <select class="form-control" name="authorized_driver_wording" id="authorized_driver_wording" required>
+<option value=""></option>
                                                     <option value="Any Authorized Driver">Any Authorized Driver</option>
                                                     <option value="Named Drivers Only">Named Drivers Only</option>
                                                     <option value="Insured only">Insured only</option>
@@ -1031,7 +1027,7 @@
                                                 </div>
                                                 <div class="form-group occupation">
                                                     <label class="control-label" for="regularDriversOccupation0">Occupation:</label>
-                                                    <select class="form-control" name="regularDriversOccupation0" id="regularDriversOccupation0"></select>
+                                                    <select class="form-control" name="regularDriversOccupation0" id="regularDriversOccupation0" required></select>
                                                 </div>
                                                 <div class="form-group DateOfBirth">
                                                     <label class="control-label" for="regularDriversDateOfBirth0">Date of Birth:</label>
@@ -2478,10 +2474,13 @@
     <script src="/Scripts/index.js"></script>
     <!--date picker-->
     <script src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <!-- <script src="/Scripts/jquery.simplePagination.js"></script> -->
 
     <script type="text/javascript">
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
+
+
 
             function setDates() {
                 //homeStartDate
@@ -2612,7 +2611,7 @@
                 searchData.dateFr = $('#searchDateFr').val();
                 searchData.dateTo = $('#searchDateTo').val();
                 searchData.type = $('#searchInsuranceType').val();
-                searchData.policy = $('#searchPolicy').val();
+                searchData.status = $('#searchStatus').val();
                 var payload = JSON.stringify(searchData);
 
                 setLoadingState(true);

@@ -204,7 +204,7 @@
 
 				$('#searchDateFr').val(formatDate(fromDate));
 				$('#searchDateTo').val(formatDate(toDate));
-								
+
 				// var policyObj = localStorage.getItem('_ironrockPolicyObject');
 				// if (policyObj) {
 				// 	localStorage.removeItem('_ironrockPolicyObject');
@@ -545,7 +545,7 @@
 				searchData.dateFr = $('#searchDateFr').val();
 				searchData.dateTo = $('#searchDateTo').val();
 				searchData.type = $('#searchInsuranceType').val();
-				searchData.policy = "policy_created";
+				searchData.status = "policy_created";
 				var payload = JSON.stringify(searchData);
 
 				setLoadingState(true);
