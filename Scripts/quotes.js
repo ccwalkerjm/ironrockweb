@@ -344,13 +344,6 @@ function runQuoteEvents() {
         resetAllAccident();
     });
 
-
-    $('input[type=radio]').change(function() {
-        setRadioDisplay($(this).attr('name'), this.value);
-    });
-
-
-
     //resetHomeAllRiskArticles
     $('#HomeAllRiskInsured').on('click', '.Add', function() {
         var elementGroup = $(this).closest('.HomeAllRiskArticles');
@@ -467,6 +460,10 @@ function runQuoteEvents() {
         }
     });
 
+    //all radio buttons toggle
+    $('input[type=radio]').change(function() {
+        setResponseDetails($(this).attr('name'), this.value);
+    });
 
 }
 
@@ -656,15 +653,18 @@ function runWizard() {
         var curStep = $(this).closest(".setup-content"),
             curStepBtn = curStep.attr("id"),
             nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find("input[type='text'],input[type='date'],input[type='url'],input[type='number'],input[type='email']"),
+            curInputs = curStep.find(":input"),
             isValid = true;
 
         $(".form-group").removeClass("has-error");
+        $(".form-inline").removeClass("has-error");
+
         for (var i = 0; i < curInputs.length; i++) {
             if (!curInputs[i].validity.valid) {
                 console.log(curInputs[i]);
                 isValid = false;
                 $(curInputs[i]).closest(".form-group").addClass("has-error");
+                $(curInputs[i]).closest(".form-inline").addClass("has-error");
             }
         }
         //custom
@@ -683,6 +683,7 @@ function runWizard() {
             curStepBtn = curStep.attr("id"),
             prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
         $(".form-group").removeClass("has-error");
+        $(".form-inline").removeClass("has-error");
         prevStepWizard.removeAttr('disabled').trigger('click');
     });
 
@@ -1118,10 +1119,11 @@ function setTown(parishId, parishValue) {
         var justIn = true;
         var $select = $('#' + townId).empty();
         $.each(towns, function(idx, value) {
-            $select.append('<option value="' + value + '">' + value + '</option>');
             if (justIn) {
-                $select.prop("selected", true);
+                $select.append('<option value=""></option>');
                 justIn = false;
+            }else{
+              $select.append('<option value="' + value + '">' + value + '</option>');
             }
         });
     }
@@ -1355,9 +1357,9 @@ function resetApplicantRelativeInPublicOffice() {
 
 //
 //set display of text based on Radio Button selection
-function setRadioDisplay(RadioName, RadioValue) {
-    var radioBtn = $('input[name=' + RadioName + '][value=' + RadioValue + ']');
-    var displayElement = getDisplayElement(RadioName);
+function setResponseDetails(elementName, RadioValue) {
+    //var radioBtn = $('input[name=' + elementName + '][value=' + RadioValue + ']');
+    var displayElement = getDisplayElement(elementName);
 
     if (!displayElement.defaultValue) return;
 
@@ -1370,7 +1372,7 @@ function setRadioDisplay(RadioName, RadioValue) {
 
     if (RadioValue == displayElement.defaultValue) {
         $element.find('input[type=text],input[type=number],textarea').val('');
-        removeElementsExceptFirst(RadioName);
+        removeElementsExceptFirst(elementName);
         $element.hide();
     } else {
         $element.show();
@@ -1380,16 +1382,16 @@ function setRadioDisplay(RadioName, RadioValue) {
 
 
 //set radio button
-function setRadioButton(buttonName, xvalue) {
-    var buttonElement = 'input[name=' + buttonName + '][value=' + xvalue + ']';
+function setRadioButton(elementName, xvalue) {
+    var buttonElement = 'input[name=' + elementName + '][value=' + xvalue + ']';
     $(buttonElement).prop('checked', true).trigger('click');
-    setRadioDisplay(buttonName, xvalue);
+    setResponseDetails(elementName, xvalue);
 }
 
 //get display element
-function getDisplayElement(RadioName) {
+function getDisplayElement(elementName) {
     var returnValue = {};
-    switch (RadioName) {
+    switch (elementName) {
         case 'vehicleKeptInSecureArea':
             returnValue.defaultValue = "yes";
             returnValue.id = "vehicleLocationDetailsClass";
@@ -1547,8 +1549,14 @@ function loadParishes() {
     var parishElements = $('.parish');
     parishElements.each(function(index, item) {
         var selectObj = $(this).empty();
+        var justIn = true;
         $.each(options.ParishTowns.data, function(i, json) {
+          if(justIn){
+            justIn=false;
+            selectObj.append('<option value=""></option>');
+          }else{
             selectObj.append('<option value="' + json.parish + '">' + json.parish + '</option>');
+          }
         });
     });
 }
@@ -1558,12 +1566,13 @@ function loadParishes() {
 function cloneElement(elementGroup) {
     var clone = elementGroup.clone().insertAfter(elementGroup);
     clone.find("input[type=text],input[type=number],textarea").val("");
+    if(clone.tagName === 'SELECT') clone[0].selectedIndex = 0;
     clone.show();
 }
 
 //default Elements
-function removeElementsExceptFirst(RadioName) {
-    switch (RadioName) {
+function removeElementsExceptFirst(elementName) {
+    switch (elementName) {
         case 'applicantRelativeInPublicOffice':
             $('.publicofficerelations').not(':first').remove();
             resetApplicantRelativeInPublicOffice();
