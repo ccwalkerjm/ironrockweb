@@ -358,7 +358,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="homeAddress">
+                                        <div id="homeAddress" class="address">
                                             <h4>Home Address</h4>
 
                                             <div class="form-group">
@@ -412,9 +412,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="applicantHomeStreetNumber">Apt No/Street No:</label>
+                                                <label class="control-label col-sm-2" for="applicantHomeStreetNo">Apt No/Street No:</label>
                                                 <div class="col-sm-10">
-                                                    <input required class="form-control" type="text" id="applicantHomeStreetNumber" name="applicantHomeStreetNumber" placeholder="Apt No/Street No">
+                                                    <input class="form-control" type="text" id="applicantHomeStreetNo" name="applicantHomeStreetNo" placeholder="Apt No/Street No">
                                                 </div>
                                             </div>
 
@@ -432,7 +432,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="mailingAddress" style="display:none">
+                                        <div id="mailingAddress" class="address" style="display:none">
                                             <h4>Mailing Address</h4>
 
                                             <div class="form-group">
@@ -487,9 +487,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="applicantMailStreetNumber">Apt No/Street No:</label>
+                                                <label class="control-label col-sm-2" for="applicantMailStreetNo">Apt No/Street No:</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" type="text" id="applicantMailStreetNumber" name="applicantMailStreetNumber" placeholder="Enter Apt No/Street No">
+                                                    <input class="form-control" type="text" id="applicantMailStreetNo" name="applicantMailStreetNo" placeholder="Enter Apt No/Street No">
                                                 </div>
                                             </div>
 
@@ -509,7 +509,7 @@
                                 <div class="col-md-12">
                                     <h3>Employment Information</h3>
                                     <form class="ProposalForm form-horizontal">
-                                        <div id="employer">
+                                        <div id="employer" class="address">
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="applicantOccupation">Occupation:</label>
                                                 <div class="col-sm-10">
@@ -574,9 +574,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="employerStreetNumber">Apt No/Street No:</label>
+                                                <label class="control-label col-sm-2" for="employerStreetNo">Apt No/Street No:</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" type="text" name="employerStreetNumber" id="employerStreetNumber" placeholder="Enter Apt No/Street No">
+                                                    <input class="form-control" type="text" name="employerStreetNo" id="employerStreetNo" placeholder="Enter Apt No/Street No">
                                                 </div>
                                             </div>
 
@@ -1543,65 +1543,65 @@
                                     <h3>Home Particulars</h3>
                                     <form class="ProposalForm">
                                         <h4>Property Address</h4>
-
-                                        <div class="form-group">
-                                            <label for="homeRiskAddressCountry">Select Country:</label>
+                                        <div id="riskAddress" class="address">
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressCountry">Select Country:</label>
                                                 <select class="form-control countries" name="homeRiskAddressCountry" id="homeRiskAddressCountry"></select>
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group international" style="display:none">
-                                            <label for="homeRiskAddressState">State/Province:</label>
+                                            <div class="form-group international" style="display:none">
+                                                <label for="homeRiskAddressState">State/Province:</label>
                                                 <input class="form-control" type="text" id="homeRiskAddressState" name="homeRiskAddressState" placeholder="Enter State/Province/County">
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group international" style="display:none">
-                                            <label  for="homeRiskAddressCity">City:</label>
+                                            <div class="form-group international" style="display:none">
+                                                <label for="homeRiskAddressCity">City:</label>
                                                 <input class="form-control" type="text" id="homeRiskAddressCity" name="homeRiskAddressCity" placeholder="Enter City">
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group jamaica">
-                                            <label for="homeRiskAddressParish">Select Parish:</label>
-                                            <select class="form-control parish" name="homeRiskAddressParish" id="homeRiskAddressParish">
+                                            <div class="form-group jamaica">
+                                                <label for="homeRiskAddressParish">Select Parish:</label>
+                                                <select class="form-control parish" name="homeRiskAddressParish" id="homeRiskAddressParish">
                                             </select>
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group jamaica">
-                                            <label for="homeRiskAddressTown">Town/Postal Zone:</label>
-                                            <select class="form-control" id="homeRiskAddressTown" name="homeRiskAddressTown"></select>
-                                        </div>
+                                            <div class="form-group jamaica">
+                                                <label for="homeRiskAddressTown">Town/Postal Zone:</label>
+                                                <select class="form-control" id="homeRiskAddressTown" name="homeRiskAddressTown"></select>
+                                            </div>
 
-                                        <div class="form-group international" style="display:none">
-                                            <label for="homeRiskAddressPostalCode">Postal Code:</label>
+                                            <div class="form-group international" style="display:none">
+                                                <label for="homeRiskAddressPostalCode">Postal Code:</label>
                                                 <input class="form-control" type="text" id="homeRiskAddressPostalCode" name="homeRiskAddressPostalCode" placeholder="Enter Postal/ZIP Code">
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="homeRiskAddressStreetName">Street Name:</label>
-                                            <input required class="form-control" type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStreetName">Street Name:</label>
+                                                <input required class="form-control" type="text" id="homeRiskAddressStreetName" name="homeRiskAddressStreetName" placeholder="Enter Street Name">
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="homeRiskAddressStreetNo">Apt No/Street No:</label>
-                                            <input class="form-control" type="text" id="homeRiskAddressStreetNo" name="homeRiskAddressStreetNo" placeholder="Enter Apt No/Street No">
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStreetNo">Apt No/Street No:</label>
+                                                <input class="form-control" type="text" id="homeRiskAddressStreetNo" name="homeRiskAddressStreetNo" placeholder="Enter Apt No/Street No">
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="homeType">Type of home:</label>
-                                            <select class="form-control" name="homeType" id="homeType">
+                                            <div class="form-group">
+                                                <label for="homeType">Type of home:</label>
+                                                <select class="form-control" name="homeType" id="homeType">
                                                 <option value="A private Dwelling House?">Private Dwelling House</option>
                                                 <option value="Apartment with seperate entrance">Apartment With Seperate Entrance</option>
                                                 <option value="Rooms not self-contained?">Rooms Not Self-Contained</option>
                                             </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressStoreys">No of Storeys:</label>
+                                                <input class="form-control" type="number" id="homeRiskAddressStoreys" name="homeRiskAddressStoreys" placeholder="Enter Number of Storeys">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="homeRiskAddressYearBuilt">Year Built:</label>
+                                                <input required class="form-control" type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="homeRiskAddressStoreys">No of Storeys:</label>
-                                            <input class="form-control" type="number" id="homeRiskAddressStoreys" name="homeRiskAddressStoreys" placeholder="Enter Number of Storeys">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="homeRiskAddressYearBuilt">Year Built:</label>
-                                            <input required class="form-control" type="number" id="homeRiskAddressYearBuilt" name="homeRiskAddressYearBuilt" placeholder="Enter Year Built">
-                                        </div>
-
 
                                         <h4>Construction of Dwelling</h4>
 
@@ -3032,6 +3032,8 @@
                 $('#applicantHomeNumber').val(currentQuote.applicantHomeNumber);
                 $('#applicantWorkNumber').val(currentQuote.applicantWorkNumber);
                 $('#applicantHomeStreetName').val(currentQuote.applicantHomeStreetName);
+                $('#applicantHomeStreetNo').val(currentQuote.applicantHomeStreetNo);
+                $('#applicantHomeCity').val(currentQuote.applicantHomeCity);
                 $('#applicantHomeParish').val(currentQuote.applicantHomeParish);
                 setTown('applicantHomeParish', $('#applicantHomeParish').val());
                 $('#applicantHomeTown').val(currentQuote.applicantHomeTown);
@@ -3044,7 +3046,9 @@
                 $('#mailingAddressSame').val(currentQuote.mailingAddressSame);
                 $('#applicantEmailAddress').val(currentQuote.applicantEmailAddress);
                 $('#applicantMailStreetName').val(currentQuote.applicantMailStreetName);
+                $('#applicantMailStreetNo').val(currentQuote.applicantMailStreetNo);
                 $('#applicantMailParish').val(currentQuote.applicantMailParish);
+                $('#applicantMailCity').val(currentQuote.applicantMailCity);
                 setTown('applicantMailParish', $('#applicantMailParish').val());
                 $('#applicantMailTown').val(currentQuote.applicantMailTown);
                 $('#applicantMailPostalCode').val(currentQuote.applicantMailPostalCode);
@@ -3055,7 +3059,8 @@
                 $('#applicantOccupation').val(currentQuote.applicantOccupation);
                 $('#employerName').val(currentQuote.employerName);
                 $('#employerStreetName').val(currentQuote.employerStreetName);
-
+                $('#employerStreetNo').val(currentQuote.employerStreetNo);
+                $('#employerCity').val(currentQuote.employerCity);
                 $('#employerParish').val(currentQuote.employerParish);
                 setTown('employerParish', $('#employerParish').val());
                 $('#employerTown').val(currentQuote.employerTown);
@@ -3143,6 +3148,7 @@
             var populateHomeProperty = function() {
                 $('#homeRiskAddressStreetNo').val(currentQuote.homeRiskAddressStreetNo);
                 $('#homeRiskAddressStreetName').val(currentQuote.homeRiskAddressStreetName);
+                $('#homeRiskAddressCity').val(currentQuote.homeRiskAddressCity);
                 $('#homeRiskAddressParish').val(currentQuote.homeRiskAddressParish);
                 setTown('homeRiskAddressParish', $('#homeRiskAddressParish').val());
                 $('#homeRiskAddressTown').val(currentQuote.homeRiskAddressTown);

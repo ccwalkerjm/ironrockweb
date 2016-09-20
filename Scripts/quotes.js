@@ -424,42 +424,18 @@ function runQuoteEvents() {
     });
 
 
-
-    $('#applicantHomeCountry').change(function() {
+    $('.countries').change(function() {
+        var $addressHolder = $(this).closest(".address");
         var select_value = $(this).val();
         if (select_value == "Jamaica") {
-            $('#homeAddress .jamaica').show();
-            $('#homeAddress .international').hide();
+            $addressHolder.find('.jamaica').show();
+            $addressHolder.find('.international').hide();
         } else {
-            $('#homeAddress .jamaica').hide();
-            $('#homeAddress .international').show();
+            $addressHolder.find('.jamaica').hide();
+            $addressHolder.find('.international').show();
         }
     });
-
-
-    $('#applicantMailCountry').change(function() {
-        var select_value = $(this).val();
-        if (select_value == "Jamaica") {
-            $('#mailingAddress').find('.jamaica').show();
-            $('#mailingAddress').find('.international').hide();
-        } else {
-            $('#mailingAddress').find('.jamaica').hide();
-            $('#mailingAddress').find('.international').show();
-        }
-    });
-
-
-    $('#employerNationality').change(function() {
-        var select_value = $(this).val();
-        if (select_value == "Jamaica") {
-            $('#employer').find('.jamaica').show();
-            $('#employer').find('.international').hide();
-        } else {
-            $('#employer').find('.jamaica').hide();
-            $('#employer').find('.international').show();
-        }
-    });
-
+    
     //all radio buttons toggle
     $('input[type=radio]').change(function() {
         setResponseDetails($(this).attr('name'), this.value);
