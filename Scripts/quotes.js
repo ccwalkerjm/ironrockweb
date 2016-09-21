@@ -1231,13 +1231,15 @@ function loadOccupations(isMotor) {
 function loadRoofWallsTypes() {
     var options = ConvertToJson(sessionStorage.getItem(_IronRockPreliminaryData));
     //wall
+    var wall = $('#constructionExternalWalls').html('<option value=""></option>');
     $.each(options.wallTypes.data, function(key, value) {
-        $('#constructionExternalWalls').append('<option value="' + value + '">' + value + '</option>');
+        wall.append('<option value="' + value + '">' + value + '</option>');
     });
 
     //roof
+    var roof = $('#constructionRoof').html('<option value=""></option>');
     $.each(options.roofTypes.data, function(key, value) {
-        $('#constructionRoof').append('<option value="' + value + '">' + value + '</option>');
+        roof.append('<option value="' + value + '">' + value + '</option>');
     });
 }
 

@@ -3082,13 +3082,12 @@
                     $('#employerState').val(currentQuote.employerState);
                 }
 
-
                 //start date
                 $('.startDate').val(currentQuote.startDate);
                 //currency
                 $('.currency').val(currentQuote.currency);
                 //applicantRelativeInPublicOffice
-                setRadioButton('applicantRelativeInPublicOffice', currentQuote.applicantRelativeInPublicOffice);
+
             };
 
 
@@ -3243,7 +3242,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost0);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver0);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth0);
-                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief0);
+                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief0);
                 }
 
                 //add second accident
@@ -3255,7 +3254,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost1);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver1);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth1);
-                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief1);
+                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief1);
                 }
 
                 //add third accident
@@ -3267,7 +3266,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost2);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver2);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth2);
-                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief2);
+                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief2);
                 }
 
                 //add fourth accident
@@ -3279,7 +3278,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost3);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver3);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth3);
-                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief3);
+                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief3);
                 }
 
                 //add fifth accident
@@ -3291,7 +3290,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost4);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver4);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth4);
-                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief4);
+                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief4);
                 }
 
 
@@ -3400,7 +3399,7 @@
 
             var populateApplicantRelativeInPublicOffice = function() {
                 //$('#publicofficerelation').on('click', '.Add', function() {
-
+                setRadioButton('applicantRelativeInPublicOffice', currentQuote.applicantRelativeInPublicOffice);
 
                 if (currentQuote.applicantRelativePublicOffice0) {
                     $('.publicofficerelations:last .office input').val(currentQuote.applicantRelativePublicOffice0);
