@@ -426,16 +426,16 @@ function runQuoteEvents() {
 
     $('.countries').change(function() {
         var $addressHolder = $(this).closest(".address");
-        var select_value = $(this).val();
-        if (select_value == "Jamaica") {
-            $addressHolder.find('.jamaica').show();
-            $addressHolder.find('.international').hide();
-        } else {
-            $addressHolder.find('.jamaica').hide();
-            $addressHolder.find('.international').show();
-        }
+        var jamaicaSelected = $(this).val() == "Jamaica";
+        $addressHolder.find('.jamaica').css("display", jamaicaSelected ? "" : "none");
+        $addressHolder.find('.international').css("display", !jamaicaSelected ? "" : "none");
+        $addressHolder.find('.state').val('').prop("required", !jamaicaSelected);
+        $addressHolder.find('.city').val('').prop("required", !jamaicaSelected);
+        $addressHolder.find('.parish').val('').prop("required", jamaicaSelected);
+        $addressHolder.find('.town').val('').prop("required", jamaicaSelected);
+        $addressHolder.find('.postalcode').val('').prop("required", !jamaicaSelected);
     });
-    
+
     //all radio buttons toggle
     $('input[type=radio]').change(function() {
         setResponseDetails($(this).attr('name'), this.value);
@@ -512,7 +512,7 @@ function setQuoteWizard(insuranceType, callback) {
     completeStep.appendTo(wizardTabs);
 
     cleanUpPages(insuranceType);
-    runWizard();
+    doPageValidation();
     //setBootstrapWizard(insuranceType);
     LoadSettings(insuranceType, function(err) {
         setLoadingState(false);
@@ -603,7 +603,7 @@ function loadFinanceCodes(insuranceType) {
 }
 
 
-function runWizard() {
+function doPageValidation() {
     var navListItems = $('div.setup-panel div a'),
         allWells = $('.setup-content'),
         allNextBtn = $('.nextBtn'),
@@ -629,7 +629,7 @@ function runWizard() {
         var curStep = $(this).closest(".setup-content"),
             curStepBtn = curStep.attr("id"),
             nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-            curInputs = curStep.find(":input"),
+            curInputs = curStep.find(":input:visible"),
             isValid = true;
 
         $(".form-group").removeClass("has-error");
@@ -677,32 +677,19 @@ function getSpecificValidation($curStep, $valid) {
             if ($('#getTRNDetails').is(":visible")) {
                 $valid = false;
                 $('#applicantTRN').closest(".form-group").addClass("has-error");
+                console.log($('#applicantTRN'));
+                bootbox.alert("TRN needs to be validated!");
             }
             break;
         case 'personal-contact-page':
-            if (!$('#applicantHomeParish').val()) {
-                $valid = false;
-            }
-            if ($('#mailingAddress').is(":visible")) {
-                if (!$('#applicantMailParish').val()) {
-                    $valid = false;
-                }
-                if (!$('#applicantMailTown').val()) {
-                    $valid = false;
-                }
-                if (!$('#applicantMailStreetName').val()) {
-                    $valid = false;
-                }
-            }
             break;
         case 'personal-employer-details-page':
-            if (!$('#applicantOccupation').val()) {
-                $valid = false;
-            }
             break;
         case 'vehicle-particulars-page':
-            if ($valid && $('#vehiclesToBeInsured tbody tr').length === 0)
+            if ($valid && $('#vehiclesToBeInsured tbody tr').length === 0) {
                 $valid = false;
+                bootbox.alert("A Vehicle is required");
+            }
             break;
         case 'vehicle-insurance-coverage-page':
             switch ($('#insuranceCoverage').val()) {
@@ -713,21 +700,27 @@ function getSpecificValidation($curStep, $valid) {
                         var vehValue = parseFloat($(this).val());
                         if (!vehValue || vehValue <= 0) {
                             $valid = false;
+                            var coverage = $("#insuranceCoverage option:selected").text();
+                            var errorMessage = coverage + " coverage requires a Motor Vehicle with a value";
+                            console.log(errorMessage);
+                            bootbox.alert(errorMessage);
                         }
                     });
                     break;
             }
             break;
         case 'vehicle-driver-details-page':
+            if (!$('#regularDriversId').is(":visible")) {
+                $valid = false;
+                console.log("Driver is required");
+                bootbox.alert("Driver is required");
+            }
             break;
         case 'vehicle-accidents-page':
             break;
         case 'vehicle-medical-history-page':
             break;
         case 'home-particulars-page':
-            if (!$('#homeRiskAddressParish').val()) {
-                $valid = false;
-            }
             break;
         case 'home-particulars-continued-page':
             break;
@@ -1098,8 +1091,8 @@ function setTown(parishId, parishValue) {
             if (justIn) {
                 $select.append('<option value=""></option>');
                 justIn = false;
-            }else{
-              $select.append('<option value="' + value + '">' + value + '</option>');
+            } else {
+                $select.append('<option value="' + value + '">' + value + '</option>');
             }
         });
     }
@@ -1527,12 +1520,12 @@ function loadParishes() {
         var selectObj = $(this).empty();
         var justIn = true;
         $.each(options.ParishTowns.data, function(i, json) {
-          if(justIn){
-            justIn=false;
-            selectObj.append('<option value=""></option>');
-          }else{
-            selectObj.append('<option value="' + json.parish + '">' + json.parish + '</option>');
-          }
+            if (justIn) {
+                justIn = false;
+                selectObj.append('<option value=""></option>');
+            } else {
+                selectObj.append('<option value="' + json.parish + '">' + json.parish + '</option>');
+            }
         });
     });
 }
@@ -1542,7 +1535,7 @@ function loadParishes() {
 function cloneElement(elementGroup) {
     var clone = elementGroup.clone().insertAfter(elementGroup);
     clone.find("input[type=text],input[type=number],textarea").val("");
-    if(clone.tagName === 'SELECT') clone[0].selectedIndex = 0;
+    if (clone.tagName === 'SELECT') clone[0].selectedIndex = 0;
     clone.show();
 }
 
