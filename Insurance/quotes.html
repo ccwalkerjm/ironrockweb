@@ -2994,6 +2994,10 @@
             function fillSignatureCanvas() {
                 if (currentQuote.signatureBytes) {
                     try {
+                        //save signature
+                        $('#signatureBytes').val(currentQuote.signatureBytes);
+                        $('#signatureImageType').val(currentQuote.signatureImageType);
+                        //display signature
                         var svgContainer = document.getElementById('svg-signature');
                         //$('#svg-signature').append(atob(currentQuote.signatureBytes));
                         svgContainer.innerHTML = atob(currentQuote.signatureBytes);

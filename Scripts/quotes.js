@@ -21,7 +21,11 @@ function runQuoteEvents() {
     ////submit
     $('#quote-section').on('click', '#submit-btn', function() {
         //get signature data
+        var previousSignatureBytes = $('#signatureBytes').val();
+        var previousSignatureImageType = $('#signatureImageType').val();
+
         currentQuote = $('form').serializeObject();
+
         if (!parseInt(currentQuote.quotation_number))
             delete currentQuote.quotation_number;
         var formData = JSON.stringify(currentQuote);
