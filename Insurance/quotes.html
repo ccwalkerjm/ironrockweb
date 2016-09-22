@@ -2553,7 +2553,7 @@
                 var endDate = new Date();
                 endDate.setMonth(endDate.getMonth() + 12);
                 var signedStartDate = new Date();
-                signedStartDate.setMonth(endDate.getMonth() - 12);
+                signedStartDate.setMonth(signedStartDate.getMonth() - 3);
 
                 $('.datepicker').datepicker({ //searchDateFr
                     format: 'yyyy-mm-dd',
@@ -2735,12 +2735,16 @@
                 var policyDate = new Date(currentQuote.startDate);
                 var currentDate = new Date();
 
-                if (signedDate > currentDate) {
-                    signedDate = currentDate;
+                if (signedDate.getTime() > currentDate.getTime()) {
+                    signedDate.setFullYear(currentDate.getFullYear());
+                    signedDate.setMonth(currentDate.getMonth());
+                    signedDate.setDate(currentDate.getDate());
                 }
 
-                if (policyDate < currentDate) {
-                    policyDate = currentDate;
+                if (policyDate.getTime() < currentDate.getTime()) {
+                  policyDate.setFullYear(currentDate.getFullYear());
+                  policyDate.setMonth(currentDate.getMonth());
+                  policyDate.setDate(currentDate.getDate());
                 }
 
                 $('#policyStartDate').val(formatDate(policyDate));
