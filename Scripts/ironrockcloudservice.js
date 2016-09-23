@@ -644,7 +644,7 @@ var ironrockcloudservice = (function () {
 			"id": id
 		};
 		var params = {
-			FunctionName: 'IronRockDriverLicense:2',
+			FunctionName: 'IronRockDriverLicense',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
