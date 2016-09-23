@@ -120,8 +120,8 @@ function CreatePDF(resp) {
     doc.text(150, 165, resp.applicantNationality);
     doc.text(50, 175, resp.employerName);
     doc.text(20, 185, resp.employerStreetName);
-    doc.text(150, 175, resp.employerTown);
-    doc.text(150, 180, resp.employerParish);
+    doc.text(150, 175, resp.employerTown || "");
+    doc.text(150, 180, resp.employerParish || "");
 
     doc.setFontType("bold");
     doc.setFontSize("10");
