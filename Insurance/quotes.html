@@ -2909,13 +2909,13 @@
                 populateApplicantRelativeInPublicOffice();
                 //
                 if (currentQuote.insuranceType == 'motor') {
-                    $('.page-header').html('<h1>Motor Insurance</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
+                    $('.page-header').html('<h1>Motor Quote</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
                     populateVehicles();
                     populateDrivers();
                     populateMiscellaneousMotorVehicle();
                     populateAllAccident();
                 } else {
-                    $('.page-header').html('<h1>Home Insurance</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
+                    $('.page-header').html('<h1>Home Quote</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
                     populateHomeProperty();
                     populateHomeAllRiskArticles();
                     populateHomeInsuranceProperty();
