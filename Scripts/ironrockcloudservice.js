@@ -672,7 +672,7 @@ var ironrockcloudservice = (function () {
 			"chassisno": chassisNo
 		};
 		var params = {
-			FunctionName: 'IronRockVehicle:2',
+			FunctionName: 'IronRockVehicle',
 			Payload: JSON.stringify(payload)
 		};
 		var _lambda = new AWS.Lambda();
