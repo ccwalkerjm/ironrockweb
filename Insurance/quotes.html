@@ -127,7 +127,7 @@
                 <div class="container" id="quoteContainer" style="display:none">
 
                     <div class="container" id="newQuoteTypeSelection">
-                        <h2>Prepare Proposal</h2>
+                        <h2>Get a Quote</h2>
                         <div class="row">
                             <div class="col-md-12">
                                 <a href="#" class="btn btn-link returntoQuotes">Return to Quotes</a>
@@ -135,14 +135,13 @@
                         </div>
 
 
-                        <p>Click the appropriate button to prepare the proposal</p>
-
+                        <p>Click the appropriate button to prepare the quotation</p>
                         <div class="row">
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-primary btn-lg btn-block insuranceSelection" id="motor">Create Motor Vehicle Insurance Proposal</button>
+                                <button type="button" class="btn btn-primary btn-lg btn-block insuranceSelection" id="motor">Motor Insurance</button>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-info btn-lg btn-block insuranceSelection" id="property">Create Home Property Insurance Proposal</button>
+                                <button type="button" class="btn btn-info btn-lg btn-block insuranceSelection" id="property">Home Insurance</button>
                             </div>
                         </div>
 
@@ -305,7 +304,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="applicantNationality">Country of Nationality:</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control countries" name="applicantNationality" id="applicantNationality"></select>
+                                                    <select class="form-control" name="applicantNationality" id="applicantNationality"></select>
                                                 </div>
                                             </div>
 
@@ -547,7 +546,7 @@
                                             <div class="form-group jamaica">
                                                 <label class="control-label col-sm-2" for="employerParish">Select Parish:</label>
                                                 <div class="col-sm-10">
-                                                    <select required class="form-control parish" name="employerParish" id="employerParish">
+                                                    <select class="form-control parish" name="employerParish" id="employerParish">
                                                     </select>
                                                 </div>
                                             </div>
@@ -555,7 +554,7 @@
                                             <div class="form-group jamaica">
                                                 <label class="control-label col-sm-2" for="employerTown">Town/Postal Zone:</label>
                                                 <div class="col-sm-10">
-                                                    <select required class="form-control town" name="employerTown" id="employerTown"></select>
+                                                    <select class="form-control town" name="employerTown" id="employerTown"></select>
                                                 </div>
                                             </div>
 
@@ -814,7 +813,7 @@
 
                                             <div class="col-md-6">
                                                 <select class="form-control" name="authorized_driver_wording" id="authorized_driver_wording" required>
-<option value=""></option>
+                                                  <option value=""></option>
                                                     <option value="Any Authorized Driver">Any Authorized Driver</option>
                                                     <option value="Named Drivers Only">Named Drivers Only</option>
                                                     <option value="Insured only">Insured only</option>
@@ -825,11 +824,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
-
-
-
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Is the vehicle fitted with an anti-theft device?</label>
@@ -868,7 +862,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Will you have regular custody of the vehicle?</label>
@@ -896,8 +889,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
-
                                         <div class="row controls-row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Is the vehicle garaged at the Proposer home address?</label>
@@ -923,7 +914,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right" for="vehicleKeptInSecureArea">Is Vehicle Kept In a Locked Garage or Secure Compound?</label>
@@ -948,7 +938,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
                                         <div class="row controls-row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Is the Proposer now insured or was previously insured in respect of
@@ -974,7 +963,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label class="control-label pull-right">Do you have any other insurance(s) with IronRock Insurance
@@ -1001,8 +989,6 @@
                                             </div>
                                         </div>
                                         <hr/>
-
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-inline">
@@ -1859,7 +1845,7 @@
                                                 </p>
                                             </div>
                                             <div class="form-group">
-                                                <label for="homeInsurancePropertySum">The Total Sum Insured:</label>
+                                                <label for="homeInsurancePropertySum">Total Buildings and Structures Insured:</label>
                                                 <input class="form-control" type="text" name="homeInsurancePropertySum" id="homeInsurancePropertySum" readonly value="">
                                             </div>
 
@@ -1931,7 +1917,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="HomeInsuranceContentTotalAmount">The Total Sum Insured:</label>
+                                                <label for="HomeInsuranceContentTotalAmount">Total Content Insured:</label>
                                                 <input class="form-control" type="text" name="HomeInsuranceContentTotalAmount" id="HomeInsuranceContentTotalAmount" value="" readonly>
                                             </div>
                                         </div>
@@ -1947,7 +1933,7 @@
                         <div class="row setup-content" id="home-all-risk-insurance-page">
                             <div class="col-xs-12">
                                 <div class="col-md-12">
-                                    <h3>Risks</h3>
+                                    <h3>All Risks</h3>
                                     <form class="ProposalForm">
 
                                         <div data-role="collapsible">
@@ -1978,7 +1964,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="HomeAllRiskTotalAmount">Total Sum Insured:</label>
+                                                <label for="HomeAllRiskTotalAmount">Total All Risks Insured:</label>
                                                 <input class="form-control" type="text" name="HomeAllRiskTotalAmount" id="HomeAllRiskTotalAmount" value="" readonly>
                                             </div>
                                             <hr />
@@ -2532,6 +2518,7 @@
     <!--Iron Rock Custom Library-->
     <script src="/Scripts/ironrockcloudservice.js"></script>
     <script src="/Scripts/pdfconvertor.js"></script>
+    <script src="/Scripts/countries.js"></script>
     <script src="/Scripts/quotes.js"></script>
     <script src="/Scripts/index.js"></script>
     <!--date picker-->
@@ -2742,9 +2729,9 @@
                 }
 
                 if (policyDate.getTime() < currentDate.getTime()) {
-                  policyDate.setFullYear(currentDate.getFullYear());
-                  policyDate.setMonth(currentDate.getMonth());
-                  policyDate.setDate(currentDate.getDate());
+                    policyDate.setFullYear(currentDate.getFullYear());
+                    policyDate.setMonth(currentDate.getMonth());
+                    policyDate.setDate(currentDate.getDate());
                 }
 
                 $('#policyStartDate').val(formatDate(policyDate));
@@ -2922,13 +2909,13 @@
                 populateApplicantRelativeInPublicOffice();
                 //
                 if (currentQuote.insuranceType == 'motor') {
-                    $('.page-header').html('<h1>Motor Vehicle Proposal</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
+                    $('.page-header').html('<h1>Motor Insurance</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
                     populateVehicles();
                     populateDrivers();
                     populateMiscellaneousMotorVehicle();
                     populateAllAccident();
                 } else {
-                    $('.page-header').html('<h1>Home Property Proposal</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
+                    $('.page-header').html('<h1>Home Insurance</h1><h4>Quote Number:' + currentQuote.applicantQuoteNo + '</h4>');
                     populateHomeProperty();
                     populateHomeAllRiskArticles();
                     populateHomeInsuranceProperty();
@@ -3148,7 +3135,7 @@
                 setRadioButton('driverSufferFromDiabetesEpilepsyHeartDisease', currentQuote.driverSufferFromDiabetesEpilepsyHeartDisease);
                 setRadioButton('driverSufferFromPhysicalMentalInfirmity', currentQuote.driverSufferFromPhysicalMentalInfirmity);
                 setRadioButton('driverTrafficTicket', currentQuote.driverTrafficTicket);
-                setRadioButton('involvedInAccident', currentQuote.involvedInAccident);
+
                 setRadioButton('isOwnerOfVehicle', currentQuote.isOwnerOfVehicle);
                 //setRadioButton('lienHolder', currentQuote.lienHolder);
                 setRadioButton('proposerEntitledToNOClaimDiscount', currentQuote.proposerEntitledToNOClaimDiscount);
@@ -3241,12 +3228,13 @@
             var populateAllAccident = function() {
                 //$('#vehicle-all-accidents')
                 //add first accident
+                setRadioButton('involvedInAccident', currentQuote.involvedInAccident);
                 if (currentQuote.accidentYear0) {
                     $('.vehicle-accident-block:last .year input').val(currentQuote.accidentYear0);
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost0);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver0);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth0);
-                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief0);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief0);
                 }
 
                 //add second accident
@@ -3258,7 +3246,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost1);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver1);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth1);
-                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief1);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief1);
                 }
 
                 //add third accident
@@ -3270,7 +3258,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost2);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver2);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth2);
-                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief2);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief2);
                 }
 
                 //add fourth accident
@@ -3282,7 +3270,7 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost3);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver3);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth3);
-                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief3);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief3);
                 }
 
                 //add fifth accident
@@ -3294,11 +3282,8 @@
                     $('.vehicle-accident-block:last .cost input').val(currentQuote.accidentCost4);
                     $('.vehicle-accident-block:last .driver input').val(currentQuote.accidentDriver4);
                     $('.vehicle-accident-block:last .month select').val(currentQuote.accidentMonth4);
-                    $('.vehicle-accident-block:last .brief textarea').text(currentQuote.accidentBrief4);
+                    $('.vehicle-accident-block:last .brief textarea').val(currentQuote.accidentBrief4);
                 }
-
-
-
             };
 
             var populateHomeAllRiskArticles = function() {
@@ -3316,7 +3301,6 @@
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription1);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue1);
-
                 }
 
                 //add third
@@ -3326,7 +3310,6 @@
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription2);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue2);
-
                 }
 
                 //add fourth
@@ -3336,7 +3319,6 @@
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription3);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue3);
-
                 }
 
                 //add fifth
@@ -3346,7 +3328,6 @@
                     resetHomeAllRiskArticles();
                     $('.HomeAllRiskArticles:last .article-name input').val(currentQuote.HomeAllRiskArticleDescription4);
                     $('.HomeAllRiskArticles:last .article-value input').val(currentQuote.HomeAllRiskArticleValue4);
-
                 }
                 SetHomeAllRiskInsuredValue();
             };
@@ -3366,7 +3347,6 @@
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem1);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue1);
-
                 }
 
                 //add third
@@ -3376,7 +3356,6 @@
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem2);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue2);
-
                 }
 
                 //add fourth
@@ -3386,7 +3365,6 @@
                     resetHomeInsuranceProperty();
                     $('.homeInsurancePropertyItems:last .article-name input').val(currentQuote.homeInsurancePropertyItem3);
                     $('.homeInsurancePropertyItems:last .article-value input').val(currentQuote.homeInsurancePropertyItemValue3);
-
                 }
 
                 //add fifth

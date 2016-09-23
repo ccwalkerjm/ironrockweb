@@ -369,10 +369,6 @@ function runQuoteEvents() {
         SetHomeAllRiskInsuredValue();
     });
 
-    $('#HomeAllRiskInsured').on('keyup', '.article-value input', function() {
-        SetHomeAllRiskInsuredValue();
-    });
-
 
     //HomeInsurance
     $('#homeInsuranceProperty').on('click', '.Add', function() {
@@ -396,12 +392,17 @@ function runQuoteEvents() {
     });
 
 
+    $('#HomeAllRiskInsured').on('keyup', '.article-value input', function() {
+        SetHomeAllRiskInsuredValue();
+    });
+
+
     $('#homeInsuranceProperty').on('keyup', '.article-value input', function() {
         SetHomeInsuranceValue();
     });
 
 
-    $('#HomeInsuranceContent .article-value').on('keyup', 'input', function() {
+    $('#HomeInsuranceContent').on('keyup', '.article-value input', function() {
         SetContentTotalAmount();
     });
 
@@ -430,15 +431,17 @@ function runQuoteEvents() {
 
     $('.countries').change(function() {
         var $addressHolder = $(this).closest(".address");
+        var isRequiredNecessary = $addressHolder.attr('id') != "employer";
         var jamaicaSelected = $(this).val() == "Jamaica";
         $addressHolder.find('.jamaica').css("display", jamaicaSelected ? "" : "none");
         $addressHolder.find('.international').css("display", !jamaicaSelected ? "" : "none");
-        $addressHolder.find('.state').val('').prop("required", !jamaicaSelected);
-        $addressHolder.find('.city').val('').prop("required", !jamaicaSelected);
-        $addressHolder.find('.parish').val('').prop("required", jamaicaSelected);
-        $addressHolder.find('.town').val('').prop("required", jamaicaSelected);
-        $addressHolder.find('.postalcode').val('').prop("required", !jamaicaSelected);
+        $addressHolder.find('.state').val('').prop("required", isRequiredNecessary && !jamaicaSelected);
+        $addressHolder.find('.city').val('').prop("required", isRequiredNecessary && !jamaicaSelected);
+        $addressHolder.find('.parish').val('').prop("required", isRequiredNecessary && jamaicaSelected);
+        $addressHolder.find('.town').val('').prop("required", isRequiredNecessary && jamaicaSelected);
+        $addressHolder.find('.postalcode').val('').prop("required", isRequiredNecessary && !jamaicaSelected);
     });
+
 
     //all radio buttons toggle
     $('input[type=radio]').change(function() {
@@ -506,7 +509,7 @@ function setQuoteWizard(insuranceType, callback) {
         //
         var riskStep = $('<div/>').addClass('stepwizard-step');
         riskStep.append('<a href="#home-all-risk-insurance-page" type="button" class="btn btn-default btn-circle" disabled>7</a>');
-        riskStep.append('<p>Risks</p>');
+        riskStep.append('<p>All Risks</p>');
         riskStep.appendTo(wizardTabs);
         finalStepNo = 8;
     }
@@ -1516,6 +1519,18 @@ function loadCountriesOptions() {
             }
         });
     });
+
+    //load nationality separately
+    var nationality = $('#applicantNationality').empty();
+    $.each(_countries, function(i, country) {
+        if (country.name == 'Jamaica') {
+            nationality.append('<option value="' + country.name + '" selected>' + country.name + '</option>');
+        } else {
+            nationality.append('<option value="' + country.name + '">' + country.name + '</option>');
+        }
+    });
+
+
 }
 
 //load parishes in select options

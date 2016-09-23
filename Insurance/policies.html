@@ -277,7 +277,7 @@
 				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
 				$('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
 
-				if(policyObj.meta.broker){
+				if (policyObj.meta.broker) {
 					$('#summary dl').append('<dt>Broker</dt><dd>' + policyObj.meta.broker + '</dd>');
 				}
 				if (policyObj.meta.broker_policy_number) {
@@ -530,23 +530,25 @@
 						var result = JSON.parse(data.Payload);
 						if (result.errorMessage) {
 							display(result.errorMessage, true);
-						} else if (result.error_message) {
+						} else if (!result.success) {
 							display(result.error_message, true);
-						} else if (result.success) {
+						} else {
 							var byteCharacters = atob(result.data.file_data);
 							var byteNumbers = new Array(byteCharacters.length);
 							for (var i = 0; i < byteCharacters.length; i++) {
 								byteNumbers[i] = byteCharacters.charCodeAt(i);
 							}
 							var byteArray = new Uint8Array(byteNumbers);
-							var file = new Blob([byteArray], {
+							var blobFile = new Blob([byteArray], {
 								type: result.data.mime_type
 							});
-							var fileURL = URL.createObjectURL(file);
-							window.open(fileURL);
-						} else {
 
-
+							if (navigator.appVersion.toString().indexOf('.NET') > 0)
+								window.navigator.msSaveBlob(blobFile, "certificate.pdf");
+							else {
+								var fileURL = URL.createObjectURL(blobFile);
+								window.open(fileURL);
+							}
 						}
 					}
 				});
