@@ -462,7 +462,7 @@ function setQuoteWizard(insuranceType, callback) {
 
     var finalStepNo = 0;
     if (insuranceType == 'motor') {
-        $('.page-header').html('<h1>Create Motor Vehicle Proposal</h1>');
+        $('.page-header').html('<h1>Motor Quote</h1>');
 
         var particularStep = $('<div/>').addClass('stepwizard-step');
         particularStep.append('<a href="#vehicle-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
@@ -490,7 +490,7 @@ function setQuoteWizard(insuranceType, callback) {
         conditionStep.appendTo(wizardTabs);
         finalStepNo = 9;
     } else {
-        $('.page-header').html('<h1>Create Home Property Proposal</h1>');
+        $('.page-header').html('<h1>Home Quote</h1>');
 
         var homeParticularStep = $('<div/>').addClass('stepwizard-step');
         homeParticularStep.append('<a href="#home-particulars-page" type="button" class="btn btn-default btn-circle" disabled>4</a>');
