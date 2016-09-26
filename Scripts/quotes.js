@@ -31,7 +31,7 @@ function runQuoteEvents() {
         var formData = JSON.stringify(currentQuote);
         console.log(formData);
         setLoadingState(true);
-        g_ironrock_service.submitQuote2(formData, function(err, r) {
+        g_ironrock_service.submitQuote(formData, function(err, r) {
             setLoadingState(false);
             if (err) {
                 alert("error: " + err.message);
