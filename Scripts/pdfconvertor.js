@@ -222,7 +222,12 @@ function CreatePDF(resp) {
 
     lastPage(resp);
     //doc.output('datauri');
-    doc.output('dataurlnewwindow');
+
+    if (navigator.appVersion.toString().indexOf('.NET') > 0)
+      doc.save('quote.pdf');
+    else {
+      doc.output('dataurlnewwindow');
+    }
     //doc.save('Proposal' + resp.applicantQuoteNo + '.pdf');
 }
 
