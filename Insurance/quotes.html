@@ -2817,17 +2817,26 @@
 
             $('#documents').on('click', '.documents-list', function(e) {
                 var key = e.target.id;
+                var $tr = $(this).closest('tr');
+                var fileName = $tr.children(":eq(1)").text();
                 setLoadingState(true);
                 g_ironrock_service.getPdfDocument(key, function(err, body) {
                     setLoadingState(false);
                     if (err) {
                         display(err.message, err);
                     } else {
-                        var file = new Blob([body], {
+                        var blobFile = new Blob([body], {
                             type: 'application/pdf'
                         });
-                        var fileURL = URL.createObjectURL(file);
-                        window.open(fileURL);
+                        //var fileURL = URL.createObjectURL(file);
+                        //window.open(fileURL);
+                        if (navigator.appVersion.toString().indexOf('.NET') > 0)
+          								window.navigator.msSaveBlob(blobFile, fileName);
+          							else {
+          								var fileURL = URL.createObjectURL(blobFile);
+          								window.open(fileURL);
+          							}
+
                     }
                 });
             });

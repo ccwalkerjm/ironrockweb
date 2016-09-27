@@ -129,7 +129,7 @@
 			///login
 			$("#login_submit").click(function(e) {
 				setLoadingState(true);
-				g_ironrock_service.signoff();
+				//g_ironrock_service.signoff();
 				g_ironrock_service.signin($('#login_username').val(), $('#login_password').val(), function(err, obj) {
 					setLoadingState(false);
 					if (err) {

@@ -42,6 +42,7 @@ var ironrockcloudservice = (function() {
     var _userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(_poolData);
     var _cognitoUser = _userPool.getCurrentUser();
 
+    var _lambda = new AWS.Lambda();
 
 
 
@@ -89,9 +90,16 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        // AWSCognito.config.update({
+        //     accessKeyId: 'anything',
+        //     secretAccessKey: 'anything'
+        // });
+        // _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+            if(err){
+              return callback(new Error("Please Reload the Page!"));
+            }
+            callback(null, results);
         });
     };
 
@@ -378,7 +386,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -397,7 +405,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -421,7 +429,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -441,7 +449,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -462,7 +470,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -483,7 +491,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -503,7 +511,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -524,7 +532,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -542,7 +550,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockSubmitQuote:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -568,7 +576,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockQuoteSearch:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -592,7 +600,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockGetQuote:test',
             Payload: id
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -619,7 +627,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'IronRockDriverLicense:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -647,7 +655,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'IronRockVehicle:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -670,7 +678,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockGetMiscData:test',
             Payload: null
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -700,7 +708,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockS3uploadPolicy:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             if (err)
                 callback(err);
@@ -922,7 +930,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -943,7 +951,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -963,7 +971,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -985,7 +993,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockAdminFunc:test',
             Payload: requestSerialized
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -999,7 +1007,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockQuoteToPolicy:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1013,7 +1021,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockGetPolicy:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1028,7 +1036,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockGetSources:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1066,7 +1074,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironrockNotificationAddressesUpdate:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1081,7 +1089,7 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironRockGetCertificate:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1092,7 +1100,7 @@ var ironrockcloudservice = (function() {
         var params = {
             FunctionName: 'IronRockGetFinanceCodes:test'
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1103,7 +1111,7 @@ var ironrockcloudservice = (function() {
         var params = {
             FunctionName: 'ironrockGetMortgagees:test'
         };
-        var _lambda = new AWS.Lambda();
+        //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
@@ -1116,7 +1124,6 @@ var ironrockcloudservice = (function() {
             FunctionName: 'ironRockPushTransaction:test',
             Payload: JSON.stringify(payload)
         };
-        var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
