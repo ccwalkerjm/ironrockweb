@@ -283,6 +283,11 @@
 				if (policyObj.meta.broker_policy_number) {
 					$('#summary dl').append('<dt>Broker Policy Number</dt><dd>' + policyObj.meta.broker_policy_number + '</dd>');
 					$('#summary dl').append('<dt>Broker Endorsement Number</dt><dd>' + policyObj.meta.broker_endorsement_number + '</dd>');
+					//
+					$('#summary dl').append('<dt>Account Executive</dt><dd>' + policyObj.meta.accountExecutive + '</dd>');
+					$('#summary dl').append('<dt>Sales Agent</dt><dd>' + policyObj.meta.salesAgent + '</dd>');
+					$('#summary dl').append('<dt>Account Handler</dt><dd>' + policyObj.meta.accountHandler + '</dd>');
+					$('#summary dl').append('<dt>Broker Branch</dt><dd>' + policyObj.meta.brokerBranch + '</dd>');
 				} else {
 					var profile = g_ironrock_service.getProfile();
 					if (profile.role == "Admin") {

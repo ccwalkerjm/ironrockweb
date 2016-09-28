@@ -149,6 +149,7 @@
 											<img id="imgLogo" src="#" alt="Logo" width="400px" />
 										</div>
 									</div>
+
 									<hr/>
 									<div class="row">
 										<div class="col-sm-3">
@@ -219,6 +220,20 @@
 										</div>
 									</div>
 
+									<hr/>
+									<div class="row">
+										<div class="col-sm-12">
+											<h4>Branches</h4>
+											<button type="button" id="branch-add" class="btn btn-link">
+													Add Branch
+												</button>
+											<button type="button" id="branch-delete" class="btn btn-link">
+													Delete Branch
+												</button>
+											<select class="form-control" id="branch-list" size="5"></select>
+										</div>
+									</div>
+
 								</form>
 							</div>
 							<div class="modal-footer">
@@ -272,6 +287,40 @@
 				listBrokers(obj);
 			});
 
+
+			//branches
+			//add branch
+			$('#branch-add').click(function() {
+				bootbox.prompt("Branch Name:", function(branch) {
+					$('#branch-list').append('<option value="' + branch + '">' + branch + '</option>');
+				});
+			});
+
+			//delete branch
+			$('#branch-delete').click(function() {
+				var index = $('#branch-list').get(0).selectedIndex;
+				$('#branch-list option:eq(' + index + ')').remove();
+			});
+
+			//get branches
+			function getBranches() {
+				var branches = [];
+				$("#branch-list option").each(function() {
+					// Add $(this).val() to your list
+					branches.push($(this).val());
+				});
+				return JSON.stringify(branches);
+			}
+
+			//load branches
+			function loadBranches(branches) {
+				if (branches) {
+					var $branch = $('#branch-list').empty();
+					$.each(JSON.parse(branches), function(idx, branch) {
+						$branch.append('<option value="' + branch + '">' + branch + '</option>');
+					});
+				}
+			}
 
 			//motor vehicle manual rates
 			$('#manual-add').click(function() {
@@ -365,6 +414,7 @@
 
 
 
+
 			$('#create-broker').click(function() {
 				var dataInput = {};
 				dataInput.code = $('#code').val().toUpperCase();
@@ -375,6 +425,7 @@
 				dataInput.logo = $('#imgLogo').attr('src');
 				dataInput.manual_rates = getManualRates($('#manual-rates-body'));
 				dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
+				dataInput.branches = getBranches();
 				if (!(dataInput.code).match(/[a-z]/i)) {
 					alert('Code must contain letters only');
 					return;
@@ -416,6 +467,7 @@
 				dataInput.logo = $('#imgLogo').attr('src');
 				dataInput.manual_rates = getManualRates($('#manual-rates-body'));
 				dataInput.hoc_manual_rates = getManualRates($('#hoc-manual-rates-body'));
+				dataInput.branches = getBranches();
 				if (!dataInput.code || !dataInput.name || !dataInput.trn) {
 					alert('Code,Name or TRN cannot be null!');
 					return;
@@ -473,6 +525,7 @@
 				$('#globalName').val('');
 				populateManualRates([], $('#manual-rates-body'));
 				populateManualRates([], $('#hoc-manual-rates-body'));
+				$('#branch-list').empty();
 				$('#update-broker').hide();
 				$('#delete-broker').hide();
 				$('#create-broker').show();
@@ -504,6 +557,7 @@
 					$("#inpLogo").val('');
 					populateManualRates(item.manual_rates, $('#manual-rates-body'));
 					populateManualRates(item.hoc_manual_rates, $('#hoc-manual-rates-body'));
+					loadBranches(item.branches);
 					$('#update-broker').show();
 					$('#create-broker').hide();
 					$('#delete-broker').show();

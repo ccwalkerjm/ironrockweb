@@ -991,7 +991,7 @@ var ironrockcloudservice = (function() {
         var payload = {};
         payload.policy_id = policy_id;
         var params = {
-            FunctionName: 'ironrockGetPolicy:test',
+            FunctionName: 'ironrockGetPolicy',
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
