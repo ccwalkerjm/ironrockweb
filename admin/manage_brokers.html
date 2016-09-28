@@ -390,16 +390,18 @@
 				setLoadingState(true);
 				g_ironrock_service.createBroker(dataInput, function(err, data) {
 					setLoadingState(false);
-					if (!err) data = JSON.parse(data.Payload);
-					if (err || data.errorMessage || data.error_message) {
-						if (err) display(err.message, true);
-						else if (data.errorMessage) display(data.errorMessage, true);
-						else if (data.error_message) display(data.error_message, true);
-						else display("Error Detected", true);
+					if (err) return display(err.message, true);
+					data = data.Payload;
+					if (data === null || data == "null") {
+						$('#brokerModal').modal('hide');
+						listBrokers();
 						return;
 					}
-					$('#brokerModal').modal('hide');
-					listBrokers();
+					data = JSON.parse(data);
+					if (data.errorMessage) display(data.errorMessage, true);
+					else if (data.error_message) display(data.error_message, true);
+					else display(data, true);
+
 				});
 			});
 
@@ -424,16 +426,17 @@
 				setLoadingState(true);
 				g_ironrock_service.modifyBroker(dataInput, function(err, data) {
 					setLoadingState(false);
-					if (!err) data = JSON.parse(data.Payload);
-					if (err || data.errorMessage || data.error_message) {
-						if (err) display(err.message, true);
-						else if (data.errorMessage) display(data.errorMessage, true);
-						else if (data.error_message) display(data.error_message, true);
-						else display("Error Detected", true);
+					if (err) return display(err.message, true);
+					data = data.Payload;
+					if (data === null || data == "null") {
+						$('#brokerModal').modal('hide');
+						listBrokers();
 						return;
 					}
-					$('#brokerModal').modal('hide');
-					listBrokers();
+					data = JSON.parse(data);
+					if (data.errorMessage) display(data.errorMessage, true);
+					else if (data.error_message) display(data.error_message, true);
+					else display(data, true);
 				});
 			});
 
