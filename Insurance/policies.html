@@ -132,6 +132,10 @@
 								<input type="hidden" id="policy_id" />
 								<input type="hidden" id="transaction_id" value="" />
 								<input type="hidden" id="source_id" value="" />
+								<input type="hidden" id="accountExecutive" value="" />
+								<input type="hidden" id="salesAgent" value="" />
+								<input type="hidden" id="accountHandler" value="" />
+								<input type="hidden" id="brokerBranch" value="" />
 								<dl class="dl-horizontal">
 								</dl>
 							</div>
@@ -229,16 +233,22 @@
 				bootbox.confirm("Are you sure you want to push Transaction to the Broker", function(ans) {
 					if (ans) {
 						setLoadingState(true);
-						var payload = {};
+						var payload = {};//$('#policy_id')
+						payload.policy_id = $('#policy_id').val();
 						payload.source_id = $('#source_id').val();
 						payload.transaction_id = $('#transaction_id').val();
+						payload.accountExecutive = $('#accountExecutive').val();
+						payload.salesAgent = $('#salesAgent').val();
+						payload.accountHandler = $('#accountHandler').val();
+						payload.brokerBranch = $('#brokerBranch').val();
 						g_ironrock_service.pushTransaction(payload, function(err, resp) {
 							setLoadingState(false);
-							if (err) {
-								display(err.message, err);
-							} else {
-								alert(JSON.stringify(resp));
-							}
+							if (err) return display(err.message, err);
+							console.log(resp);
+							var data = ConvertToJson(resp.Payload);
+							if(data.errorMessage) return display(data.errorMessage, true);
+							if(data.success == false) return display(data.error_message, true);
+							location.reload();
 						});
 					}
 				});
@@ -255,6 +265,7 @@
 					} else {
 						setLoadingState(false);
 						var policyObj = JSON.parse(data.Payload);
+						console.log(policyObj);
 						if (policyObj.errorMessage) {
 							display(policyObj.errorMessage, true);
 						} else if (!policyObj.success) {
@@ -280,21 +291,24 @@
 				if (policyObj.meta.broker) {
 					$('#summary dl').append('<dt>Broker</dt><dd>' + policyObj.meta.broker + '</dd>');
 				}
-				if (policyObj.meta.broker_policy_number) {
-					$('#summary dl').append('<dt>Broker Policy Number</dt><dd>' + policyObj.meta.broker_policy_number + '</dd>');
-					$('#summary dl').append('<dt>Broker Endorsement Number</dt><dd>' + policyObj.meta.broker_endorsement_number + '</dd>');
+				$("#accountExecutive").val(policyObj.meta.accountExecutive);
+				$("#salesAgent").val(policyObj.meta.salesAgent);
+				$("#accountHandler").val(policyObj.meta.accountHandler);
+				$("#brokerBranch").val(policyObj.meta.brokerBranch);
+
+				var broker_policy_number = parseInt(policyObj.meta.broker_policy_number);
+				$('#pushTransaction').hide();
+				if (broker_policy_number && broker_policy_number > 0) {
+					$('#summary dl').append('<dt>Broker Policy #</dt><dd>' + policyObj.meta.broker_policy_number + '</dd>');
+					$('#summary dl').append('<dt>Endorsement #</dt><dd>' + policyObj.meta.broker_endorsement_number + '</dd>');
 					//
-					$('#summary dl').append('<dt>Account Executive</dt><dd>' + policyObj.meta.accountExecutive + '</dd>');
-					$('#summary dl').append('<dt>Sales Agent</dt><dd>' + policyObj.meta.salesAgent + '</dd>');
-					$('#summary dl').append('<dt>Account Handler</dt><dd>' + policyObj.meta.accountHandler + '</dd>');
-					$('#summary dl').append('<dt>Broker Branch</dt><dd>' + policyObj.meta.brokerBranch + '</dd>');
+					$('#summary dl').append('<dt>Account Executive</dt><dd>' + policyObj.brokerOne.accountExecutive.name + '</dd>');
+					$('#summary dl').append('<dt>Sales Agent</dt><dd>' + policyObj.brokerOne.salesAgent.name + '</dd>');
+					$('#summary dl').append('<dt>Account Handler</dt><dd>' + policyObj.brokerOne.accountHandler.name + '</dd>');
+					$('#summary dl').append('<dt>Broker Branch</dt><dd>' + policyObj.brokerOne.brokerBranch.branch_name + '</dd>');
 				} else {
 					var profile = g_ironrock_service.getProfile();
-					if (profile.role == "Admin") {
-						$('#pushTransaction').show();
-					} else {
-						$('#pushTransaction').hide();
-					}
+					if (profile.role == "Admin") $('#pushTransaction').show();
 				}
 				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
 				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');

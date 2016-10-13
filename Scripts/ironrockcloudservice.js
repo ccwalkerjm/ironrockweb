@@ -12,7 +12,7 @@ var ironrockcloudservice = (function() {
     const IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
     const USER_POOL_ID = 'us-east-1_sXSIoZ4vD';
     const CLIENT_ID = '65qcrqbc1tkru2unrkegerschk';
-    const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
+    //const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
     const AWS_REGION = 'us-east-1';
 
     //private properties and methods
@@ -65,11 +65,13 @@ var ironrockcloudservice = (function() {
     //set Credentials
     var _setCredentials = function(session) {
         if (session && session.isValid()) {
+            var idToken = session.getIdToken().getJwtToken();
+            var provider_name = 'cognito-idp.' + AWS_REGION + '.amazonaws.com/' + USER_POOL_ID;
             _creds.params.Logins = {};
-            _creds.params.Logins[PROVIDER_NAME] = session.getIdToken().getJwtToken();
-            //_creds.expired = true;
-            AWS.config.credentials = _creds;
-            AWSCognito.config.credentials = _creds;
+            _creds.params.Logins[provider_name] = idToken;
+            _creds.expired = true;
+            //AWS.config.credentials = _creds;
+            //AWSCognito.config.credentials = _creds;
             console.log(_creds);
         }
     };
@@ -149,6 +151,7 @@ var ironrockcloudservice = (function() {
                 console.log(err);
                 _cognitoUser.signOut();
                 _cognitoUser = null;
+                AWS.config.credentials.clearCachedId();
                 callback(new Error('Account has been expired!. Please login again!')); //   null, $this);
             } else {
                 _setCredentials(session);
@@ -245,6 +248,7 @@ var ironrockcloudservice = (function() {
         if (_cognitoUser !== null) {
             _cognitoUser.signOut();
             _cognitoUser = null;
+            AWS.config.credentials.clearCachedId();
         }
     };
 
@@ -540,6 +544,24 @@ var ironrockcloudservice = (function() {
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
+        });
+    };
+
+
+    //get BrokerOne data
+    ironrockcloudservice.prototype.getBrokerOneData = function(brokerCode, callback) {
+        var jsonRequest = { "brokerCode" : brokerCode};
+
+        var params = {
+            FunctionName: 'ironrock_brokerOneGet:test',
+            Payload: JSON.stringify(jsonRequest)
+        };
+        //var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function(err, results) {
+            if(err) return callback(err);
+            if(results.Payload ==='null') return callback();
+            if(results.Payload.errorMessage) return callback(new Error(results.errorMessage));
+            callback(null, results.Payload);
         });
     };
 

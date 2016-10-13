@@ -2444,43 +2444,61 @@
                             <form class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="policyStartDate">Start Date</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <input id="policyStartDate" name="policyStartDate" type="text" placeholder="Start Date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="signedDate">Date Signed</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <input id="signedDate" name="signedDate" type="text" placeholder="Date Signed" class="form-control">
                                     </div>
                                 </div>
+                                <!-- <div class="form-group">
+                                    <label class="col-md-4 control-label" for="create_certificate">Create Certificate</label>
+                                    <div class="col-md-8">
+                                        <select id="create_certificate" name="create_certificate" class="form-control">
+                                          <option value="false">False</option>
+                                          <option value="true">True</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group">
+                                    <label class="col-md-4 control-label" for="create_cover_note">Create Cover Note</label>
+                                    <div class="col-md-8">
+                                      <select id="create_cover_note" name="create_cover_note" class="form-control">
+                                        <option value="false">False</option>
+                                        <option value="true">True</option>
+                                      </select>
+                                    </div>
+                                </div> -->
+                                <div class="form-group brokerOneExtension">
                                     <label class="col-md-4 control-label" for="salesAgent">Sales Agent</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <select id="salesAgent" name="salesAgent" class="form-control"></select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group brokerOneExtension">
                                     <label class="col-md-4 control-label" for="accountHandler">Account Handler</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <select id="accountHandler" name="accountHandler" class="form-control"></select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group brokerOneExtension">
                                     <label class="col-md-4 control-label" for="accountExecutive">Account Executive</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <select id="accountExecutive" name="accountExecutive" class="form-control"></select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group brokerOneExtension">
                                     <label class="col-md-4 control-label" for="brokerBranch">Branch</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <select id="brokerBranch" name="brokerBranch" class="form-control"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="memo">Memo</label>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <textarea id="memo" name="memo" placeholder="Memo" class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -2762,35 +2780,44 @@
                 $('#policyStartDate').val(formatDate(policyDate));
                 $('#signedDate').val(formatDate(signedDate));
                 setLoadingState(true);
-                g_ironrock_service.getBroker(currentQuote.broker, function(err, data) {
+                g_ironrock_service.getBrokerOneData(currentQuote.broker, function(err, data) {
                     setLoadingState(false);
-                    if (!err) data = JSON.parse(data.Payload);
-                    if (err || data.errorMessage || data.error_message) {
-                        if (err) display(err.message, true);
-                        else if (data.errorMessage) display(data.errorMessage, true);
-                        else if (data.error_message) display(data.error_message, true);
-                        else display("Error Detected", true);
-                        return;
-                    }
-                    setLoadingState(true);
-                    var brokerBranches = data.branches;
-                    g_ironrock_service.listUsers(null, currentQuote.broker, function(err, data) {
-                        setLoadingState(false);
-                        if (err) {
-                            display(err.message, err);
-                            return;
-                        }
-                        if (data.Payload === null || data.Payload === 'null') {
-                            display("System Error Detected!", true);
-                            return;
-                        }
-                        populateBrokerAgents(data, brokerBranches);
-                        $('#convertToPolicyModal').modal('show');
-                    });
+                    if (err) return display(err.message, true);
+                    populateBrokerOneDropDowns(ConvertToJson(data));
+                    $('#convertToPolicyModal').modal('show');
                 });
 
 
             });
+
+            //broker extension
+            function populateBrokerOneDropDowns(data) {
+                var policyModal = $('#convertToPolicyModal');
+                if (data === null) {
+                    policyModal.find('.brokerOneExtension').hide();
+                    return;
+                }
+
+                policyModal.find('.brokerOneExtension').show();
+                var $salesAgent = policyModal.find('#salesAgent').html('<option>Select</option>');
+                var $accountHandler = policyModal.find('#accountHandler').html('<option>Select</option>');
+                var $accountExecutive = policyModal.find('#accountExecutive').html('<option>Select</option>');
+                var $branch = policyModal.find('#brokerBranch').html('<option>Select</option>');
+
+                $.each(data.sales_agents, function(idx, val) {
+                    $salesAgent.append('<option value="' + val.id + '">' + val.name + '</option>');
+                });
+                $.each(data.account_handlers, function(idx, val) {
+                    $accountHandler.append('<option value="' + val.id + '">' + val.name + '</option>');
+                });
+                $.each(data.account_executives, function(idx, val) {
+                    $accountExecutive.append('<option value="' + val.id + '">' + val.name + '</option>');
+                });
+                $.each(data.branches, function(idx, branch) {
+                    $branch.append('<option value="' + branch.id + '">' + branch.branch_name + '</option>');
+                });
+
+            }
 
 
 
@@ -3655,44 +3682,6 @@
             };
 
 
-
-            //broker extension
-            function populateBrokerAgents(data, branches) {
-                //g_ironrock_service.listUsers(null, currentQuote.broker, function(err, data) {
-                let brokerAgent = 'Agent';
-                let brokerHandler = 'Handler';
-                let brokerExecutive = 'Executive';
-
-                var items = JSON.parse(data.Payload);
-                if (items.errorMessage) {
-                    display(items.errorMessage, true);
-                    return;
-                }
-
-                var policyModal = $('#convertToPolicyModal');
-                var $salesAgent = policyModal.find('#salesAgent').html('<option></option>');
-                var $accountHandler = policyModal.find('#accountHandler').html('<option></option>');
-                var $accountExecutive = policyModal.find('#accountExecutive').html('<option></option>');
-
-                $.each(items, function(idx, val) {
-                    if (val.role.indexOf(brokerAgent) > 0) {
-                        $salesAgent.append('<option value="' + val.username + '">' + val.family_name + ', ' + val.given_name + '</option>');
-                    }
-                    if (val.role.indexOf(brokerHandler) > 0) {
-                        $accountHandler.append('<option value="' + val.username + '">' + val.family_name + ', ' + val.given_name + '</option>');
-                    }
-                    if (val.role.indexOf(brokerExecutive) > 0) {
-                        $accountExecutive.append('<option value="' + val.username + '">' + val.family_name + ', ' + val.given_name + '</option>');
-                    }
-                });
-                if (branches) {
-                    //load branches
-                    var $branch = $('#brokerBranch').empty();
-                    $.each(JSON.parse(branches), function(idx, branch) {
-                        $branch.append('<option value="' + branch + '">' + branch + '</option>');
-                    });
-                }
-            }
 
         });
     </script>
