@@ -11,15 +11,38 @@ var ironrockcloudservice = (function() {
     //edited July 18, 2016 10:14 am
     //added misc..
     'use strict';
-    var IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
-    var USER_POOL_ID = 'us-east-1_sXSIoZ4vD';
-    var CLIENT_ID = '65qcrqbc1tkru2unrkegerschk';
-    //const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
+    //development/testing
+    const USER_POOL_ID_TEST = 'us-east-1_sXSIoZ4vD';
+    const CLIENT_ID_TEST = '65qcrqbc1tkru2unrkegerschk';
+    //production
+    const USER_POOL_ID_PROD = 'us-east-1_VK4TuyyrR';
+    const CLIENT_ID_PROD = '16rlb08qo2cq2cv2s8ib1t4t4f';
+    //variables
+    const IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
+    var _userPoolId; //= 'us-east-1_sXSIoZ4vD';
+    var _clientId; // = '65qcrqbc1tkru2unrkegerschk';
+
     const AWS_REGION = 'us-east-1';
 
     var _environmentType = ENVIRONMENT_TYPE_DEVELOPMENT;
 
-    var set_dynamodb_tableName = function(base_table_name) {
+
+    function set_cognito_environment() {
+        switch (_environmentType) {
+            case ENVIRONMENT_TYPE_PRODUCTION:
+                _userPoolId = USER_POOL_ID_PROD;
+                _clientId = CLIENT_ID_PROD;
+                break;
+                //case ENVIRONMENT_TYPE_TESTING:
+                //case ENVIRONMENT_TYPE_DEVELOPMENT:
+            default:
+                _userPoolId = USER_POOL_ID_TEST;
+                _clientId = CLIENT_ID_TEST;
+                break;
+        }
+    }
+
+    function set_dynamodb_tableName(base_table_name) {
         switch (_environmentType) {
             case ENVIRONMENT_TYPE_PRODUCTION:
                 return "_p_" + base_table_name;
@@ -30,9 +53,9 @@ var ironrockcloudservice = (function() {
             default:
                 return base_table_name;
         }
-    };
+    }
 
-    var set_lambda_functionName = function(base_function_name) {
+    function set_lambda_functionName(base_function_name) {
         switch (_environmentType) {
             case ENVIRONMENT_TYPE_PRODUCTION:
                 return base_function_name + ":prod";
@@ -43,7 +66,7 @@ var ironrockcloudservice = (function() {
             default:
                 return base_function_name;
         }
-    };
+    }
 
 
     //private properties and methods
@@ -55,49 +78,46 @@ var ironrockcloudservice = (function() {
         IdentityPoolId: IDENTITY_POOL
     });
 
-    var _poolData = {
-        UserPoolId: USER_POOL_ID,
-        ClientId: CLIENT_ID
-    };
+    var _poolData;
 
     // Initialize the Amazon Cognito credentials provider
-    AWS.config.region = AWS_REGION; // Region
-    AWS.config.credentials = _creds;
+    // AWS.config.region = AWS_REGION; // Region
+    // AWS.config.credentials = _creds;
+    //
+    // AWSCognito.config.region = AWS_REGION;
+    // AWSCognito.config.credentials = _creds;
+    //
+    // AWSCognito.config.update({
+    //     accessKeyId: 'anything',
+    //     secretAccessKey: 'anything'
+    // });
 
-    AWSCognito.config.region = AWS_REGION;
-    AWSCognito.config.credentials = _creds;
+    var _userPool; //= new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(_poolData);
+    var _cognitoUser; // = _userPool.getCurrentUser();
 
-    AWSCognito.config.update({
-        accessKeyId: 'anything',
-        secretAccessKey: 'anything'
-    });
-
-    var _userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(_poolData);
-    var _cognitoUser = _userPool.getCurrentUser();
-
-    var _lambda = new AWS.Lambda();
+    var _lambda; // = new AWS.Lambda();
 
 
 
 
     //private methods
     //Get auth details for lambda authentication
-    var _getAuth = function() {
+    function _getAuth() {
         var auth = {};
         if (_cognitoUser) {
             auth.username = _cognitoUser.username;
             auth.signInUserSession = _cognitoUser.signInUserSession;
         }
         return auth;
-    };
+    }
 
 
 
     //set Credentials
-    var _setCredentials = function(session) {
+    function _setCredentials(session) {
         if (session && session.isValid()) {
             var idToken = session.getIdToken().getJwtToken();
-            var provider_name = 'cognito-idp.' + AWS_REGION + '.amazonaws.com/' + USER_POOL_ID;
+            var provider_name = 'cognito-idp.' + AWS_REGION + '.amazonaws.com/' + _userPoolId;
             _creds.params.Logins = {};
             _creds.params.Logins[provider_name] = idToken;
             _creds.expired = true;
@@ -105,7 +125,7 @@ var ironrockcloudservice = (function() {
             //AWSCognito.config.credentials = _creds;
             console.log(_creds);
         }
-    };
+    }
 
 
     //transform dynamodb fields
@@ -135,6 +155,16 @@ var ironrockcloudservice = (function() {
         }
     }
 
+    //process response from lambda
+    function processLambdaData(err, resp) {
+        if (err) return;
+        resp = JSON.parse(resp.Payload);
+        if (resp && resp.errorMessage) {
+            err = new Error(resp.errorMessage);
+            resp = null;
+        }
+    }
+
 
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
@@ -143,7 +173,7 @@ var ironrockcloudservice = (function() {
     }
 
     //get broker internal function
-    var _getBroker = function(code, callback) {
+    function _getBroker(code, callback) {
         var jsonRequest = {};
         jsonRequest.request = {
             'cmd': 'getBroker',
@@ -161,7 +191,7 @@ var ironrockcloudservice = (function() {
         _lambda.invoke(params, function(err, results) {
             callback(err, results);
         });
-    };
+    }
 
 
     //constructor  aug0, aug1    generally aug0 == _environmentType and aug1 == callback
@@ -180,7 +210,33 @@ var ironrockcloudservice = (function() {
         }
 
         var $this = this;
+        //set variables
+        set_cognito_environment();
+
+        _poolData = {
+            UserPoolId: _userPoolId,
+            ClientId: _clientId
+        };
+
+        // Initialize the Amazon Cognito credentials provider
+        AWS.config.region = AWS_REGION; // Region
+        AWS.config.credentials = _creds;
+
+        AWSCognito.config.region = AWS_REGION;
+        AWSCognito.config.credentials = _creds;
+
+        AWSCognito.config.update({
+            accessKeyId: 'anything',
+            secretAccessKey: 'anything'
+        });
+
+        _lambda = new AWS.Lambda();
+
+        _userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(_poolData);
         _cognitoUser = _userPool.getCurrentUser();
+
+
+        //
         if (_cognitoUser === null) {
             if (callback && typeof callback == "function") {
                 callback(null, $this);
@@ -293,6 +349,63 @@ var ironrockcloudservice = (function() {
         }
     };
 
+    ironrockcloudservice.prototype.disableUser = function(username, callback) {
+        var jsonRequest = {};
+        jsonRequest.request = {
+            'cmd': 'disableUser',
+            'username': username
+        };
+        jsonRequest.auth = _getAuth();
+        var requestSerialized = JSON.stringify(jsonRequest);
+        var params = {
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
+            Payload: requestSerialized
+        };
+        //var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp);
+            callback(err, resp);
+        });
+    };
+
+    ironrockcloudservice.prototype.enableUser = function(username, callback) {
+        var jsonRequest = {};
+        jsonRequest.request = {
+            'cmd': 'enableUser',
+            'username': username
+        };
+        jsonRequest.auth = _getAuth();
+        var requestSerialized = JSON.stringify(jsonRequest);
+        var params = {
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
+            Payload: requestSerialized
+        };
+        //var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp);
+            callback(err, resp);
+        });
+    };
+
+    ironrockcloudservice.prototype.deleteUser = function(username, callback) {
+        var jsonRequest = {};
+        jsonRequest.request = {
+            'cmd': 'deleteUser',
+            'username': username
+        };
+        jsonRequest.auth = _getAuth();
+        var requestSerialized = JSON.stringify(jsonRequest);
+        var params = {
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
+            Payload: requestSerialized
+        };
+        //var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp);
+            callback(err, resp);
+        });
+    };
+
     ironrockcloudservice.prototype.signup = function(user, callback) {
         var jsonRequest = {};
         jsonRequest.request = {
@@ -307,73 +420,12 @@ var ironrockcloudservice = (function() {
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, resp) {
-            if(err) return callback(err);
+            if (err) return callback(err);
             resp = JSON.parse(resp.Payload);
-            if(resp && resp.errorMessage) return callback(new Error(resp.errorMessage));
+            if (resp && resp.errorMessage) return callback(new Error(resp.errorMessage));
             callback(err, resp);
         });
     };
-
-
-    // ironrockcloudservice.prototype.signup = function(user, callback) {
-    //     var attributeList = [];
-    //     var validationData = [];
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'email',
-    //         Value: user.email
-    //     }));
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'phone_number',
-    //         Value: user.phone_number
-    //     }));
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'given_name',
-    //         Value: user.given_name
-    //     }));
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'family_name',
-    //         Value: user.family_name
-    //     }));
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'gender',
-    //         Value: user.gender
-    //     }));
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'custom:roleId',
-    //         Value: user.role
-    //     }));
-    //
-    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'custom:brokerId',
-    //         Value: user.broker
-    //     }));
-    //
-    //     //send validation data
-    //     validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'admin',
-    //         Value: _cognitoUser ? _cognitoUser.username : null
-    //     }));
-    //     validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-    //         Name: 'password',
-    //         Value: user.password
-    //     }));
-    //     //using attributeList for null...
-    //     _userPool.signUp(user.username, user.password, attributeList, validationData, function(err, result) {
-    //         if (err) {
-    //             console.log(err);
-    //             callback(err);
-    //         }
-    //         if (result) {
-    //             _cognitoUser = result.user;
-    //             callback(null, result);
-    //         }
-    //     });
-    // };
 
 
     ironrockcloudservice.prototype.confirmSignup = function(username, verificationCode, callback) {
@@ -409,14 +461,25 @@ var ironrockcloudservice = (function() {
             onSuccess: function(result) {
                 _setCredentials(result);
                 if (callback && typeof callback == "function")
-                    callback(null, $this);
+                    callback(null, false, $this);
             },
             onFailure: function(err) {
                 //_cognitoUser = null;
                 if (callback && typeof callback == "function")
                     callback(err, $this);
+            },
+            newPasswordRequired: function(userAttributes, requiredAttributes) {
+                callback(null, true, this, userAttributes, requiredAttributes);
             }
         });
+    };
+
+    //completeChallenge
+    ironrockcloudservice.prototype.completeChallenge = function(newPassword, user, $this) {
+        var attributesData = {};
+        attributesData.phone_number = '+18766568000';
+        attributesData.gender = 'male';
+        _cognitoUser.completeNewPasswordChallenge(newPassword, attributesData, $this);
     };
 
 
@@ -446,9 +509,6 @@ var ironrockcloudservice = (function() {
             },
             inputVerificationCode: function() {
                 callback(null, true, this);
-                /*var verificationCode = prompt('Please input verification code ', '');
-                var newPassword = prompt('Enter new password ', '');
-                cognitoUser.confirmPassword(verificationCode, newPassword, this);*/
             }
         });
     };

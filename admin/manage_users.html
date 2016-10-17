@@ -76,9 +76,10 @@
 										<th>Username</th>
 										<th>First Name</th>
 										<th>Last Name</th>
-										<th>Verified</th>
 										<th>Role</th>
 										<th>Broker</th>
+										<th>Enabled</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -98,6 +99,9 @@
 										<div class="modal-body">
 											<div class="message"></div>
 											<form class="form-horizontal" role="form">
+												<div class="panel panel-default user-status">
+													<div class="panel-heading"></div>
+												</div>
 												<div class="form-group">
 													<label class="control-label col-sm-4" for="username">Username:</label>
 													<div class="col-sm-8">
@@ -150,6 +154,8 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-warning" id="delete-user">Delete</button>
+											<button type="button" class="btn btn-default" id="toggle-state">Disable</button>
 											<button type="button" class="btn btn-primary" id="update-user">Update</button>
 											<button type="button" class="btn btn-primary" id="create-user">Create</button>
 										</div>
@@ -196,6 +202,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var userData = {};
 			initPage(function(err, obj) {
 				listRoles(obj);
 				listBrokers(obj);
@@ -249,17 +256,30 @@
 				setLoadingState(true);
 				g_ironrock_service.getUser(username, function(err, data) {
 					setLoadingState(false);
-					var item = JSON.parse(data.Payload);
-					$('#username').val(item.username).prop("readonly", true);
-					$('#firstName').val(item.given_name).prop("readonly", true);
-					$('#lastName').val(item.family_name).prop("readonly", true);
-					$('#email').val(item.email).prop("readonly", true);
-					$('#phone').val(item.phone_number).prop("readonly", true);
-					$('#role').val(item.role).parent().parent().show();
-					$('#broker').val(item.broker).parent().parent().show();
+					userData = JSON.parse(data.Payload);
+					$('#username').val(userData.username).prop("readonly", true);
+					$('#firstName').val(userData.given_name).prop("readonly", true);
+					$('#lastName').val(userData.family_name).prop("readonly", true);
+					$('#email').val(userData.email).prop("readonly", true);
+					$('#phone').val(userData.phone_number).prop("readonly", true);
+					$('#role').val(userData.role).parent().parent().show();
+					$('#broker').val(userData.broker).parent().parent().show();
 					$('#update-user').show();
+					$('#toggle-state').show();
+					var $user_status = $('#userModal').find('.user-status');
+					if (userData.enabled) {
+						$user_status.removeClass('panel-warning').addClass('panel-success');
+						$user_status.find('.panel-heading').text("Active User:- Status:" + userData.userStatus);
+						$('#delete-user').hide();
+						$('#toggle-state').text("Disable User");
+					} else {
+						$user_status.removeClass('panel-success').addClass('panel-warning');
+						$user_status.find('.panel-heading').text("Disabled User:- Status:" + userData.userStatus);
+						$('#toggle-state').text("Enable User");
+						$('#delete-user').show();
+					}
 					$('#create-user').hide();
-					$('#userModal .modal-title').text('Update Agent');
+					$('#userModal .modal-title').text('Update User');
 					$('#userModal').modal('show');
 				});
 			});
@@ -274,26 +294,66 @@
 				$('#role').parent().parent().show();
 				$('#broker').parent().parent().show();
 				$('#update-user').hide();
+				$('#toggle-state').hide();
+				$('#delete-user').hide();
 				$('#create-user').show();
-				$('#userModal .modal-title').text('Create Agent');
+				$('#userModal .modal-title').text('Create User');
 				$('#userModal').modal('show');
 			});
+
+
+			//delete user
+			$("#delete-user").click(function(e) {
+				var username = $('#username').val();
+				setLoadingState(true);
+				g_ironrock_service.deleteUser(username, function(err, result) {
+					setLoadingState(false);
+					if (err)
+						return display(err.message, true);
+					$('#userModal').modal('hide');
+					listUsers();
+				});
+			});
+
+			//toggle-state
+			$("#toggle-state").click(function(e) {
+				var username = $('#username').val();
+				setLoadingState(true);
+				if (userData.enabled) {
+					g_ironrock_service.disableUser(username, function(err, result) {
+						setLoadingState(false);
+						if (err)
+							return display(err.message, true);
+						$('#userModal').modal('hide');
+						listUsers();
+					});
+				} else {
+					g_ironrock_service.enableUser(username, function(err, result) {
+						setLoadingState(false);
+						if (err)
+							return display(err.message, true);
+						$('#userModal').modal('hide');
+						listUsers();
+					});
+				}
+			});
+
 
 
 			//save new user
 			//username, password, email, phone_number, given_name, family_name, gender
 			$("#create-user").click(function(e) {
 
-				var password = g_ironrock_service.generateRandomCode();
-				password = password.replace(/[^A-Z]/ig, "");
+				//var password = g_ironrock_service.generateRandomCode();
+				//password = password.replace(/[^A-Z]/ig, "");
 				var user = {
 					username: $('#username').val(),
-					password: password,
+					//password: password,
 					email: $('#email').val(),
-					phone_number: '+18766568000',
+					//phone_number: '+18766568000',
 					given_name: $('#firstName').val(),
 					family_name: $('#lastName').val(),
-					gender: 'Male',
+					//gender: 'Male',
 					role: $('#role').val(),
 					broker: $('#broker').val()
 				};
@@ -302,6 +362,7 @@
 						return display(err.message, true);
 					display("The user has been created. An email, with the user credentials, has been sent to " + $('#email').val(), false);
 					$('#userModal').modal('hide');
+					listUsers();
 				});
 			});
 
@@ -334,9 +395,11 @@
 						tcontent.append('<tr><td>' + val.username +
 							'</td><td>' + val.given_name.toLowerCase().capitalizeFirstLetter() +
 							'</td><td>' + val.family_name.toLowerCase().capitalizeFirstLetter() +
-							'</td><td>' + val.email_verified +
+							//'</td><td>' + val.email_verified +
 							'</td><td>' + role +
 							'</td><td>' + broker +
+							'</td><td>' + val.enabled +
+							'</td><td>' + val.userStatus +
 							'</td><td><button type="button" id="' + val.username +
 							'" class="btn btn-link select">Select</button></td></tr>');
 					});

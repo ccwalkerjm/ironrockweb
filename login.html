@@ -126,16 +126,37 @@
 		$(document).ready(function() {
 			initPage();
 
+			var newPasswordText = '<form><div class=form-group><label for=password>New Password:</label><input class=form-control id=password type=password></div><div class=form-group><label for=confirmPassword>Confirm New Password:</label><input class=form-control id=confirmPassword type=password></div></form>';
+
 			///login
 			$("#login_submit").click(function(e) {
 				setLoadingState(true);
 				//g_ironrock_service.signoff();
-				g_ironrock_service.signin($('#login_username').val(), $('#login_password').val(), function(err, obj) {
+				g_ironrock_service.signin($('#login_username').val(), $('#login_password').val(), function(err, checkNewUser, $this, userAttributes, requiredAttributes) {
 					setLoadingState(false);
 					if (err) {
 						display(err.message, true);
 					} else {
-						location.href = "/dashboard.html";
+						if (!checkNewUser) location.href = "/dashboard.html";
+						else {
+							bootbox.dialog({
+								title: "Set New Password",
+								message: newPasswordText,
+								buttons: {
+									success: {
+										label: "Confirm",
+										className: "btn-success",
+										callback: function() {
+											var newPassword = $('#password').val();
+											var confirmPassword = $('#confirmPassword').val();
+											if (!newPassword || newPassword != confirmPassword)							return false;
+											var user = [];
+											g_ironrock_service.completeChallenge(newPassword, user, $this);
+										}
+									}
+								}
+							});
+						}
 					}
 				});
 			});

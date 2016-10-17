@@ -143,7 +143,7 @@ function initPage(callback) {
             '<li><a href="/Admin/manage_sources.html">Sources</a></li>' +
             '<li><a href="/Admin/manage_brokers.html">Brokers</a></li>' +
             '<li><a href="/Admin/manage_notifications.html">Notifications</a></li>' +
-            '<li><a href="/Admin/manage_users.html">Agents</a></li>');
+            '<li><a href="/Admin/manage_users.html">Users</a></li>');
 
         var valid_page = false;
         if ($this.getUsername()) {
