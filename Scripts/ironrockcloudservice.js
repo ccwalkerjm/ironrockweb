@@ -2,18 +2,49 @@
 /*jshint esversion: 6 */
 /*jslint nomen: true */
 // Class definition
-
+const ENVIRONMENT_TYPE_DEVELOPMENT = "DEVELOPMENT";
+const ENVIRONMENT_TYPE_TESTING = "TESTING";
+const ENVIRONMENT_TYPE_PRODUCTION = "PRODUCTION";
 var ironrockcloudservice = (function() {
     //edited July 18, 2016 4:27pm
     //fixed lambda error..
     //edited July 18, 2016 10:14 am
     //added misc..
     'use strict';
-    const IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
-    const USER_POOL_ID = 'us-east-1_sXSIoZ4vD';
-    const CLIENT_ID = '65qcrqbc1tkru2unrkegerschk';
+    var IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
+    var USER_POOL_ID = 'us-east-1_sXSIoZ4vD';
+    var CLIENT_ID = '65qcrqbc1tkru2unrkegerschk';
     //const PROVIDER_NAME = 'cognito-idp.us-east-1.amazonaws.com/us-east-1_sXSIoZ4vD';
     const AWS_REGION = 'us-east-1';
+
+    var _environmentType = ENVIRONMENT_TYPE_DEVELOPMENT;
+
+    var set_dynamodb_tableName = function(base_table_name) {
+        switch (_environmentType) {
+            case ENVIRONMENT_TYPE_PRODUCTION:
+                return "_p_" + base_table_name;
+            case ENVIRONMENT_TYPE_TESTING:
+                return base_table_name;
+            case ENVIRONMENT_TYPE_DEVELOPMENT:
+                return base_table_name;
+            default:
+                return base_table_name;
+        }
+    };
+
+    var set_lambda_functionName = function(base_function_name) {
+        switch (_environmentType) {
+            case ENVIRONMENT_TYPE_PRODUCTION:
+                return base_function_name + ":prod";
+            case ENVIRONMENT_TYPE_TESTING:
+                return base_function_name + ":test";
+            case ENVIRONMENT_TYPE_DEVELOPMENT:
+                return base_function_name;
+            default:
+                return base_function_name;
+        }
+    };
+
 
     //private properties and methods
     var _profile;
@@ -123,7 +154,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -133,11 +164,21 @@ var ironrockcloudservice = (function() {
     };
 
 
-    //constructor
-    function ironrockcloudservice(callback) {
-        //AWS.config.credentials.get(function (err) {});
+    //constructor  aug0, aug1    generally aug0 == _environmentType and aug1 == callback
+    function ironrockcloudservice(aug0, aug1) {
         //must run last.  will check if user is valid...
-        //this.init = function (callback) {
+        //_environmentType
+        var callback;
+        if (aug0 && typeof aug0 == "function") {
+            callback = aug0;
+        } else if (aug0) {
+            _environmentType = aug0;
+        }
+
+        if (aug1 && typeof aug1 == "function") {
+            callback = aug1;
+        }
+
         var $this = this;
         _cognitoUser = _userPool.getCurrentUser();
         if (_cognitoUser === null) {
@@ -205,7 +246,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         _lambda.invoke(params, function(err, results) {
@@ -252,66 +293,87 @@ var ironrockcloudservice = (function() {
         }
     };
 
-
     ironrockcloudservice.prototype.signup = function(user, callback) {
-        var attributeList = [];
-        var validationData = [];
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'email',
-            Value: user.email
-        }));
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'phone_number',
-            Value: user.phone_number
-        }));
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'given_name',
-            Value: user.given_name
-        }));
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'family_name',
-            Value: user.family_name
-        }));
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'gender',
-            Value: user.gender
-        }));
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'custom:roleId',
-            Value: user.role
-        }));
-
-        attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'custom:brokerId',
-            Value: user.broker
-        }));
-
-        //send validation data
-        validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'admin',
-            Value: _cognitoUser ? _cognitoUser.username : null
-        }));
-        validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
-            Name: 'password',
-            Value: user.password
-        }));
-        //using attributeList for null...
-        _userPool.signUp(user.username, user.password, attributeList, validationData, function(err, result) {
-            if (err) {
-                console.log(err);
-                callback(err);
-            }
-            if (result) {
-                _cognitoUser = result.user;
-                callback(null, result);
-            }
+        var jsonRequest = {};
+        jsonRequest.request = {
+            'cmd': 'createUser',
+            'data': user
+        };
+        jsonRequest.auth = _getAuth();
+        var requestSerialized = JSON.stringify(jsonRequest);
+        var params = {
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
+            Payload: requestSerialized
+        };
+        //var _lambda = new AWS.Lambda();
+        _lambda.invoke(params, function(err, resp) {
+            if(err) return callback(err);
+            resp = JSON.parse(resp.Payload);
+            if(resp && resp.errorMessage) return callback(new Error(resp.errorMessage));
+            callback(err, resp);
         });
     };
+
+
+    // ironrockcloudservice.prototype.signup = function(user, callback) {
+    //     var attributeList = [];
+    //     var validationData = [];
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'email',
+    //         Value: user.email
+    //     }));
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'phone_number',
+    //         Value: user.phone_number
+    //     }));
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'given_name',
+    //         Value: user.given_name
+    //     }));
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'family_name',
+    //         Value: user.family_name
+    //     }));
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'gender',
+    //         Value: user.gender
+    //     }));
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'custom:roleId',
+    //         Value: user.role
+    //     }));
+    //
+    //     attributeList.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'custom:brokerId',
+    //         Value: user.broker
+    //     }));
+    //
+    //     //send validation data
+    //     validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'admin',
+    //         Value: _cognitoUser ? _cognitoUser.username : null
+    //     }));
+    //     validationData.push(new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute({
+    //         Name: 'password',
+    //         Value: user.password
+    //     }));
+    //     //using attributeList for null...
+    //     _userPool.signUp(user.username, user.password, attributeList, validationData, function(err, result) {
+    //         if (err) {
+    //             console.log(err);
+    //             callback(err);
+    //         }
+    //         if (result) {
+    //             _cognitoUser = result.user;
+    //             callback(null, result);
+    //         }
+    //     });
+    // };
 
 
     ironrockcloudservice.prototype.confirmSignup = function(username, verificationCode, callback) {
@@ -410,7 +472,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -429,7 +491,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -449,7 +511,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -469,7 +531,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -497,7 +559,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -517,7 +579,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -538,7 +600,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -550,17 +612,19 @@ var ironrockcloudservice = (function() {
 
     //get BrokerOne data
     ironrockcloudservice.prototype.getBrokerOneData = function(brokerCode, callback) {
-        var jsonRequest = { "brokerCode" : brokerCode};
+        var jsonRequest = {
+            "brokerCode": brokerCode
+        };
 
         var params = {
-            FunctionName: 'ironrock_brokerOneGet:test',
+            FunctionName: set_lambda_functionName('ironrock_brokerOneGet'),
             Payload: JSON.stringify(jsonRequest)
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, results) {
-            if(err) return callback(err);
-            if(results.Payload ==='null') return callback();
-            if(results.Payload.errorMessage) return callback(new Error(results.errorMessage));
+            if (err) return callback(err);
+            if (results.Payload === 'null') return callback();
+            if (results.Payload.errorMessage) return callback(new Error(results.errorMessage));
             callback(null, results.Payload);
         });
     };
@@ -574,7 +638,7 @@ var ironrockcloudservice = (function() {
             "auth": _getAuth()
         };
         var params = {
-            FunctionName: 'ironrockSubmitQuote:test',
+            FunctionName: set_lambda_functionName('ironrockSubmitQuote'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -600,7 +664,7 @@ var ironrockcloudservice = (function() {
         var payload = JSON.parse(data);
         payload.auth = _getAuth();
         var params = {
-            FunctionName: 'ironrockQuoteSearch:test',
+            FunctionName: set_lambda_functionName('ironrockQuoteSearch'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -624,7 +688,7 @@ var ironrockcloudservice = (function() {
     //get quote
     ironrockcloudservice.prototype.getQuote = function(id, callback) {
         var params = {
-            FunctionName: 'ironrockGetQuote:test',
+            FunctionName: set_lambda_functionName('ironrockGetQuote'),
             Payload: id
         };
         //var _lambda = new AWS.Lambda();
@@ -651,7 +715,7 @@ var ironrockcloudservice = (function() {
             "id": id
         };
         var params = {
-            FunctionName: 'IronRockDriverLicense:test',
+            FunctionName: set_lambda_functionName('IronRockDriverLicense'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -679,7 +743,7 @@ var ironrockcloudservice = (function() {
             "chassisno": chassisNo
         };
         var params = {
-            FunctionName: 'IronRockVehicle:test',
+            FunctionName: set_lambda_functionName('IronRockVehicle'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -702,7 +766,7 @@ var ironrockcloudservice = (function() {
     //get misc
     ironrockcloudservice.prototype.getMiscOptions = function(callback) {
         var params = {
-            FunctionName: 'ironrockGetMiscData:test',
+            FunctionName: set_lambda_functionName('ironrockGetMiscData'),
             Payload: null
         };
         //var _lambda = new AWS.Lambda();
@@ -732,7 +796,7 @@ var ironrockcloudservice = (function() {
             "auth": _getAuth()
         };
         var params = {
-            FunctionName: 'ironrockS3uploadPolicy:test',
+            FunctionName: set_lambda_functionName('ironrockS3uploadPolicy'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -817,7 +881,7 @@ var ironrockcloudservice = (function() {
             apiVersion: '2012-08-10'
         });
         dynamodb.query({
-            TableName: 'ironRockS3Documents',
+            TableName: set_dynamodb_tableName('ironRockS3Documents'),
             KeyConditions: {
                 "quoteNo": {
                     "AttributeValueList": [{
@@ -905,7 +969,7 @@ var ironrockcloudservice = (function() {
             apiVersion: '2012-08-10'
         });
         var params = {
-            TableName: 'IronRockBrokers',
+            TableName: set_dynamodb_tableName('IronRockBrokers'),
             Key: {
                 code: {
                     S: code
@@ -950,7 +1014,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -971,7 +1035,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -991,7 +1055,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -1013,7 +1077,7 @@ var ironrockcloudservice = (function() {
         jsonRequest.auth = _getAuth();
         var requestSerialized = JSON.stringify(jsonRequest);
         var params = {
-            FunctionName: 'ironrockAdminFunc:test',
+            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
@@ -1027,7 +1091,7 @@ var ironrockcloudservice = (function() {
     ironrockcloudservice.prototype.convertToPolicy = function(payload, callback) {
         payload.username = _cognitoUser.getUsername();
         var params = {
-            FunctionName: 'ironrockQuoteToPolicy:test',
+            FunctionName: set_lambda_functionName('ironrockQuoteToPolicy'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -1041,7 +1105,7 @@ var ironrockcloudservice = (function() {
         var payload = {};
         payload.policy_id = policy_id;
         var params = {
-            FunctionName: 'ironrockGetPolicy:test',
+            FunctionName: set_lambda_functionName('ironrockGetPolicy'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -1056,7 +1120,7 @@ var ironrockcloudservice = (function() {
         var payload = {};
         payload.username = _cognitoUser.getUsername();
         var params = {
-            FunctionName: 'ironrockGetSources:test',
+            FunctionName: set_lambda_functionName('ironrockGetSources'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -1068,7 +1132,7 @@ var ironrockcloudservice = (function() {
     //notification
     ironrockcloudservice.prototype.getNotification = function(callback) {
         var params = {
-            TableName: 'ironrockNotificationAddresses'
+            TableName: set_dynamodb_tableName('ironrockNotificationAddresses')
         };
         var dynamodb = new AWS.DynamoDB({
             apiVersion: '2012-08-10'
@@ -1094,7 +1158,7 @@ var ironrockcloudservice = (function() {
         var payload = {};
         payload.emailAddresses = emailAddresses;
         var params = {
-            FunctionName: 'ironrockNotificationAddressesUpdate:test',
+            FunctionName: set_lambda_functionName('ironrockNotificationAddressesUpdate'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -1109,7 +1173,7 @@ var ironrockcloudservice = (function() {
         payload.policy_id = policy_id;
         payload.risk_id = risk_id;
         var params = {
-            FunctionName: 'ironRockGetCertificate:test',
+            FunctionName: set_lambda_functionName('ironRockGetCertificate'),
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
@@ -1119,32 +1183,32 @@ var ironrockcloudservice = (function() {
     };
 
     //get finance institution codes
-    ironrockcloudservice.prototype.getFinanceInstitutions = function(callback) {
-        var params = {
-            FunctionName: 'IronRockGetFinanceCodes:test'
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
+    // ironrockcloudservice.prototype.getFinanceInstitutions = function(callback) {
+    //     var params = {
+    //         FunctionName: set_lambda_functionName('IronRockGetFinanceCodes')
+    //     };
+    //     //var _lambda = new AWS.Lambda();
+    //     _lambda.invoke(params, function(err, results) {
+    //         callback(err, results);
+    //     });
+    // };
 
     //get Mortgagees
-    ironrockcloudservice.prototype.getMortgagees = function(callback) {
-        var params = {
-            FunctionName: 'ironrockGetMortgagees:test'
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
+    // ironrockcloudservice.prototype.getMortgagees = function(callback) {
+    //     var params = {
+    //         FunctionName: set_lambda_functionName('ironrockGetMortgagees')
+    //     };
+    //     //var _lambda = new AWS.Lambda();
+    //     _lambda.invoke(params, function(err, results) {
+    //         callback(err, results);
+    //     });
+    // };
 
     //get
     //get Mortgagees
     ironrockcloudservice.prototype.pushTransaction = function(payload, callback) {
         var params = {
-            FunctionName: 'ironRockPushTransaction:test',
+            FunctionName: set_lambda_functionName('ironRockPushTransaction'),
             Payload: JSON.stringify(payload)
         };
         _lambda.invoke(params, function(err, results) {

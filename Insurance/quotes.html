@@ -2543,7 +2543,7 @@
     <script src="/Scripts/aws/moment.min.js"></script>
     <script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
     <script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
-    <script src="/Scripts/aws/aws-sdk-2.3.19.min.js"></script>
+    <script src="/Scripts/aws/aws-sdk.min.js"></script>
     <script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
 
     <!--PDF Libraries-->
@@ -2823,10 +2823,12 @@
 
             $('#convertToPolicyModal').on('click', '#createPolicy', function() {
                 setLoadingState(true);
+                $(this).prop("disabled", true);
                 var policyData = $('#convertToPolicyModal form').serializeObject();
                 policyData.quoteNo = currentQuote.applicantQuoteNo;
                 g_ironrock_service.convertToPolicy(policyData, function(err, result) {
                     setLoadingState(false);
+                    $(this).prop("disabled", false);
                     if (err) {
                         display(err.message, err);
                         return;
