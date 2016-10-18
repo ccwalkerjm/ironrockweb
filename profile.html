@@ -57,7 +57,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="clearfix" />
+	<div class="clearfix"></div>
 
 	<div class="page-container">
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
@@ -72,7 +72,7 @@
 
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
-			2016 &copy; Ironrock Insurance.
+			2016 &copy; IronRock Insurance.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
@@ -85,31 +85,30 @@
 
 	<script src="/Scripts/bootbox.js"></script>
 	<!--Required Libraries-->
-	<script src="/aws/jsbn.js"></script>
-	<script src="/aws/jsbn2.js"></script>
-	<script src="/aws/sjcl.js"></script>
-	<script src="/aws/moment.min.js"></script>
-	<script src="/aws/aws-cognito-sdk.min.js"></script>
-	<script src="/aws/amazon-cognito-identity.min.js"></script>
-	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
+	<script src="/Scripts/aws/jsbn.js"></script>
+	<script src="/Scripts/aws/jsbn2.js"></script>
+	<script src="/Scripts/aws/sjcl.js"></script>
+	<script src="/Scripts/aws/moment.min.js"></script>
+	<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+	<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+	<script src="/Scripts/aws/aws-sdk.min.js"></script>
 	<!--Iron Rock Custom Library-->
-	<script src="/aws/ironrockcloudservice.js"></script>
-	<script src="/aws/index.js"></script>
+	<script src="/Scripts/ironrockcloudservice.js"></script>
+	<script src="/Scripts/index.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			doPrimaryFunctions(function () {
-				//set profile						
+			initPage(function (err, obj) {
+				//set profile
 				var dl = $('#profile');
-				var profile = localStorage.getItem("ironrockUserProfile");
+				var profile = obj.getProfile(); // localStorage.getItem("ironrockUserProfile");
 				if (profile) {
-					var item = JSON.parse(profile);
-					dl.append('<dt>UserName</dt><dd>' + item.username + '</dd>');
-					dl.append('<dt>First Name</dt><dd>' + item.given_name + '</dd>');
-					dl.append('<dt>Last Name</dt><dd>' + item.family_name + '</dd>');
-					dl.append('<dt>Email Address</dt><dd>' + item.email + '</dd>');
-					dl.append('<dt>Phone Number</dt><dd>' + item.phone_number + '</dd>');
-					dl.append('<dt>Role</dt><dd>' + item.role + '</dd>');
-					dl.append('<dt>Broker</dt><dd>' + item.broker + '</dd>');
+					dl.append('<dt>UserName</dt><dd>' + profile.username + '</dd>');
+					dl.append('<dt>First Name</dt><dd>' + profile.given_name + '</dd>');
+					dl.append('<dt>Last Name</dt><dd>' + profile.family_name + '</dd>');
+					dl.append('<dt>Email Address</dt><dd>' + profile.email + '</dd>');
+					dl.append('<dt>Phone Number</dt><dd>' + profile.phone_number + '</dd>');
+					dl.append('<dt>Role</dt><dd>' + profile.role + '</dd>');
+					dl.append('<dt>Broker</dt><dd>' + profile.broker + '</dd>');
 				}
 			});
 

@@ -57,21 +57,26 @@
 			</ul>
 		</div>
 	</div>
-	<div class="clearfix" />
+	<div class="clearfix"></div>
 
 	<div class="page-container">
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>IronRock Online Services</h1>
-				<p>We provide a list of online services.</p>
+				<h1>IRIe</h1>
+				<p>IronRock Insurance E-services.</p>
+				<ul class="list-group">
+					<li class="list-group-item"><a href="/Insurance/quotes.html">Manage Quotes</a></li>
+					<li class="list-group-item"><a href="/Insurance/policies.html">Manage Policies</a></li>
+					<li class="list-group-item"><a href="https://build.phonegap.com/apps/1944576/share" target="_blank">Download Mobile App</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
 
 	<div class="footer" style="background-color:rgb(231,231,231)!important">
 		<div class="footer-inner">
-			2016 &copy; Ironrock Insurance.
+			2016 &copy; IronRock Insurance.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
@@ -84,32 +89,32 @@
 
 	<script src="/Scripts/bootbox.js"></script>
 	<!--Required Libraries-->
-	<script src="/aws/jsbn.js"></script>
-	<script src="/aws/jsbn2.js"></script>
-	<script src="/aws/sjcl.js"></script>
-	<script src="/aws/moment.min.js"></script>
-	<script src="/aws/aws-cognito-sdk.min.js"></script>
-	<script src="/aws/amazon-cognito-identity.min.js"></script>
-	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
+	<script src="/Scripts/aws/jsbn.js"></script>
+	<script src="/Scripts/aws/jsbn2.js"></script>
+	<script src="/Scripts/aws/sjcl.js"></script>
+	<script src="/Scripts/aws/moment.min.js"></script>
+	<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+	<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+	<script src="/Scripts/aws/aws-sdk.min.js"></script>
 	<!--api gateway lib-->
-	<script type="text/javascript" src="/aws/apigClientLib/axios/dist/axios.standalone.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/CryptoJS/rollups/hmac-sha256.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/CryptoJS/rollups/sha256.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/CryptoJS/components/hmac.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/CryptoJS/components/enc-base64.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/url-template/url-template.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/apiGatewayCore/sigV4Client.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/apiGatewayCore/apiGatewayClient.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/apiGatewayCore/simpleHttpClient.js"></script>
-	<script type="text/javascript" src="/aws/apigClientLib/apiGatewayCore/utils.js"></script>
-	<script type="text/javascript" src="aws/apigClient.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/axios/dist/axios.standalone.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/rollups/hmac-sha256.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/rollups/sha256.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/components/hmac.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/components/enc-base64.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/url-template/url-template.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/sigV4Client.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/apiGatewayClient.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/simpleHttpClient.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/utils.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClient.js"></script>
 	<!--Iron Rock Custom Library-->
-	<script src="/aws/ironrockcloudservice.js"></script>
-	<script src="/aws/index.js"></script>
+	<script src="/Scripts/ironrockcloudservice.js"></script>
+	<script src="/Scripts/index.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			doPrimaryFunctions();
+			initPage();
 			//test api
 			$('#klop').click(function () {
 				g_ironrock_service.setCredentials(function (err, creds) {

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="MobileOptimized" content="320">
+	<title>IronRock Insurance</title>
+
+	<!--    @Scripts.Render("~/bundles/modernizr")-->
+	<!--@Styles.Render("~/bundles/GlobalCSS")-->
+	<link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet">
+	<link href="/assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+	<!--    @Styles.Render("~/bundles/ThemeCSS")-->
+	<link href="/assets/css/style-metronic.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+	<link href="/assets/css/style-responsive.css" rel="stylesheet">
+	<link href="/assets/css/plugins.css" rel="stylesheet">
+	<link href="/assets/css/pages/tasks.css" rel="stylesheet">
+	<link href="/assets/css/themes/default.css" rel="stylesheet">
+	<link href="/assets/css/custom.css" rel="stylesheet">
+	<link href="/assets/plugins/select2/select2_metro.css" rel="stylesheet">
+	<!--@Scripts.Render("~/bundles/jquery")-->
+	<script src="/Scripts/jquery-2.2.3.js"></script>
+	<script src="/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+	<script src="/assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/assets/scripts/app.js"></script>
+	<script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js"></script>
+	<script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/assets/plugins/jquery.blockui.min.js"></script>
+	<script src="/assets/plugins/jquery.cokie.min.js"></script>
+	<script src="/assets/plugins/uniform/jquery.uniform.min.js"></script>
+	<script src="/assets/plugins/select2/select2.min.js"></script>
+
+</head>
+
+<body class="page-header-fixed">
+	<div class="header navbar navbar-inverse navbar-fixed-top" style="background-color:rgb(231,231,231)!important;min-height:60px">
+		<div class="header-inner">
+			<a class="navbar-brand" href="/index.html">
+				<img src="/assets/img/logo.png" id="logo" alt="" class="img-responsive" />
+			</a>
+
+			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<img src="/assets/img/menu-toggler.png" alt="" />
+			</a>
+
+			<ul class="nav navbar-nav pull-right">
+			</ul>
+
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+			</ul>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
+	<div class="page-container">
+		<div class="page-sidebar-wrapper" id="sidebar"></div>
+		<div class="page-content-wrapper">
+			<div class="page-content">
+				<div class="message"></div>
+				<section id="queryPolicySection" style="display:none">
+					<h1>Policies</h1>
+					<div class="row">
+						<div class="col-md-4" id="searchColumn">
+							<h2>Policy Search</h2>
+							<form role="form">
+								<div class="form-group">
+									<label for="searchPolicyNo">Policy No</label>
+									<input type="number" class="form-control" id="searchPolicyNo">
+								</div>
+								<div class="form-group">
+									<label for="searchFirstname">First Name:</label>
+									<input type="text" class="form-control" id="searchFirstname">
+								</div>
+								<div class="form-group">
+									<label for="searchLastname">Last Name:</label>
+									<input type="text" class="form-control" id="searchLastname">
+								</div>
+								<div class="form-group">
+									<label for="searchDateFr">Date From:</label>
+									<input type="date" class="form-control" id="searchDateFr">
+								</div>
+								<div class="form-group">
+									<label for="searchDateTo">Date To:</label>
+									<input type="date" class="form-control" id="searchDateTo">
+								</div>
+								<div class="form-group">
+									<label for="searchInsuranceType">Type:</label>
+									<select class="form-control" id="searchInsuranceType">
+										<option value="">All Types</option>
+										<option value="motor">Motor Vehicle</option>
+										<option value="property">Home Property</option>
+									</select>
+								</div>
+								<button type="button" class="btn btn-default" id="doSearch">Submit</button>
+							</form>
+						</div>
+						<div class="col-md-8">
+							<h2>Selected Policies</h2>
+							<!-- <p>
+								<button type="button" class="btn btn-link btn-sm pull-left" id="searchBtn">Toggle Search</button>
+							</p> -->
+							<table class="table" id="policiesTable">
+								<thead></thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+				<section id="viewPolicySection" style="display:none">
+					<div class="container">
+						<h2>Policy</h2>
+						<button class="btn btn-link" id="gotoPolicies" type="button">Return</button>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#summary">Summary</a></li>
+							<li><a data-toggle="tab" href="#risk">Risks</a></li>
+							<li><a data-toggle="tab" href="#Insured">Insured</a></li>
+						</ul>
+						<div class="tab-content">
+
+							<div id="summary" class="tab-pane fade in active">
+								<h3>Policy</h3>
+								<p id="broker_policy_info" />
+								<button type="button" class="btn btn-link pull-right" id="pushTransaction" style="display:none">Broker One Push</button>
+
+								<input type="hidden" id="policy_id" />
+								<input type="hidden" id="transaction_id" value="" />
+								<input type="hidden" id="source_id" value="" />
+								<input type="hidden" id="accountExecutive" value="" />
+								<input type="hidden" id="salesAgent" value="" />
+								<input type="hidden" id="accountHandler" value="" />
+								<input type="hidden" id="brokerBranch" value="" />
+								<dl class="dl-horizontal">
+								</dl>
+							</div>
+							<div id="risk" class="tab-pane fade">
+								<h3>Risks</h3>
+								<div class="panel-group" id="riskAccordion">
+								</div>
+							</div>
+							<div id="Insured" class="tab-pane fade">
+								<h3>Insured(s)</h3>
+								<div class="panel-group" id="InsuredAccordian">
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</section>
+			</div>
+		</div>
+	</div>
+	<div class="loadingModal">
+		<!-- Place at bottom of page -->
+	</div>
+	<div class="footer" style="background-color:rgb(231,231,231)!important">
+		<div class="footer-inner">
+			2016 &copy; IronRock Insurance.
+		</div>
+		<div class="footer-tools">
+			<span class="go-top">
+			    <i class="fa fa-angle-up"></i>
+		    </span>
+		</div>
+	</div>
+
+
+
+	<script src="/Scripts/bootbox.js"></script>
+	<script src="https://cdn.courserv.com/ironrock/scripts/accounting.min.js"></script>
+	<script src="/Scripts/bootbox.js"></script>
+	<!--Required Libraries-->
+	<script src="/Scripts/aws/jsbn.js"></script>
+	<script src="/Scripts/aws/jsbn2.js"></script>
+	<script src="/Scripts/aws/sjcl.js"></script>
+	<script src="/Scripts/aws/moment.min.js"></script>
+	<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+	<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+	<script src="/Scripts/aws/aws-sdk.min.js"></script>
+	<!--api gateway lib-->
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/axios/dist/axios.standalone.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/rollups/hmac-sha256.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/rollups/sha256.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/components/hmac.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/CryptoJS/components/enc-base64.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/url-template/url-template.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/sigV4Client.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/apiGatewayClient.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/simpleHttpClient.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClientLib/apiGatewayCore/utils.js"></script>
+	<script type="text/javascript" src="/Scripts/aws/apigClient.js"></script>
+	<!--Iron Rock Custom Library-->
+	<script src="/Scripts/ironrockcloudservice.js"></script>
+	<script src="/Scripts/index.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			initPage(function(err, obj) {
+				var toDate = new Date();
+				toDate.setDate(toDate.getDate() + 30);
+
+				var fromDate = new Date();
+				fromDate.setDate(fromDate.getDate() - 5);
+
+				$('#searchDateFr').val(formatDate(fromDate));
+				$('#searchDateTo').val(formatDate(toDate));
+
+				// var policyObj = localStorage.getItem('_ironrockPolicyObject');
+				// if (policyObj) {
+				// 	localStorage.removeItem('_ironrockPolicyObject');
+				// 	policyObj = JSON.parse(policyObj);
+				// 	populatePolicy(policyObj);
+				// } else {
+				var policy_id = getQueryStringParams("policy");
+				if (policy_id) {
+					displayPolicy(policy_id + "==", obj);
+				} else {
+					doSearch(obj);
+					$('#queryPolicySection').show();
+					$('#viewPolicySection').hide();
+				}
+				//}
+			});
+
+
+			$('#pushTransaction').click(function() {
+				bootbox.confirm("Are you sure you want to push Transaction to the Broker", function(ans) {
+					if (ans) {
+						setLoadingState(true);
+						var payload = {};//$('#policy_id')
+						payload.policy_id = $('#policy_id').val();
+						payload.source_id = $('#source_id').val();
+						payload.transaction_id = $('#transaction_id').val();
+						payload.accountExecutive = $('#accountExecutive').val();
+						payload.salesAgent = $('#salesAgent').val();
+						payload.accountHandler = $('#accountHandler').val();
+						payload.brokerBranch = $('#brokerBranch').val();
+						g_ironrock_service.pushTransaction(payload, function(err, resp) {
+							setLoadingState(false);
+							if (err) return display(err.message, err);
+							console.log(resp);
+							var data = ConvertToJson(resp.Payload);
+							if(data.errorMessage) return display(data.errorMessage, true);
+							if(data.success == false) return display(data.error_message, true);
+							location.reload();
+						});
+					}
+				});
+			});
+
+			//test api
+			function displayPolicy(policy_id, obj) {
+				setLoadingState(true);
+				obj = obj || g_ironrock_service;
+				obj.getPolicy(policy_id, function(err, data) {
+					if (err) {
+						display(err.message, err);
+						setLoadingState(false);
+					} else {
+						setLoadingState(false);
+						var policyObj = JSON.parse(data.Payload);
+						console.log(policyObj);
+						if (policyObj.errorMessage) {
+							display(policyObj.errorMessage, true);
+						} else if (!policyObj.success) {
+							display(policyObj.error_message, true);
+						} else {
+							populatePolicy(policyObj);
+						}
+					}
+				});
+			}
+
+
+			function populatePolicy(policyObj) {
+				$('#queryPolicySection').hide();
+				$('#viewPolicySection').show();
+				$('#summary dl').empty();
+				$('#policy_id').val(policyObj.policy.policy_id);
+				$("#source_id").val(policyObj.policy.source_global_name_id);
+				$("#transaction_id").val(policyObj.meta.transaction_id);
+				$('#summary dl').append('<dt>Policy Number</dt><dd>' + policyObj.policy.policy_number + '</dd>');
+				$('#summary dl').append('<dt>Policy Prefix</dt><dd>' + policyObj.policy.policy_prefix + '</dd>');
+
+				if (policyObj.meta.broker) {
+					$('#summary dl').append('<dt>Broker</dt><dd>' + policyObj.meta.broker + '</dd>');
+				}
+				$("#accountExecutive").val(policyObj.meta.accountExecutive);
+				$("#salesAgent").val(policyObj.meta.salesAgent);
+				$("#accountHandler").val(policyObj.meta.accountHandler);
+				$("#brokerBranch").val(policyObj.meta.brokerBranch);
+
+				var broker_policy_number = parseInt(policyObj.meta.broker_policy_number);
+				$('#pushTransaction').hide();
+				if (broker_policy_number && broker_policy_number > 0) {
+					$('#summary dl').append('<dt>Broker Policy #</dt><dd>' + policyObj.meta.broker_policy_number + '</dd>');
+					$('#summary dl').append('<dt>Endorsement #</dt><dd>' + policyObj.meta.broker_endorsement_number + '</dd>');
+					//
+					$('#summary dl').append('<dt>Account Executive</dt><dd>' + policyObj.brokerOne.accountExecutive.name + '</dd>');
+					$('#summary dl').append('<dt>Sales Agent</dt><dd>' + policyObj.brokerOne.salesAgent.name + '</dd>');
+					$('#summary dl').append('<dt>Account Handler</dt><dd>' + policyObj.brokerOne.accountHandler.name + '</dd>');
+					$('#summary dl').append('<dt>Broker Branch</dt><dd>' + policyObj.brokerOne.brokerBranch.branch_name + '</dd>');
+				} else {
+					var profile = g_ironrock_service.getProfile();
+					if (profile.role == "Admin") $('#pushTransaction').show();
+				}
+				$('#summary dl').append('<dt>Start Date</dt><dd>' + policyObj.policy.start_date + '</dd>');
+				$('#summary dl').append('<dt>End Date</dt><dd>' + policyObj.policy.end_date + '</dd>');
+				$('#summary dl').append('<dt>Status</dt><dd>' + policyObj.policy.status + '</dd>');
+				$('#summary dl').append('<dt>Branch</dt><dd>' + policyObj.policy.branch + '</dd>');
+				$('#summary dl').append('<dt>Date Signed</dt><dd>' + policyObj.policy.date_proposal_signed + '</dd>');
+				$('#summary dl').append('<dt>Currency</dt><dd>' + policyObj.policy.currency + '</dd>');
+				//$('#summary dl').append('<dt>Financial Institution</dt><dd>' + (policyObj.policy.premium_finance_company_code || "None") + '</dd>');
+				//$('#summary dl').append('<dt>Agreed Value</dt><dd>' + (policyObj.policy.agreed_value ? "Yes" : "No") + '</dd>');
+				//$('#summary dl').append('<dt>Auto Renewal</dt><dd>' + (policyObj.policy.auto_renewal ? "Yes" : "No") + '</dd>');
+				if (policyObj.policy.memo)
+					$('#summary dl').append('<dt>Memo</dt><dd>' + policyObj.policy.memo + '</dd>');
+				//$('#summary dl').append('<dt>Occupancy</dt><dd>' + policyObj.policy.occupancy + '</dd>');
+				//$('#summary dl').append('<dt>Usage Category</dt><dd>' + policyObj.policy.usage_category + '</dd>');
+
+
+
+
+				populateInsureds(policyObj.policy.insureds, policyObj.global_names);
+				//populate risks
+				if (policyObj.risks[0].chassis_number)
+					populateMVRisks(policyObj.risks);
+				else
+					populateHOCRisks(policyObj.risks);
+
+				console.log(policyObj);
+			}
+
+
+			function populateInsureds(insureds, globalNames) {
+				var insuredAccordian = $('#InsuredAccordian').empty();
+				$.each(insureds, function(idx, insured) {
+					var insuredDetail = getDetails(insured, globalNames);
+					var insuredId = "insured" + idx.toString();
+
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + insuredAccordian.attr("id")).attr("href", "#" + insuredId);
+					panel_toggle.text((idx + 1).toString() + ": " + insuredDetail.first_name + " " + insuredDetail.last_name);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", insuredId).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+
+
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Nationa ID:<dt><dd>' + insuredDetail.national_id + '</dd>');
+					dl.append('<dt>Nationa ID Type:</dt><dd>' + insuredDetail.national_id_type + '</dd>');
+					dl.append('<dt>First Name:</dt><dd>' + insuredDetail.first_name + '</dd>');
+					dl.append('<dt>Last Name:</dt><dd>' + insuredDetail.last_name + '</dd>');
+					dl.append('<dt>Middle Name:</dt><dd>' + insuredDetail.middle_name + '</dd>');
+					dl.append('<dt>Maiden Name:</dt><dd>' + insuredDetail.maiden_name + '</dd>');
+					dl.append('<dt>Nationality:</dt><dd>' + insuredDetail.nationality + '</dd>');
+					dl.append('<dt>Occupation:</dt><dd>' + insuredDetail.occupation + '</dd>');
+					dl.append('<dt>Place Of Birth:</dt><dd>' + insuredDetail.place_of_birth + '</dd>');
+					dl.append('<dt>Gender:</dt><dd>' + insuredDetail.gender + '</dd>');
+					dl.append('<dt>Email Address:</dt><dd>' + insuredDetail.email_address + '</dd>');
+					dl.append('<dt>Title:</dt><dd>' + insuredDetail.title + '</dd>');
+					dl.append('<dt>Date of Birth:</dt><dd>' + insuredDetail.dob + '</dd>');
+					$.each(insuredDetail.phone_numbers, function(idx, phone) {
+						dl.append('<dt>' + phone.type + ':</dt><dd>' + phone.phone_number + '</dd>');
+					});
+
+					var $locationTable = $('<table/>').addClass('table');
+					$locationTable.html('<thead><tr><th>Main</th><th>Type</th><th>Address</th><th>Town</th><th>Parish</th><th>Country</th></tr></thead>');
+					var $tbody = $('<tbody/>');
+
+					$.each(insuredDetail.locations, function(jdx, address) {
+						$tbody.append('<tr><td>' + address.is_main_location + '</td>' +
+							'<td>' + address.street_type + '</td>' +
+							'<td>' + address.street_number + ' ' + address.street_name + '</td>' +
+							'<td>' + address.town + '</td>' +
+							'<td>' + address.parish + '</td>' +
+							'<td>' + address.country + '</td></tr>');
+					});
+					$locationTable.append($tbody);
+
+					panel_body.append('<h4>Insured Details</h4>');
+					panel_body.append(dl);
+					panel_body.append("<hr/>");
+					panel_body.append("<h4>Address(es)</h4>");
+					panel_body.append($locationTable);
+
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					insuredAccordian.append(panel_default);
+				});
+				insuredAccordian.on('hidden.bs.collapse', toggleChevron);
+				insuredAccordian.on('shown.bs.collapse', toggleChevron);
+			}
+
+
+			function getDetails(insured, globalNames) {
+				var details = {};
+				$.each(globalNames, function(idx, globalName) {
+					if (insured.national_id == globalName.national_id && insured.national_id_type == globalName.national_id_type) {
+						details = globalName;
+					}
+				});
+				return details;
+			}
+
+			function toggleChevron(e) {
+				$(e.target)
+					.prev('.panel-heading')
+					.find("i.indicator")
+					.toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+			}
+			$('#riskAccordion').on('hidden.bs.collapse', toggleChevron);
+			$('#riskAccordion').on('shown.bs.collapse', toggleChevron);
+
+
+			function populateMVRisks(risks) {
+				var riskAccordion = $('#riskAccordion').empty();
+				//table.find('thead').html('<tr><th>Plate&nbsp;No</th><th>Chassis&nbsp;No</th><th>Make</th><th>Model</th><th>Year</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
+				//var tbody = table.find('tbody').empty();
+				$.each(risks, function(idx, risk) {
+					var riskDetail = "riskDetail" + idx.toString();
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + riskAccordion.attr("id")).attr("href", "#" + riskDetail);
+					panel_toggle.text((idx + 1).toString() + ": Registration No: " + risk.registration_number);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", riskDetail).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+					var certificateButton = '<button type="button" class="btn btn-link getCertificate pull-right" id="' + risk.risk_id + '">Get Certificate</button>';
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Registration No:<dt><dd>' + risk.registration_number + '</dd>');
+					dl.append('<dt>Chassis No:<dt><dd>' + risk.chassis_number + '</dd>');
+					dl.append('<dt>Engine No:<dt><dd>' + risk.engine_number + '</dd>');
+					dl.append('<dt>Make:<dt><dd>' + risk.make + '</dd>');
+					dl.append('<dt>Model:<dt><dd>' + risk.model + '</dd>');
+					dl.append('<dt>Year:<dt><dd>' + risk.year + '</dd>');
+					dl.append('<dt>Colour:<dt><dd>' + risk.colour + '</dd>');
+					dl.append('<dt>Body Type:<dt><dd>' + risk.body_type + '</dd>');
+					dl.append('<dt>Driver Wording:<dt><dd>' + risk.authorized_driver_wording + '</dd>');
+					dl.append('<dt>Excess Description:<dt><dd>' + risk.excess_description + '</dd>');
+					dl.append('<dt>Sum Insured:<dt><dd>' + accounting.formatMoney(risk.sum_insured) + '</dd>');
+
+					panel_body.append(certificateButton);
+					panel_body.append('<h4>Motor Vehicle Details</h4>');
+					panel_body.append(dl);
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					riskAccordion.append(panel_default);
+
+				});
+				//riskAccordion.on('hidden.bs.collapse', toggleChevron);
+				//riskAccordion.on('shown.bs.collapse', toggleChevron);
+			}
+
+			function populateHOCRisks(risks) {
+				var riskAccordion = $('#riskAccordion').empty();
+
+				//table.find('thead').html('<tr><th>Usage&nbsp;Code</th><th>Type</th><th>Year&nbsp;Built</th><th>Roof</th><th>Wall</th><th>Storeys</th><th align="right">Sum&nbsp;Insured</th><th></th></tr>');
+				//var tbody = table.find('tbody').empty();
+				$.each(risks, function(idx, risk) {
+					var riskDetail = "riskDetail" + idx.toString();
+					var panel_default = $('<div/>').addClass("panel panel-default");
+					var panel_heading = $('<div/>').addClass("panel-heading");
+					var panel_title = $('<h4/>').addClass("panel-title");
+					var panel_toggle = $('<a/>').addClass("accordion-toggle").attr("data-toggle", "collapse").attr("data-parent", "#" + riskAccordion.attr("id")).attr("href", "#" + riskDetail);
+					panel_toggle.text((idx + 1).toString() + ": Risk: " + risk.risk_item_type);
+					var iglyph = $('<i/>').addClass("indicator glyphicon glyphicon-chevron-down pull-right");
+					var panel_collapse = $('<div/>').attr("id", riskDetail).addClass("panel-collapse collapse");
+					var panel_body = $('<div/>').addClass('panel_body');
+
+					var dl = $("<dl/>").attr("class", "dl-horizontal");
+					dl.append('<dt>Risk Item Type:<dt><dd>' + risk.risk_item_type + '</dd>');
+					dl.append('<dt>Usage Code:<dt><dd>' + risk.usage_code + '</dd>');
+					dl.append('<dt>Year Built:<dt><dd>' + risk.building_year_built + '</dd>');
+					dl.append('<dt>Construction of Roof:<dt><dd>' + risk.construction_of_roof + '</dd>');
+					dl.append('<dt>Construction of Wall:<dt><dd>' + risk.construction_of_wall + '</dd>');
+					dl.append('<dt>Storeys:<dt><dd>' + risk.height_in_storeys + '</dd>');
+					dl.append('<dt>Sum Insured:<dt><dd>' + accounting.formatMoney(risk.sum_insured) + '</dd>');
+
+
+					panel_body.append('<h4>Risk Details</h4>');
+					panel_body.append(dl);
+					panel_collapse.append(panel_body);
+
+					panel_title.append(panel_toggle);
+					panel_title.append(iglyph);
+					panel_heading.append(panel_title);
+
+					panel_default.append(panel_heading);
+					panel_default.append(panel_collapse);
+					riskAccordion.append(panel_default);
+
+				});
+				//riskAccordion.on('hidden.bs.collapse', toggleChevron);
+				//riskAccordion.on('shown.bs.collapse', toggleChevron);
+			}
+
+
+			$('#gotoPolicies').click(function() {
+				$('#queryPolicySection').show();
+				$('#viewPolicySection').hide();
+			});
+
+
+
+			$('#policiesTable').on('click', '.select', function(e) {
+				displayPolicy(e.target.id);
+			});
+
+			$('#searchBtn').click(function() {
+				$('#searchColumn').toggle();
+			});
+			//search policies
+			$('#doSearch').click(function() {
+				doSearch();
+			});
+
+
+			$('#riskAccordion').on('click', '.getCertificate', function(e) {
+				var risk_id = e.target.id;
+				var policy_id = $('#policy_id').val();
+				setLoadingState(true);
+				g_ironrock_service.getCertification(policy_id, risk_id, function(err, data) {
+					setLoadingState(false);
+					if (err) {
+						bootbox.alert(err);
+					} else {
+						var result = JSON.parse(data.Payload);
+						if (result.errorMessage) {
+							display(result.errorMessage, true);
+						} else if (!result.success) {
+							display(result.error_message, true);
+						} else {
+							var byteCharacters = atob(result.data.file_data);
+							var byteNumbers = new Array(byteCharacters.length);
+							for (var i = 0; i < byteCharacters.length; i++) {
+								byteNumbers[i] = byteCharacters.charCodeAt(i);
+							}
+							var byteArray = new Uint8Array(byteNumbers);
+							var blobFile = new Blob([byteArray], {
+								type: result.data.mime_type
+							});
+
+							if (navigator.appVersion.toString().indexOf('.NET') > 0)
+								window.navigator.msSaveBlob(blobFile, "certificate.pdf");
+							else {
+								var fileURL = URL.createObjectURL(blobFile);
+								window.open(fileURL);
+							}
+						}
+					}
+				});
+			});
+
+
+			function doSearch(obj) {
+				var searchData = {};
+
+				searchData.policyNo = $('#searchPolicyNo').val();
+				searchData.firstName = $('#searchFirstname').val();
+				searchData.lastName = $('#searchLastname').val();
+				searchData.dateFr = $('#searchDateFr').val();
+				searchData.dateTo = $('#searchDateTo').val();
+				searchData.type = $('#searchInsuranceType').val();
+				searchData.status = "policy_created";
+				var payload = JSON.stringify(searchData);
+
+				setLoadingState(true);
+
+				obj = obj || g_ironrock_service;
+				obj.searchQuotes(payload, function(err, quoteList) {
+					if (err) {
+						setLoadingState(false);
+						display(err.message, true);
+						return;
+					}
+					if (!quoteList) {
+						setLoadingState(false);
+						display('No quotes returned!');
+						return;
+					}
+					g_ironrock_service.listBrokers(function(err, data) {
+						setLoadingState(false);
+						var brokers = JSON.parse(data.Payload);
+						quoteList = ConvertToJson(quoteList);
+						var quotes = quoteList.sort(function(a, b) {
+							return b.id - a.id;
+						});
+						// ascending ord
+						$('#policiesTable thead').html(
+							'<tr><th class="col-md-1">Policy&nbsp;No</th><th class="col-md-2">Date</th><th class="col-md-2">First&nbsp;Name</th><th class="col-md-2">Last&nbsp;Name</th><th class="col-md-1">Type</th><th class="col-md-3">Broker</th></tr>');
+						var dlTable = $('#policiesTable tbody').html('');
+						$.each(quotes, function(idx, policy) {
+							var brokerName = policy.broker;
+							$.each(brokers, function(i, b) {
+								if (b.code == policy.broker) {
+									brokerName = b.name;
+								}
+							});
+							var date = new Date(policy.startDate);
+							var day = date.getDate();
+							var monthIndex = date.getMonth() + 1;
+							var year = date.getFullYear();
+							//var dateFormat = day + '/' + monthIndex + '/' + year;
+							var dateFormat = year + '-' + formatDataPart(monthIndex) + '-' + formatDataPart(day);
+							dlTable.append('<tr><td>' + policy.policy_number + '</td><td>' +
+								dateFormat + '</td><td>' +
+								policy.firstName.capitalizeFirstLetter() + '</td><td>' +
+								policy.lastName.capitalizeFirstLetter() + '</td><td>' +
+								policy.type.capitalizeFirstLetter() + '</td><td>' +
+								brokerName + '</td><td><button class="btn btn-link select" id="' +
+								policy.policy_id + '">Select</button></td></tr>');
+						});
+					});
+				});
+			}
+		});
+	</script>
+
+
+
+
+</body>
+
+</html>

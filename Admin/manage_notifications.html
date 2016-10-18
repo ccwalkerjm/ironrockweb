@@ -63,24 +63,51 @@
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>IRIe</h1>
-				<p>IronRock Insurance E-services.</p>
+				<div class="row" id="account-block">
+					<div class="col-md-12">
+						<h1>Notification Email Addresses</h1>
+						<button type="button" class="btn btn-primary" id="saveNotification">Save Notification Addresses</button>
+						<div class="message"></div>
+						<table class="table table-striped" id="emailTable">
+							<thead>
+								<tr>
+									<th class="col-md-8">Email Addresses</th>
+									<th class="col-md-4"></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<div class="row">
+							<div class="col-md-8">
+								<input type="email" class="form-control" id="email" placeholder="Enter New Email Address" required />
+							</div>
+							<div class="col-md-4">
+								<button type="button" class="btn btn-link" id="addEmail">Add Email</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
-	</div>
 
-	<div class="footer" style="background-color:rgb(231,231,231)!important">
-		<div class="footer-inner">
-			2016 &copy; IronRock Insurance.
+
+
+		<div class="loadingModal">
+			<!-- Place at bottom of page -->
 		</div>
-		<div class="footer-tools">
-			<span class="go-top">
+		<div class="footer" style="background-color:rgb(231,231,231)!important">
+			<div class="footer-inner">
+				2016 &copy; IronRock Insurance.
+			</div>
+			<div class="footer-tools">
+				<span class="go-top">
 			    <i class="fa fa-angle-up"></i>
 		    </span>
+			</div>
 		</div>
+
 	</div>
-
-
 
 	<script src="/Scripts/bootbox.js"></script>
 	<!--Required Libraries-->
@@ -97,7 +124,73 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			initPage();
+			initPage(function (err, obj) {
+				listEmails(obj);
+			});
+
+			function listEmails(obj) {
+				setLoadingState(true);
+				obj = obj ? obj : g_ironrock_service;
+				obj.getNotification(function (err, items) {
+					setLoadingState(false);
+					if (err) {
+						display(err.message, err);
+						return;
+					}
+					var tcontent = $('#emailTable tbody').html('');
+					console.log(items);
+					$.each(items, function (idx, emailAddress) {
+						tcontent.append('<tr><td>' + emailAddress +
+							'</td><td><button type="button" class="btn btn-link delete">Delete</button></td></tr>');
+					});
+				});
+			}
+
+
+			$('#emailTable').on('click', '.delete', function (e) {
+				var $this = $(this);
+				$this.parent().parent().remove();
+				$(window).on('beforeunload', function () {
+					return 'Are you sure you want to leave?';
+				});
+			});
+
+			$('#addEmail').click(function () {
+				var $input = $('#email');
+				if ($input[0].validity.valid) {
+					var tcontent = $('#emailTable tbody').append('<tr><td>' + $input.val() +
+						'</td><td><button type="button" class="btn btn-link delete">Delete</button></td></tr>');
+					$input.val('');
+					$(window).on('beforeunload', function () {
+						return 'Are you sure you want to leave?';
+					});
+				} else {
+					display('Invalid Email', true);
+				}
+			});
+
+			$('#saveNotification').click(function () {
+				var emailAddresses = [];
+				$.each($('#emailTable tbody tr'), function (idx, $tr) {
+					emailAddresses.push($(this).find('td').first().text());
+				});
+				setLoadingState(true);
+				g_ironrock_service.addNotification(emailAddresses, function (err) {
+					if (err) {
+						display(err.message, err);
+					} else {
+						stopNavigate();
+						listEmails();
+					}
+				});
+			});
+
+
+
+			function stopNavigate() {
+				$(window).off('beforeunload');
+			}
+
 
 		});
 	</script>

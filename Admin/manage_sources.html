@@ -2,9 +2,9 @@
 <html lang="en" class="no-js">
 
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="MobileOptimized" content="320">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>IronRock Insurance</title>
 
 	<!--    @Scripts.Render("~/bundles/modernizr")-->
@@ -57,63 +57,95 @@
 			</ul>
 		</div>
 	</div>
-	<div class="clearfix" />
+	<div class="clearfix"></div>
 
 	<div class="page-container">
 		<div class="page-sidebar-wrapper" id="sidebar"></div>
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<h1>Upload Documents</h1>
-				<form action="http://ironrockdocuments.courserv.com.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
-					Document to upload:
+				<div class="row" id="account-block">
+					<div class="col-md-12">
+						<h1>Sources</h1>
+						<div class="message"></div>
 
-					<input type="file" name="file" />
-					<br />
-					<!-- The elements after this will be ignored -->
-					<input type="submit" name="submit" value="Upload to Amazon S3" />
-				</form>
+						<table class="table table-striped" id="sourceTable">
+							<thead>
+								<tr>
+									<th class="col-md-3">Name</th>
+									<th class="col-md-1">Type</th>
+									<th class="col-md-8">ID</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
 			</div>
 		</div>
-	</div>
 
-	<div class="footer" style="background-color:rgb(231,231,231)!important">
-		<div class="footer-inner">
-			2016 &copy; Ironrock Insurance.
+
+
+		<div class="loadingModal">
+			<!-- Place at bottom of page -->
 		</div>
-		<div class="footer-tools">
-			<span class="go-top">
+		<div class="footer" style="background-color:rgb(231,231,231)!important">
+			<div class="footer-inner">
+				2016 &copy; IronRock Insurance.
+			</div>
+			<div class="footer-tools">
+				<span class="go-top">
 			    <i class="fa fa-angle-up"></i>
 		    </span>
+			</div>
 		</div>
-	</div>
 
 
 
-	<script src="/Scripts/bootbox.js"></script>
-	<!--Required Libraries-->
-	<script src="/aws/jsbn.js"></script>
-	<script src="/aws/jsbn2.js"></script>
-	<script src="/aws/sjcl.js"></script>
-	<script src="/aws/moment.min.js"></script>
-	<script src="/aws/aws-cognito-sdk.min.js"></script>
-	<script src="/aws/amazon-cognito-identity.min.js"></script>
-	<script src="/aws/aws-sdk-2.3.19.min.js"></script>
-	<!--Iron Rock Custom Library-->
-	<script src="/aws/ironrockcloudservice.js"></script>
-	<script src="/aws/index.js"></script>
+		<script src="/Scripts/bootbox.js"></script>
+		<!--Required Libraries-->
+		<script src="/Scripts/aws/jsbn.js"></script>
+		<script src="/Scripts/aws/jsbn2.js"></script>
+		<script src="/Scripts/aws/sjcl.js"></script>
+		<script src="/Scripts/aws/moment.min.js"></script>
+		<script src="/Scripts/aws/aws-cognito-sdk.min.js"></script>
+		<script src="/Scripts/aws/amazon-cognito-identity.min.js"></script>
+		<script src="/Scripts/aws/aws-sdk.min.js"></script>
+		<!--Iron Rock Custom Library-->
+		<script src="/Scripts/ironrockcloudservice.js"></script>
+		<script src="/Scripts/index.js"></script>
 
-	<script type="text/javascript">
-		$(document).ready(function () {
-			doPrimaryFunctions(function () {
-				//populate fields
-				g_ironrock_service.getUploadPolicy()
+		<script type="text/javascript">
+			$(document).ready(function () {
+				initPage(function (err, obj) {
+					listSources(obj);
+				});
+
+				function listSources(obj) {
+					setLoadingState(true);
+					obj = obj ? obj : g_ironrock_service;
+					obj.getSources(function (err, data) {
+						setLoadingState(false);
+						if (err) {
+							display(err.message, err);
+							return;
+						}
+						var tcontent = $('#sourceTable tbody').html('');
+						var payload = JSON.parse(data.Payload);
+						console.log(payload);
+						if (payload.success) {
+							$.each(payload.sources, function (idx, source) {
+								tcontent.append('<tr><td>' + source.source_name +
+									'</td><td>' + source.source_type +
+									'</td><td>' + source.source_id + '</td></tr>');
+							});
+						}
+					});
+				}
+
 
 			});
-		});
-	</script>
-
-
-
+		</script>
 
 </body>
 

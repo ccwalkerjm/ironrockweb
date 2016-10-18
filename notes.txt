@@ -1,7 +1,0 @@
-<div class="form-inline">
-            <div class="checkbox">
-                <label>
-                    Is Mailing Address Same as Home Address?
-                    <input type="checkbox" name="mailingAddressSame" id="mailingAddressSame" checked> </label>
-            </div>
-        </div>
