@@ -108,7 +108,7 @@ function initPage(callback) {
     setLoadingState(true);
 
 
-    g_ironrock_service = new ironrockcloudservice(ENVIRONMENT_TYPE_DEVELOPMENT, function(err, $this) {
+    g_ironrock_service = new ironrockcloudservice(ENVIRONMENT_TYPE_PRODUCTION, function(err, $this) {
         setLoadingState(false);
         if (err) {
             g_ironrock_service.signoff();
