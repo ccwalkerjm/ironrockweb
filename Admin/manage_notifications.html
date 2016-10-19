@@ -133,10 +133,7 @@
 				obj = obj ? obj : g_ironrock_service;
 				obj.getNotification(function (err, items) {
 					setLoadingState(false);
-					if (err) {
-						display(err.message, err);
-						return;
-					}
+					if (err) return display(err.message, err);
 					var tcontent = $('#emailTable tbody').html('');
 					console.log(items);
 					$.each(items, function (idx, emailAddress) {
