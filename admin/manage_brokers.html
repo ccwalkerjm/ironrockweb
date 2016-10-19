@@ -316,7 +316,7 @@
 			function loadBranches(branches) {
 				if (branches) {
 					var $branch = $('#branch-list').empty();
-					$.each(JSON.parse(branches), function(idx, branch) {
+					$.each(ConvertToJson(branches), function(idx, branch) {
 						$branch.append('<option value="' + branch + '">' + branch + '</option>');
 					});
 				}
@@ -442,17 +442,8 @@
 				g_ironrock_service.createBroker(dataInput, function(err, data) {
 					setLoadingState(false);
 					if (err) return display(err.message, true);
-					data = data.Payload;
-					if (data === null || data == "null") {
-						$('#brokerModal').modal('hide');
-						listBrokers();
-						return;
-					}
-					data = JSON.parse(data);
-					if (data.errorMessage) display(data.errorMessage, true);
-					else if (data.error_message) display(data.error_message, true);
-					else display(data, true);
-
+					$('#brokerModal').modal('hide');
+					listBrokers();
 				});
 			});
 
@@ -479,16 +470,8 @@
 				g_ironrock_service.modifyBroker(dataInput, function(err, data) {
 					setLoadingState(false);
 					if (err) return display(err.message, true);
-					data = data.Payload;
-					if (data === null || data == "null") {
-						$('#brokerModal').modal('hide');
-						listBrokers();
-						return;
-					}
-					data = JSON.parse(data);
-					if (data.errorMessage) display(data.errorMessage, true);
-					else if (data.error_message) display(data.error_message, true);
-					else display(data, true);
+					listBrokers();
+					$('#brokerModal').modal('hide');
 				});
 			});
 
@@ -499,14 +482,7 @@
 					setLoadingState(true);
 					g_ironrock_service.deleteBroker(code, function(err, data) {
 						setLoadingState(false);
-						if (!err) data = JSON.parse(data.Payload);
-						if (err || data.errorMessage || data.error_message) {
-							if (err) display(err.message, true);
-							else if (data.errorMessage) display(data.errorMessage, true);
-							else if (data.error_message) display(data.error_message, true);
-							else display("Error Detected", true);
-							return;
-						}
+						if (err) return display(err.message, true);
 						listBrokers();
 						$('#brokerModal').modal('hide');
 					});
@@ -538,15 +514,8 @@
 				setLoadingState(true);
 				g_ironrock_service.getBroker(id, function(err, data) {
 					setLoadingState(false);
-					if (!err) data = JSON.parse(data.Payload);
-					if (err || data.errorMessage || data.error_message) {
-						if (err) display(err.message, true);
-						else if (data.errorMessage) display(data.errorMessage, true);
-						else if (data.error_message) display(data.error_message, true);
-						else display("Error Detected", true);
-						return;
-					}
-					var item = data;
+					if (err) return display(err.message, true);
+					var item = ConvertToJson(data);
 					$('#code').val(item.code).prop('readonly', true);
 					$('#name').val(item.name);
 					$('#trn').val(item.trn);
@@ -587,12 +556,9 @@
 				obj = obj ? obj : g_ironrock_service;
 				obj.listBrokers(function(err, data) {
 					setLoadingState(false);
-					if (err) {
-						display(err.message, err);
-						return;
-					}
+					if (err) return display(err.message, err);
 					var tcontent = $('#brokerTable tbody').html('');
-					var items = JSON.parse(data.Payload);
+					var items = ConvertToJson(data);
 					$.each(items, function(idx, val) {
 						tcontent.append('<tr><td>' + val.code +
 							'</td><td>' + val.name +

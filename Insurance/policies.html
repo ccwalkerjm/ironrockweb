@@ -214,7 +214,7 @@
 				// var policyObj = localStorage.getItem('_ironrockPolicyObject');
 				// if (policyObj) {
 				// 	localStorage.removeItem('_ironrockPolicyObject');
-				// 	policyObj = JSON.parse(policyObj);
+				// 	policyObj = ConvertToJson(policyObj);
 				// 	populatePolicy(policyObj);
 				// } else {
 				var policy_id = getQueryStringParams("policy");
@@ -245,9 +245,7 @@
 							setLoadingState(false);
 							if (err) return display(err.message, err);
 							console.log(resp);
-							var data = ConvertToJson(resp.Payload);
-							if(data.errorMessage) return display(data.errorMessage, true);
-							if(data.success == false) return display(data.error_message, true);
+							//var data = ConvertToJson(resp);
 							location.reload();
 						});
 					}
@@ -259,20 +257,14 @@
 				setLoadingState(true);
 				obj = obj || g_ironrock_service;
 				obj.getPolicy(policy_id, function(err, data) {
+					setLoadingState(false);
 					if (err) {
 						display(err.message, err);
-						setLoadingState(false);
 					} else {
 						setLoadingState(false);
-						var policyObj = JSON.parse(data.Payload);
+						var policyObj = ConvertToJson(data);
 						console.log(policyObj);
-						if (policyObj.errorMessage) {
-							display(policyObj.errorMessage, true);
-						} else if (!policyObj.success) {
-							display(policyObj.error_message, true);
-						} else {
-							populatePolicy(policyObj);
-						}
+						populatePolicy(policyObj);
 					}
 				});
 			}
@@ -546,28 +538,22 @@
 					if (err) {
 						bootbox.alert(err);
 					} else {
-						var result = JSON.parse(data.Payload);
-						if (result.errorMessage) {
-							display(result.errorMessage, true);
-						} else if (!result.success) {
-							display(result.error_message, true);
-						} else {
-							var byteCharacters = atob(result.data.file_data);
-							var byteNumbers = new Array(byteCharacters.length);
-							for (var i = 0; i < byteCharacters.length; i++) {
-								byteNumbers[i] = byteCharacters.charCodeAt(i);
-							}
-							var byteArray = new Uint8Array(byteNumbers);
-							var blobFile = new Blob([byteArray], {
-								type: result.data.mime_type
-							});
+						var result = ConvertToJson(data);
+						var byteCharacters = atob(result.data.file_data);
+						var byteNumbers = new Array(byteCharacters.length);
+						for (var i = 0; i < byteCharacters.length; i++) {
+							byteNumbers[i] = byteCharacters.charCodeAt(i);
+						}
+						var byteArray = new Uint8Array(byteNumbers);
+						var blobFile = new Blob([byteArray], {
+							type: result.data.mime_type
+						});
 
-							if (navigator.appVersion.toString().indexOf('.NET') > 0)
-								window.navigator.msSaveBlob(blobFile, "certificate.pdf");
-							else {
-								var fileURL = URL.createObjectURL(blobFile);
-								window.open(fileURL);
-							}
+						if (navigator.appVersion.toString().indexOf('.NET') > 0)
+							window.navigator.msSaveBlob(blobFile, "certificate.pdf");
+						else {
+							var fileURL = URL.createObjectURL(blobFile);
+							window.open(fileURL);
 						}
 					}
 				});
@@ -602,7 +588,7 @@
 					}
 					g_ironrock_service.listBrokers(function(err, data) {
 						setLoadingState(false);
-						var brokers = JSON.parse(data.Payload);
+						var brokers = ConvertToJson(data);
 						quoteList = ConvertToJson(quoteList);
 						var quotes = quoteList.sort(function(a, b) {
 							return b.id - a.id;

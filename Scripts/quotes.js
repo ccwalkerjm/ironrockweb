@@ -38,29 +38,21 @@ function runQuoteEvents() {
                 return;
             }
             r = ConvertToJson(r);
-            if (r.errorMessage) {
-                alert("error: " + r.errorMessage);
-                return;
-            }
-            if (!r.success) {
-                console.log(r);
-                alert(r.error_message ? r.error_message : '' + r.Message ? r.Message : '');
-            } else {
-                currentQuote.quoteLimits = r;
-                currentQuote.quotation_number = r.quotation_number;
-                currentQuote.applicantQuoteNo = r.quotation_number;
-                $('#quotation_number').val(r.quotation_number);
+            currentQuote.quoteLimits = r;
+            currentQuote.quotation_number = r.quotation_number;
+            currentQuote.applicantQuoteNo = r.quotation_number;
+            $('#quotation_number').val(r.quotation_number);
 
-                var $container = $('#quotation');
-                loadQuotationLimits($container, r);
-                $container.addClass("returntoQuotes");
-                $('#quoteLimitsModal').modal('show');
+            var $container = $('#quotation');
+            loadQuotationLimits($container, r);
+            $container.addClass("returntoQuotes");
+            $('#quoteLimitsModal').modal('show');
 
-                //$('#disclaimerContainer').hide();
-                //$('#submit-btn').hide();
-                //$('.button-previous').prop('disabled', true);
-                //$('.button-next').prop('disabled', true);
-            }
+            //$('#disclaimerContainer').hide();
+            //$('#submit-btn').hide();
+            //$('.button-previous').prop('disabled', true);
+            //$('.button-next').prop('disabled', true);
+
         });
     });
 
@@ -567,7 +559,6 @@ function LoadSettings(insuranceType, callback) {
             return callback(err);
         }
         var jsondata = ConvertToJson(r);
-        if (jsondata.errorMessage) return callback(new Error(jsondata.errorMessage));
         jsondata.timeUpdated = currentTimeStamp;
         sessionStorage.setItem(_IronRockPreliminaryData, JSON.stringify(jsondata));
         setSettings(insuranceType);
@@ -1040,15 +1031,7 @@ function GetDriverLicense($this, id, callback) {
             callback(err);
         } else {
             r = ConvertToJson(r);
-            if (r.error_message) {
-                err = new Error('Invalid ID!');
-                callback(err);
-            } else if (r.Message) {
-                err = new Error('Invalid ID!');
-                callback(err);
-            } else {
-                callback(null, r);
-            }
+            callback(null, r);
         }
     });
 }

@@ -216,7 +216,7 @@
 				obj.listRoles(function(err, data) {
 					setLoadingState(false);
 					var element = $('#role').html('<option>None</option>');
-					$.each(JSON.parse(data.Payload), function(idx, val) {
+					$.each(ConvertToJson(data), function(idx, val) {
 						element.append('<option value="' + val + '">' + val + '</option>');
 					});
 				});
@@ -228,7 +228,7 @@
 				obj.listBrokers(function(err, data) {
 					setLoadingState(false);
 					var element = $('#broker').html('<option>None</option>');
-					$.each(JSON.parse(data.Payload), function(idx, val) {
+					$.each(ConvertToJson(data), function(idx, val) {
 						element.append('<option value="' + val.code + '">' + val.name + '</option>');
 					});
 				});
@@ -256,7 +256,7 @@
 				setLoadingState(true);
 				g_ironrock_service.getUser(username, function(err, data) {
 					setLoadingState(false);
-					userData = JSON.parse(data.Payload);
+					userData = ConvertToJson(data);
 					$('#username').val(userData.username).prop("readonly", true);
 					$('#firstName').val(userData.given_name).prop("readonly", true);
 					$('#lastName').val(userData.family_name).prop("readonly", true);
@@ -372,21 +372,9 @@
 				if (!broker) broker = null;
 				obj = obj ? obj : g_ironrock_service; //
 				obj.listUsers(role, broker, function(err, data) {
-					if (err) {
-						display(err.message, err);
-						return;
-					}
+					if (err) return 						display(err.message, err);
 
-					if (data.Payload === null || data.Payload === 'null') {
-						display("System Error Detected!", true);
-						return;
-					}
-
-					var items = JSON.parse(data.Payload);
-					if (items.errorMessage) {
-						display(items.errorMessage, true);
-						return;
-					}
+					var items = ConvertToJson(data);
 
 					var tcontent = $('#userTable tbody').html('');
 					$.each(items, function(idx, val) {
