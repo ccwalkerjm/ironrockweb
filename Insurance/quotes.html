@@ -2710,7 +2710,7 @@
                 obj = obj || g_ironrock_service;
                 obj.searchQuotes(payload, function(err, quoteList) {
                     if (err) {
-                        bootbox.alert("Validation Error Detection: Narrow your Date Range and try Again!");
+                        bootbox.alert(err.message);
                         setLoadingState(false);
                         return;
                     }
@@ -2721,7 +2721,7 @@
                     }
                     g_ironrock_service.listBrokers(function(err, data) {
                         setLoadingState(false);
-                        var brokers = ConvertToJson(data.Payload);
+                        var brokers = ConvertToJson(data);
                         quoteList = ConvertToJson(quoteList);
                         var quotes = quoteList.sort(function(a, b) {
                             return b.id - a.id;
@@ -2833,17 +2833,7 @@
                         display(err.message, err);
                         return;
                     }
-                    result = ConvertToJson(result.Payload);
-                    if (result && result.errorMessage) {
-                        //lambda error
-                        display(result.errorMessage, true);
-                        return;
-                    }
-                    if (result && !result.success) {
-                        //epic error
-                        display(result.error_message, err);
-                        return;
-                    }
+                    result = ConvertToJson(result);
                     console.log(result);
                     //localStorage.setItem('_ironrockPolicyObject', JSON.stringify(result)); //
                     location.assign('policies.html?policy=' + result.policy.policy_id);

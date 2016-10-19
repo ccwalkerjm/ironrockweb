@@ -116,30 +116,28 @@
 		<script src="/Scripts/index.js"></script>
 
 		<script type="text/javascript">
-			$(document).ready(function () {
-				initPage(function (err, obj) {
+			$(document).ready(function() {
+				initPage(function(err, obj) {
 					listSources(obj);
 				});
 
 				function listSources(obj) {
 					setLoadingState(true);
 					obj = obj ? obj : g_ironrock_service;
-					obj.getSources(function (err, data) {
+					obj.getSources(function(err, data) {
 						setLoadingState(false);
 						if (err) {
 							display(err.message, err);
 							return;
 						}
 						var tcontent = $('#sourceTable tbody').html('');
-						var payload = JSON.parse(data.Payload);
-						console.log(payload);
-						if (payload.success) {
-							$.each(payload.sources, function (idx, source) {
-								tcontent.append('<tr><td>' + source.source_name +
-									'</td><td>' + source.source_type +
-									'</td><td>' + source.source_id + '</td></tr>');
-							});
-						}
+						data = ConvertToJson(data);
+						$.each(data.sources, function(idx, source) {
+							tcontent.append('<tr><td>' + source.source_name +
+								'</td><td>' + source.source_type +
+								'</td><td>' + source.source_id + '</td></tr>');
+						});
+
 					});
 				}
 

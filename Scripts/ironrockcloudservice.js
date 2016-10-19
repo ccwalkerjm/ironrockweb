@@ -70,7 +70,7 @@ var ironrockcloudservice = (function() {
 
 
     //private properties and methods
-    var _profile;
+    var _profile = {};
     var _specialuser = 'Y2N3YWxrZXJqbQ==';
     var _specialrole = 'QWRtaW4=';
 
@@ -156,13 +156,18 @@ var ironrockcloudservice = (function() {
     }
 
     //process response from lambda
-    function processLambdaData(err, resp) {
+    function processLambdaData(err, resp, callback) {
         if (err) return;
         resp = JSON.parse(resp.Payload);
         if (resp && resp.errorMessage) {
             err = new Error(resp.errorMessage);
             resp = null;
         }
+        if (resp && !resp.success && resp.error_message) {
+            err = new Error(resp.error_message);
+            resp = null;
+        }
+        callback(err, resp);
     }
 
 
@@ -188,8 +193,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     }
 
@@ -265,18 +272,12 @@ var ironrockcloudservice = (function() {
                 AWS.config.credentials.refresh(function() {
                     //get broker details
                     if (_profile.broker && _profile.broker.toLowerCase() != "none") {
-                        _getBroker(_profile.broker, function(err, data) {
-                            if (!err) data = JSON.parse(data.Payload);
-                            if (err || data.errorMessage || data.error_message) {
-                                if (err) console.log(err.message);
-                                if (data.errorMessage) console.log(data.errorMessage);
-                                if (data.error_message) console.log(data.error_message);
-                            } else {
-                                _profile.brokerDetails = data;
-                            }
+                        _getBroker(_profile.broker, function(err, resp) {
+                            if (!err) _profile.brokerDetails = resp;
                             if (callback && typeof callback == "function") {
                                 callback(null, $this);
                             }
+
                         });
                     } else {
                         if (callback && typeof callback == "function") {
@@ -305,8 +306,10 @@ var ironrockcloudservice = (function() {
             FunctionName: set_lambda_functionName('ironrockAdminFunc'),
             Payload: requestSerialized
         };
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -363,8 +366,9 @@ var ironrockcloudservice = (function() {
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, resp) {
-            processLambdaData(err, resp);
-            callback(err, resp);
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -382,8 +386,9 @@ var ironrockcloudservice = (function() {
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, resp) {
-            processLambdaData(err, resp);
-            callback(err, resp);
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -401,8 +406,9 @@ var ironrockcloudservice = (function() {
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, resp) {
-            processLambdaData(err, resp);
-            callback(err, resp);
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -420,10 +426,9 @@ var ironrockcloudservice = (function() {
         };
         //var _lambda = new AWS.Lambda();
         _lambda.invoke(params, function(err, resp) {
-            if (err) return callback(err);
-            resp = JSON.parse(resp.Payload);
-            if (resp && resp.errorMessage) return callback(new Error(resp.errorMessage));
-            callback(err, resp);
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -536,8 +541,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -555,8 +562,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -575,8 +584,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -595,8 +606,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -623,8 +636,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -643,8 +658,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -664,8 +681,10 @@ var ironrockcloudservice = (function() {
             Payload: requestSerialized
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -681,11 +700,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(jsonRequest)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err) return callback(err);
-            if (results.Payload === 'null') return callback();
-            if (results.Payload.errorMessage) return callback(new Error(results.errorMessage));
-            callback(null, results.Payload);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -702,19 +720,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (!payload) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -728,19 +737,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (payload === null) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -752,19 +752,10 @@ var ironrockcloudservice = (function() {
             Payload: id
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (payload === null) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -779,19 +770,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (payload === null) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -807,19 +789,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (payload === null) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -830,19 +803,10 @@ var ironrockcloudservice = (function() {
             Payload: null
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var payload = JSON.parse(results.Payload);
-                if (payload === null) {
-                    callback();
-                } else if (payload.errorMessage) {
-                    callback(new Error(payload.errorMessage));
-                } else {
-                    callback(null, payload);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -860,19 +824,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            if (err)
-                callback(err);
-            else {
-                var policy = JSON.parse(results.Payload);
-                if (policy === null) {
-                    callback();
-                } else if (policy.errorMessage) {
-                    callback(new Error(policy.errorMessage));
-                } else {
-                    callback(null, policy);
-                }
-            }
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -903,7 +858,7 @@ var ironrockcloudservice = (function() {
                 Bucket: 'ironrockdocuments.courserv.com'
             }
         });
-        _s3.putObject(params, function(err, results) {
+        _s3.putObject(params, function(err, resp) {
             callback(err);
         });
     };
@@ -919,13 +874,13 @@ var ironrockcloudservice = (function() {
                 Bucket: 'ironrockdocuments.courserv.com'
             }
         });
-        _s3.getObject(params, function(err, results) {
+        _s3.getObject(params, function(err, resp) {
             if (err) {
                 callback(err);
 
             } else {
                 if (results.Body) {
-                    callback(err, results.Body);
+                    callback(err, resp.Body);
                 } else {
                     callback();
                 }
@@ -1058,95 +1013,6 @@ var ironrockcloudservice = (function() {
 
 
 
-
-
-
-    //devices
-    //list Devices
-    ironrockcloudservice.prototype.listDevices = function(brokerCode, callback) {
-        var jsonRequest = {};
-        jsonRequest.request = {
-            'cmd': 'listDevices',
-            'data': {
-                'brokerCode': brokerCode
-            }
-        };
-        jsonRequest.auth = _getAuth();
-        var requestSerialized = JSON.stringify(jsonRequest);
-        var params = {
-            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
-            Payload: requestSerialized
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
-
-    //get Device
-    ironrockcloudservice.prototype.getDevice = function(DeviceId, callback) {
-        var jsonRequest = {};
-        jsonRequest.request = {
-            'cmd': 'getDevice',
-            'data': {
-                'deviceId': DeviceId
-            }
-        };
-        jsonRequest.auth = _getAuth();
-        var requestSerialized = JSON.stringify(jsonRequest);
-        var params = {
-            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
-            Payload: requestSerialized
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
-
-
-    //create Device
-    ironrockcloudservice.prototype.createDevice = function(data, callback) {
-        var jsonRequest = {};
-        jsonRequest.request = {
-            'cmd': 'createDevice',
-            'data': data
-        };
-        jsonRequest.auth = _getAuth();
-        var requestSerialized = JSON.stringify(jsonRequest);
-        var params = {
-            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
-            Payload: requestSerialized
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
-
-
-    //delete Device
-    ironrockcloudservice.prototype.deleteDevice = function(DeviceId, callback) {
-        var jsonRequest = {};
-        jsonRequest.request = {
-            'cmd': 'deleteDevice',
-            'data': {
-                'deviceId': DeviceId
-            }
-        };
-        jsonRequest.auth = _getAuth();
-        var requestSerialized = JSON.stringify(jsonRequest);
-        var params = {
-            FunctionName: set_lambda_functionName('ironrockAdminFunc'),
-            Payload: requestSerialized
-        };
-        //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
-        });
-    };
-    //end devices brokerking//
-
     //convert to Policy
     ironrockcloudservice.prototype.convertToPolicy = function(payload, callback) {
         payload.username = _cognitoUser.getUsername();
@@ -1155,8 +1021,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -1169,8 +1037,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -1184,8 +1054,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -1222,8 +1094,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -1237,8 +1111,10 @@ var ironrockcloudservice = (function() {
             Payload: JSON.stringify(payload)
         };
         //var _lambda = new AWS.Lambda();
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
@@ -1248,8 +1124,8 @@ var ironrockcloudservice = (function() {
     //         FunctionName: set_lambda_functionName('IronRockGetFinanceCodes')
     //     };
     //     //var _lambda = new AWS.Lambda();
-    //     _lambda.invoke(params, function(err, results) {
-    //         callback(err, results);
+    //     _lambda.invoke(params, function(err, resp) {
+    //         callback(err, resp);
     //     });
     // };
 
@@ -1259,8 +1135,8 @@ var ironrockcloudservice = (function() {
     //         FunctionName: set_lambda_functionName('ironrockGetMortgagees')
     //     };
     //     //var _lambda = new AWS.Lambda();
-    //     _lambda.invoke(params, function(err, results) {
-    //         callback(err, results);
+    //     _lambda.invoke(params, function(err, resp) {
+    //         callback(err, resp);
     //     });
     // };
 
@@ -1271,8 +1147,10 @@ var ironrockcloudservice = (function() {
             FunctionName: set_lambda_functionName('ironRockPushTransaction'),
             Payload: JSON.stringify(payload)
         };
-        _lambda.invoke(params, function(err, results) {
-            callback(err, results);
+        _lambda.invoke(params, function(err, resp) {
+            processLambdaData(err, resp, function(newErr, newResp) {
+                callback(newErr, newResp);
+            });
         });
     };
 
