@@ -469,19 +469,20 @@ function setGroupLimits(policy_prefix) {
     });
     var thirdPartyLimit = $('#thirdPartyLimit').empty();
     $.each(group_limits, function(idx, value) {
-        if (vehValue >= options.limit_group_cutoff_value) {
-            if (value.toLowerCase().indexOf("and above") >= 0 ||
-                (value.toLowerCase().indexOf("under") < 0 &&
-                    value.toLowerCase().indexOf("up to") < 0)) {
-                thirdPartyLimit.append('<option value="' + value + '">' + value + '</option>');
-            }
-        } else {
-            if (value.toLowerCase().indexOf("under") >= 0 ||
-                value.toLowerCase().indexOf("up to") >= 0 ||
-                value.toLowerCase().indexOf("and above") < 0) {
-                thirdPartyLimit.append('<option value="' + value + '">' + value + '</option>');
-            }
-        }
+        thirdPartyLimit.append('<option value="' + value + '">' + value + '</option>');
+        // if (vehValue >= options.limit_group_cutoff_value) {
+        //     if (value.toLowerCase().indexOf("and above") >= 0 ||
+        //         (value.toLowerCase().indexOf("under") < 0 &&
+        //             value.toLowerCase().indexOf("up to") < 0)) {
+        //         thirdPartyLimit.append('<option value="' + value + '">' + value + '</option>');
+        //     }
+        // } else {
+        //     if (value.toLowerCase().indexOf("under") >= 0 ||
+        //         value.toLowerCase().indexOf("up to") >= 0 ||
+        //         value.toLowerCase().indexOf("and above") < 0) {
+        //         thirdPartyLimit.append('<option value="' + value + '">' + value + '</option>');
+        //     }
+        // }
     });
 }
 
