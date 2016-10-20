@@ -160,7 +160,15 @@ var ironrockcloudservice = (function() {
         if (err) return;
         resp = JSON.parse(resp.Payload);
         if (resp && resp.errorMessage) {
-            err = new Error(resp.errorMessage);
+            //transform errorMessage
+            var newMessage = resp.errorMessage;
+            switch (resp.errorMessage) {
+              case "1 validation error detected: Value '[]' at 'requestItems.IronRockQuotes.member.keys' failed to satisfy constraint: Member must have length greater than or equal to 1":
+                newMessage = "No Result Found";
+                break;
+              default:
+            }
+            err = new Error(newMessage);
             resp = null;
         }
         if (resp && !resp.success && resp.error_message) {
