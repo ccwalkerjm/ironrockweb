@@ -12,15 +12,15 @@ var ironrockcloudservice = (function() {
     //added misc..
     'use strict';
     //development/testing
-    const USER_POOL_ID_TEST = 'us-east-1_sXSIoZ4vD';
-    const CLIENT_ID_TEST = '65qcrqbc1tkru2unrkegerschk';
+    const USER_POOL_ID_TEST = 'us-east-1_S05gwcXQX';
+    const CLIENT_ID_TEST = '7kt3jgk37i06qlra4cmb7jd5bi';
     //production
-    const USER_POOL_ID_PROD = 'us-east-1_VK4TuyyrR';
-    const CLIENT_ID_PROD = '16rlb08qo2cq2cv2s8ib1t4t4f';
+    const USER_POOL_ID_PROD = 'us-east-1_cwLOmmqfy';
+    const CLIENT_ID_PROD = '4g9qs2vn4mf93fjee5ns9oecb8';
     //variables
-    const IDENTITY_POOL = 'us-east-1:7e05741e-030b-4fa9-8099-a61dcf81d4dc';
-    var _userPoolId; //= 'us-east-1_sXSIoZ4vD';
-    var _clientId; // = '65qcrqbc1tkru2unrkegerschk';
+    const IDENTITY_POOL = 'us-east-1:ed89e513-79fc-4183-ba95-aebd5bbbabd6';
+    var _userPoolId; //= 'us-east-1_S05gwcXQX';
+    var _clientId; // = '7kt3jgk37i06qlra4cmb7jd5bi';
 
     const AWS_REGION = 'us-east-1';
 
@@ -71,7 +71,7 @@ var ironrockcloudservice = (function() {
 
     //private properties and methods
     var _profile = {};
-    var _specialuser = 'Y2N3YWxrZXJqbQ==';
+    var _specialuser = 'SVJBZG1pbg==';
     var _specialrole = 'QWRtaW4=';
 
     var _creds = new AWS.CognitoIdentityCredentials({
@@ -699,6 +699,7 @@ var ironrockcloudservice = (function() {
 
     //get BrokerOne data
     ironrockcloudservice.prototype.getBrokerOneData = function(brokerCode, callback) {
+        if(!brokerCode || brokerCode.toLowerCase() == "none") return callback();
         var jsonRequest = {
             "brokerCode": brokerCode
         };

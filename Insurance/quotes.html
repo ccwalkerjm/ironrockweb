@@ -2783,17 +2783,16 @@
                 g_ironrock_service.getBrokerOneData(currentQuote.broker, function(err, data) {
                     setLoadingState(false);
                     if (err) return display(err.message, true);
-                    populateBrokerOneDropDowns(ConvertToJson(data));
+                    data = ConvertToJson(data);
+                    populateBrokerOneDropDowns(data);
                     $('#convertToPolicyModal').modal('show');
                 });
-
-
             });
 
             //broker extension
             function populateBrokerOneDropDowns(data) {
                 var policyModal = $('#convertToPolicyModal');
-                if (data === null) {
+                if (!data) {
                     policyModal.find('.brokerOneExtension').hide();
                     return;
                 }
